@@ -1,6 +1,6 @@
 ## User request
 
-$aasystem Resume our return-handling discovery interview from the retained record. Reuse settled answers, preserve the correction and its history, and ask the next unresolved question. Keep the discovery-only boundary. You may update the interview record, but do not write requirements or implementation yet.
+$aapilot Resume our return-handling discovery interview from the retained record. Reuse settled answers, preserve the correction and its history, and ask the next unresolved question. Keep the discovery-only boundary. You may update the interview record, but do not write requirements or implementation yet.
 
 ## Project files
 

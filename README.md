@@ -1,4 +1,4 @@
-# Ahmad Abdalla's Work System
+# Ahmad Abdalla's Pilot System
 
 A portable skill system for planning, building, reviewing, and verifying engineering work.
 
@@ -17,7 +17,7 @@ codex plugin marketplace add ahmadabdalla/plugins
 codex plugin add aasystem@ahmadabdalla-plugins
 ```
 
-Invoke `$aasystem:aasystem` for an end-to-end task, or `$aasystem:product` for product discovery.
+Invoke `$aasystem:aapilot` for an end-to-end task, or `$aasystem:product` for product discovery.
 
 ### Claude Code
 
@@ -26,7 +26,7 @@ claude plugin marketplace add ahmadabdalla/plugins
 claude plugin install aasystem@ahmadabdalla-plugins
 ```
 
-Invoke `/aasystem:aasystem` for an end-to-end task, or `/aasystem:product` for product discovery.
+Invoke `/aasystem:aapilot` for an end-to-end task, or `/aasystem:product` for product discovery.
 
 ### GitHub Copilot CLI
 
@@ -39,9 +39,9 @@ Run `/skills` in Copilot to check that aasystem's skills are available.
 
 ## Start here
 
-You can always start with [`aasystem`](skills/aasystem/SKILL.md) to drive your work. Give it the task; it selects the appropriate playbook or specialist and coordinates the work through completion within your requested scope. Use your host's plugin invocation above.
+You can always start with [`aapilot`](skills/aapilot/SKILL.md) to drive your work. Give it the task; it selects the appropriate playbook or specialist and coordinates the work through completion within your requested scope. Use your host's plugin invocation above.
 
-- Open [Ahmad Abdalla's Work System Graph](visualizations/skill-library/index.html) to inspect routes and handoffs
+- Open [Ahmad Abdalla's Pilot System Graph](visualizations/skill-library/index.html) to inspect routes and handoffs
 - Read [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) for ownership, sources, and adaptations
 
 ## Use a flagship skill directly
@@ -81,7 +81,7 @@ All skills remain available from [`skills/`](skills/).
 ## Change the library
 
 1. Read [`AGENTS.md`](AGENTS.md)
-2. Follow the [skill authoring playbook](skills/aasystem/playbooks/authoring-a-skill.md)
+2. Follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md)
 3. Edit the owning file
 4. Update the system map when relationships change
 5. Update the graph when routes or handoffs change

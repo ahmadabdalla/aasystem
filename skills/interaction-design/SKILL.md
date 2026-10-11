@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Interaction design
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own the interaction model for the assigned scope. The caller assigns this responsibility and integrates the result; a standalone request ends with the requested design or review. Product owns intended behavior and business meaning, while architect owns technical implementation design. This skill proposes how people encounter and act on that behavior.
 

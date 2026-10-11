@@ -4,7 +4,7 @@ Keep this file and its expectations out of candidate contexts. Apply identical c
 
 | Criterion | Observable success |
 | --- | --- |
-| A. Conditional routing and ownership | Observed aasystem routing reaches Product for discovery; Product reads its discovery reference and uses Grill-me's interview reference when interviewing. Grill-me returns evidence to its caller; Product synthesizes and returns to its caller. Discovery-only work stops without automatic requirements/UI work. Credit only observed steps. |
+| A. Conditional routing and ownership | Observed aapilot routing reaches Product for discovery; Product reads its discovery reference and uses Grill-me's interview reference when interviewing. Grill-me returns evidence to its caller; Product synthesizes and returns to its caller. Discovery-only work stops without automatic requirements/UI work. Credit only observed steps. |
 | B. Scoped, adaptive questioning | Inspects supplied knowledge, starts from concrete work and handoffs, asks one focused question and waits. Subsequent questions follow answers and consequential gaps; settled facts are reused. Avoids premature architecture or unrelated customer-value research. |
 | C. Faithful evidence and authority | Preserves attribution, meaning, source/status and revised-answer history. Records authorized answers before the next question. Separates intent, current work, observations, proposals and pending answers; does not invent acceptance or erase the accepted baseline. |
 | D. Journey synthesis | Documents relevant actors/authority, trigger/outcome, prerequisites, sequence, handoffs, completion and unfinished/failure/recovery paths, using retrievable sources. Distinguishes supported paths from open questions. |

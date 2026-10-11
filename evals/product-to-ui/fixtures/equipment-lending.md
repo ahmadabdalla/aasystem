@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Prepare the interaction proposal for equipment checkout and return using these project records. Keep it usable by the engineer building the next version, with source links and outstanding decisions. You may update the local experience document. Do not implement software or change our documentation system.
+$aapilot Prepare the interaction proposal for equipment checkout and return using these project records. Keep it usable by the engineer building the next version, with source links and outstanding decisions. You may update the local experience document. Do not implement software or change our documentation system.
 
 ## Project files
 

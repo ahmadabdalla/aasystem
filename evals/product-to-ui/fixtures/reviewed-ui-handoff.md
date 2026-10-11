@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Prepare the technical-design handoff for our loan editor using the existing reviewed UI. Explain what the implementer must preserve and how we should check the delivered result. Read the existing files; do not edit the UI, restart discovery, or begin implementation.
+$aapilot Prepare the technical-design handoff for our loan editor using the existing reviewed UI. Explain what the implementer must preserve and how we should check the delivered result. Read the existing files; do not edit the UI, restart discovery, or begin implementation.
 
 ## Project files
 

@@ -1,6 +1,6 @@
 # Verification lifecycle evaluation
 
-Exercises temporary verification output, teardown, retained proof, and reruns using the [evaluation playbook](../../skills/aasystem/playbooks/eval.md). Fixtures stay outside runtime skills; generated runs stay outside this package.
+Exercises temporary verification output, teardown, retained proof, and reruns using the [evaluation playbook](../../skills/aapilot/playbooks/eval.md). Fixtures stay outside runtime skills; generated runs stay outside this package.
 
 Copy [the Notes project](fixtures/notes-project/) into a separate temporary Git repository for each request in [requests.md](fixtures/requests.md), committing its initial files before execution. Save complete baseline and revised `skills/` snapshots. Give fresh candidates only their assigned snapshot, request and raw project, with separate writable directories. Keep this README, the [rubric](rubric.md), label mapping and other outputs out of candidate contexts. Explicit instruction reads test application, not native host discovery. Record when isolation is instruction-based rather than enforced.
 

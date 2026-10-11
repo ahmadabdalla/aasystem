@@ -1,6 +1,6 @@
 # Product discovery evaluation
 
-This package exercises the conditional discovery -> journeys -> requirements path. Follow the [evaluation playbook](../../skills/aasystem/playbooks/eval.md) and reuse the [product-to-interaction package's runner preparation and evidence conventions](../product-to-ui/README.md). Use fresh, isolated baseline/revised candidates with the same raw fixture and explicit `aasystem` entry point; keep this README and the [judge-only rubric](rubric.md) outside candidate contexts. No new runner is required.
+This package exercises the conditional discovery -> journeys -> requirements path. Follow the [evaluation playbook](../../skills/aapilot/playbooks/eval.md) and reuse the [product-to-interaction package's runner preparation and evidence conventions](../product-to-ui/README.md). Use fresh, isolated baseline/revised candidates with the same raw fixture and explicit `aapilot` entry point; keep this README and the [judge-only rubric](rubric.md) outside candidate contexts. No new runner is required.
 
 Product returns the assigned discovery result or behavior contract to its caller. Grill-me returns interview evidence to its caller, including Product for a discovery assignment. The caller owns continuation; a discovery-only result does not automatically trigger requirements or Interaction Design.
 

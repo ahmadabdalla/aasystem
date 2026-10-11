@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Plan the next UI refinement pass for our loan-request workflow. I want to inspect the experience before we implement production saving. Use the existing prototype and my feedback. Return a concrete plan for what you will show me and what will carry into implementation afterward. This turn is plan-only; do not change files or build anything.
+$aapilot Plan the next UI refinement pass for our loan-request workflow. I want to inspect the experience before we implement production saving. Use the existing prototype and my feedback. Return a concrete plan for what you will show me and what will carry into implementation afterward. This turn is plan-only; do not change files or build anything.
 
 ## Project files
 

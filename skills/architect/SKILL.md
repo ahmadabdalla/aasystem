@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Architect
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Ground the problem, sketch alternatives, implement the chosen shape, and redesign when evidence contradicts it. Verification shapes the design from the start and tests it throughout implementation.
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Solution
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Reach a defensible decision through research, alternatives, and analysis.
 
@@ -46,4 +46,4 @@ For each viable option, identify what must be true, the strongest failure case, 
 
 Use the caller’s designated artifact for the solution rationale, preserving other contributors’ content and linking canonical decisions. Maintain one decision record containing the outcome, chosen approach and rationale, constraints, non-goals, decisive sources and their limits, accepted tradeoffs, rejected alternatives, unresolved assumptions, and conditions for reconsideration. Include observable success criteria where known. Preserve whether a claim is documented, observed, inferred, or a value judgment. Distinguish an initial version from a target state only with concrete transition triggers. If uncertainty changes the ranking, make the recommendation conditional and identify the discriminating evidence. Present the recommendation and what affects its acceptance; link to supporting detail when substantial. The record's contents need not become separate headings in every reply.
 
-When called by [aasystem](../aasystem/SKILL.md), return the decision record and its source artifacts to that owner, which selects the appropriate change playbook if implementation is authorized. For a standalone request that includes implementation design, pass the same record to [architect](../architect/SKILL.md). A research-only request ends with the recommendation. Business value and preference may remain judgments. Research supports the recommendation; it does not prove a future implementation works.
+When called by [aapilot](../aapilot/SKILL.md), return the decision record and its source artifacts to that owner, which selects the appropriate change playbook if implementation is authorized. For a standalone request that includes implementation design, pass the same record to [architect](../architect/SKILL.md). A research-only request ends with the recommendation. Business value and preference may remain judgments. Research supports the recommendation; it does not prove a future implementation works.

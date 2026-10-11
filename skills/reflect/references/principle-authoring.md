@@ -13,7 +13,7 @@ Use a current working record or `reviews/<date>/judgment/` for the source statem
 
 Follow the environment's skill-authoring instructions when available. Store an approved leaf at `principle-<name>/SKILL.md` beside the workflow skills. Give it a discriminating description, a decision preference, rationale, and limits. Include an example only where it clarifies the choice. Keep source history and evaluation reports in the review record. Use `disable-model-invocation: true` for the leaf and, when this toolbox carries Codex adapters, add `agents/openai.yaml` with `policy.allow_implicit_invocation: false`. The index owns deliberate selection of relevant principles.
 
-Update the [approved-principle index](../../principles/INDEX.md) with its situation trigger, relevant workflow, and relative leaf link in the same change. The index routes to the leaf; it should not restate its instructions. aasystem, solution, architect, and figure-it-out consume the index. Check the affected path when another workflow also needs deliberate activation.
+Update the [approved-principle index](../../principles/INDEX.md) with its situation trigger, relevant workflow, and relative leaf link in the same change. The index routes to the leaf; it should not restate its instructions. aapilot, solution, architect, and figure-it-out consume the index. Check the affected path when another workflow also needs deliberate activation.
 
 A principle can guide the choice of a project mechanism while that mechanism enforces a concrete property. Keep those responsibilities distinct. Avoid a new principle that merely repeats an existing procedure.
 

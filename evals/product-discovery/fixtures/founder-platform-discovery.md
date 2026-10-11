@@ -1,6 +1,6 @@
 ## User request
 
-$aasystem Help me, Morgan the founder, explore how our workshop platform is organized and how people book, collect and return tools. Interview me about concrete work and handoffs, then document what we know and the open questions. This is discovery only: exclude customer-value research, architecture selection and requirements writing. Retain attributable interview answers under docs/discovery/ so I can resume later. Keep the accepted baseline intact.
+$aapilot Help me, Morgan the founder, explore how our workshop platform is organized and how people book, collect and return tools. Interview me about concrete work and handoffs, then document what we know and the open questions. This is discovery only: exclude customer-value research, architecture selection and requirements writing. Retain attributable interview answers under docs/discovery/ so I can resume later. Keep the accepted baseline intact.
 
 ## Project files
 

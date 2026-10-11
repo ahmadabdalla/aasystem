@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # UI refinement
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
 
 Own bounded UI/UX refinement and the reviewed-reference handoff. The caller retains the task and production delivery. Product owns business meaning, Interaction Design owns interaction/presentation decisions, and Prototype owns the rendered artifact. Standalone work ends at its requested design/review checkpoint.
 

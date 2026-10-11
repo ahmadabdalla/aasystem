@@ -1,7 +1,7 @@
 const TYPE_LABELS = {
   work: "Entry skill",
   skill: "Skill",
-  playbook: "aasystem playbook",
+  playbook: "aapilot playbook",
   principle: "Approved principle",
   foundation: "Shared foundation",
   artifact: "Project-owned records",
@@ -10,12 +10,12 @@ const TYPE_LABELS = {
 const nodes = [
   {
     id: "work",
-    title: "aasystem",
+    title: "aapilot",
     type: "work",
     subtitle: "Fundamental entry point",
     purpose: "Selects the path, keeps one owner, coordinates supporting skills, and remains accountable through verification and delivery.",
     owns: "Task framing, routing, integration, final proof, and completion.",
-    source: "../../skills/aasystem/SKILL.md",
+    source: "../../skills/aapilot/SKILL.md",
     x: -310,
     y: 530,
     w: 240,
@@ -105,7 +105,7 @@ const nodes = [
     subtitle: "Explain without changing",
     purpose: "Produces a cited explanation or recommendation while preserving a read-only boundary.",
     owns: "The investigation question, evidence reconciliation, and bounded conclusion.",
-    source: "../../skills/aasystem/playbooks/investigation.md",
+    source: "../../skills/aapilot/playbooks/investigation.md",
     x: 430,
     y: 345,
   },
@@ -149,7 +149,7 @@ const nodes = [
     subtitle: "Decision experiment",
     purpose: "Coordinates a bounded experiment whose output is evidence and a recommendation, not production implementation.",
     owns: "The decision the experiment resolves and the handoff of its evidence.",
-    source: "../../skills/aasystem/playbooks/prototype.md",
+    source: "../../skills/aapilot/playbooks/prototype.md",
     x: 430,
     y: 455,
   },
@@ -193,7 +193,7 @@ const nodes = [
     subtitle: "Change behavior",
     purpose: "Grounds, designs, implements, verifies, and delivers an intentional behavior change.",
     owns: "Feature execution, acceptance criteria, integration, and final behavioral proof.",
-    source: "../../skills/aasystem/playbooks/feature.md",
+    source: "../../skills/aapilot/playbooks/feature.md",
     x: 430,
     y: 635,
   },
@@ -204,7 +204,7 @@ const nodes = [
     subtitle: "Correct a mechanism",
     purpose: "Reproduces a failure, confirms its cause, implements a bounded correction, and replays the original surface.",
     owns: "Reproduction, causal diagnosis, correction, and failing-before/passing-after proof.",
-    source: "../../skills/aasystem/playbooks/bug-fix.md",
+    source: "../../skills/aapilot/playbooks/bug-fix.md",
     x: 430,
     y: 745,
   },
@@ -215,7 +215,7 @@ const nodes = [
     subtitle: "Preserve behavior",
     purpose: "Changes structure in verifiable increments while holding the observed behavior contract constant.",
     owns: "The structural improvement and equivalence proof.",
-    source: "../../skills/aasystem/playbooks/refactoring.md",
+    source: "../../skills/aapilot/playbooks/refactoring.md",
     x: 1776,
     y: 745,
   },
@@ -270,7 +270,7 @@ const nodes = [
     subtitle: "Authorized delivery",
     purpose: "Reviews the complete change, prepares its history and reviewer brief, publishes, and verifies the PR state.",
     owns: "PR preparation and publication—not monitoring, merging, or deployment.",
-    source: "../../skills/aasystem/playbooks/opening-a-pr.md",
+    source: "../../skills/aapilot/playbooks/opening-a-pr.md",
     x: 1776,
     y: 635,
   },
@@ -281,7 +281,7 @@ const nodes = [
     subtitle: "Change instructions",
     purpose: "Traces behavior from entry point, edits the owning instructions, validates the package, and exercises consequential changes.",
     owns: "The intended instruction behavior and its validation boundary.",
-    source: "../../skills/aasystem/playbooks/authoring-a-skill.md",
+    source: "../../skills/aapilot/playbooks/authoring-a-skill.md",
     x: 2224,
     y: 745,
   },
@@ -292,7 +292,7 @@ const nodes = [
     subtitle: "Behavioral evidence",
     purpose: "Compares instruction variants in isolated contexts against a rubric defined before the run.",
     owns: "Experiment design, evidence reconciliation, and the adoption decision.",
-    source: "../../skills/aasystem/playbooks/eval.md",
+    source: "../../skills/aapilot/playbooks/eval.md",
     x: 2224,
     y: 635,
   },
@@ -347,7 +347,7 @@ const nodes = [
     subtitle: "Applies to all procedures",
     purpose: "Defines ownership, handoffs, delegation boundaries, verification through the project, evidence, and delivery.",
     owns: "The shared operating rules read by every procedural skill and worker.",
-    source: "../../skills/aasystem/references/execution.md",
+    source: "../../skills/aapilot/references/execution.md",
     x: 2224,
     y: 925,
   },
@@ -394,7 +394,7 @@ function connect(from, to, type, label) {
   edges.push({ id: `${from}--${to}--${type}`, from, to, type, label });
 }
 
-// aasystem's explicit task router.
+// aapilot's explicit task router.
 [
   ["product", "define product behavior"],
   ["interaction-design", "design interactions"],
@@ -943,7 +943,7 @@ function traceFromWork() {
   if (path === null) {
     document.querySelector("#trace-button").textContent = "No directed path";
     window.setTimeout(() => {
-      document.querySelector("#trace-button").textContent = "Trace from aasystem";
+      document.querySelector("#trace-button").textContent = "Trace from aapilot";
     }, 1400);
     return;
   }
