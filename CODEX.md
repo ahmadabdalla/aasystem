@@ -23,4 +23,4 @@ Select skills explicitly; ordinary prompts do not activate them automatically. C
 
 Keep each adapter and its skill frontmatter consistent, preserving existing interface and dependency settings. Generated project verifiers retain their own scope and invocation settings.
 
-See the [official invocation policy](https://learn.chatgpt.com/docs/build-skills#optional-metadata), [system map](SKILL_SYSTEM.md), and [validation plan](PLUGIN_PLAN.md).
+See the [official invocation policy](https://learn.chatgpt.com/docs/build-skills#optional-metadata) and [system map](SKILL_SYSTEM.md).

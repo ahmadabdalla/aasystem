@@ -6,9 +6,9 @@ Inspired by [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Laur
 
 ## Install the plugin
 
-The plugin is being prepared for marketplace distribution. Marketplace installation will be available once `aasystem` is listed in [ahmadabdalla/plugins](https://github.com/ahmadabdalla/plugins). See the [preparation plan](PLUGIN_PLAN.md) for testing and release status.
+Install `aasystem` from the [ahmadabdalla/plugins](https://github.com/ahmadabdalla/plugins) marketplace in Codex CLI, Claude Code, or GitHub Copilot CLI.
 
-Add the marketplace once in each host you use, then install aasystem. If you already added it for Azure Cost Calculator, refresh the marketplace and install aasystem.
+Add the marketplace once in each host you use, then install aasystem. If you already added it for Azure Cost Calculator, [refresh the marketplace](https://github.com/ahmadabdalla/plugins#marketplace-commands) and install aasystem.
 
 ### Codex CLI
 
@@ -77,7 +77,6 @@ All skills remain available from [`skills/`](skills/).
 | [`CODEX.md`](CODEX.md) | Codex invocation settings |
 | [`plugin.json`](plugin.json) | Portable plugin identity and OpenAI presentation metadata |
 | [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json) | Claude compatibility manifest |
-| [`PLUGIN_PLAN.md`](PLUGIN_PLAN.md) | Migration checks and remaining release steps |
 
 ## Change the library
 

@@ -6,7 +6,6 @@ It does not define maintenance steps or Codex invocation settings.
 
 - **Maintenance rules:** [`AGENTS.md`](AGENTS.md)
 - **Codex settings:** [`CODEX.md`](CODEX.md)
-- **Plugin preparation:** [`PLUGIN_PLAN.md`](PLUGIN_PLAN.md)
 - **Visual map:** [Ahmad Abdalla's Work System Graph](visualizations/skill-library/index.html)
 
 ## System flow
