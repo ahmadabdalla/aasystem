@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Ahmad Abdalla's Work System Graph: an interactive map of the aasystem skill library, its playbooks, supporting skills, handoffs, and shared foundations."
+    />
+    <title>Ahmad Abdalla's Work System Graph</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#graph">Skip to graph</a>
+
+    <header class="masthead">
+      <div class="title-block">
+        <p class="eyebrow">Current working tree</p>
+        <h1>Ahmad Abdalla's Work System Graph</h1>
+      </div>
+
+      <dl class="summary" aria-label="Map summary">
+        <div><dt id="skill-count">0</dt><dd>skills</dd></div>
+        <div><dt id="playbook-count">0</dt><dd>playbooks</dd></div>
+        <div><dt id="edge-count">0</dt><dd>interactions</dd></div>
+      </dl>
+    </header>
+
+    <main class="workspace">
+      <section class="map-shell" aria-labelledby="map-title">
+        <div class="toolbar">
+          <div class="toolbar-title">
+            <p class="section-index">01 / SYSTEM MAP</p>
+            <h2 id="map-title">Task routes and handoffs</h2>
+          </div>
+
+          <label class="search-field">
+            <span class="visually-hidden">Find a skill or playbook</span>
+            <svg aria-hidden="true" viewBox="0 0 20 20">
+              <circle cx="8.5" cy="8.5" r="5.5"></circle>
+              <path d="m13 13 4 4"></path>
+            </svg>
+            <input id="search" type="search" placeholder="Find a node…" autocomplete="off" />
+            <kbd>/</kbd>
+          </label>
+
+          <div class="toolbar-actions">
+            <button class="button button-quiet" id="trace-button" type="button">Trace from aasystem</button>
+            <button class="button button-quiet" id="show-all-button" type="button">Show all</button>
+            <button
+              class="button button-quiet"
+              id="inspector-toggle"
+              type="button"
+              aria-controls="inspector"
+              aria-expanded="true"
+            >Hide details</button>
+            <div class="zoom-controls" aria-label="Map zoom controls">
+              <button class="button button-quiet" id="zoom-out-button" type="button" aria-label="Zoom out">−</button>
+              <button class="button button-quiet" id="zoom-in-button" type="button" aria-label="Zoom in">+</button>
+            </div>
+            <button class="button button-strong" id="fit-button" type="button">Fit map</button>
+          </div>
+        </div>
+
+        <div class="filter-row" aria-label="Relationship filters">
+          <span class="filter-label">Relationships</span>
+          <label class="filter route-filter">
+            <input type="checkbox" value="route" checked />
+            <span></span>aasystem routes
+          </label>
+          <label class="filter support-filter">
+            <input type="checkbox" value="support" checked />
+            <span></span>Support calls
+          </label>
+          <label class="filter handoff-filter">
+            <input type="checkbox" value="handoff" checked />
+            <span></span>Handoffs
+          </label>
+          <label class="filter governance-filter">
+            <input type="checkbox" value="governance" />
+            <span></span>Foundations
+          </label>
+        </div>
+
+        <div class="map-frame" id="graph">
+          <svg
+            id="skill-map"
+            role="img"
+            aria-labelledby="svg-title svg-description"
+            viewBox="-360 0 3020 1180"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <title id="svg-title">Ahmad Abdalla's Work System Graph</title>
+            <desc id="svg-description">
+              aasystem is the entry point. Arrows show routing to primary procedures, use of supporting
+              skills, handoffs between owners, and shared governance.
+            </desc>
+            <defs>
+              <pattern id="dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="1" fill="currentColor" opacity="0.12"></circle>
+              </pattern>
+              <marker id="arrow-route" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="var(--route)"></path>
+              </marker>
+              <marker id="arrow-support" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="var(--support)"></path>
+              </marker>
+              <marker id="arrow-handoff" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="var(--handoff)"></path>
+              </marker>
+              <marker id="arrow-governance" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="var(--governance)"></path>
+              </marker>
+            </defs>
+            <rect class="grid-fill" x="-360" width="3020" height="1180" fill="url(#dot-grid)"></rect>
+            <g id="lanes"></g>
+            <g id="edges"></g>
+            <g id="edge-labels"></g>
+            <g id="nodes"></g>
+          </svg>
+
+          <div class="map-hint" aria-hidden="true">
+            <span>Drag to pan</span><span>Scroll to zoom</span><span>Hover to isolate routes</span>
+          </div>
+          <div class="empty-search" id="empty-search" hidden>No matching node</div>
+        </div>
+      </section>
+
+      <aside class="inspector" id="inspector" aria-live="polite" aria-labelledby="inspector-title">
+        <div class="inspector-topline">
+          <p class="section-index">02 / INSPECTOR</p>
+          <span class="node-kind" id="inspector-kind">Entry skill</span>
+        </div>
+        <h2 id="inspector-title">aasystem</h2>
+        <p class="inspector-purpose" id="inspector-purpose"></p>
+
+        <div class="ownership-card">
+          <span>Owns</span>
+          <p id="inspector-owns"></p>
+        </div>
+
+        <div class="relationship-section">
+          <div class="relationship-heading">
+            <h3>Outgoing</h3>
+            <span id="outgoing-count">0</span>
+          </div>
+          <div class="relationship-list" id="outgoing-list"></div>
+        </div>
+
+        <div class="relationship-section">
+          <div class="relationship-heading">
+            <h3>Incoming</h3>
+            <span id="incoming-count">0</span>
+          </div>
+          <div class="relationship-list" id="incoming-list"></div>
+        </div>
+
+        <div class="inspector-footer">
+          <a id="source-link" href="../../skills/aasystem/SKILL.md">Open source ↗</a>
+          <button id="copy-link" type="button">Copy node link</button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="page-footer">
+      <p>
+        Built from <a href="../../SKILL_SYSTEM.md">SKILL_SYSTEM.md</a>, skill entry points,
+        and aasystem playbooks. Dashed arrows are conditional calls.
+      </p>
+      <p>Local visualization · no external dependencies</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

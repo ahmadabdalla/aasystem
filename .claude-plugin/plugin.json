@@ -1,0 +1,13 @@
+{
+  "name": "aasystem",
+  "version": "0.1.0",
+  "description": "Coordinate engineering work through playbooks, specialist skills, and evidence of completion.",
+  "author": {
+    "name": "Ahmad Abdalla",
+    "url": "https://github.com/ahmadabdalla"
+  },
+  "homepage": "https://github.com/ahmadabdalla/aasystem",
+  "repository": "https://github.com/ahmadabdalla/aasystem",
+  "license": "MIT",
+  "keywords": ["engineering", "planning", "verification", "skills"]
+}

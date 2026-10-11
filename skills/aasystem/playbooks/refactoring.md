@@ -1,0 +1,12 @@
+# Refactoring
+
+Own the behavior contract while changing structure. Identify discovered defects or new features separately; do not mix their changed expectations into an equivalence claim.
+
+1. **Capture the baseline.** Use [how](../../how/SKILL.md) and the [execution contract](../references/execution.md). Before moving structure, run a characterization test, snapshot, or equivalence harness through the relevant public surface. Record inputs, outputs, side effects, source identity, and known defects. Compilation and lint do not capture behavior.
+2. **Name the structural improvement.** Identify the ownership, data shape, or dependency change and how it makes the code easier to understand or extend. Preserve real compatibility and migration requirements. Route a change to intended behavior to Feature or Bug fix. For a large coupled migration, use [figure-it-out](../../figure-it-out/SKILL.md).
+3. **Design the target.** If the reshape crosses a function boundary, use [architect](../../architect/SKILL.md) with a design-only assignment, the baseline, and the compatibility constraints. Reuse an already settled target rather than repeat its competition.
+4. **Move in verifiable increments.** Delegate mechanical edits with exact ownership and invariants where permitted. Remove obsolete code when the contract allows it, migrate affected callers, and inspect strings, documentation, and indirect references as well as symbols. Rerun the baseline after each meaningful unit. Compatibility paths need an actual consumer or migration requirement.
+5. **Prove equivalence and assess the result.** Compare old and new behavior on the real artifact, including side effects and affected entry points. Account for intentional source/configuration differences. Review whether the resulting structure delivers the stated improvement. Revise or drop ineffective owned edits without erasing unrelated work.
+6. **Deliver.** Retain baseline and final evidence, update operating recipes only where their driving steps changed, and follow the execution contract for commits or [PR delivery](opening-a-pr.md).
+
+Report the structural improvement, the preserved contract, equivalence evidence, and any separately identified behavior changes or gaps.

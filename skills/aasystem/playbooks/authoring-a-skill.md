@@ -1,0 +1,9 @@
+# Skill authoring
+
+Own the behavior the instructions should produce. Read callers and supporting references before changing the procedure.
+
+1. **Establish the intended change.** Use the available skill-authoring capability and project conventions. For a captured judgment or correction, use [reflect](../../reflect/SKILL.md) to identify its destination and evidence. Trace the task from entry point through its dependencies; preserving a sentence in an unreachable file does not preserve the behavior.
+2. **Edit the owning instructions.** Keep routing in the entry skill and substantial task procedures in linked references. Give each decision one owner; preserve information required at handoffs. Keep required metadata and existing invocation settings. New portable skills in this toolbox use `disable-model-invocation: true` and an `agents/openai.yaml` containing `policy.allow_implicit_invocation: false`. Generated project verifiers keep their own discovery policy. Source attribution belongs in the maintainer system map.
+3. **Validate the package.** Parse metadata, check names and local links, and run shipped helpers. Distinguish a strict format validator rejecting a deliberate host extension from malformed metadata. Check the actual host separately for discovery, explicit use, and supporting-skill composition; documentation alone cannot prove them.
+4. **Exercise consequential behavior changes.** Use [Evaluation](eval.md) for changes to routing, ownership, handoffs, or proof requirements. Use realistic requests and inspect actual artifacts. A wording-only edit may need only structural review; explain the validation limit without manufacturing a behavioral success claim.
+5. **Deliver for review.** Show the changed instruction, its intended effect, observed validation, and remaining limits. Follow the requested delivery boundary and [Opening a PR](opening-a-pr.md) when authorized.
