@@ -17,6 +17,8 @@ python3 -m unittest discover -s tests
 
 The validator uses Ruby's standard library. It checks manifest JSON and identity/version agreement, all skill metadata and Codex adapters, inventory/export completeness, local Markdown link paths, current release notes and the shipped verification helper. Deliberate `disable-model-invocation` metadata remains supported. Link anchors, remote links, host discovery and full behavioral evaluations are separate checks. CI runs these commands on PRs and `main`.
 
+GitHub Actions must be enabled under Settings → Actions → General. Confirm the PR has a successful `validate` check before merging; no check result means CI has not run.
+
 ## Check the merged artifact
 
 Resolve the merged PR's `mergeCommit.oid` with `gh pr view NUMBER --json mergeCommit`. Check out that exact commit in a separate directory and rerun validation. A later `main` commit is not the release target.
