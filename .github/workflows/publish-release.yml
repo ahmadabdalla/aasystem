@@ -1,0 +1,56 @@
+name: Publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_pr:
+        description: Merged release PR number
+        required: true
+        type: string
+      host_evidence:
+        description: PR or issue comment URL recording host checks on the merged commit
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Resolve merged release PR
+        id: release
+        env:
+          RELEASE_PR: ${{ inputs.release_pr }}
+        run: |
+          [[ "$RELEASE_PR" =~ ^[1-9][0-9]*$ ]]
+          pr=$(gh api "repos/$GH_REPO/pulls/$RELEASE_PR")
+          jq -e --arg repo "$GH_REPO" '.merged == true and .base.ref == "main" and .base.repo.full_name == $repo' <<< "$pr" > /dev/null
+          sha=$(jq -r '.merge_commit_sha' <<< "$pr")
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]]
+          title=$(jq -r '.title' <<< "$pr")
+          [[ "$title" =~ ^release:\ v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "version=${title#release: v}" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: ${{ steps.release.outputs.sha }}
+          fetch-depth: 0
+      - name: Validate and publish the exact commit
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+          HOST_EVIDENCE: ${{ inputs.host_evidence }}
+        run: bash scripts/publish-release.sh "$VERSION" "$RELEASE_SHA" "$HOST_EVIDENCE"
