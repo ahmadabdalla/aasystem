@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Prepare the interaction-design handoff for the assignment workspace using the project files below. We are reviewing the next build; produce a concise proposal with source links and any decisions still needed. You may update local design documents. Do not implement application code or contact anyone.
+$aapilot Prepare the interaction-design handoff for the assignment workspace using the project files below. We are reviewing the next build; produce a concise proposal with source links and any decisions still needed. You may update local design documents. Do not implement application code or contact anyone.
 
 ## Project files
 

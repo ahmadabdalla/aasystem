@@ -1,6 +1,6 @@
 # Discovery interviews
 
-Follow Grill-me's baseline and the [execution contract](../../aasystem/references/execution.md). Reuse the caller's scope, starting knowledge, selected records and checkpoint. Inspect available facts before asking; reopen settled answers only when new evidence changes them.
+Follow Grill-me's baseline and the [execution contract](../../aapilot/references/execution.md). Reuse the caller's scope, starting knowledge, selected records and checkpoint. Inspect available facts before asking; reopen settled answers only when new evidence changes them.
 
 Start from concrete activities, examples and handoffs, including work done manually or outside the product. Explore relevant work before offering architectural choices or a recommended solution. Recommendations are appropriate once enough context exists to resolve a real choice.
 

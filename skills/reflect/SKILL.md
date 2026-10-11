@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Reflect
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
 
 Mine the current conversation for durable learnings, then route them into skill edits.
 
@@ -49,7 +49,7 @@ File Backlog items to the team's configured devex or backlog tracker within the 
 For each approved Accepted item, follow the Routing field exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): use the available skill-authoring capability and the [authoring playbook](../aasystem/playbooks/authoring-a-skill.md) for its draft / test / iterate loop.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): use the available skill-authoring capability and the [authoring playbook](../aapilot/playbooks/authoring-a-skill.md) for its draft / test / iterate loop.
 - `tune description: <skill path>` (the skill exists but didn't trigger when it should have): use the skill-authoring capability to tune and test the description.
 - `new skill via create-skill: <kebab-name>`: use the skill-authoring capability. Do not invent the shape ad hoc. For an approved personal principle, also follow the existing [principle-authoring convention](references/principle-authoring.md).
 

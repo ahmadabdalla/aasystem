@@ -8,5 +8,5 @@ Carry relevant leaves and their scope with the settled brief into supporting wor
 
 | Situation | Workflow | Principle |
 | --- | --- | --- |
-| Simplifying a workflow or changing what crosses a skill, agent, or team handoff. | aasystem, solution, architect, and figure-it-out; their supporting tasks when relevant. | [Preserve decision context at handoffs](../principle-preserve-decision-context/SKILL.md) |
-| Designing or simplifying interface layout, controls, or explanatory copy. | aasystem, solution, architect, and figure-it-out; their supporting UI tasks when relevant. | [Convey UI meaning through structure](../principle-ui-meaning-through-structure/SKILL.md) |
+| Simplifying a workflow or changing what crosses a skill, agent, or team handoff. | aapilot, solution, architect, and figure-it-out; their supporting tasks when relevant. | [Preserve decision context at handoffs](../principle-preserve-decision-context/SKILL.md) |
+| Designing or simplifying interface layout, controls, or explanatory copy. | aapilot, solution, architect, and figure-it-out; their supporting UI tasks when relevant. | [Convey UI meaning through structure](../principle-ui-meaning-through-structure/SKILL.md) |

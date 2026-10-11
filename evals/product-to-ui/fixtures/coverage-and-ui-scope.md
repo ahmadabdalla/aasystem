@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Reconcile this service-request mock with the product records and prepare the interaction handoff for implementation. Keep the proposal proportionate and identify what remains to be decided or verified. You may edit local design documents; do not build application code.
+$aapilot Reconcile this service-request mock with the product records and prepare the interaction handoff for implementation. Keep the proposal proportionate and identify what remains to be decided or verified. You may edit local design documents; do not build application code.
 
 ## Project files
 

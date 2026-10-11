@@ -1,6 +1,6 @@
 ## User request
 
-$aasystem Group the loan editor's Return and Cancel actions using our existing action-row style, and change "Return" to "Record return". Make the local edit and report what you checked. This adjustment is authorized; keep the existing behavior and do not deploy.
+$aapilot Group the loan editor's Return and Cancel actions using our existing action-row style, and change "Return" to "Record return". Make the local edit and report what you checked. This adjustment is authorized; keep the existing behavior and do not deploy.
 
 ## Project files
 

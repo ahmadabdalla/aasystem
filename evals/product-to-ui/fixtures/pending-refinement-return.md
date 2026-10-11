@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Plan our next desktop recovery-state review using the current candidate and the returned agent review. Tell me what can be reused, what needs rechecking and what we should show next. This is plan-only; do not edit files, build or start delivery.
+$aapilot Plan our next desktop recovery-state review using the current candidate and the returned agent review. Tell me what can be reused, what needs rechecking and what we should show next. This is plan-only; do not edit files, build or start delivery.
 
 ## Project files
 

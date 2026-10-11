@@ -1,6 +1,6 @@
 ## User request
 
-$aasystem Gather the scoped requirements for the proposed damaged-tool release change using these records. Preserve the accepted baseline. If a consequential product decision is missing, ask me one focused question and wait before proceeding. Do not implement or start interaction design.
+$aapilot Gather the scoped requirements for the proposed damaged-tool release change using these records. Preserve the accepted baseline. If a consequential product decision is missing, ask me one focused question and wait before proceeding. Do not implement or start interaction design.
 
 ## Project files
 

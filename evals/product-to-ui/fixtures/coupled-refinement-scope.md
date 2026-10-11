@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Plan the next desktop review of our loan-request prototype. We accepted r3's idle appearance; now I want to inspect failed saving and retry before production work. Use the current records, the earlier agent report and the integration note. Return what happens next, which responsibilities are involved and what carries forward. This turn is plan-only: do not edit files, build, or start delivery.
+$aapilot Plan the next desktop review of our loan-request prototype. We accepted r3's idle appearance; now I want to inspect failed saving and retry before production work. Use the current records, the earlier agent report and the integration note. Return what happens next, which responsibilities are involved and what carries forward. This turn is plan-only: do not edit files, build, or start delivery.
 
 ## Project files
 

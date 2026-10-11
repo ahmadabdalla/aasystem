@@ -4,9 +4,9 @@ See the [README](README.md#codex-cli) for installation.
 
 ## Invoke a skill
 
-Start with `$aasystem:aasystem`. For direct specialist use, type `$aasystem:<skill-name>`, for example `$aasystem:product` or `$aasystem:how`. See the [README](README.md#start-here) for guidance on choosing an entry point.
+Start with `$aasystem:aapilot`. For direct specialist use, type `$aasystem:<skill-name>`, for example `$aasystem:product` or `$aasystem:how`. See the [README](README.md#start-here) for guidance on choosing an entry point.
 
-Direct skill installations omit the plugin prefix, for example `$aasystem` or `$product`.
+Direct skill installations omit the plugin prefix, for example `$aapilot` or `$product`.
 
 Keep the complete skill tree together. Follow the host's invocation restrictions and report any unavailable required handoff.
 

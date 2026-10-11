@@ -2,7 +2,7 @@
 
 ## User request
 
-$aasystem Prepare closure of the accepted record-events change from these local files. Update the documentation and references needed for another engineer to find the current interaction model after archive. You may edit or move these documentation files, or provide an exact file-level closure plan. Do not change product behavior or create a new schema. The archive destination is openspec/changes/archive/2026-10-03-record-events/.
+$aapilot Prepare closure of the accepted record-events change from these local files. Update the documentation and references needed for another engineer to find the current interaction model after archive. You may edit or move these documentation files, or provide an exact file-level closure plan. Do not change product behavior or create a new schema. The archive destination is openspec/changes/archive/2026-10-03-record-events/.
 
 ## Project files
 

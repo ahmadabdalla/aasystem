@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Figure it out
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Produce the workflow before executing it. Scale rigor through concrete checks and artifacts, then retain the evidence for the owner's final judgment.
 

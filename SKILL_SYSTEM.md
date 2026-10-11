@@ -6,15 +6,15 @@ It does not define maintenance steps or Codex invocation settings.
 
 - **Maintenance rules:** [`AGENTS.md`](AGENTS.md)
 - **Codex settings:** [`CODEX.md`](CODEX.md)
-- **Visual map:** [Ahmad Abdalla's Work System Graph](visualizations/skill-library/index.html)
+- **Visual map:** [Ahmad Abdalla's Pilot System Graph](visualizations/skill-library/index.html)
 
 ## System flow
 
 The default flow is:
 
-`aasystem -> playbook -> supporting skills -> project evidence`
+`aapilot -> playbook -> supporting skills -> project evidence`
 
-1. [`aasystem`](skills/aasystem/SKILL.md) owns coordination and completion
+1. [`aapilot`](skills/aapilot/SKILL.md) owns coordination and completion
 2. A playbook defines the task sequence
 3. Supporting skills return bounded results to their caller
 4. The caller updates canonical project records
@@ -22,7 +22,7 @@ The default flow is:
 
 All procedural skills use:
 
-- The [execution contract](skills/aasystem/references/execution.md)
+- The [execution contract](skills/aapilot/references/execution.md)
 - The [principle index](skills/principles/INDEX.md)
 - The current project instructions
 - The current task brief
@@ -31,7 +31,7 @@ All procedural skills use:
 
 Use these boundaries when skills interact:
 
-- **aasystem:** routing, coordination, and completion
+- **aapilot:** routing, coordination, and completion
 - **Product:** journeys, behavior, rules, and acceptance scenarios
 - **Grill me:** attributed interview evidence
 - **Interaction design:** navigation, interactions, and information hierarchy
@@ -66,7 +66,7 @@ Use `features/README.md` plus linked feature files.
 
 Preserve an equivalent existing layout.
 
-For OpenSpec projects, use the [integration reference](skills/aasystem/references/openspec.md).
+For OpenSpec projects, use the [integration reference](skills/aapilot/references/openspec.md).
 
 ## Skill inventory
 
@@ -74,7 +74,7 @@ Each row names the skill’s role, source, and local adaptation.
 
 | Skill | Role | Source | Local adaptation |
 | --- | --- | --- | --- |
-| [`aasystem`](skills/aasystem/SKILL.md) | Coordinate and finish tasks | pstack [`poteto-mode`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md) | Uses host tools; needs no custom agent setup |
+| [`aapilot`](skills/aapilot/SKILL.md) | Coordinate and finish tasks | pstack [`poteto-mode`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md) | Uses host tools; needs no custom agent setup |
 | [`product`](skills/product/SKILL.md) | Define journeys and behavior | First-party split; [OpenSpec](https://github.com/Fission-AI/OpenSpec/blob/main/docs/concepts.md) | Owns discovery synthesis and separates facts, proposals, and agreements |
 | [`solution`](skills/solution/SKILL.md) | Choose the overall approach | pstack [`investigation`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/investigation.md) | Adds solution design and unresolved conditions |
 | [`architect`](skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md) | Can stop after design; verifies against requirements |
@@ -100,18 +100,18 @@ Each row names the skill’s role, source, and local adaptation.
 
 ## Orchestrator playbooks
 
-The aasystem skill selects one of these sequences:
+The aapilot skill selects one of these sequences:
 
 | Playbook | Purpose |
 | --- | --- |
-| [`investigation`](skills/aasystem/playbooks/investigation.md) | Answer a question with evidence |
-| [`bug-fix`](skills/aasystem/playbooks/bug-fix.md) | Reproduce, diagnose, fix, and recheck |
-| [`feature`](skills/aasystem/playbooks/feature.md) | Design, build, and verify a feature |
-| [`refactoring`](skills/aasystem/playbooks/refactoring.md) | Change structure without changing behavior |
-| [`prototype`](skills/aasystem/playbooks/prototype.md) | Coordinate a bounded experiment |
-| [`authoring-a-skill`](skills/aasystem/playbooks/authoring-a-skill.md) | Create or update a skill |
-| [`eval`](skills/aasystem/playbooks/eval.md) | Run fresh candidates against separate criteria |
-| [`opening-a-pr`](skills/aasystem/playbooks/opening-a-pr.md) | Prepare, publish, and confirm a pull request |
+| [`investigation`](skills/aapilot/playbooks/investigation.md) | Answer a question with evidence |
+| [`bug-fix`](skills/aapilot/playbooks/bug-fix.md) | Reproduce, diagnose, fix, and recheck |
+| [`feature`](skills/aapilot/playbooks/feature.md) | Design, build, and verify a feature |
+| [`refactoring`](skills/aapilot/playbooks/refactoring.md) | Change structure without changing behavior |
+| [`prototype`](skills/aapilot/playbooks/prototype.md) | Coordinate a bounded experiment |
+| [`authoring-a-skill`](skills/aapilot/playbooks/authoring-a-skill.md) | Create or update a skill |
+| [`eval`](skills/aapilot/playbooks/eval.md) | Run fresh candidates against separate criteria |
+| [`opening-a-pr`](skills/aapilot/playbooks/opening-a-pr.md) | Prepare, publish, and confirm a pull request |
 
 The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins/tree/main/pstack/skills/poteto-mode/playbooks).
 
@@ -119,7 +119,7 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 
 ### Coordination
 
-The [execution contract](skills/aasystem/references/execution.md) adds:
+The [execution contract](skills/aapilot/references/execution.md) adds:
 
 - Caller-owned phase transitions
 - Scoped decision authority

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Product
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own product discovery and the product behavior contract for the assigned scope. Return the result to the caller, which retains the larger task. Discovery-only work ends with the documented model, journeys and unresolved questions; a specification request ends with the contract and unresolved decisions.
 

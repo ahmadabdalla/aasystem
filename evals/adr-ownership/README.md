@@ -1,6 +1,6 @@
 # ADR ownership evaluation
 
-This package exercises ADR scope, ownership, maintenance, and project-local conventions. Follow the [evaluation playbook](../../skills/aasystem/playbooks/eval.md). These are document exercises, not evidence of runtime behavior or native skill discovery.
+This package exercises ADR scope, ownership, maintenance, and project-local conventions. Follow the [evaluation playbook](../../skills/aapilot/playbooks/eval.md). These are document exercises, not evidence of runtime behavior or native skill discovery.
 
 ## Run
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Grill me
 
-Before starting, read the [shared execution contract](../aasystem/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Conduct a bounded discovery or decision interview. For discovery assignments, read [Discovery interviews](references/discovery-interview.md) and follow that procedure instead of the decision-resolution steps below.
 

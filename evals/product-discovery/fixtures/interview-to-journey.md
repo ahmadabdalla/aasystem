@@ -1,6 +1,6 @@
 ## User request
 
-$aasystem Use our retained interviews to document the dispatch-to-completion journey, including the blocked-access handoff, and gather scoped candidate requirements for that handoff. Preserve sources, authority and unresolved choices. Update the local product records and existing specification; return the result to me for review. Interaction design and implementation are outside this assignment.
+$aapilot Use our retained interviews to document the dispatch-to-completion journey, including the blocked-access handoff, and gather scoped candidate requirements for that handoff. Preserve sources, authority and unresolved choices. Update the local product records and existing specification; return the result to me for review. Interaction design and implementation are outside this assignment.
 
 ## Project files
 
