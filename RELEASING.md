@@ -40,8 +40,6 @@ Record the results in a release PR comment:
 - Installation, discovery and invocation results, with evidence
 - Failed or unavailable host checks
 
-This smoke check proves that the skill loads. Full workflow evaluation and [marketplace install/upgrade checks](https://github.com/ahmadabdalla/plugins/issues/38) remain separate.
-
 ## 3. Publish and hand off
 
 After merged-commit validation and host checks, run [Publish release](.github/workflows/publish-release.yml). Replace the placeholders with the PR number and evidence comment URL:
@@ -57,8 +55,6 @@ The workflow validates the exact merged commit, then publishes an annotated tag 
 If publication fails, retry with the same inputs. A retry can finish release creation after its tag was pushed. Existing tags and releases must match; conflicts stop the run. Investigate conflicts without deleting or moving released tags or editing released contents.
 
 Confirm the successful Actions run, release notes and both manifests at the tag. Check its commit with `git rev-parse 'vX.Y.Z^{commit}'`.
-
-Send the marketplace owner the version, tag, commit, release URL, Actions run URL and host evidence for a reviewed catalog PR. Keep [issue #2](https://github.com/ahmadabdalla/aasystem/issues/2) open until `v0.2.0` is published and [plugins#38](https://github.com/ahmadabdalla/plugins/issues/38) has these details.
 
 ## Upgrade an installed plugin
 
@@ -87,10 +83,3 @@ copilot plugin marketplace update ahmadabdalla-plugins
 copilot plugin update aasystem@ahmadabdalla-plugins
 ```
 
-Confirm the installed version, tag/commit and a read-only `aapilot` invocation. The [temporary Codex reinstall](https://github.com/ahmadabdalla/plugins/issues/39#issuecomment-6106029360) passed. Version `0.2.0` upgrades remain pending marketplace adoption; Claude and Copilot upgrade results are unverified.
-
-## Sources
-
-Publication adapts Azure Cost Calculator's [tag/release helper](https://github.com/ahmadabdalla/azure-cost-calculator/blob/main/.github/scripts/release/create-tag-and-release.sh) and [changelog extraction](https://github.com/ahmadabdalla/azure-cost-calculator/blob/main/.github/scripts/release/extract-changelog.sh).
-
-Host commands follow [Codex packaging guidance](https://developers.openai.com/plugins/build/plugins) and [Claude update guidance](https://code.claude.com/docs/en/plugins/host-marketplace#release-a-new-version).
