@@ -38,7 +38,9 @@ args = sys.argv[1:]
 state = pathlib.Path(os.environ['TEST_RELEASE_STATE'])
 if args[0] == 'api':
     if os.environ.get('TEST_API_FAIL'): sys.exit(1)
-    if state.exists(): print(state.read_text())
+    if any('/pulls/' in arg for arg in args):
+        print(pathlib.Path(os.environ['TEST_PR_STATE']).read_text())
+    elif state.exists(): print(state.read_text())
 elif args[:2] == ['release', 'create']:
     if os.environ.get('TEST_CREATE_FAIL'): sys.exit(1)
     state.write_text(json.dumps({
@@ -58,8 +60,46 @@ else:
 
     def publish(self, version="0.2.0", sha=None, **env):
         return subprocess.run(["bash", "scripts/publish-release.sh", version, sha or self.sha,
-                               "https://github.com/example/aasystem/pull/2#issuecomment-1"],
+                               "https://github.com/example/aasystem/pull/2"],
                               cwd=self.repo, env=dict(self.env, **env), text=True, capture_output=True)
+
+    def resolve_pr(self, **changes):
+        workflow = json.loads(subprocess.check_output(
+            ["ruby", "-rjson", "-ryaml", "-e", "puts JSON.generate(YAML.safe_load(File.read(ARGV[0])))",
+             str(self.repo / ".github/workflows/publish-release.yml")], text=True))
+        script = next(step["run"] for step in workflow["jobs"]["publish"]["steps"] if step.get("id") == "release")
+        pr = dict(merged=True, title="release: v0.2.0", merge_commit_sha=self.sha,
+                  base={"ref": "main", "repo": {"full_name": "example/aasystem"}})
+        pr.update(changes)
+        pr_state = self.base / "pr.json"
+        pr_state.write_text(json.dumps(pr))
+        output = self.base / "outputs"
+        output.write_text("")
+        result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", script], cwd=self.repo,
+                                env=dict(self.env, TEST_PR_STATE=str(pr_state), GITHUB_OUTPUT=str(output), RELEASE_PR="2"),
+                                text=True, capture_output=True)
+        return result, dict(line.split("=", 1) for line in output.read_text().splitlines())
+
+    def test_workflow_resolves_and_publishes_exact_merged_release(self):
+        result, outputs = self.resolve_pr()
+        self.assert_success(result)
+        self.assertEqual(outputs["sha"], self.sha)
+        self.assertEqual(outputs["pr_url"], "https://github.com/example/aasystem/pull/2")
+        self.assert_success(self.publish(version=outputs["version"], sha=outputs["sha"]))
+        notes = json.loads(self.state.read_text())["body"]
+        self.assertIn("Release PR: " + outputs["pr_url"], notes)
+        self.assertNotIn("Host checks:", notes)
+
+    def test_workflow_rejects_unmerged_wrong_base_and_nonrelease_prs(self):
+        cases = [dict(merged=False), dict(title="fix: ordinary change"), dict(title="release: v0.2.0 extra"),
+                 dict(base={"ref": "dev", "repo": {"full_name": "example/aasystem"}}),
+                 dict(base={"ref": "main", "repo": {"full_name": "another/repo"}})]
+        for change in cases:
+            with self.subTest(change=change):
+                result, outputs = self.resolve_pr(**change)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(outputs, {})
+        self.assert_no_remote_tag()
 
     def assert_success(self, result):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

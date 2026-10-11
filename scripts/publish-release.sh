@@ -5,14 +5,14 @@ set -euo pipefail
 
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
-version="${1:?Usage: $0 <version> <merged-commit> <host-evidence-url>}"
+version="${1:?Usage: $0 <version> <merged-commit> <release-pr-url>}"
 release_sha="${2:?Merged release commit is required}"
-host_evidence="${3:?Host check evidence is required}"
+release_pr_url="${3:?Release PR URL is required}"
 : "${GH_REPO:?Repository is required}"
 : "${GH_TOKEN:?GitHub token is required}"
 [[ "$version" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || fail 'Use a stable X.Y.Z version'
 [[ "$release_sha" =~ ^[0-9a-f]{40}$ ]] || fail 'Expected a full merged commit SHA'
-[[ "$host_evidence" == "https://github.com/$GH_REPO/pull/"* || "$host_evidence" == "https://github.com/$GH_REPO/issues/"* ]] || fail 'Evidence must link to this repository'
+[[ "$release_pr_url" == "https://github.com/$GH_REPO/pull/"* ]] || fail 'Release PR must link to this repository'
 [[ "$(git rev-parse HEAD)" == "$release_sha" ]] || fail 'Checkout differs from merged release commit'
 git merge-base --is-ancestor "$release_sha" origin/main
 git diff --exit-code HEAD -- . > /dev/null
@@ -28,7 +28,7 @@ awk -v heading="## [$version]" '
   found { print }
 ' CHANGELOG.md > "$notes_file"
 [[ -s "$notes_file" ]] || fail 'No changelog section for release version'
-printf '\nValidated commit: `%s`\n\nHost checks: %s\n' "$release_sha" "$host_evidence" >> "$notes_file"
+printf '\nValidated commit: `%s`\n\nRelease PR: %s\n' "$release_sha" "$release_pr_url" >> "$notes_file"
 
 # API errors fail the run; an empty successful listing means no release exists.
 existing=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" --jq '.[] | select(.tag_name == env.RELEASE_TAG)')

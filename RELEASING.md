@@ -1,14 +1,13 @@
 # Release aasystem
 
-Prepare a release PR, verify its merged commit, then publish. This repository publishes the plugin; [the marketplace](https://github.com/ahmadabdalla/plugins/issues/38) adopts it separately.
+Merging a release PR into `main` automatically creates its tag and GitHub Release after validation.
 
-## 1. Prepare the release PR
+## Prepare and merge
 
-Create a branch from `main`, then:
-
-1. Use [plugin.json](plugin.json) as the version source. Update [.claude-plugin/plugin.json](.claude-plugin/plugin.json) to match in the same commit. Keep the name `aasystem`.
-2. Add a `## [X.Y.Z]` section to [CHANGELOG.md](CHANGELOG.md), including invocation changes and upgrade instructions.
-3. Run these checks:
+1. Choose the version in `plugin.json`, then set the same version in `.claude-plugin/plugin.json`. Keep the name `aasystem`.
+2. Add a `## [X.Y.Z]` section to `CHANGELOG.md` describing the changes and any upgrade steps.
+3. Run the checks below and test installation plus a read-only `aapilot` invocation in each available host. Put results and any gaps in the PR.
+4. Open a PR titled exactly `release: vX.Y.Z`, targeting `main`. Review it and wait for the `validate` check to pass, then merge.
 
 ```bash
 ruby scripts/validate-release.rb
@@ -16,45 +15,21 @@ bash -n scripts/publish-release.sh
 python3 -m unittest discover -s tests
 ```
 
-Open a PR targeting `main`, titled exactly `release: vX.Y.Z`. Get it reviewed and confirm the `validate` check passes before merging. If no check appears, enable GitHub Actions under **Settings → Actions → General**.
+Choose major, minor or patch in the PR; the workflow doesn't guess. `plugin.json` is the version source. Ordinary PR merges don't publish releases.
 
-Use `X.Y.Z` versions and `vX.Y.Z` tags. Before 1.0, choose the increment deliberately: `0.2.0` records the entry-point change.
+The workflow checks the exact merged commit, runs the tests and package validator, then publishes an annotated `vX.Y.Z` tag. The release notes include the changelog, commit and PR. These package checks don't claim full host or workflow correctness.
 
-The [validator](scripts/validate-release.rb) uses Ruby's standard library. It checks manifests, skill metadata/adapters, package files, local link paths, release notes and the shipped helper. Host behavior, full workflow evaluations, remote links and link anchors need separate checks.
+Confirm the **Publish release** run succeeded and the tag points to the merged commit. Give the marketplace owner the version, tag, commit, release URL and check results for a separate catalog PR.
 
-## 2. Verify the merged commit
+## Retry a failed or missed release
 
-Find the exact commit to release, replacing `your_pr_number`:
-
-```bash
-gh pr view your_pr_number --json mergeCommit --jq .mergeCommit.oid
-```
-
-Check out that commit in a separate directory and rerun the checks above. Install it through a temporary local marketplace or a supported local plugin path.
-
-In a fresh session, ask `aapilot` to state its name, purpose and main invocation. Allow reads only, with no edits or delegation. Confirm the run loads the installed skill.
-
-Record the results in a release PR comment:
-
-- Host version, source commit and plugin version
-- Installation, discovery and invocation results, with evidence
-- Failed or unavailable host checks
-
-## 3. Publish and hand off
-
-After merged-commit validation and host checks, run [Publish release](.github/workflows/publish-release.yml). Replace the placeholders with the PR number and evidence comment URL:
+Rerun the failed Actions job. For a release PR merged before automation was enabled, run this on `main`, replacing `your_pr_number`:
 
 ```bash
-gh workflow run publish-release.yml --ref main \
-  -f release_pr=your_pr_number \
-  -f host_evidence=your_host_evidence_comment_url
+gh workflow run publish-release.yml --ref main -f release_pr=your_pr_number
 ```
 
-The workflow validates the exact merged commit, then publishes an annotated tag and GitHub Release with the changelog and evidence links.
-
-If publication fails, retry with the same inputs. A retry can finish release creation after its tag was pushed. Existing tags and releases must match; conflicts stop the run. Investigate conflicts without deleting or moving released tags or editing released contents.
-
-Confirm the successful Actions run, release notes and both manifests at the tag. Check its commit with `git rev-parse 'vX.Y.Z^{commit}'`.
+Retries use the same PR and commit. Conflicting tags or release contents stop publication; never move a released tag or overwrite its contents.
 
 ## Upgrade an installed plugin
 

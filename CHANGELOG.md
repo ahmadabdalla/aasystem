@@ -2,4 +2,4 @@
 
 ## [0.2.0]
 
-- Add package checks and manual publication of versioned releases from the exact validated, merged commit.
+- Publish a versioned release automatically when a release PR merges to `main`, after checking the exact merged commit.
