@@ -75,6 +75,8 @@ All skills remain available from [`skills/`](skills/).
 | [`AGENTS.md`](AGENTS.md) | Repository maintenance rules |
 | [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) | Architecture, ownership, sources, and adaptations |
 | [`CODEX.md`](CODEX.md) | Codex invocation settings |
+| [`RELEASING.md`](RELEASING.md) | Release validation, publication and marketplace handoff |
+| [`CHANGELOG.md`](CHANGELOG.md) | Version history and invocation migration |
 | [`plugin.json`](plugin.json) | Portable plugin identity and OpenAI presentation metadata |
 | [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json) | Claude compatibility manifest |
 
@@ -92,6 +94,8 @@ All skills remain available from [`skills/`](skills/).
 Keep the [export contents](SKILL_SYSTEM.md#export-boundary) together, including both plugin manifests, all skills, and the license notices.
 
 Host-specific invocation support varies.
+
+For versioned releases and existing-user upgrades, see [RELEASING.md](RELEASING.md).
 
 See [`CODEX.md`](CODEX.md) for the included Codex adapter.
 
