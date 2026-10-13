@@ -19,7 +19,7 @@ Identify the ambiguous term, relationship, or decision. Test the meaning with a 
 ## Preserve the result
 
 - For agreed project vocabulary, read [glossary.md](references/glossary.md).
-- Before creating or editing a project decision record, read [adr.md](references/adr.md) for qualification, ownership, scope and maintenance. Routine choices stay in their requirement or task record.
+- Before creating, editing or reviewing an ADR, read [adr.md](references/adr.md). Use it to choose the rules and check the record. Routine choices stay in their task or design record.
 
 Apply document edits already authorized by the task. Research-only or read-only work returns proposed wording and its destination. When creating or revising records, reuse or update the smallest project instruction pointer to read relevant terms and decisions before changing the affected area. For ADRs, ensure it directs edits and final diff review to accessible project-owned maintenance rules. Use actual project-relative paths; records, rules and pointer must work without this toolbox. Preserve unrelated instructions.
 

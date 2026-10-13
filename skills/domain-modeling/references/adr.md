@@ -1,6 +1,6 @@
 # Project decision records
 
-Use the project's existing ADR convention across product, design and software.
+Before writing or reviewing an ADR, choose its rules in this order: documented project rules for the record's scope, the convention used by existing ADRs in that scope, then the framework default below. This includes older formats the project still uses. Use an external template only if the project explicitly adopted it. If the sources conflict and specify no precedence, identify the conflict and leave conformance undecided.
 
 ## Decide whether to record
 
@@ -45,7 +45,17 @@ When splitting an overloaded ADR, preserve each decision's sources, standing, ra
 
 ## Write a small record
 
-Default to a title and 1–3 sentences covering context, choice and why. Add alternatives, consequences, assumptions, evidence limits or reconsideration conditions only when they help a future decision. Link sources and substantial evidence; keep requirements, implementation steps and detailed verification scenarios in their owning documents.
+The framework default requires a title and prose stating:
+
+- The problem or constraint.
+- The decision and intended result.
+- Why the decision was chosen.
+- At least one alternative considered and why it was rejected.
+- Expected effects, including costs and limitations.
+
+State standing and authority using the rules below. Aim for 1–3 sentences; use more to cover the required information. Headings and simple ASCII flows are optional.
+
+Authors and reviewers use the same selected rules. For each failure, cite the rule and identify the missing information or format error. Require specific headings only when project rules require them. Link sources and substantial evidence; keep requirements, implementation steps and detailed verification scenarios in their owning documents.
 
 Make standing and authority clear using the project's format:
 
