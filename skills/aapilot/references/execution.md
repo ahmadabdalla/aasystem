@@ -10,7 +10,14 @@ Retain a separate supporting artifact only for an identified future reader and d
 
 Keep owner, objective, constraints, evidence and limits, applicable principles, expected results and next action in one brief. Reuse settled grounding. Assign each contributor a bounded deliverable, practical budget, accessible evidence and artifact paths, write ownership, verification method and return contract. Every worker, including nested delegates, must read this contract, the principle index, its procedure and relevant project instructions before work. Supply accessible paths, the current brief and later corrections; restrict execution to the assigned phase. Return out-of-scope findings to the caller with evidence and a proposed assignment; do not start that workflow. Helpers may compose bounded support under the same caller and checkpoint.
 
-The lead owns integration, review, final proof and design decisions within its recorded authority. Delegate implementation and investigation when supported and permitted. Use actual host capabilities and configured models; do not invent diversity. If independent execution or review is unavailable, disclose the limit and work directly. Self-review is not independent review; a required independent gate remains incomplete without it.
+The lead owns framing, assignments, integration, acceptance, final proof and design decisions within its recorded authority.
+
+## Delegation
+
+1. **Check capability.** At the start of the workflow, identify the available agent tool and applicable delegation restrictions. Use this check for availability and permission conditions in supporting procedures. Use configured models or the allowed inherited model; do not invent capabilities or diversity.
+2. **Assign execution.** The workflow owner delegates bounded investigation, design, implementation and record maintenance using the selected procedures. A delegated worker executes its assignment; additional delegation follows that assignment's procedure rather than repeating this default. The lead may execute directly only for an explicit exception in the selected procedure, an absent agent tool, or an applicable delegation prohibition. Name the exception or restriction.
+3. **Choose the work structure.** Give coupled work to one worker. Dispatch independent ready assignments concurrently within actual limits. When slots are occupied, sequence assignments as slots become available. A worker prohibited from spawning returns required supporting assignments to its caller.
+4. **Inspect the result.** Check the returned artifact and evidence against the assignment's completion criteria before advancing. Assign corrections with the updated brief. Self-review does not satisfy a required independent gate; keep that gate incomplete when independence cannot be achieved.
 
 Route large documents, verbose outputs, screenshots and broad exploration to bounded subagents. Supply artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. The lead inspects decisive evidence and contributions. Without delegation, narrow reads and save bulky output to files.
 
@@ -43,6 +50,12 @@ Before editing, derive expected results from requirements or the contract. Exerc
 Follow project evidence procedures and the [evidence contract](../../bootstrap-verification/references/project-contract.md#evidence-and-retention) for claim strength, run locations, review retention and disposal. Separate harness faults, product defects and missing access. Use [maintain-verification](../../maintain-verification/SKILL.md) for recipe drift. Never change expectations to hide regressions; record authority for intentional changes. Update and recheck affected feature recipes when behavior or procedure changes; unchanged runs need no permanent map edit.
 
 Verify each meaningful unit and the final combined artifact. Clean up only owned resources; confirm evidence survives. Partial results must identify unverified claims.
+
+## Completion
+
+During planning, put applicable decision reconciliation, verification maintenance and evidence retention work in the existing task list, with owners and completion criteria. Apply the delegation procedure to those assignments.
+
+Before reporting completion, inspect every required result, reconcile consequential findings into canonical records, and check affected references. Account for incomplete assignments and unmet evidence gates. Preserve the requested scope and delivery boundary; read-only work returns recommendations rather than editing records.
 
 ## Delivery
 
