@@ -12,7 +12,7 @@ Keep the project's meaning and decision rationale available to future work.
 
 ## Discover and clarify
 
-Read project instructions and relevant system-wide and context-specific records. Follow an existing glossary map and reuse the project's locations, formats, and context boundaries. The references below guide placement of new records. Create a file only when there is agreed content to save.
+Read project instructions and relevant system-wide and context-specific records. Follow an existing glossary map and reuse the project's locations, formats, and context boundaries. The references below guide placement of new records. Create glossary files only for established meanings; create decision files only when justified under [adr.md](references/adr.md), preserving the choice’s standing and authority.
 
 Identify the ambiguous term, relationship, or decision. Test the meaning with a concrete scenario, including a consequential edge case. Compare claims about existing behavior with code or observed evidence. Preserve discrepancies between intended and implemented behavior. Ask one question and wait when a material meaning or preference cannot be established; use [grill-me](../grill-me/SKILL.md) only if several dependent choices need an interview.
 

@@ -137,6 +137,8 @@ Shared rules stay in the execution contract.
 
 Specialists keep only actionable scope reminders.
 
+The [Architect design trigger](skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
+
 ### UI review
 
 The [UI refinement loop](skills/ui-refinement/references/refinement-loop.md) adds:

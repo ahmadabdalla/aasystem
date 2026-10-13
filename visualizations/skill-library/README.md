@@ -15,6 +15,8 @@ The map intentionally does not draw a foundation edge from every procedural skil
 
 The execution contract owns [review context](../../skills/aapilot/references/execution.md#review-context), including the distinction between independent discovery and confirmation/evidence audits.
 
+Bug Fix and Refactoring use the [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) for their design assignments. Architect owns that criterion; editing several function bodies alone does not select the route.
+
 ## Maintain the map
 
 - Edit node titles, descriptions, source links, and positions in the `nodes` array in `app.js`.

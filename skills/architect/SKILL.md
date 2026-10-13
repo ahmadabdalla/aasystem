@@ -1,6 +1,6 @@
 ---
 name: architect
-description: Design caller usage, types, signatures, and module boundaries before implementation, then verify and reconsider the shape. Use when a change crosses a function boundary or a playbook requests design; use solution for overall direction.
+description: Design caller usage, types, signatures, and module boundaries before implementation, then verify and reconsider the shape. Use for changes to interfaces, state ownership, or responsibilities between functions, or when a playbook requests design; use solution for overall direction.
 disable-model-invocation: true
 ---
 
@@ -13,6 +13,10 @@ Ground the problem, sketch alternatives, implement the chosen shape, and redesig
 Own the implementation design and its explanation. Integrate returned artifacts into the design package instead of repeating reports or restarting completed phases. Surface material changes and verification gaps as work proceeds.
 
 Establish whether this assignment owns design only or design plus implementation. A supporting feasibility/design assignment stays design-only unless the caller explicitly assigns implementation; authorization of the larger task does not expand this assignment. A calling playbook that retains execution receives the design package and resumes its own implementation phase. A standalone implementation request continues through proof. Reuse a current grounded package when the design is already settled; reopen it only for a material change or evidence gap.
+
+## Design trigger
+
+Use Architect when a proposed change alters an interface between functions or reallocates state ownership or responsibilities between them. Editing multiple function bodies alone does not require this route. An explicit task or calling playbook may also request design.
 
 ## Ground and define proof
 

@@ -71,7 +71,7 @@ const nodes = [
     type: "skill",
     subtitle: "Implementation shape",
     purpose: "Designs caller usage, data shapes, signatures, ownership, and module boundaries, then verifies or revises the shape.",
-    owns: "Implementation design and its explanation; implementation only when explicitly assigned.",
+    owns: "The design trigger, implementation design, and its explanation; implementation only when explicitly assigned.",
     source: "../../skills/architect/SKILL.md",
     x: 2224,
     y: 55,
@@ -92,7 +92,7 @@ const nodes = [
     title: "Domain modeling",
     type: "skill",
     subtitle: "Terms & decisions",
-    purpose: "Clarifies project concepts and preserves agreed terminology or qualifying decisions in canonical records.",
+    purpose: "Clarifies project concepts and preserves established terminology or qualifying decisions with their standing and authority.",
     owns: "Glossary meaning and scoped product, design, or software decision records.",
     source: "../../skills/domain-modeling/SKILL.md",
     x: 879,
@@ -234,9 +234,9 @@ const nodes = [
     id: "swarm",
     title: "Swarm",
     type: "skill",
-    subtitle: "Independent slices",
-    purpose: "Partitions independent work, runs bounded workers, accounts for every result, and returns one integrated report.",
-    owns: "Coverage, worker boundaries, aggregation, and combined verification.",
+    subtitle: "Slices & races",
+    purpose: "Partitions independent work or runs declared races, accounts for every result, and returns one integrated report.",
+    owns: "Coverage, worker boundaries, pre-result race criteria, aggregation, and combined verification.",
     source: "../../skills/swarm/SKILL.md",
     x: 1327,
     y: 635,
@@ -495,13 +495,13 @@ connect("feature", "opening-pr", "handoff", "delivers when authorized");
 connect("bug-fix", "how", "support", "traces failure path");
 connect("bug-fix", "why", "support", "checks regression history");
 connect("bug-fix", "probe", "support", "separates causal hypotheses");
-connect("bug-fix", "architect", "support", "designs boundary-crossing fix");
+connect("bug-fix", "architect", "support", "designs when trigger applies");
 connect("bug-fix", "tdd", "support", "pins cheap regression path");
 connect("bug-fix", "opening-pr", "handoff", "delivers when authorized");
 
 connect("refactoring", "how", "support", "captures behavior baseline");
 connect("refactoring", "figure-it-out", "support", "handles coupled migration");
-connect("refactoring", "architect", "support", "designs target structure");
+connect("refactoring", "architect", "support", "designs when trigger applies");
 connect("refactoring", "feature", "handoff", "separates behavior changes");
 connect("refactoring", "bug-fix", "handoff", "separates discovered defects");
 connect("refactoring", "opening-pr", "handoff", "delivers when authorized");
