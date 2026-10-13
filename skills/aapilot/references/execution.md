@@ -14,16 +14,16 @@ The lead owns framing, assignments, integration, acceptance, final proof and des
 
 ## Delegation
 
-1. **Check capability.** At the start of the workflow, identify the available agent tool and applicable delegation restrictions. Use this check for availability and permission conditions in supporting procedures. Use configured models or the allowed inherited model; do not invent capabilities or diversity.
-2. **Assign execution.** The workflow owner delegates bounded investigation, design, implementation and record maintenance using the selected procedures. A delegated worker executes its assignment; additional delegation follows that assignment's procedure rather than repeating this default. The lead may execute directly only for an explicit exception in the selected procedure, an absent agent tool, or an applicable delegation prohibition. Name the exception or restriction.
-3. **Choose the work structure.** Give coupled work to one worker. Dispatch independent ready assignments concurrently within actual limits. When slots are occupied, sequence assignments as slots become available. A worker prohibited from spawning returns required supporting assignments to its caller.
-4. **Inspect the result.** Check the returned artifact and evidence against the assignment's completion criteria before advancing. Assign corrections with the updated brief. Self-review does not satisfy a required independent gate; keep that gate incomplete when independence cannot be achieved.
+1. **Check capability.** At the start of the workflow, identify the agent tool, delegation restrictions and access workers need for the assignment. Apply this check to supporting procedures. Use configured or permitted inherited models; do not invent diversity.
+2. **Assign execution.** Delegate investigation, design, implementation and record maintenance using the selected procedures. Workers execute their assigned scope; supporting delegation follows their procedure. The lead executes directly only under an explicit procedure exception or a concrete delegation limitation. Name the exception, missing tool, delegation restriction, denied access or failed dispatch.
+3. **Structure the work.** For nontrivial implementation, record blocking prerequisites, independent workstreams, shared mutable state and the smallest safe decomposition; explain using one worker and revisit at phase changes. Complete blockers first. Give coupled work to one worker; parallelize independent ready assignments within actual limits. Occupied slots require sequencing. Workers unable to spawn return required supporting assignments to their caller.
+4. **Accept results.** Inspect returned artifacts and evidence against completion criteria before advancing. Assign corrections with the updated brief. Self-review cannot satisfy a required independent gate; keep it incomplete when independence cannot be achieved.
 
-Route large documents, verbose outputs, screenshots and broad exploration to bounded subagents. Supply artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. The lead inspects decisive evidence and contributions. Without delegation, narrow reads and save bulky output to files.
+Route large documents, verbose outputs, screenshots and broad exploration to bounded subagents. Supply artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. Without delegation, narrow reads and save bulky output to files.
 
 Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for every new assignment, including fixes and retries. Resume only when its live process, local changes or costly state is necessary. Transfer the consolidated brief and corrections. For review assignments, select the supplied context under the [review-context rule](#review-context). Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Parallel writes need separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each return's brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted standing; recheck stale or conflicting findings.
 
-Before delegating nontrivial implementation, record blocking prerequisites, independent workstreams, shared mutable state and the smallest safe decomposition. Explain using one worker for coupled work; revisit these decisions at phase changes. Workflow configuration does not authorize unavailable tools or external actions.
+Workflow configuration does not authorize unavailable tools or external actions.
 
 ## Review context
 
@@ -53,9 +53,9 @@ Verify each meaningful unit and the final combined artifact. Clean up only owned
 
 ## Completion
 
-During planning, put applicable decision reconciliation, verification maintenance and evidence retention work in the existing task list, with owners and completion criteria. Apply the delegation procedure to those assignments.
+Plan applicable decision reconciliation, verification maintenance and evidence retention in the existing task list, with owners and completion criteria. Delegate under the procedure above.
 
-Before reporting completion, inspect every required result, reconcile consequential findings into canonical records, and check affected references. Account for incomplete assignments and unmet evidence gates. Preserve the requested scope and delivery boundary; read-only work returns recommendations rather than editing records.
+Before reporting completion, check required results, reconcile consequential findings into canonical records, and verify affected references. Report incomplete assignments and unmet gates within the requested scope and delivery boundary.
 
 ## Delivery
 
