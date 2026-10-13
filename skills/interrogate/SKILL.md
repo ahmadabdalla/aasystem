@@ -12,7 +12,7 @@ Establish scope and intent, gather adversarial findings, synthesize them, and ap
 
 ## Prepare and challenge
 
-Identify the actual artifact or diff, surrounding system, intended outcome, constraints, and review criteria. Reuse the calling workflow's brief and evidence when supplied; surface only consequential gaps or changed assumptions. Resolve missing intent that would materially change the review before proceeding; ask one question and wait when necessary.
+Identify the actual artifact or diff, surrounding system, intended outcome, constraints, and review criteria. Select the assignment mode and prepare inputs under the [shared review-context rule](../aapilot/references/execution.md#review-context). Reuse settled grounding within that rule; surface only consequential gaps or changed assumptions. Resolve missing intent that would materially change the review before proceeding; ask one question and wait when necessary.
 
 When delegation is available and permitted, run isolated reviewers with the same evidence, artifact, and rubric without each other's findings. Use multiple actual model families when available; different personas do not supply that diversity. Disclose the reviewer setup, unavailable seats, and limitations. Without isolated reviewers, perform a single-agent adversarial review; repeated passes or role labels do not create independence. A required independent gate remains incomplete when only self-review was possible.
 
@@ -21,6 +21,8 @@ Review relevant correctness, boundaries, data ownership, failure paths, verifica
 Require a concrete location, condition or execution path, consequence, supporting evidence, and what would resolve uncertainty for each finding. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty review is valid.
 
 ## Apply lead judgment
+
+State the assignment mode and isolation limits in the verdict. Keep initial discovery findings distinguishable from subsequent checks of supplied claims.
 
 Read and deduplicate all findings, retaining disagreements and consequential findings raised by only one reviewer. Check material claims in the actual artifact, call path, source, or [probe](../probe/SKILL.md). Reviewer agreement is a signal to inspect, not proof.
 

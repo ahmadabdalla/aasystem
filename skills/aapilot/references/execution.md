@@ -14,9 +14,21 @@ The lead owns integration, review, final proof and design decisions within its r
 
 Route large documents, verbose outputs, screenshots and broad exploration to bounded subagents. Supply artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. The lead inspects decisive evidence and contributions. Without delegation, narrow reads and save bulky output to files.
 
-Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for every new assignment, including fixes and retries. Resume only when its live process, local changes or costly state is necessary. Transfer the consolidated brief and corrections. Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Parallel writes need separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each return's brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted standing; recheck stale or conflicting findings.
+Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for every new assignment, including fixes and retries. Resume only when its live process, local changes or costly state is necessary. Transfer the consolidated brief and corrections, selecting review inputs under the [review-context rule](#review-context) where applicable. Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Parallel writes need separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each return's brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted standing; recheck stale or conflicting findings.
 
 Before delegating nontrivial implementation, record blocking prerequisites, independent workstreams, shared mutable state and the smallest safe decomposition. Explain using one worker for coupled work; revisit these decisions at phase changes. Workflow configuration does not authorize unavailable tools or external actions.
+
+## Review context
+
+Label review assignments as independent discovery or confirmation/evidence audit. An open search for weaknesses uses discovery; checking specified claims uses an audit.
+
+For independent discovery, supply the objective, authoritative requirements, accepted constraints, source identity, original artifacts, and evidence/access limits. Exclude lead conclusions, suggested answers, earlier reviewer findings, and inherited discussion. Preserve necessary grounding and the artifact under review; disclose unavoidable exposure to prior assessments.
+
+Use fresh contexts without inherited conversation where supported. Keep reviewers separate until their initial findings return, then compare findings against evidence. A fresh worker or different model alone does not establish independent discovery. Report isolation limitations.
+
+For a confirmation/evidence audit, supply the claims and their sources alongside the authoritative requirements and original evidence. Treat claims as hypotheses. Derive expected results from the requirements, examine supporting and contradictory evidence, and report supported, contradicted, or inconclusive results. Audit agreement does not establish independent discovery.
+
+When a decision needs independent corroboration, retain initial discovery findings before revealing lead conclusions for targeted follow-up checks. Otherwise, use the selected mode directly. Model diversity is optional.
 
 ## Verification through the project
 

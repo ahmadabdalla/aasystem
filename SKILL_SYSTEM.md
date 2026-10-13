@@ -85,7 +85,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`why`](skills/why/SKILL.md) | Reconstruct prior rationale | pstack [`why`](https://github.com/cursor/plugins/blob/main/pstack/skills/why/SKILL.md) | Checks several evidence sources and reports access gaps |
 | [`probe`](skills/probe/SKILL.md) | Test an important assumption | pstack [`prototype`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/prototype.md) | Separates empirical questions from artifact prototyping |
 | [`arena`](skills/arena/SKILL.md) | Compare competing options | pstack [`arena`](https://github.com/cursor/plugins/blob/main/pstack/skills/arena/SKILL.md) | Uses an independent judge when available |
-| [`interrogate`](skills/interrogate/SKILL.md) | Find consequential weaknesses | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md) | Also checks whether the work solves the right problem |
+| [`interrogate`](skills/interrogate/SKILL.md) | Find consequential weaknesses | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md) | Also challenges framing and selects review inputs through the shared context rule |
 | [`grill-me`](skills/grill-me/SKILL.md) | Run a bounded interview | Matt Pocock [`grilling`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) | Returns attributed evidence; Product owns synthesis |
 | [`domain-modeling`](skills/domain-modeling/SKILL.md) | Define terms and record decisions | Matt Pocock [`domain-modeling`](https://github.com/mattpocock/skills/blob/b0618bc436ad893b3c5e84e55fba86586d34a404/skills/engineering/domain-modeling/SKILL.md) | Adds ownership, evidence, layout, and supersession rules |
 | [`tdd`](skills/tdd/SKILL.md) | Prove a regression before a fix | pstack [`tdd`](https://github.com/cursor/plugins/blob/main/pstack/skills/tdd/SKILL.md) | Adds practical test limits and repeats the original check |
@@ -128,6 +128,7 @@ The [execution contract](skills/aapilot/references/execution.md) adds:
 - No implied scheduler, runtime lock, or automatic approval
 - Fresh workers for independent tasks
 - Independent candidates and judges
+- Review inputs distinguishing independent discovery from confirmation/evidence audits
 - Adversarial review where the playbook requires it
 
 Local styling cannot silently change a shared design system.
@@ -228,6 +229,7 @@ The current evaluation packages cover:
 | [`product-discovery`](evals/product-discovery/README.md) | Interviews, evidence, journeys, requirements, and checkpoints |
 | [`adr-ownership`](evals/adr-ownership/README.md) | Decision scope, ownership, layout, maintenance, and counterexamples |
 | [`verification-lifecycle`](evals/verification-lifecycle/README.md) | Temporary output, teardown, retained proof, and reruns |
+| [`review-context`](evals/review-context/README.md) | Reviewer context separation, delayed comparison, and checking supplied claims |
 
 Fixtures define test cases.
 
