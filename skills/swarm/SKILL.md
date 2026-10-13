@@ -12,7 +12,7 @@ Frame the work, run bounded workers, account for every required result, and retu
 
 ## Frame
 
-Reuse the caller's brief and name the completion predicate and required artifact. Choose partitioned coverage, a race, or a mixture. Declare the race rule before results: first verified pass, rank all, or select best. For candidates that need comparison and grafting, use [arena](../arena/SKILL.md).
+Reuse the caller's brief and name the completion predicate and required artifact. Choose partitioned coverage, a race, or a mixture. Declare the race rule before results: first verified pass, rank all, or select best. For ranking or selecting the best, include the comparison criteria in that declared rule. For candidates that need comparison and grafting, use [arena](../arena/SKILL.md).
 
 Build a small coverage table with each slice, owner, inputs, writable location, expected result, and proof method. Complete blocking prerequisites before fan-out. Assign separate writable outputs or worktrees; serialize genuinely shared mutable state. The lead integrates results and proves the combined artifact.
 
