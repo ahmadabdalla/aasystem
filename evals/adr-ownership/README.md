@@ -1,6 +1,6 @@
 # ADR ownership evaluation
 
-This package exercises ADR scope, ownership, maintenance, and project-local conventions. Follow the [evaluation playbook](../../skills/aapilot/playbooks/eval.md). These are document exercises, not evidence of runtime behavior or native skill discovery.
+This package exercises ADR scope, ownership, maintenance, convention selection, and content conformance. Follow the [evaluation playbook](../../skills/aapilot/playbooks/eval.md). These are document exercises, not evidence of runtime behavior or native skill discovery.
 
 ## Run
 
@@ -18,3 +18,4 @@ Keep dated run evidence outside this reusable package: exact prompts, instructio
 | [shared-decision](fixtures/shared-decision.md) | Keep a cross-cutting choice in one ordinary system ADR; avoid an ADR for a reversible detail |
 | [context-decision](fixtures/context-decision.md) | Keep a consequential product rule and detailed software choice local to an established context |
 | [accumulated-record](fixtures/accumulated-record.md) | Separate accumulated choices, update evidence for a continuing decision and supersede only an accepted replacement |
+| [conformance](fixtures/conformance.md) | Write and review default records, select project and older conventions, and check supplied conformance claims |

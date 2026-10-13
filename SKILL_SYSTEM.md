@@ -171,8 +171,12 @@ The local system adds:
 - Cross-links between related decisions
 - Separate authority and implementation evidence
 - Explicit update, split, and supersession handling
+- Project rules before existing scoped conventions (including older formats), then a framework default
+- Required default content and review failures tied to the selected rules
 
 Poteto supplies workflow ideas, not the ADR taxonomy.
+
+The default content and shared author/reviewer contract adapt pstack's [architecture rationale template](https://github.com/cursor/plugins/blob/1dcc2bacde73ddd284803b7af28164d0436198fc/pstack/skills/architect/references/rationale-template.md). ADR convention selection is a local addition; the default requires decision meaning without mandatory headings.
 
 Accepted decisions constrain work but do not prove the result.
 
@@ -229,7 +233,7 @@ The current evaluation packages cover:
 | --- | --- |
 | [`product-to-ui`](evals/product-to-ui/README.md) | Authority, interaction coverage, UI review, delivery, and portability |
 | [`product-discovery`](evals/product-discovery/README.md) | Interviews, evidence, journeys, requirements, and checkpoints |
-| [`adr-ownership`](evals/adr-ownership/README.md) | Decision scope, ownership, layout, maintenance, and counterexamples |
+| [`adr-ownership`](evals/adr-ownership/README.md) | Decision scope, ownership, layout, maintenance, convention selection, and content conformance |
 | [`verification-lifecycle`](evals/verification-lifecycle/README.md) | Temporary output, teardown, retained proof, and reruns |
 | [`review-context`](evals/review-context/README.md) | Reviewer context separation, delayed comparison, and checking supplied claims |
 
