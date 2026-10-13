@@ -8,4 +8,4 @@ Keep this README and the [rubric](rubric.md) outside candidate contexts. The req
 
 Record exact prompts, history inheritance, source identities, accessible inputs, isolation enforcement, reads/actions, assignments, initial findings, and subsequent comparisons. An access instruction without enforcement is a limitation, not proof of isolation. Keep run evidence outside this reusable package using the linked conventions.
 
-Run both cases for a handoff claim; credit reviewer behavior and comparison ordering only if exercised. Without delegation, report those boundaries as unverified. These cases test context separation and claim checking; they do not prove that anchoring has been eliminated or that native host invocation works.
+Run both cases for a handoff claim. A prepared assignment supports only a handoff assessment. Credit reviewer behavior from recorded reviewer runs, and comparison ordering from recorded dispatch and return events. Without delegation, report those boundaries as unverified. These cases test context separation and claim checking; they do not prove that anchoring has been eliminated or that native host invocation works.
