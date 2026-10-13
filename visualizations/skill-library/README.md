@@ -13,6 +13,8 @@ Hover or select a node to suppress unrelated lines and inspect its incoming and 
 
 The map intentionally does not draw a foundation edge from every procedural skill to the execution contract and principle index. Their system-wide scope is recorded on the foundation nodes without obscuring task flows.
 
+The execution contract owns [review context](../../skills/aapilot/references/execution.md#review-context), including the distinction between independent discovery and confirmation/evidence audits.
+
 ## Maintain the map
 
 - Edit node titles, descriptions, source links, and positions in the `nodes` array in `app.js`.

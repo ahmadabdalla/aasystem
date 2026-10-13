@@ -14,9 +14,21 @@ The lead owns integration, review, final proof and design decisions within its r
 
 Route large documents, verbose outputs, screenshots and broad exploration to bounded subagents. Supply artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. The lead inspects decisive evidence and contributions. Without delegation, narrow reads and save bulky output to files.
 
-Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for every new assignment, including fixes and retries. Resume only when its live process, local changes or costly state is necessary. Transfer the consolidated brief and corrections. Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Parallel writes need separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each return's brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted standing; recheck stale or conflicting findings.
+Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for every new assignment, including fixes and retries. Resume only when its live process, local changes or costly state is necessary. Transfer the consolidated brief and corrections. For review assignments, select the supplied context under the [review-context rule](#review-context). Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Parallel writes need separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each return's brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted standing; recheck stale or conflicting findings.
 
 Before delegating nontrivial implementation, record blocking prerequisites, independent workstreams, shared mutable state and the smallest safe decomposition. Explain using one worker for coupled work; revisit these decisions at phase changes. Workflow configuration does not authorize unavailable tools or external actions.
+
+## Review context
+
+Label review assignments as independent discovery or confirmation/evidence audit. An open search for weaknesses uses discovery; checking specified claims uses an audit.
+
+For independent discovery, supply the objective, authoritative requirements, accepted constraints, source identity, original artifacts, and evidence/access limits. Exclude lead conclusions, suggested answers, earlier reviewer findings, and inherited discussion. Keep the listed review inputs and original artifact intact. If the artifact contains prior assessments, or the host exposes them, identify that exposure in the review report.
+
+Start each reviewer without inheriting the parent conversation. If the host cannot exclude that history, report which prior context the reviewer receives. Do not share reviewers' findings with one another until all reviewers have returned their initial reports. Then compare the reports against the evidence. A fresh worker or different model alone does not establish independent discovery. Report isolation limitations.
+
+For a confirmation/evidence audit, supply the claims and their sources alongside the authoritative requirements and original evidence. Treat claims as hypotheses. Derive expected results from the requirements, examine supporting and contradictory evidence, and report supported, contradicted, or inconclusive results. Audit agreement does not establish independent discovery.
+
+To obtain independent corroboration of a lead conclusion, collect and retain initial discovery reports before revealing that conclusion. A confirmation/evidence audit can run directly without a preceding discovery review. Model diversity is optional.
 
 ## Verification through the project
 
