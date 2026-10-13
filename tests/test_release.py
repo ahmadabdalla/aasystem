@@ -18,6 +18,10 @@ class ReleaseTests(unittest.TestCase):
         self.base = Path(self.temp.name)
         self.repo = self.base / "repo"
         shutil.copytree(ROOT, self.repo, ignore=shutil.ignore_patterns(".git", "__pycache__", ".DS_Store"))
+        self.version = json.loads((self.repo / "plugin.json").read_text())["version"]
+        self.tag = "v" + self.version
+        major, minor, patch = self.version.split(".")
+        self.other_version = f"{major}.{minor}.{int(patch) + 1}"
         self.git("init", "-b", "main")
         self.git("config", "user.name", "Release test")
         self.git("config", "user.email", "release-test@example.com")
@@ -58,7 +62,9 @@ else:
     def git(self, *args):
         return subprocess.run(["git", *args], cwd=self.repo, text=True, capture_output=True, check=True)
 
-    def publish(self, version="0.2.0", sha=None, **env):
+    def publish(self, version=None, sha=None, **env):
+        if version is None:
+            version = self.version
         return subprocess.run(["bash", "scripts/publish-release.sh", version, sha or self.sha,
                                "https://github.com/example/aasystem/pull/2"],
                               cwd=self.repo, env=dict(self.env, **env), text=True, capture_output=True)
@@ -68,7 +74,7 @@ else:
             ["ruby", "-rjson", "-ryaml", "-e", "puts JSON.generate(YAML.safe_load(File.read(ARGV[0])))",
              str(self.repo / ".github/workflows/publish-release.yml")], text=True))
         script = next(step["run"] for step in workflow["jobs"]["publish"]["steps"] if step.get("id") == "release")
-        pr = dict(merged=True, title="release: v0.2.0", merge_commit_sha=self.sha,
+        pr = dict(merged=True, title="release: " + self.tag, merge_commit_sha=self.sha,
                   base={"ref": "main", "repo": {"full_name": "example/aasystem"}})
         pr.update(changes)
         pr_state = self.base / "pr.json"
@@ -91,7 +97,7 @@ else:
         self.assertNotIn("Host checks:", notes)
 
     def test_workflow_rejects_unmerged_wrong_base_and_nonrelease_prs(self):
-        cases = [dict(merged=False), dict(title="fix: ordinary change"), dict(title="release: v0.2.0 extra"),
+        cases = [dict(merged=False), dict(title="fix: ordinary change"), dict(title="release: " + self.tag + " extra"),
                  dict(base={"ref": "dev", "repo": {"full_name": "example/aasystem"}}),
                  dict(base={"ref": "main", "repo": {"full_name": "another/repo"}})]
         for change in cases:
@@ -114,23 +120,23 @@ else:
         self.git("push", "origin", "main")
         self.git("checkout", "--detach", self.sha)
         self.assert_success(self.publish())
-        self.assertEqual(self.git("rev-parse", "v0.2.0^{commit}").stdout.strip(), self.sha)
-        self.assertEqual(self.git("cat-file", "-t", "v0.2.0").stdout.strip(), "tag")
-        tag_before = self.git("rev-parse", "v0.2.0").stdout
+        self.assertEqual(self.git("rev-parse", self.tag + "^{commit}").stdout.strip(), self.sha)
+        self.assertEqual(self.git("cat-file", "-t", self.tag).stdout.strip(), "tag")
+        tag_before = self.git("rev-parse", self.tag).stdout
         release_before = self.state.read_bytes()
         self.assert_success(self.publish())
-        self.assertEqual(self.git("rev-parse", "v0.2.0").stdout, tag_before)
+        self.assertEqual(self.git("rev-parse", self.tag).stdout, tag_before)
         self.assertEqual(self.state.read_bytes(), release_before)
 
     def test_resume_after_tag_push(self):
         self.assertNotEqual(self.publish(TEST_CREATE_FAIL="1").returncode, 0)
         self.assertFalse(self.state.exists())
-        tag_before = self.git("rev-parse", "v0.2.0").stdout
+        tag_before = self.git("rev-parse", self.tag).stdout
         self.assert_success(self.publish())
-        self.assertEqual(self.git("rev-parse", "v0.2.0").stdout, tag_before)
+        self.assertEqual(self.git("rev-parse", self.tag).stdout, tag_before)
 
     def test_version_mismatch_stops_before_tag(self):
-        self.assertNotEqual(self.publish(version="0.3.0").returncode, 0)
+        self.assertNotEqual(self.publish(version=self.other_version).returncode, 0)
         self.assert_no_remote_tag()
 
     def test_wrong_checkout_stops_before_tag(self):
@@ -144,16 +150,16 @@ else:
     def test_conflicting_remote_tag_is_preserved(self):
         self.git("commit", "--allow-empty", "-m", "Other commit")
         other = self.git("rev-parse", "HEAD").stdout.strip()
-        self.git("tag", "-a", "v0.2.0", "-m", "Other release")
-        self.git("push", "origin", "v0.2.0")
+        self.git("tag", "-a", self.tag, "-m", "Other release")
+        self.git("push", "origin", self.tag)
         self.git("checkout", "--detach", self.sha)
         self.assertNotEqual(self.publish().returncode, 0)
-        self.assertEqual(self.git("rev-parse", "v0.2.0^{commit}").stdout.strip(), other)
+        self.assertEqual(self.git("rev-parse", self.tag + "^{commit}").stdout.strip(), other)
         self.assertFalse(self.state.exists())
 
     def test_lightweight_tag_is_rejected(self):
-        self.git("tag", "v0.2.0")
-        self.git("push", "origin", "v0.2.0")
+        self.git("tag", self.tag)
+        self.git("push", "origin", self.tag)
         self.assertNotEqual(self.publish().returncode, 0)
         self.assertFalse(self.state.exists())
 
@@ -170,7 +176,7 @@ else:
         manifest_path = self.repo / ".claude-plugin/plugin.json"
         original = manifest_path.read_text()
         manifest = json.loads(original)
-        manifest["version"] = "0.1.0"
+        manifest["version"] = self.other_version
         manifest_path.write_text(json.dumps(manifest))
         result = subprocess.run(["ruby", "scripts/validate-release.rb"], cwd=self.repo, capture_output=True)
         self.assertNotEqual(result.returncode, 0)
