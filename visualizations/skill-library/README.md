@@ -13,7 +13,7 @@ Hover or select a node to suppress unrelated lines and inspect its incoming and 
 
 The map intentionally does not draw a foundation edge from every procedural skill to the execution contract and principle index. Their system-wide scope is recorded on the foundation nodes without obscuring task flows.
 
-The execution contract owns [review context](../../skills/aapilot/references/execution.md#review-context), including the distinction between independent discovery and confirmation/evidence audits.
+The execution contract owns [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot assigns execution and checks results under those shared rules; review context distinguishes independent discovery from confirmation/evidence audits.
 
 Bug Fix and Refactoring use the [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) for their design assignments. Architect owns that criterion; editing several function bodies alone does not select the route.
 

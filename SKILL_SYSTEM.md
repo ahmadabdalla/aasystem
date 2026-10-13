@@ -133,7 +133,7 @@ The [execution contract](skills/aapilot/references/execution.md) adds:
 
 Local styling cannot silently change a shared design system.
 
-Shared rules stay in the execution contract.
+Shared rules stay in the execution contract. Its [delegation procedure](skills/aapilot/references/execution.md#delegation) owns capability checks, execution assignments and result acceptance; its [completion rules](skills/aapilot/references/execution.md#completion) own planned closing assignments and final reconciliation.
 
 Specialists keep only actionable scope reminders.
 

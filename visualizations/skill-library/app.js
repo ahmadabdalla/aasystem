@@ -345,7 +345,7 @@ const nodes = [
     title: "Execution contract",
     type: "foundation",
     subtitle: "Applies to all procedures",
-    purpose: "Defines ownership, handoffs, review context, delegation boundaries, verification through the project, evidence, and delivery.",
+    purpose: "Defines ownership, handoffs, delegation decisions, result acceptance, completion, review context, verification through the project, evidence, and delivery.",
     owns: "The shared operating rules read by every procedural skill and worker.",
     source: "../../skills/aapilot/references/execution.md",
     x: 2224,
@@ -539,7 +539,7 @@ connect("maintain-verification", "project-records", "handoff", "updates verifier
 connect("reflect", "project-records", "handoff", "records accepted learning");
 connect("work", "project-records", "handoff", "consolidates canonical evidence");
 
-connect("execution-contract", "work", "governance", "governs ownership and proof");
+connect("execution-contract", "work", "governance", "governs delegation, proof and completion");
 connect("principles-index", "work", "governance", "routes approved judgments");
 connect("principles-index", "preserve-context", "governance", "matches handoff changes");
 connect("principles-index", "ui-meaning", "governance", "matches UI structure changes");
