@@ -21,13 +21,13 @@ Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and
 | Discover product structure, people and journeys, or define product behavior, business rules, and acceptance scenarios | [Product](../product/SKILL.md)                                                                                             |
 | Translate product outcomes into navigation, interactions, information visibility, and justified UI choices            | [Interaction design](../interaction-design/SKILL.md)                                                                       |
 | Interview the user to resolve consequential choices in a plan                                                         | [Grill me](../grill-me/SKILL.md)                                                                                           |
-| Clarify project terminology or record a consequential product, design or software decision                             | [Domain modeling](../domain-modeling/SKILL.md)                                                                             |
+| Clarify project terminology or record a consequential product, design or software decision                            | [Domain modeling](../domain-modeling/SKILL.md)                                                                             |
 | Explain current behavior or investigate a question without changing the product                                       | [Investigation](playbooks/investigation.md)                                                                                |
 | Decide what solution should exist while direction, ownership, or constraints remain open                              | [Solution](../solution/SKILL.md)                                                                                           |
 | Correct a reported defect                                                                                             | [Bug fix](playbooks/bug-fix.md)                                                                                            |
 | Add or intentionally change behavior                                                                                  | [Feature](playbooks/feature.md)                                                                                            |
 | Change structure while preserving behavior                                                                            | [Refactoring](playbooks/refactoring.md)                                                                                    |
-| Refine an inspectable UI/UX with human feedback and preserve a reviewed visual reference | [UI refinement](../ui-refinement/SKILL.md) |
+| Refine an inspectable UI/UX with human feedback and preserve a reviewed visual reference                              | [UI refinement](../ui-refinement/SKILL.md)                                                                                 |
 | Resolve a decision through a throwaway experiment                                                                     | [Prototype](playbooks/prototype.md)                                                                                        |
 | Create or change a skill                                                                                              | [Skill authoring](playbooks/authoring-a-skill.md)                                                                          |
 | Assess whether an instruction or skill change improves behavior                                                       | [Evaluation](playbooks/eval.md)                                                                                            |
@@ -44,7 +44,7 @@ Dedicated procedures for performance tuning, hillclimbing, forensics, general-pu
 
 ## Coordinate and finish
 
-Follow the [delegation procedure](references/execution.md#delegation) for assignments; links do not bypass invocation restrictions. Report unavailable required handoffs. Supporting results return to the current owner without starting another top-level session. Assign architecture as design-only when the playbook retains implementation.
+Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect returns design, [Implement](../implement/SKILL.md) returns production edits and development checks, and a separate worker supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
 
 For substantial, multi-phase or unattended work, use [show-me-your-work](../show-me-your-work/SKILL.md) from the first consequential decision. The log links detailed solution records, design packages and evidence.
 

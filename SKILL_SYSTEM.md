@@ -38,9 +38,13 @@ Use these boundaries when skills interact:
 - **UI refinement:** the bounded human review loop
 - **Prototype:** the inspectable throwaway artifact
 - **Solution:** the overall approach
-- **Architect:** implementation shape and boundaries
+- **Architect:** implementation shape, boundaries, rationale, and verification planning; design-only
+- **Implement:** bounded edits against a supplied design or contract, development checks, and evidence return
+- **Maintainability:** a bounded assessment of reader effort, local change cost, and ease of verification; returns findings to its caller
 - **Feature playbook:** authorized production delivery
-- **Project verifier:** observed behavior and reusable checks
+- **Project verifier:** the project-owned procedure and reusable checks
+- **Independent verification agent:** a separate worker that exercises the changed artifact through the project verifier and returns observed results
+- **Interrogate:** adversarial review findings; review does not replace executable verification
 - **Caller:** phase transitions and canonical record updates
 
 Supporting skills do not gain production scope from an assignment.
@@ -77,7 +81,9 @@ Each row names the skill’s role, source, and local adaptation.
 | [`aapilot`](skills/aapilot/SKILL.md) | Coordinate and finish tasks | pstack [`poteto-mode`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md) | Uses host tools; needs no custom agent setup |
 | [`product`](skills/product/SKILL.md) | Define journeys and behavior | First-party split; [OpenSpec](https://github.com/Fission-AI/OpenSpec/blob/main/docs/concepts.md) | Owns discovery synthesis and separates facts, proposals, and agreements |
 | [`solution`](skills/solution/SKILL.md) | Choose the overall approach | pstack [`investigation`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/investigation.md) | Adds solution design and unresolved conditions |
-| [`architect`](skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md) | Can stop after design; verifies against requirements |
+| [`architect`](skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md) | Returns a design package and proof plan; implementation and final acceptance stay with the coordinating caller |
+| [`implement`](skills/implement/SKILL.md) | Execute bounded edits and development checks | First-party extraction from the library’s implementation workflows and [execution contract](skills/aapilot/references/execution.md) | Accepts a settled design or contract, returns artifact and evidence, and returns design contradictions to the caller; no design selection or final approval |
+| [`maintainability`](skills/maintainability/SKILL.md) | Assess reader effort, local change, and ease of verification | pstack [`Minimize Reader Load`](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-minimize-reader-load/SKILL.md) and [`Architect red flags`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md); Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md) and [`code-review`](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md) | Owns reusable criteria now maintained in [`SKILL.md`](skills/maintainability/SKILL.md), [`local code`](skills/maintainability/references/local-code.md), and [`boundaries`](skills/maintainability/references/boundaries.md). Local Clean Code guidance is conceptual input only and is not reproduced. |
 | [`interaction-design`](skills/interaction-design/SKILL.md) | Design consequential interactions | pstack [`Experience First`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-experience-first/SKILL.md), [`Exhaust the Design Space`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-exhaust-the-design-space/SKILL.md), Matt Pocock [`wayfinder`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/wayfinder/SKILL.md) | Keeps product meaning and implementation architecture with their owners |
 | [`ui-refinement`](skills/ui-refinement/SKILL.md) | Refine a rendered experience | First-party founder requirement | Returns a reviewed reference; the caller retains delivery |
 | [`prototype`](skills/prototype/SKILL.md) | Build an inspectable experiment | Matt Pocock [`prototype`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/prototype/SKILL.md) | Uses isolated artifacts; excludes automatic production promotion |
@@ -137,7 +143,23 @@ Shared rules stay in the execution contract. Its [delegation procedure](skills/a
 
 Specialists keep only actionable scope reminders.
 
+The [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md) owns instruction specificity, deduplication, and criteria for splitting skills or using references.
+
 The [Architect design trigger](skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
+
+### Design, implementation, and independent verification
+
+[`architect`](skills/architect/SKILL.md) owns design only: caller usage, interfaces, data shapes, ownership, rationale, and proof planning. A direct design-and-build request needs a coordinating playbook to retain implementation and completion scope. Implementation evidence that contradicts the design returns through the caller for design revision.
+
+[`implement`](skills/implement/SKILL.md) is shared bounded execution support for Feature, Bug Fix, Refactoring, and Figure It Out. Each caller supplies its settled design or contract, file ownership, constraints, and assigned checks; Implement returns edits and development evidence to that caller.
+
+The [execution contract](skills/aapilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and the existing low-impact presentation exception. The worker runs the project-owned verifier procedure against the identified artifact; it is an agent role, not another portable skill. The caller retains integration, semantic acceptance, and final proof. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
+
+### Maintainability
+
+[`maintainability`](skills/maintainability/SKILL.md) is a conditional supporting assessment for Architect, Refactoring, and Interrogate when its findings can change a design, structural improvement, or review verdict.
+
+The reusable assessment criteria formerly held by Architect now live with Maintainability in its [`SKILL.md`](skills/maintainability/SKILL.md), [local-code reference](skills/maintainability/references/local-code.md), and [boundaries reference](skills/maintainability/references/boundaries.md). This keeps local readability and system-boundary assessment in one owner while Architect retains implementation design and Refactoring retains equivalence proof.
 
 ### UI review
 
@@ -225,21 +247,9 @@ Other sources inform bounded parts of the system:
 - **Feature maps:** pstack [`feature-map example`](https://github.com/cursor/plugins/blob/main/pstack/skills/create-verification-skill/references/feature-map-example/README.md)
 - **Specification workflow:** OpenSpec [`CLI`](https://github.com/Fission-AI/OpenSpec/blob/main/docs/cli.md) and [`workflows`](https://github.com/Fission-AI/OpenSpec/blob/main/docs/workflows.md)
 
-## Evaluation coverage
+## Evaluation
 
-The current evaluation packages cover:
-
-| Package | Coverage |
-| --- | --- |
-| [`product-to-ui`](evals/product-to-ui/README.md) | Authority, interaction coverage, UI review, delivery, and portability |
-| [`product-discovery`](evals/product-discovery/README.md) | Interviews, evidence, journeys, requirements, and checkpoints |
-| [`adr-ownership`](evals/adr-ownership/README.md) | Decision scope, ownership, layout, maintenance, convention selection, and content conformance |
-| [`verification-lifecycle`](evals/verification-lifecycle/README.md) | Temporary output, teardown, retained proof, and reruns |
-| [`review-context`](evals/review-context/README.md) | Reviewer context separation, delayed comparison, and checking supplied claims |
-
-Fixtures define test cases.
-
-They do not prove that an evaluation passed.
+The [evaluation playbook](skills/aapilot/playbooks/eval.md) adapts [pstack’s Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript inspection, and lead reconciliation. Local adaptations use the shared host and invocation rules and project evidence conventions; the playbook owns temporary experiments and the criterion for retaining reusable regression cases. The library does not ship an evaluation runner or a standing fixture collection.
 
 ## Export boundary
 

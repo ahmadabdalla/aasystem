@@ -65,12 +65,16 @@ For a focused task, you can invoke a flagship skill directly:
 
 All skills remain available from [`skills/`](skills/).
 
+For bounded edits against a settled design or contract, use [`implement`](skills/implement/SKILL.md). It returns the changed artifact and development-check evidence to its caller. Architect remains design-only; the coordinating playbook assigns a separate verification agent to run the project’s checks and owns acceptance.
+
+For a bounded code or design assessment, use [`maintainability`](skills/maintainability/SKILL.md). It examines reader effort, local change cost, and ease of verification, then returns findings to the caller; it does not select a top-level task route or own implementation.
+
 ## Repository map
 
 | Path | Contents |
 | --- | --- |
 | [`skills/`](skills/) | Portable skills, references, assets, and orchestrator playbooks |
-| [`evals/`](evals/) | Evaluation fixtures and separate judge criteria |
+| [Evaluation playbook](skills/aapilot/playbooks/eval.md) | Temporary experiments for assessing instruction changes |
 | [`visualizations/skill-library/`](visualizations/skill-library/) | Interactive system graph |
 | [`AGENTS.md`](AGENTS.md) | Repository maintenance rules |
 | [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) | Architecture, ownership, sources, and adaptations |

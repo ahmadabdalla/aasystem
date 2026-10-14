@@ -5,6 +5,7 @@ const TYPE_LABELS = {
   principle: "Approved principle",
   foundation: "Shared foundation",
   artifact: "Project-owned records",
+  role: "Agent role",
 };
 
 const nodes = [
@@ -70,8 +71,8 @@ const nodes = [
     title: "Architect",
     type: "skill",
     subtitle: "Implementation shape",
-    purpose: "Designs caller usage, data shapes, signatures, ownership, and module boundaries, then verifies or revises the shape.",
-    owns: "The design trigger, implementation design, and its explanation; implementation only when explicitly assigned.",
+    purpose: "Designs caller usage, data shapes, signatures, ownership, and module boundaries; plans proof and revises the design when the caller returns contradictory evidence.",
+    owns: "The design trigger, implementation design, rationale, and proof plan; returns a design package to the caller.",
     source: "../../skills/architect/SKILL.md",
     x: 2224,
     y: 55,
@@ -187,6 +188,17 @@ const nodes = [
     y: 455,
   },
   {
+    id: "maintainability",
+    title: "Maintainability",
+    type: "skill",
+    subtitle: "Reader & change burden",
+    purpose: "Assesses whether supplied code or a design is easy to understand, change, and verify, then returns concrete findings to its caller.",
+    owns: "The bounded assessment and its evidence-backed findings; the caller decides on design, edits, and records.",
+    source: "../../skills/maintainability/SKILL.md",
+    x: 2224,
+    y: 455,
+  },
+  {
     id: "feature",
     title: "Feature",
     type: "playbook",
@@ -290,11 +302,34 @@ const nodes = [
     title: "Evaluation",
     type: "playbook",
     subtitle: "Behavioral evidence",
-    purpose: "Compares instruction variants in isolated contexts against a rubric defined before the run.",
-    owns: "Experiment design, evidence reconciliation, and the adoption decision.",
+    purpose: "Runs temporary instruction experiments in isolated contexts with blinded judging and evidence checked against predefined criteria.",
+    owns: "Experiment design, evidence reconciliation, and the adoption recommendation.",
     source: "../../skills/aapilot/playbooks/eval.md",
     x: 2224,
     y: 635,
+  },
+  {
+    id: "implement",
+    title: "Implement",
+    type: "skill",
+    subtitle: "Bounded edits & checks",
+    purpose: "Executes a supplied design or contract within assigned file ownership, runs development checks, and returns edits, evidence, and design concerns.",
+    owns: "Bounded implementation and development evidence; the caller retains integration and final acceptance.",
+    source: "../../skills/implement/SKILL.md",
+    x: 1327,
+    y: 855,
+  },
+  {
+    id: "independent-verification",
+    title: "Independent verification",
+    type: "role",
+    subtitle: "Separate verification worker",
+    purpose: "Derives expectations from the authoritative contract and exercises the identified changed artifact using the project verifier procedure.",
+    owns: "Observed verification results, failures, and gaps; returns evidence to the caller for acceptance and correction assignments.",
+    source: "../../skills/aapilot/references/execution.md#independent-implementation-verification",
+    x: 879,
+    y: 1145,
+    w: 270,
   },
   {
     id: "bootstrap-verification",
@@ -305,7 +340,7 @@ const nodes = [
     owns: "Verification setup and declared coverage gaps.",
     source: "../../skills/bootstrap-verification/SKILL.md",
     x: 430,
-    y: 925,
+    y: 1035,
   },
   {
     id: "maintain-verification",
@@ -316,7 +351,7 @@ const nodes = [
     owns: "Verifier/map drift, scoped repairs, and coverage reporting.",
     source: "../../skills/maintain-verification/SKILL.md",
     x: 879,
-    y: 925,
+    y: 1035,
   },
   {
     id: "reflect",
@@ -327,7 +362,7 @@ const nodes = [
     owns: "Reflection synthesis and approved personal-principle changes.",
     source: "../../skills/reflect/SKILL.md",
     x: 1327,
-    y: 925,
+    y: 1035,
   },
   {
     id: "project-records",
@@ -338,7 +373,7 @@ const nodes = [
     owns: "Durable project context; individual skills own only their scoped contribution and handoff.",
     source: "../../SKILL_SYSTEM.md",
     x: 1776,
-    y: 925,
+    y: 1035,
   },
   {
     id: "execution-contract",
@@ -349,7 +384,7 @@ const nodes = [
     owns: "The shared operating rules read by every procedural skill and worker.",
     source: "../../skills/aapilot/references/execution.md",
     x: 2224,
-    y: 925,
+    y: 1035,
   },
   {
     id: "principles-index",
@@ -360,7 +395,7 @@ const nodes = [
     owns: "The discovery and application rules for approved principle leaves.",
     source: "../../skills/principles/INDEX.md",
     x: 1327,
-    y: 1035,
+    y: 1145,
   },
   {
     id: "preserve-context",
@@ -371,7 +406,7 @@ const nodes = [
     owns: "The judgment that local brevity must not break downstream decisions.",
     source: "../../skills/principle-preserve-decision-context/SKILL.md",
     x: 1776,
-    y: 1035,
+    y: 1145,
     w: 270,
   },
   {
@@ -383,7 +418,7 @@ const nodes = [
     owns: "The judgment about structural UI meaning and its safety exceptions.",
     source: "../../skills/principle-ui-meaning-through-structure/SKILL.md",
     x: 2224,
-    y: 1035,
+    y: 1145,
     w: 270,
   },
 ].map((node) => ({ w: 230, h: 104, ...node }));
@@ -453,11 +488,10 @@ connect("architect", "product", "handoff", "returns product-rule gaps");
 connect("architect", "domain-modeling", "support", "clarifies concepts / ADRs");
 connect("architect", "how", "support", "traces affected behavior");
 connect("architect", "why", "support", "checks ownership history");
-connect("architect", "bootstrap-verification", "support", "establishes missing proof path");
 connect("architect", "interaction-design", "handoff", "returns unsettled interactions");
 connect("architect", "arena", "support", "compares implementation shapes");
 connect("architect", "interrogate", "support", "reviews contested design");
-connect("architect", "maintain-verification", "support", "repairs verifier drift");
+connect("architect", "maintainability", "support", "assesses candidate burden");
 
 // Investigation and experiment mechanics.
 connect("investigation", "how", "support", "grounds current behavior");
@@ -471,6 +505,7 @@ connect("why", "solution", "handoff", "supplies historical constraints");
 connect("why", "architect", "handoff", "supplies layering constraints");
 connect("arena", "probe", "support", "reconciles disputed evidence");
 connect("interrogate", "probe", "support", "checks material claims");
+connect("interrogate", "maintainability", "support", "checks maintainability claims");
 connect("prototype-playbook", "probe", "support", "defines empirical method");
 connect("prototype-playbook", "prototype", "support", "delegates inspectable artifact");
 connect("prototype-playbook", "feature", "handoff", "passes selected direction");
@@ -502,6 +537,7 @@ connect("bug-fix", "opening-pr", "handoff", "delivers when authorized");
 connect("refactoring", "how", "support", "captures behavior baseline");
 connect("refactoring", "figure-it-out", "support", "handles coupled migration");
 connect("refactoring", "architect", "support", "designs when trigger applies");
+connect("refactoring", "maintainability", "support", "assesses structural improvement");
 connect("refactoring", "feature", "handoff", "separates behavior changes");
 connect("refactoring", "bug-fix", "handoff", "separates discovered defects");
 connect("refactoring", "opening-pr", "handoff", "delivers when authorized");
@@ -519,6 +555,19 @@ connect("skill-authoring", "opening-pr", "handoff", "delivers when authorized");
 connect("reflect", "skill-authoring", "handoff", "sends accepted substantive edits");
 connect("opening-pr", "interrogate", "support", "reviews consequential change");
 connect("work", "show-work", "support", "records substantial work");
+
+// Shared implementation support; the caller retains all phase transitions.
+["feature", "bug-fix", "refactoring", "figure-it-out"].forEach((owner) => {
+  connect(owner, "implement", "support", "assigns bounded edits and checks");
+  connect(owner, "independent-verification", "support", "assigns separate proof worker");
+  connect("architect", owner, "handoff", "returns design or revision via caller");
+});
+connect("implement", "project-records", "handoff", "returns artifact and evidence via caller");
+connect("independent-verification", "project-records", "support", "uses project verifier procedure");
+connect("independent-verification", "bootstrap-verification", "handoff", "returns missing proof path via caller");
+connect("independent-verification", "maintain-verification", "handoff", "returns recipe drift via caller");
+connect("independent-verification", "implement", "handoff", "returns correction need via caller");
+connect("execution-contract", "independent-verification", "governance", "owns independent dispatch and exceptions");
 
 // Verification lifecycle.
 connect("bootstrap-verification", "how", "support", "traces relevant paths");
@@ -548,8 +597,8 @@ connect("execution-contract", "project-records", "governance", "defines evidence
 const lanes = [
   { number: "A", title: "DEFINE & DECIDE", x: 280, y: 20, w: 2300, h: 270 },
   { number: "B", title: "EXPLORE & CHALLENGE", x: 280, y: 310, w: 2300, h: 270 },
-  { number: "C", title: "CHANGE & DELIVER", x: 280, y: 600, w: 2300, h: 270 },
-  { number: "D", title: "VERIFY & EVOLVE", x: 280, y: 890, w: 2300, h: 270 },
+  { number: "C", title: "CHANGE & DELIVER", x: 280, y: 600, w: 2300, h: 380 },
+  { number: "D", title: "VERIFY & EVOLVE", x: 280, y: 1000, w: 2300, h: 270 },
 ];
 
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
@@ -564,7 +613,7 @@ const emptySearch = document.querySelector("#empty-search");
 let selectedId = "work";
 let focusMode = false;
 let tracedEdgeIds = new Set();
-const fullView = { x: -360, y: 0, w: 3020, h: 1180 };
+const fullView = { x: -360, y: 0, w: 3020, h: 1290 };
 let view = { ...fullView };
 let hoveredId = null;
 let panState = null;
@@ -1051,6 +1100,8 @@ function handleSearch() {
   });
   emptySearch.hidden = !query || matchCount > 0;
 }
+
+document.querySelector(".grid-fill").setAttribute("height", fullView.h);
 
 renderLanes();
 renderEdges();
