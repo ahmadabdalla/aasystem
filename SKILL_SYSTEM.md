@@ -247,23 +247,9 @@ Other sources inform bounded parts of the system:
 - **Feature maps:** pstack [`feature-map example`](https://github.com/cursor/plugins/blob/main/pstack/skills/create-verification-skill/references/feature-map-example/README.md)
 - **Specification workflow:** OpenSpec [`CLI`](https://github.com/Fission-AI/OpenSpec/blob/main/docs/cli.md) and [`workflows`](https://github.com/Fission-AI/OpenSpec/blob/main/docs/workflows.md)
 
-## Evaluation coverage
+## Evaluation
 
-The current evaluation packages cover:
-
-| Package | Coverage |
-| --- | --- |
-| [`product-to-ui`](evals/product-to-ui/README.md) | Authority, interaction coverage, UI review, delivery, and portability |
-| [`product-discovery`](evals/product-discovery/README.md) | Interviews, evidence, journeys, requirements, and checkpoints |
-| [`adr-ownership`](evals/adr-ownership/README.md) | Decision scope, ownership, layout, maintenance, convention selection, and content conformance |
-| [`verification-lifecycle`](evals/verification-lifecycle/README.md) | Temporary output, teardown, retained proof, and reruns |
-| [`review-context`](evals/review-context/README.md) | Reviewer context separation, delayed comparison, and checking supplied claims |
-| [`implementation-routing`](evals/implementation-routing/README.md) | Design-only ownership, bounded execution, separate verification, correction handoffs, and presentation exceptions |
-| [`maintainability`](evals/maintainability/README.md) | Local code and boundary assessments, caller ownership, settled-target reuse, and discovery handoffs |
-
-Fixtures define test cases.
-
-They do not prove that an evaluation passed.
+The [evaluation playbook](skills/aapilot/playbooks/eval.md) adapts [pstack’s Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript inspection, and lead reconciliation. Local adaptations use the shared host and invocation rules and project evidence conventions; the playbook owns temporary experiments and the criterion for retaining reusable regression cases. The library does not ship an evaluation runner or a standing fixture collection.
 
 ## Export boundary
 

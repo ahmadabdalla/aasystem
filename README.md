@@ -74,7 +74,7 @@ For a bounded code or design assessment, use [`maintainability`](skills/maintain
 | Path | Contents |
 | --- | --- |
 | [`skills/`](skills/) | Portable skills, references, assets, and orchestrator playbooks |
-| [`evals/`](evals/) | Evaluation fixtures and separate judge criteria |
+| [Evaluation playbook](skills/aapilot/playbooks/eval.md) | Temporary experiments for assessing instruction changes |
 | [`visualizations/skill-library/`](visualizations/skill-library/) | Interactive system graph |
 | [`AGENTS.md`](AGENTS.md) | Repository maintenance rules |
 | [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) | Architecture, ownership, sources, and adaptations |

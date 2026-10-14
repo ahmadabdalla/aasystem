@@ -1,2 +1,0 @@
-Prior migration investigation: source identity and exact input were not recorded.
-This file is historical evidence, not proof that the current migration passes.
