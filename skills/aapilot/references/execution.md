@@ -49,7 +49,17 @@ Before editing, derive expected results from requirements or the contract. Exerc
 
 Follow project evidence procedures and the [evidence contract](../../bootstrap-verification/references/project-contract.md#evidence-and-retention) for claim strength, run locations, review retention and disposal. Separate harness faults, product defects and missing access. Use [maintain-verification](../../maintain-verification/SKILL.md) for recipe drift. Never change expectations to hide regressions; record authority for intentional changes. Update and recheck affected feature recipes when behavior or procedure changes; unchanged runs need no permanent map edit.
 
-Verify each meaningful unit and the final combined artifact. Clean up only owned resources; confirm evidence survives. Partial results must identify unverified claims.
+Verify each meaningful unit and the final combined artifact under the [independent implementation verification procedure](#independent-implementation-verification) when applicable. Clean up only owned resources; confirm evidence survives. Partial results must identify unverified claims.
+
+## Independent implementation verification
+
+For production implementation, the owner dispatches a fresh verifier separate from product editors; development checks cannot satisfy this gate. The [prescribed presentation exception](#verification-through-the-project) may stay with the lead; record why it applies and any unexercised claims. Design-only and throwaway experiments retain their own evidence scope.
+
+Follow [Delegation](#delegation) and [Review context](#review-context). Include the combined artifact’s exact revision or source identity, relevant baseline or reproduction, project verifier and affected recipes, surface and side-effect expectations, environment/access limits, evidence destination, and cleanup ownership. For discovery, exclude implementation conclusions and development pass claims until the initial report; retain original requirements, constraints, contracts, and runnable recipes. Audits may receive claims and sources; disclose that mode and its limits.
+
+The verifier follows [project verification](#verification-through-the-project) against the actual artifact and returns pass, fail, or unverified per claim, observations and evidence, tested source identity, coverage and isolation limits. It changes neither product code nor expectations. Return harness drift for separate [Maintain Verification](../../maintain-verification/SKILL.md) correction; blocked product claims remain unverified.
+
+The owner reconciles the report, assigns product corrections through the change workflow, and reruns affected independent proof on the current combined artifact after material changes. Acceptance requires evidence for the current artifact. Missing delegation, runtime access, or usable proof leaves the gate unmet. [Interrogate](../../interrogate/SKILL.md) provides adversarial review, not executable verification.
 
 ## Completion
 

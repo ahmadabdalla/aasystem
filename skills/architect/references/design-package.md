@@ -6,7 +6,7 @@ When retaining a separate project design artifact, keep it discoverable through 
 
 ## Candidate inputs and output
 
-Each candidate receives the task, settled constraints, relevant grounding artifacts, evidence limits, applicable principle leaves with their scope, proof criteria, design review questions, and its own output location. A candidate produces one sketch and rationale; it does not run another competition or implement the design unless explicitly assigned that work.
+Each candidate receives the task, settled constraints, relevant grounding artifacts, evidence limits, applicable principle leaves with their scope, proof criteria, design review questions, and its own output location. A candidate produces one sketch and rationale; it does not run another competition or implement the design.
 
 - **Problem and constraints:** The intended behavior, relevant existing boundaries, accepted solution decisions, non-goals, and assumptions still needing evidence. Preserve sources and their limits.
 - **Caller usage:** Realistic calls or interactions written before the types. Reconcile the sketch to this usage.
@@ -20,4 +20,4 @@ Each candidate receives the task, settled constraints, relevant grounding artifa
 
 Arena adds the selected base and reason, compatible additions with their source candidates, rejected ideas, and comparison limits. It reconciles usage, shape, constraints, and the verification plan into one package. Candidate alternatives and the selection among candidates are distinct parts of the rationale.
 
-Architect checks the package against the task. For a design-only assignment, return it to the calling playbook, which owns subsequent implementation and final proof. For standalone implementation work, architect retains that ownership. Update the package when material evidence changes the design, retaining the reason. Preserve the distinction between a supported design choice and behavior observed in the final implementation.
+Architect checks and returns the package under its [handoff and revision rules](../SKILL.md#return-and-reconsider), including the standalone design-and-build route. A supported design choice does not establish observed implementation behavior.

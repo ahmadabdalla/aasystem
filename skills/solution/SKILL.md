@@ -8,8 +8,6 @@ disable-model-invocation: true
 
 Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
-Reach a defensible decision through research, alternatives, and analysis.
-
 Own the solution decision and its explanation. Use returned findings in the decision record; do not restart the brief or concatenate reports. Surface changed assumptions, consequential findings, and decisions that need the user's input as work proceeds.
 
 ## Check the brief
@@ -25,8 +23,6 @@ Consume the product contract when present. Preserve agreed behavior and invarian
 Use [grill-me](../grill-me/SKILL.md) when the user requests an interview or several consequential choices need their judgment. Reuse its returned brief and continue the solution decision; a single missing detail uses the focused question above.
 
 Read relevant project glossary entries and current ADRs, following project instructions and context maps. Preserve their scope and status. Use [domain-modeling](../domain-modeling/SKILL.md) when meanings need clarification or a qualifying decision needs recording within the authorized document scope. Link saved records from the decision record; preserve the reason when new evidence warrants revisiting one.
-
-Read the [approved-principle index](../principles/INDEX.md) while grounding the decision. Use its matching, application, and handoff instructions for relevant judgments.
 
 Establish the current system, desired properties, non-goals, actors, ownership, trust boundaries, and operational burden where relevant. Use [how](../how/SKILL.md) for behavior and [why](../why/SKILL.md) for existing rationale. Use existing project discovery and feature-map evidence when available, preserving its inspection boundaries and observed-versus-intended distinctions. Research current external claims in primary sources; cite the relevant passage or artifact, version, and date where these affect the decision.
 
@@ -46,4 +42,4 @@ For each viable option, identify what must be true, the strongest failure case, 
 
 Use the caller’s designated artifact for the solution rationale, preserving other contributors’ content and linking canonical decisions. Maintain one decision record containing the outcome, chosen approach and rationale, constraints, non-goals, decisive sources and their limits, accepted tradeoffs, rejected alternatives, unresolved assumptions, and conditions for reconsideration. Include observable success criteria where known. Preserve whether a claim is documented, observed, inferred, or a value judgment. Distinguish an initial version from a target state only with concrete transition triggers. If uncertainty changes the ranking, make the recommendation conditional and identify the discriminating evidence. Present the recommendation and what affects its acceptance; link to supporting detail when substantial. The record's contents need not become separate headings in every reply.
 
-When called by [aapilot](../aapilot/SKILL.md), return the decision record and its source artifacts to that owner, which selects the appropriate change playbook if implementation is authorized. For a standalone request that includes implementation design, pass the same record to [architect](../architect/SKILL.md). A research-only request ends with the recommendation. Business value and preference may remain judgments. Research supports the recommendation; it does not prove a future implementation works.
+When called by [aapilot](../aapilot/SKILL.md), return the decision record and its source artifacts to that owner, which selects the appropriate change playbook if implementation is authorized. For a standalone design request, pass the same record to [architect](../architect/SKILL.md). For an authorized build, transfer the continuation and same record to aapilot for the change playbook, preserving one owner and requested checkpoints; Architect remains design-only. A research-only request ends with the recommendation. Business value and preference may remain judgments. Research supports the recommendation; it does not prove a future implementation works.
