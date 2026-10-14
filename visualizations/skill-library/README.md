@@ -15,6 +15,8 @@ The map intentionally does not draw a foundation edge from every procedural skil
 
 The execution contract owns [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot assigns execution and checks results under those shared rules; review context distinguishes independent discovery from confirmation/evidence audits.
 
+Maintainability is a conditional supporting assessment for Architect, Refactoring, and Interrogate. It returns findings to its caller, which retains the design, review, or implementation decision; it is not an aapilot route.
+
 Bug Fix and Refactoring use the [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) for their design assignments. Architect owns that criterion; editing several function bodies alone does not select the route.
 
 ## Maintain the map

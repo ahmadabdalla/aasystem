@@ -65,6 +65,8 @@ For a focused task, you can invoke a flagship skill directly:
 
 All skills remain available from [`skills/`](skills/).
 
+For a bounded code or design assessment, use [`maintainability`](skills/maintainability/SKILL.md). It examines reader effort, local change cost, and ease of verification, then returns findings to the caller; it does not select a top-level task route or own implementation.
+
 ## Repository map
 
 | Path | Contents |

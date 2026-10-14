@@ -18,6 +18,8 @@ When delegation is available and permitted, run isolated reviewers with the same
 
 Review relevant correctness, boundaries, data ownership, failure paths, verification coverage, and cost. Also inspect frame errors: an untested premise shared by all options, a missing alternative, or a proposed means mistaken for the user's outcome. Respect explicit constraints and identify conflicts instead of silently redefining the goal.
 
+For code or implementation-design assignments where reader burden or change cost matters, give the relevant existing reviewer a bounded [maintainability](../maintainability/SKILL.md) assignment and accessible criterion references. Keep it within the same review setup and selected context mode; do not create a second reviewer pool or supply prior assessments to independent discovery. Respect its explicit invocation policy and disclose an unavailable handoff. The supporting assessment returns findings; Interrogate retains adversarial synthesis and the verdict.
+
 Require a concrete location, condition or execution path, consequence, supporting evidence, and what would resolve uncertainty for each finding. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty review is valid.
 
 ## Apply lead judgment

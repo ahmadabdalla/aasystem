@@ -39,6 +39,7 @@ Use these boundaries when skills interact:
 - **Prototype:** the inspectable throwaway artifact
 - **Solution:** the overall approach
 - **Architect:** implementation shape and boundaries
+- **Maintainability:** a bounded assessment of reader effort, local change cost, and ease of verification; returns findings to its caller
 - **Feature playbook:** authorized production delivery
 - **Project verifier:** observed behavior and reusable checks
 - **Caller:** phase transitions and canonical record updates
@@ -78,6 +79,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`product`](skills/product/SKILL.md) | Define journeys and behavior | First-party split; [OpenSpec](https://github.com/Fission-AI/OpenSpec/blob/main/docs/concepts.md) | Owns discovery synthesis and separates facts, proposals, and agreements |
 | [`solution`](skills/solution/SKILL.md) | Choose the overall approach | pstack [`investigation`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/investigation.md) | Adds solution design and unresolved conditions |
 | [`architect`](skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md) | Can stop after design; verifies against requirements |
+| [`maintainability`](skills/maintainability/SKILL.md) | Assess reader effort, local change, and ease of verification | pstack [`Minimize Reader Load`](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-minimize-reader-load/SKILL.md) and [`Architect red flags`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md); Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md) and [`code-review`](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md) | Owns reusable criteria now maintained in [`SKILL.md`](skills/maintainability/SKILL.md), [`local code`](skills/maintainability/references/local-code.md), and [`boundaries`](skills/maintainability/references/boundaries.md). Local Clean Code guidance is conceptual input only and is not reproduced. |
 | [`interaction-design`](skills/interaction-design/SKILL.md) | Design consequential interactions | pstack [`Experience First`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-experience-first/SKILL.md), [`Exhaust the Design Space`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-exhaust-the-design-space/SKILL.md), Matt Pocock [`wayfinder`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/wayfinder/SKILL.md) | Keeps product meaning and implementation architecture with their owners |
 | [`ui-refinement`](skills/ui-refinement/SKILL.md) | Refine a rendered experience | First-party founder requirement | Returns a reviewed reference; the caller retains delivery |
 | [`prototype`](skills/prototype/SKILL.md) | Build an inspectable experiment | Matt Pocock [`prototype`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/prototype/SKILL.md) | Uses isolated artifacts; excludes automatic production promotion |
@@ -138,6 +140,12 @@ Shared rules stay in the execution contract. Its [delegation procedure](skills/a
 Specialists keep only actionable scope reminders.
 
 The [Architect design trigger](skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
+
+### Maintainability
+
+[`maintainability`](skills/maintainability/SKILL.md) is a conditional supporting assessment for Architect, Refactoring, and Interrogate when its findings can change a design, structural improvement, or review verdict.
+
+The reusable assessment criteria formerly held by Architect now live with Maintainability in its [`SKILL.md`](skills/maintainability/SKILL.md), [local-code reference](skills/maintainability/references/local-code.md), and [boundaries reference](skills/maintainability/references/boundaries.md). This keeps local readability and system-boundary assessment in one owner while Architect retains implementation design and Refactoring retains equivalence proof.
 
 ### UI review
 
@@ -236,6 +244,7 @@ The current evaluation packages cover:
 | [`adr-ownership`](evals/adr-ownership/README.md) | Decision scope, ownership, layout, maintenance, convention selection, and content conformance |
 | [`verification-lifecycle`](evals/verification-lifecycle/README.md) | Temporary output, teardown, retained proof, and reruns |
 | [`review-context`](evals/review-context/README.md) | Reviewer context separation, delayed comparison, and checking supplied claims |
+| [`maintainability`](evals/maintainability/README.md) | Local code and boundary assessments, caller ownership, settled-target reuse, and discovery handoffs |
 
 Fixtures define test cases.
 

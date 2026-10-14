@@ -187,6 +187,17 @@ const nodes = [
     y: 455,
   },
   {
+    id: "maintainability",
+    title: "Maintainability",
+    type: "skill",
+    subtitle: "Reader & change burden",
+    purpose: "Assesses whether supplied code or a design is easy to understand, change, and verify, then returns concrete findings to its caller.",
+    owns: "The bounded assessment and its evidence-backed findings; the caller decides on design, edits, and records.",
+    source: "../../skills/maintainability/SKILL.md",
+    x: 2224,
+    y: 455,
+  },
+  {
     id: "feature",
     title: "Feature",
     type: "playbook",
@@ -458,6 +469,7 @@ connect("architect", "interaction-design", "handoff", "returns unsettled interac
 connect("architect", "arena", "support", "compares implementation shapes");
 connect("architect", "interrogate", "support", "reviews contested design");
 connect("architect", "maintain-verification", "support", "repairs verifier drift");
+connect("architect", "maintainability", "support", "assesses candidate burden");
 
 // Investigation and experiment mechanics.
 connect("investigation", "how", "support", "grounds current behavior");
@@ -471,6 +483,7 @@ connect("why", "solution", "handoff", "supplies historical constraints");
 connect("why", "architect", "handoff", "supplies layering constraints");
 connect("arena", "probe", "support", "reconciles disputed evidence");
 connect("interrogate", "probe", "support", "checks material claims");
+connect("interrogate", "maintainability", "support", "checks maintainability claims");
 connect("prototype-playbook", "probe", "support", "defines empirical method");
 connect("prototype-playbook", "prototype", "support", "delegates inspectable artifact");
 connect("prototype-playbook", "feature", "handoff", "passes selected direction");
@@ -502,6 +515,7 @@ connect("bug-fix", "opening-pr", "handoff", "delivers when authorized");
 connect("refactoring", "how", "support", "captures behavior baseline");
 connect("refactoring", "figure-it-out", "support", "handles coupled migration");
 connect("refactoring", "architect", "support", "designs when trigger applies");
+connect("refactoring", "maintainability", "support", "assesses structural improvement");
 connect("refactoring", "feature", "handoff", "separates behavior changes");
 connect("refactoring", "bug-fix", "handoff", "separates discovered defects");
 connect("refactoring", "opening-pr", "handoff", "delivers when authorized");
