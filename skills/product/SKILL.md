@@ -38,7 +38,7 @@ Trace journeys backward to who establishes their prerequisites and forward acros
 
 Check for missing outcomes, contradictory rules, and terms that admit different interpretations. Use [domain-modeling](../domain-modeling/SKILL.md) for consequential ambiguity, [probe](../probe/SKILL.md) when evidence could settle an assumption, and [interrogate](../interrogate/SKILL.md) for contested or consequential contracts.
 
-Use [grill-me](../grill-me/SKILL.md) when several related decisions need the user's judgment. For a single material choice that cannot reasonably be inferred, ask one focused question and wait. Helpers return findings to this assignment; they do not launch implementation. A technical feasibility concern goes to the caller for solution analysis; retain the affected requirement and tradeoff until its authority is resolved.
+Resolve consequential choices under [decision authority](../aapilot/references/execution.md#decision-authority). Helpers return findings to this assignment; they do not launch implementation. A technical feasibility concern goes to the caller for solution analysis; retain the affected requirement and tradeoff until its authority is resolved.
 
 ## Record and hand off
 

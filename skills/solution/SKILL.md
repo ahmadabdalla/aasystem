@@ -14,13 +14,13 @@ Own the solution decision and its explanation. Use returned findings in the deci
 
 Treat feature scope, production readiness, evaluation purpose and rollout scale as separate decisions; infer none from the label MVP alone.
 
-Before substantial work, briefly state the intended outcome, consequential gaps, and assumptions you will use. Reframe a proposed technology or either/or choice into the actual decision. Investigate observable unknowns; ask one focused question when a missing preference or constraint could materially change the outcome and cannot reasonably be assumed. If you ask, stop and wait for the answer. Otherwise proceed with the stated assumptions. Do not repeat this check after the brief is settled unless new evidence changes it.
+Before substantial work, state the intended outcome and unresolved choices. Reframe a proposed technology or either/or choice into the actual decision. Investigate observable unknowns and apply [decision authority](../aapilot/references/execution.md#decision-authority). Preserve proposals separately from agreements; reopen a settled brief only when new evidence changes it.
 
 ## Ground and research
 
 Consume the product contract when present. Preserve agreed behavior and invariants while comparing approaches. Use [product](../product/SKILL.md) for material gaps in the behavior contract within the assigned scope. When feasibility changes the available product choices, return the requirement, evidence, and tradeoff to the caller or user for resolution; do not silently redefine the outcome. An adequate brief needs no separate product exercise.
 
-Use [grill-me](../grill-me/SKILL.md) when the user requests an interview or several consequential choices need their judgment. Reuse its returned brief and continue the solution decision; a single missing detail uses the focused question above.
+Use [grill-me](../grill-me/SKILL.md) when the user requests an interview or several consequential choices need their judgment. Reuse its returned brief and continue the solution decision; a single missing detail follows the shared decision rule.
 
 Read relevant project glossary entries and current ADRs, following project instructions and context maps. Preserve their scope and status. Use [domain-modeling](../domain-modeling/SKILL.md) when meanings need clarification or a qualifying decision needs recording within the authorized document scope. Link saved records from the decision record; preserve the reason when new evidence warrants revisiting one.
 

@@ -8,7 +8,9 @@ import shutil
 import stat
 import subprocess
 from datetime import datetime
-VERSION = 1
+STATE_VERSION = 2
+SNAPSHOT_VERSION = 1
+VERSION = STATE_VERSION
 ENTRY_PATH = Path(__file__).resolve().parent.parent / 'work_receipts.py'
 SKILL_TREE = ENTRY_PATH.parents[2]
 
@@ -130,9 +132,17 @@ def validate_brief(brief, state_path):
     fingerprint(brief['environment'])
     read_json(brief['environment'])
     string_list(brief.get('actions'), 'actions', True)
-    string_list(brief.get('claims'), 'claims', True)
+    string_list(brief.get('claims'), 'claims')
+    require(brief.get('purpose') in ('implementation', 'verification', 'other'), 'explicit purpose required')
+    require(brief.get('required_review_mode', 'independent-discovery') in ('independent-discovery', 'confirmation-audit'), 'invalid required_review_mode')
     string_list(brief.get('checkpoints'), 'checkpoints')
+    obligations = brief.get('checkpoint_obligations', [])
+    require(isinstance(obligations, list), 'checkpoint_obligations must be a list')
+    for obligation in obligations:
+        require(obligation.get('id') in brief['checkpoints'] and obligation.get('before') in ('implementation', 'acceptance'), 'invalid checkpoint obligation')
+    require(len({(o['id'], o['before']) for o in obligations}) == len(obligations), 'duplicate checkpoint obligation')
     require(brief.get('proof_kind') in ('scoped', 'production'), 'invalid proof_kind')
+    require(brief['proof_kind'] != 'production' or bool(brief['claims']), 'production requires nonempty claims')
     for key in ('constraints', 'expected_outputs'):
         require(key in brief, f'{key} required')
     resources = brief.get('resources')
@@ -219,7 +229,7 @@ def check_snapshot(state, path, current=True, current_authority=True):
         'snapshot manifest must be in runtime directory',
     )
     manifest = read_json(path)
-    require(manifest.get('schema_version') == VERSION, 'unsupported snapshot schema')
+    require(manifest.get('schema_version') == SNAPSHOT_VERSION, 'unsupported snapshot schema')
     require(manifest.get('run') == state['brief']['id'], 'snapshot belongs to another run')
     if current_authority:
         require(
@@ -257,6 +267,10 @@ def read_report_record(state, path):
     for name in ('environment', 'verifier'):
         if report.get(name):
             refs.append(report[name])
+    context = report.get('context', {})
+    if isinstance(context, dict):
+        for exposure in context.get('exposures', []):
+            refs.append(exposure['source_ref'])
     hashes = {v: fingerprint(v) for v in refs}
     record = {'report': report, 'hashes': hashes, 'authority_revision': state['authority_revision']}
     previous = state['reports'].get(report['id'])
@@ -267,91 +281,6 @@ def read_report_record(state, path):
 def check_record(record):
     paths = [p for p, expected in record['hashes'].items() if fingerprint(p, True) != expected]
     require(not paths, 'stale report/evidence inputs: ' + ', '.join(paths))
-
-
-def validate_production_proof(state, report, verifier):
-    context = report.get('context', {})
-    require(report.get('executable') is True, 'production requires executable proof')
-    require(
-        context.get('fresh') is True and context.get('prior_conclusions') is False,
-        'fresh verifier without inherited conclusions required',
-    )
-    require(
-        isinstance(context.get('exposure'), str) and bool(context.get('isolation_limits')),
-        'context exposure/isolation declarations required',
-    )
-    require(
-        report.get('review_mode') in ('independent-discovery', 'confirmation-audit'),
-        'production review_mode required',
-    )
-    editors = set(string_list(report.get('editors'), 'editors'))
-    for other_task in state['tasks'].values():
-        for report_id in other_task.get('returns', []):
-            returned = state['reports'][report_id]['report']
-            if other_task['id'] != verifier['id']:
-                editors.update(returned.get('editors', []))
-                editors.add(returned['producer'])
-    require(report['producer'] not in editors, 'verifier is a declared editor/artifact producer')
-    commands = report.get('commands')
-    require(isinstance(commands, list) and bool(commands), 'executable commands required')
-    require(
-        all((isinstance(c, dict) and c.get('command') and (type(c.get('exit_code')) is int) and (c['exit_code'] == 0) for c in commands)),
-        'command proof missing/failing',
-    )
-
-
-def validate_claim_proof(state, task, claim, proof, current):
-    record = state['reports'][proof['report']]
-    report = record['report']
-    require(record['authority_revision'] == state['authority_revision'], 'proof predates resume')
-    check_record(record)
-    require(
-        report['claims'][claim].get('status') == 'pass' and report['claims'][claim].get('observations'),
-        'claim is not observed passing',
-    )
-    require(report.get('snapshot'), 'tested snapshot required')
-    check_snapshot(state, report['snapshot'], current=current)
-    require(
-        report.get('environment') == state['brief']['environment'],
-        'environment descriptor identity missing/mismatched',
-    )
-    fingerprint(report.get('verifier'))
-    require(
-        report.get('coverage') and report.get('limitations') is not None and (report.get('effects') is not None),
-        'coverage, effects and limitations required',
-    )
-    verifier = state['tasks'][proof['verifier_task']]
-    require(verifier['status'] in ('returned', 'accepted'), 'verifier assignment must return')
-    require(report['task'] == verifier['id'], 'verifier report assignment mismatch')
-    if task['proof_kind'] == 'production':
-        validate_production_proof(state, report, verifier)
-
-
-def proof_errors(state, target, current=True, selected_reports=None):
-    task = state['tasks'][target]
-    errors = []
-    for claim in task['claims']:
-        candidates = [
-            p
-            for p in state['proofs']
-            if p['target'] == target
-            and claim in state['reports'][p['report']]['report'].get('claims', {})
-        ]
-        reasons = []
-        passed = False
-        # A later contradictory or invalid receipt cannot revive an older pass.
-        for proof in candidates[-1:]:
-            try:
-                validate_claim_proof(state, task, claim, proof, current)
-                passed = True
-                if selected_reports is not None:
-                    selected_reports.append(proof['report'])
-                break
-            except (Rejected, KeyError, TypeError, ValueError, OSError) as exc:
-                reasons.append(str(exc))
-        if not passed:
-            errors.append(f'{target}:{claim}: ' + ('; '.join(reasons) or 'missing verification'))
-    return errors
 
 
 def snapshot(state, task, out, write_manifest):
@@ -376,7 +305,7 @@ def snapshot(state, task, out, write_manifest):
         after = input_manifest(state)
         require(before == after, 'source changed during snapshot: ' + ', '.join(changed(before, after)))
         manifest = {
-            'schema_version': VERSION,
+            'schema_version': SNAPSHOT_VERSION,
             'run': state['brief']['id'],
             'task': task,
             'authority_revision': state['authority_revision'],

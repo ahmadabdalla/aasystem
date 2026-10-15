@@ -12,7 +12,7 @@ Own framing through verification. Select the procedure, coordinate contributors,
 
 ## Select the path
 
-Read the request, project instructions and task evidence. State the outcome, consequential assumptions and selected path. Inspect observable unknowns. Ask one focused question only for a material choice you cannot reasonably infer; then stop and wait. Preserve plan-only, research-only and explicit checkpoints.
+Read the request, project instructions and task evidence. State the outcome and selected path; inspect observable unknowns. Apply [decision authority](references/execution.md#decision-authority) before implementation. Preserve plan-only, research-only and explicit checkpoints.
 
 Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and exceptions with the brief. Borrowed workflow requirements do not establish personal preferences.
 
@@ -44,7 +44,7 @@ Dedicated procedures for performance tuning, hillclimbing, forensics, general-pu
 
 ## Coordinate and finish
 
-When the user explicitly requests bounded autonomous work or the bounded-autonomy PoC, follow [Bounded work](references/bounded-work.md) alongside the selected procedure. It adds shared work receipts for authority, budget, current proof and human checkpoints; the existing owner retains execution and acceptance.
+When the user explicitly requests bounded autonomous work or the bounded-autonomy PoC, follow [Bounded work](references/bounded-work.md) alongside the selected procedure. It adds decision reviews, native attempt receipts, frozen findings, current proof and mandatory human checkpoints; the existing owner retains execution and acceptance.
 
 Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect returns design, [Implement](../implement/SKILL.md) returns production edits and development checks, and a separate worker supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
 

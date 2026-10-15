@@ -36,6 +36,9 @@ class WorkReceiptsCLI(unittest.TestCase):
             'owner': 'lead',
             'project_root': str(self.project),
             'objective': 'bounded work',
+            'purpose': 'other',
+            'checkpoint_obligations': [],
+            'required_review_mode': 'independent-discovery',
             'requirements': [str(self.req)],
             'decisions': [],
             'procedures': [str(self.procedure)],
@@ -110,6 +113,7 @@ class WorkReceiptsCLI(unittest.TestCase):
         }
 
     def apply(self, kind=None, ok=True, event=None, **payload):
+        self.ensure_transition_prerequisites(kind, payload)
         event = event or self.event_data(kind, **payload)
         before = self.state.read_bytes()
         result = self.call(['apply', '--state', str(self.state), '--event', str(self.json_file('event.json', event))], ok)
@@ -117,12 +121,35 @@ class WorkReceiptsCLI(unittest.TestCase):
             self.assertEqual(before, self.state.read_bytes(), 'rejected transition changed state')
         return result
 
+    def ensure_transition_prerequisites(self, kind, payload):
+        """Record required dispatch and decision review before the requested event."""
+        if kind in ('accept', 'cancelled'):
+            task_id = payload.get('task', 'root')
+            assigned = self.current()['tasks'][task_id]
+            attempt = self.current()['attempts'].get(task_id, {})
+            if assigned.get('parent') and 'outcome' not in attempt:
+                self.apply('dispatch', task=task_id, actor=assigned['owner'], attempt_id=task_id, operation='spawn',
+                    request_ref=str(self.host), host_ref=str(self.host), outcome='failed' if kind == 'cancelled' else 'started',
+                    worker_id=None if kind == 'cancelled' else task_id + '-worker')
+        if kind == 'accept' and 'decision_review' not in payload:
+            payload['decision_review'] = self.review(payload.get('task', 'root'), payload.get('actor', 'lead'))
+
+    def review(self, task='root', actor='lead', **changes):
+        event = self.event_data('decision_review', task=task, actor=actor, **({
+            'resources': self.current()['tasks'][task]['resources'], 'artifact_refs': [str(self.req)],
+            'coverage': 'Inspect fixture behavior, authority and contract; no unsettled consequential choice',
+            'authority_revision': self.current()['authority_revision'], 'decisions': [], 'unresolved': [],
+            'rationale': 'Requirements settle fixture behavior; helper internals are routine'} | changes))
+        self.apply(event=event)
+        return event['id']
+
     def assign(self, task_id='verify', parent='root', owner='worker', actor='lead', ok=True, **changes):
         assignment = {
             'id': task_id,
             'parent': parent,
             'owner': owner,
             'objective': 'bounded assignment',
+            'purpose': 'verification' if ('verify' in task_id or 'verifier' in task_id) else 'other',
             'procedure': str(self.procedure),
             'actions': ['read'],
             'resources': ['repo'],
@@ -131,18 +158,30 @@ class WorkReceiptsCLI(unittest.TestCase):
             'inputs': [str(self.req)],
             'expected_artifacts': ['report'],
         }
+        if assignment['purpose'] == 'verification':
+            target = parent if parent != 'root' else ('replacement' if task_id == 'replacement-verifier' else 'root')
+            assignment['review'] = {'target': target, 'mode': 'independent-discovery', 'claims': self.current()['tasks'][target]['claims']}
         assignment.update(changes)
         return self.apply('assign', task=parent, actor=actor, assignment=assignment, ok=ok)
 
     def snapshot(self, name='snapshot', task='root', ok=True):
+        task = self.snapshot_task(task)
         result = self.call(['snapshot', '--state', str(self.state), '--task', task, '--out', str(self.run / name)], ok)
         return result.get('manifest')
 
+    def snapshot_task(self, task):
+        if task == 'root':
+            reviews = [t for t in self.current()['tasks'].values() if t.get('purpose') == 'verification' and not t.get('preflight')]
+            if reviews:
+                task = reviews[-1]['id']
+        return task
+
     def report(self, name='proof', task='verify', **changes):
+        """Start the producer, freeze initial findings, then write its final report."""
         report = {
             'id': name,
             'task': task,
-            'producer': 'fresh-verifier',
+            'producer': task + '-native-worker',
             'host_ref': str(self.host),
             'editors': ['editor'],
             'review_mode': 'independent-discovery',
@@ -150,7 +189,9 @@ class WorkReceiptsCLI(unittest.TestCase):
                 'fresh': True,
                 'prior_conclusions': False,
                 'exposure': 'requirements and actual artifact only',
-                'isolation_limits': 'shared filesystem; synthetic fixture',
+                'isolation_limits': ['shared filesystem; synthetic fixture'],
+                'exposures': [],
+                'interval_complete': True,
             },
             'snapshot': str(self.run / 'snapshot' / 'manifest.json') if (self.run / 'snapshot' / 'manifest.json').exists() else None,
             'environment': str(self.env),
@@ -165,7 +206,54 @@ class WorkReceiptsCLI(unittest.TestCase):
             'executable': True,
         }
         report.update(changes)
+        assigned = self.current()['tasks'].get(task)
+        if assigned and assigned.get('parent'):
+            self.ensure_started_report_producer(task, assigned, report)
+            self.ensure_frozen_initial_findings(name, task, assigned, report)
         return str(self.json_file(name + '.json', report))
+
+    def ensure_started_report_producer(self, task, assigned, report):
+        attempts = self.current()['attempts']
+        if task not in attempts or 'outcome' not in attempts[task]:
+            request = self.json_file(task + '-native-request.json', {'fixture': 'synthetic spawn', 'task': task})
+            if assigned['purpose'] == 'verification':
+                self.record_report_preflight(task, assigned, report, request)
+            self.apply('dispatch', task=task, actor=assigned['owner'], attempt_id=task, operation='spawn',
+                request_ref=str(request), host_ref=str(self.host), outcome='started', worker_id=report['producer'])
+
+    def record_report_preflight(self, task, assigned, report, request):
+        context = copy.deepcopy(report['context'])
+        if not context:
+            context = {'fresh': True, 'prior_conclusions': False, 'exposure': 'fixture scoped review', 'isolation_limits': ['synthetic fixture'], 'exposures': [], 'interval_complete': True}
+            report['context'] = context
+        # Ineligible proof facts remain in the initial report; preflight
+        # is a separately observed declaration, not a cleanliness grant.
+        preflight_context = copy.deepcopy(context)
+        preflight_context.setdefault('exposures', [])
+        if isinstance(preflight_context.get('isolation_limits'), str):
+            preflight_context['isolation_limits'] = [preflight_context['isolation_limits']]
+        self.apply('review_preflight', task=task, actor=assigned['owner'], snapshot=report['snapshot'],
+            environment=str(self.env), mode=assigned['review']['mode'], context=preflight_context, host_request_ref=str(request))
+
+    def ensure_frozen_initial_findings(self, name, task, assigned, report):
+        if assigned['purpose'] == 'verification':
+            assigned = self.current()['tasks'][task]
+            if not assigned.get('initial_findings'):
+                context = copy.deepcopy(report['context'])
+                context.setdefault('exposures', [])
+                context.setdefault('interval_complete', True)
+                if isinstance(context.get('isolation_limits'), str):
+                    context['isolation_limits'] = [context['isolation_limits']]
+                report['context'] = context
+                original = self.json_file(name + '-initial.json', {**report, 'id': name + '-initial'})
+                attempt = self.current()['attempts'][task]
+                initial = self.event_data('initial_findings', task=task, actor=assigned['owner'],
+                    preflight_event=assigned['preflight']['id'], dispatch_event=attempt['event'], findings=str(original),
+                    context=context, context_evidence_refs=[str(self.host)])
+                self.apply(event=initial)
+                report['initial_findings_event'] = initial['id']
+            else:
+                report['initial_findings_event'] = assigned['initial_findings']['event']
 
     def proof(self, **changes):
         self.assign()
@@ -177,6 +265,17 @@ class WorkReceiptsCLI(unittest.TestCase):
 
     def accept(self, ok=True):
         return self.apply('accept', rationale='Inspected requirements and observed effects', evidence_refs=[str(self.evidence)], ok=ok)
+
+    def checkpoint_package(self):
+        return self.json_file('package.json', {'question_id': 'fixture-question', 'question': 'What fixture should continue?',
+            'artifact_refs': [str(self.req)], 'decision_ids': ['fixture-decision']})
+
+    def checkpoint_response(self):
+        checkpoint = self.current()['checkpoint']
+        source = self.write(self.run / 'synthetic-human-source.txt', 'Synthetic schema fixture answer only; no actual human interaction')
+        return self.json_file('human.json', {'checkpoint_event': checkpoint['event'],
+            'question_id': checkpoint['content']['question_id'], 'package_hash': checkpoint['hash']['sha256'],
+            'authority_revision': self.current()['authority_revision'], 'answer': 'Continue fixture', 'source_ref': str(source)})
 
     # Lifecycle, authority and proof eligibility.
     def test_returned_is_not_verified_or_accepted(self):
@@ -217,7 +316,7 @@ class WorkReceiptsCLI(unittest.TestCase):
     def test_scoped_design_proof_does_not_require_execution(self):
         self.brief['proof_kind'] = 'scoped'
         self.initialize()
-        self.proof(executable=False, commands=[], review_mode='scoped', context={})
+        self.proof(executable=False, commands=[])
         self.accept()
 
     def test_latest_claim_proof_cannot_fall_back_to_older_pass(self):
@@ -226,9 +325,9 @@ class WorkReceiptsCLI(unittest.TestCase):
             report = self.report(name='later-' + status, claims={'behavior': {'status': status, 'observations': 'new same-artifact observation'}})
             self.apply('returned', task='verify', actor='worker', report=report)
             self.apply('verification', target='root', verifier_task='verify', report=report)
-            self.assertEqual(self.status()['tasks']['root']['verified_now'], status == 'pass')
-            if status != 'pass':
-                self.accept(ok=False)
+            self.assertFalse(self.status()['tasks']['root']['verified_now'])
+            self.accept(ok=False)
+        self.integrated_proof_after_resume()
         self.accept()
 
     def test_editor_or_inherited_context_cannot_prove_production(self):
@@ -249,7 +348,7 @@ class WorkReceiptsCLI(unittest.TestCase):
         self.assign('implement', owner='editor')
         report = self.report(name='implementation', task='implement', producer='same-worker', editors=['same-worker'])
         self.apply('returned', task='implement', actor='editor', report=report)
-        self.proof(producer='same-worker', editors=[])
+        self.proof(producer='fresh-editor', editors=['fresh-editor'])
         self.accept(ok=False)
 
     # Source and retained evidence identity.
@@ -307,11 +406,11 @@ class WorkReceiptsCLI(unittest.TestCase):
     # Checkpoints, interrupted effects and transaction guarantees.
     def test_checkpoint_stops_and_resume_invalidates_proof(self):
         self.proof()
-        self.apply('checkpoint', checkpoint_id='visual', package=str(self.evidence), reason='requires eyeballing', decision='approve preview')
+        self.apply('checkpoint', checkpoint_id='visual', package=str(self.checkpoint_package()), reason='requires eyeballing', decision='approve preview')
         used = self.status()['remaining_dispatches']
         self.assign('blocked', ok=False)
         self.accept(ok=False)
-        response = self.write(self.run / 'human.txt', 'SYNTHETIC human-response protocol fixture only')
+        response = self.checkpoint_response()
         self.apply('resume', checkpoint_id='wrong', authority_revision=0, human_response=str(response), ok=False)
         self.apply('resume', checkpoint_id='visual', authority_revision=99, human_response=str(response), ok=False)
         wider = copy.deepcopy(self.brief)
@@ -340,6 +439,7 @@ class WorkReceiptsCLI(unittest.TestCase):
             'parent': 'root',
             'owner': 'worker',
             'objective': 'inspect',
+            'purpose': 'other',
             'procedure': str(self.procedure),
             'actions': ['read'],
             'resources': ['repo'],
@@ -538,6 +638,15 @@ class WorkReceiptsCLI(unittest.TestCase):
         self.source.write_text('new current source')
         self.assertFalse(self.status()['tasks']['root']['currently_accepted'])
 
+    def test_superseded_review_cannot_accept_without_claims(self):
+        self.brief['claims'] = []
+        self.brief['proof_kind'] = 'scoped'
+        self.initialize()
+        old = self.review()
+        latest = self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        self.apply('accept', decision_review=old, rationale='Try older review', evidence_refs=[str(self.evidence)], ok=False)
+        self.assertEqual(self.current()['tasks']['root']['decision_review'], latest)
+
     def test_uncertainty_blocks_equal_parent_child_and_named_aliases(self):
         self.brief['resources'].update({'app': str(self.source), 'repo-alias': str(self.project), 'service-alias': 'named:local-service'})
         self.initialize()
@@ -562,9 +671,9 @@ class WorkReceiptsCLI(unittest.TestCase):
     def test_resume_allows_fresh_proof_and_acceptance_after_old_acceptance(self):
         self.proof()
         self.accept()
-        package = self.write(self.run / 'package.txt', 'current artifact')
+        package = self.checkpoint_package()
         self.apply('checkpoint', checkpoint_id='visual', package=str(package), reason='review', decision='approve')
-        response = self.write(self.run / 'human.txt', 'synthetic response')
+        response = self.checkpoint_response()
         self.apply('resume', checkpoint_id='visual', authority_revision=0, human_response=str(response))
         self.assertFalse(self.status()['tasks']['root']['currently_accepted'])
         self.accept(ok=False)
@@ -615,16 +724,16 @@ class WorkReceiptsCLI(unittest.TestCase):
         self.assign('unrelated', parent='other-parent', actor='worker', owner='other', claims=['design'], proof_kind='production', supersedes='original', ok=False)
 
     def test_checkpoint_package_must_match_before_resume(self):
-        package = self.write(self.run / 'package.txt', 'preview shown')
+        package = self.checkpoint_package()
         self.apply('checkpoint', checkpoint_id='visual', package=str(package), reason='review', decision='approve')
-        response = self.write(self.run / 'human.txt', 'synthetic response')
+        response = self.checkpoint_response()
         package.write_text('different preview')
         self.assertIn('checkpoint package', self.apply('resume', checkpoint_id='visual', authority_revision=0, human_response=str(response), ok=False)['error'])
 
     def test_resumed_response_and_package_remain_current_acceptance_inputs(self):
-        package = self.write(self.run / 'package.txt', 'preview shown')
+        package = self.checkpoint_package()
         self.apply('checkpoint', checkpoint_id='visual', package=str(package), reason='review', decision='approve')
-        response = self.write(self.run / 'human.txt', 'synthetic response')
+        response = self.checkpoint_response()
         self.apply('resume', checkpoint_id='visual', authority_revision=0, human_response=str(response))
         self.proof()
         for path in (response, package):
@@ -634,5 +743,340 @@ class WorkReceiptsCLI(unittest.TestCase):
                 self.assertIn('resumption', self.accept(ok=False)['error'])
                 path.write_bytes(original)
         self.accept()
+    def test_exposure_after_execution_before_initial_findings_cannot_pass_discovery(self):
+        context = {'fresh': True, 'prior_conclusions': False,
+            'exposure': 'Lead supplied passing-readiness conclusions after commands but before initial findings returned.',
+            'post_execution_conclusion_exposure': True,
+            'isolation_limits': ['shared host; synthetic protocol regression'],
+            'interval_complete': True,
+            'exposures': [{'kind': 'prior-conclusions', 'stage': 'after-execution-before-initial-findings',
+                'source_ref': str(self.host), 'description': 'Prior lead passing-readiness conclusions received'}]}
+        self.proof(context=context)
+        self.assertFalse(self.status()['tasks']['root']['verified_now'])
+        # A final report claiming clean context cannot improve frozen facts.
+        final = self.report(name='clean-summary')
+        self.apply('returned', task='verify', actor='worker', report=final)
+        self.apply('verification', target='root', verifier_task='verify', report=final)
+        self.accept(ok=False)
+        frozen = self.current()['tasks']['verify']['initial_findings']['record']['report']
+        self.assertEqual(frozen['context'], context)
+
+    def test_decision_reviews_bind_design_authority_and_do_not_invent_agreement(self):
+        self.assign('missing-review', purpose='implementation', ok=False)
+        unresolved = self.review(unresolved=[{'id': 'export', 'question': 'Which data?', 'reason': 'Unsettled consequential choice'}])
+        self.assign('unresolved', purpose='implementation', decision_review=unresolved, ok=False)
+        valid = self.review(decisions=[{'id': 'routine', 'question': 'Helper name?', 'selected': 'plain helper',
+            'classification': 'routine', 'origin': {'kind': 'delegated'}},
+            {'id': 'export', 'question': 'Which data?', 'selected': 'Accepted requirement scope', 'classification': 'product',
+             'origin': {'kind': 'source', 'ref': str(self.req), 'locator': 'line 1', 'status': 'accepted'}},
+            {'id': 'source-settled', 'question': 'Duplicate behavior?', 'selected': 'Leave unchanged', 'classification': 'product',
+             'origin': {'kind': 'source', 'ref': str(self.req), 'locator': 'line 1', 'status': 'accepted'}}])
+        self.assign('settled', purpose='implementation', decision_review=valid)
+        self.assign('wrong-design', purpose='implementation', decision_review=valid, inputs=[str(self.procedure)], ok=False)
+        self.req.write_text('Changed governing authority')
+        self.assign('stale', purpose='implementation', decision_review=valid, ok=False)
+        # Invalid consequential delegation fails in the review transaction itself.
+        event = self.event_data('decision_review', resources=['repo'], artifact_refs=[str(self.req)], coverage='Export policy',
+            authority_revision=0, decisions=[{'id': 'export', 'question': 'Which data?', 'selected': 'all',
+                'classification': 'product', 'origin': {'kind': 'delegated'}}], unresolved=[], rationale='No human source')
+        self.apply(event=event, ok=False)
+        event['decisions'][0]['origin'] = {'kind': 'source', 'ref': str(self.procedure), 'locator': 'line 1', 'status': 'accepted'}
+        event['id'] += '-unapproved-source'
+        self.apply(event=event, ok=False)
+
+    def test_superseded_review_cannot_assign_or_accept_claimless_root(self):
+        self.brief['claims'] = []
+        self.brief['proof_kind'] = 'scoped'
+        self.initialize()
+        old = self.review()
+        latest = self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        self.assign('implement', purpose='implementation', decision_review=old, ok=False)
+        self.apply('accept', decision_review=old, rationale='Try older review', evidence_refs=[str(self.evidence)], ok=False)
+        self.assertEqual(self.current()['tasks']['root']['decision_review'], latest)
+        self.assertFalse(self.status()['tasks']['root']['currently_accepted'])
+
+    def test_implementation_dispatch_and_followup_recheck_current_design(self):
+        design = self.write(self.project / 'design.md', 'Settled A')
+        review = self.review(artifact_refs=[str(design)])
+        self.assign('implement', purpose='implementation', decision_review=review, inputs=[str(design)])
+        design.write_text('Changed B')
+        self.apply('dispatch', task='implement', actor='worker', attempt_id='implement', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native', ok=False)
+        design.write_text('Settled A')
+        self.apply('dispatch', task='implement', actor='worker', attempt_id='implement', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native')
+        self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        self.apply('dispatch_reserved', task='implement', actor='worker', attempt_id='more', operation='followup',
+            reason='Continue native state', worker_id='native', ok=False)
+
+    def test_implementation_followup_reservation_rechecks_current_review(self):
+        review = self.review()
+        self.assign('implement', purpose='implementation', decision_review=review)
+        self.apply('dispatch', task='implement', actor='worker', attempt_id='implement', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native')
+        self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        self.apply('dispatch_reserved', task='implement', actor='worker', attempt_id='more', operation='followup',
+            reason='Continue native state', worker_id='native', ok=False)
+
+    def test_dispatch_readiness_is_current_read_only_and_uses_reserved_budget(self):
+        self.brief['budget']['dispatches'] = 1
+        self.initialize()
+        design = self.write(self.project / 'design.md', 'Settled A')
+        review = self.review(artifact_refs=[str(design)])
+        self.assign('implement', purpose='implementation', decision_review=review, inputs=[str(design)])
+        before = self.state.read_bytes()
+        status = self.status()
+        self.assertEqual(status['remaining_dispatches'], 0)
+        self.assertTrue(status['tasks']['implement']['dispatch_eligible_now'])
+        self.assertEqual(before, self.state.read_bytes())
+        design.write_text('Changed B')
+        self.assertFalse(self.status()['tasks']['implement']['dispatch_eligible_now'])
+        design.write_text('Settled A')
+        self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        self.assertFalse(self.status()['tasks']['implement']['dispatch_eligible_now'])
+
+    def test_reserved_followup_rechecks_gate_at_started_receipt(self):
+        review = self.review()
+        self.assign('implement', purpose='implementation', decision_review=review)
+        self.apply('dispatch', task='implement', actor='worker', attempt_id='implement', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native')
+        self.apply('dispatch_reserved', task='implement', actor='worker', attempt_id='more', operation='followup',
+            reason='Continue native state', worker_id='native')
+        self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        self.assertFalse(self.status()['tasks']['implement']['dispatch_eligible_now'])
+        self.apply('dispatch', task='implement', actor='worker', attempt_id='more', operation='followup',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native', ok=False)
+        self.apply('dispatch', task='implement', actor='worker', attempt_id='more', operation='followup',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='unknown', worker_id='native')
+        self.assertTrue(self.current()['tasks']['implement']['uncertain'])
+        self.assertEqual(self.status()['observed_attempts'], 2)
+
+    def test_production_root_requires_observable_claims(self):
+        self.brief['claims'] = []
+        self.state.unlink()
+        self.call(['init', '--state', str(self.state), '--brief', str(self.json_file('brief.json', self.brief))], ok=False)
+        self.assertFalse(self.state.exists())
+
+    def test_known_unresolved_choice_cannot_disappear_in_clear_review(self):
+        self.review(unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'Architecture unresolved'}])
+        event = self.event_data('decision_review', authority_revision=0, resources=['repo'], artifact_refs=[str(self.req)],
+            coverage='Reinspect', decisions=[], unresolved=[], rationale='Try dropping known choice')
+        self.apply(event=event, ok=False)
+        event['id'] += '-routine'
+        event['decisions'] = [{'id': 'boundary', 'question': 'Who owns state?', 'selected': 'worker',
+            'classification': 'routine', 'origin': {'kind': 'delegated'}}]
+        self.apply(event=event, ok=False)
+        self.review(decisions=[{'id': 'boundary', 'question': 'Who owns state?', 'selected': 'Contract owner',
+            'classification': 'architecture', 'origin': {'kind': 'source', 'ref': str(self.req), 'locator': 'line 1', 'status': 'accepted'}}])
+
+    def test_current_reviews_follow_resource_scope_and_event_order(self):
+        repo = self.review(resources=['repo'])
+        self.review(resources=['service'], unresolved=[{'id': 'service', 'question': 'Who owns service?', 'reason': 'Unresolved'}])
+        self.assign('repo-implementation', purpose='implementation', decision_review=repo)
+        # Review IDs sort differently from event chronology after e9.
+        for unused in range(10):
+            repo = self.review(resources=['repo'])
+        self.assign('latest-implementation', purpose='implementation', decision_review=repo)
+
+    def test_new_unresolved_child_review_still_blocks_ancestor_after_acceptance(self):
+        self.accepted_child()
+        self.review()
+        self.review(task='child', actor='child-owner', unresolved=[{'id': 'boundary', 'question': 'Who owns state?', 'reason': 'New unresolved architecture'}])
+        self.assertIn('unresolved consequential choices', ';'.join(self.status()['tasks']['root']['gates']))
+
+    def test_failed_and_unknown_native_receipts_survive_closed_design_gate(self):
+        for outcome in ('failed', 'unknown'):
+            with self.subTest(outcome=outcome):
+                self.initialize()
+                design = self.write(self.project / 'design.md', 'Settled A')
+                review = self.review(artifact_refs=[str(design)])
+                self.assign('implement', purpose='implementation', decision_review=review, inputs=[str(design)])
+                design.write_text('Changed after actual invocation')
+                self.apply('dispatch', task='implement', actor='worker', attempt_id='implement', operation='spawn',
+                    request_ref=str(self.host), host_ref=str(self.host), outcome=outcome, worker_id=None)
+                status = self.status()
+                self.assertEqual(status['observed_attempts'], 1)
+                self.assertEqual(status['allocated_dispatches'], 1)
+                self.assertEqual(self.current()['tasks']['implement']['uncertain'], outcome == 'unknown')
+
+    def test_explicit_purpose_and_claimless_root_acceptance_require_review(self):
+        self.brief['claims'] = []
+        self.brief['proof_kind'] = 'scoped'
+        self.initialize()
+        event = self.event_data('accept', rationale='claimless scope', evidence_refs=[str(self.evidence)])
+        self.apply(event=event, ok=False)
+        self.brief.pop('purpose')
+        self.state.unlink()
+        self.call(['init', '--state', str(self.state), '--brief', str(self.json_file('brief.json', self.brief))], False)
+        self.assertFalse(self.state.exists())
+
+    def test_mandatory_checkpoint_cannot_be_omitted_for_root_or_implementation(self):
+        self.brief.update(purpose='implementation', claims=[], proof_kind='scoped', checkpoint_obligations=[{'id': 'decision', 'before': 'implementation'}])
+        self.initialize()
+        review = self.review()
+        self.assign('implement', purpose='implementation', decision_review=review, ok=False)
+        self.accept(ok=False)
+        self.apply('checkpoint', checkpoint_id='decision', package=str(self.checkpoint_package()), reason='Need actual answer', decision='fixture-decision')
+        self.apply('resume', checkpoint_id='decision', authority_revision=0, human_response=str(self.checkpoint_response()))
+        self.accept()
+        self.assertTrue(self.status()['tasks']['root']['currently_accepted'])
+
+    def test_free_text_and_choice_answers_bind_exact_question_package_and_source(self):
+        package = self.checkpoint_package()
+        self.apply('checkpoint', checkpoint_id='decision', package=str(package), reason='Ask focused question', decision='fixture-decision')
+        response = self.checkpoint_response()
+        original = json.loads(response.read_text())
+        for changes in ({'checkpoint_event': 'invented'}, {'question_id': 'wrong'}, {'package_hash': 'wrong'},
+                        {'authority_revision': 99}, {'answer': ''}, {'selected_option': 'invented'}):
+            response.write_text(json.dumps(original | changes))
+            self.apply('resume', checkpoint_id='decision', authority_revision=0, human_response=str(response), ok=False)
+        response.write_text(json.dumps(original))
+        self.apply('resume', checkpoint_id='decision', authority_revision=0, human_response=str(response))
+        review = self.review(decisions=[{'id': 'fixture-decision', 'question': 'What fixture should continue?',
+            'selected': original['answer'], 'classification': 'product', 'origin': {'kind': 'human',
+                'checkpoint_event': original['checkpoint_event'], 'resume_event': self.current()['resumptions'][-1]['event']}}])
+        self.assign('answered', purpose='implementation', decision_review=review)
+        # A second distinct checkpoint uses concrete choices, with no manufactured free-text selection.
+        package2 = self.json_file('choice.json', {'question_id': 'choice', 'question': 'Which fixture?', 'artifact_refs': [str(self.req)],
+            'decision_ids': ['choice'], 'options': [{'id': 'a', 'label': 'A', 'consequences': 'first'},
+                {'id': 'b', 'label': 'B', 'consequences': 'second'}], 'recommendation': 'a'})
+        self.apply('checkpoint', checkpoint_id='decision', package=str(package2), reason='Choice', decision='choice')
+        response2 = self.checkpoint_response()
+        content = json.loads(response2.read_text())
+        self.apply('resume', checkpoint_id='decision', authority_revision=1, human_response=str(response2), ok=False)
+        response2.write_text(json.dumps(content | {'selected_option': 'a'}))
+        self.apply('resume', checkpoint_id='decision', authority_revision=1, human_response=str(response2))
+        source = Path(content['source_ref'])
+        source.write_text('mutated actual answer source')
+        self.assertIn('resumption', ';'.join(self.status()['tasks']['root']['gates']))
+
+    def test_native_allocations_results_followups_and_unknowns_are_not_refunded(self):
+        self.brief['budget']['dispatches'] = 3
+        self.initialize()
+        self.assign('native', owner='native-owner')
+        self.assertEqual(self.status()['allocated_dispatches'], 1)
+        self.assertEqual(self.status()['pending_reservations'], 1)
+        self.apply('dispatch', task='native', actor='native-owner', attempt_id='native', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='actual-fixture-worker')
+        self.assertEqual(self.status()['allocated_dispatches'], 1)
+        self.apply('dispatch_reserved', task='native', actor='native-owner', attempt_id='continue', operation='followup',
+            reason='Retain live process state', worker_id='actual-fixture-worker')
+        self.assertEqual(self.status()['allocated_dispatches'], 2)
+        self.apply('dispatch', task='native', actor='native-owner', attempt_id='continue', operation='followup',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='wrong', ok=False)
+        self.apply('dispatch', task='native', actor='native-owner', attempt_id='continue', operation='followup',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='unknown', worker_id='actual-fixture-worker')
+        self.assign('retry', ok=False)
+        self.apply('reconciled', task='native', actor='native-owner', evidence_refs=[str(self.evidence)],
+            worker_active=False, outcome='known', observations='Fixture effects inspected')
+        self.assign('failed')
+        event = self.event_data('dispatch', task='failed', actor='worker', attempt_id='failed', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='failed', worker_id=None)
+        self.apply(event=event)
+        before = self.state.read_bytes()
+        self.apply(event=event)
+        self.assertEqual(before, self.state.read_bytes())
+        status = self.status()
+        self.assertEqual((status['allocated_dispatches'], status['observed_attempts'], status['started_attempts'],
+            status['failed_attempts'], status['unknown_attempts'], status['remaining_dispatches']), (3, 3, 1, 1, 1, 0))
+        self.apply('dispatch', task='failed', actor='worker', attempt_id='failed', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='failed', worker_id=None, ok=False)
+        self.apply('returned', task='failed', actor='worker', report=self.report(name='failed-return', task='root'), ok=False)
+
+    def test_preflight_and_first_findings_cannot_be_late_missing_or_replaced(self):
+        self.assign()
+        self.apply('dispatch', task='verify', actor='worker', attempt_id='verify', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native', ok=False)
+        self.snapshot()
+        report = self.report()
+        frozen = self.current()['tasks']['verify']['initial_findings']
+        self.apply('initial_findings', task='verify', actor='worker', preflight_event='wrong', dispatch_event='wrong',
+            findings=report, context=frozen['context'], context_evidence_refs=[str(self.host)], ok=False)
+        self.apply('returned', task='verify', actor='worker', report=report)
+        self.apply('verification', target='root', verifier_task='verify', report=report)
+        self.accept()
+        initial_path = next(p for p in frozen['record']['hashes'] if p.endswith('-initial.json'))
+        Path(initial_path).write_text('{}')
+        self.assertFalse(self.status()['tasks']['root']['verified_now'])
+        self.assertFalse(self.status()['tasks']['root']['currently_accepted'])
+
+    def test_final_summary_cannot_upgrade_frozen_failed_claims_or_commands(self):
+        for changes in ({'claims': {'behavior': {'status': 'fail', 'observations': 'Observed failure'}}},
+                        {'commands': [{'command': 'actual failing check', 'exit_code': 1}]}):
+            self.initialize()
+            shutil.rmtree(self.run / 'snapshot', ignore_errors=True)
+            self.proof(**changes)
+            final = self.report(name='upgraded')
+            self.apply('returned', task='verify', actor='worker', report=final)
+            self.apply('verification', target='root', verifier_task='verify', report=final)
+            self.accept(ok=False)
+
+    def test_authorized_audit_retains_qualifications_without_passing_discovery(self):
+        context = {'fresh': True, 'prior_conclusions': True, 'exposure': 'Specified claims supplied',
+            'isolation_limits': ['synthetic audit'], 'exposures': [], 'interval_complete': True}
+        for required, eligible in [('independent-discovery', False), ('confirmation-audit', True)]:
+            self.brief['required_review_mode'] = required
+            self.initialize()
+            shutil.rmtree(self.run / 'snapshot', ignore_errors=True)
+            self.assign(review={'target': 'root', 'mode': 'confirmation-audit', 'claims': ['behavior']})
+            self.snapshot()
+            report = self.report(review_mode='confirmation-audit', context=context)
+            self.apply('returned', task='verify', actor='worker', report=report)
+            self.apply('verification', target='root', verifier_task='verify', report=report)
+            self.assertEqual(self.status()['tasks']['root']['verified_now'], eligible)
+            self.accept(ok=eligible)
+
+    def test_nine_spawns_plus_one_followup_consume_ten_allocations(self):
+        for index in range(9):
+            task = 'native-' + str(index)
+            self.assign(task, required=False)
+            self.apply('dispatch', task=task, actor='worker', attempt_id=task, operation='spawn',
+                request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id=task + '-host-id')
+        self.apply('dispatch_reserved', task='native-0', actor='worker', attempt_id='tenth', operation='followup',
+            reason='Live fixture state retained', worker_id='native-0-host-id')
+        reserved = self.status()
+        self.assertEqual((reserved['allocated_dispatches'], reserved['observed_attempts'], reserved['pending_reservations']), (10, 9, 1))
+        self.apply('dispatch', task='native-0', actor='worker', attempt_id='tenth', operation='followup',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='failed', worker_id='native-0-host-id')
+        observed = self.status()
+        self.assertEqual((observed['allocated_dispatches'], observed['observed_attempts'], observed['remaining_dispatches']), (10, 10, 0))
+        self.assign('eleventh', ok=False)
+
+    def test_missing_interval_and_wrong_preflight_request_reject_without_mutation(self):
+        self.assign()
+        snapshot = self.snapshot()
+        context = {'fresh': True, 'prior_conclusions': False, 'exposure': 'Raw fixture inputs only',
+            'isolation_limits': ['synthetic fixture'], 'exposures': []}
+        self.apply('review_preflight', task='verify', actor='worker', snapshot=snapshot, environment=str(self.env),
+            mode='independent-discovery', context=context, host_request_ref=str(self.host))
+        self.apply('dispatch', task='verify', actor='worker', attempt_id='verify', operation='spawn',
+            request_ref=str(self.evidence), host_ref=str(self.host), outcome='started', worker_id='native-fixture', ok=False)
+        self.apply('dispatch', task='verify', actor='worker', attempt_id='verify', operation='spawn',
+            request_ref=str(self.host), host_ref=str(self.host), outcome='started', worker_id='native-fixture')
+        findings = self.json_file('raw-findings.json', {'id': 'raw', 'task': 'verify', 'producer': 'native-fixture',
+            'host_ref': str(self.host), 'context': context})
+        task = self.current()['tasks']['verify']
+        self.apply('initial_findings', task='verify', actor='worker', preflight_event=task['preflight']['id'],
+            dispatch_event=self.current()['attempts']['verify']['event'], findings=str(findings),
+            context=context, context_evidence_refs=[str(self.host)], ok=False)
+        self.apply('returned', task='verify', actor='worker', report=str(findings), ok=False)
+
+    def test_legacy_state_reports_history_without_inventing_recorded_gates(self):
+        legacy = self.current()
+        legacy['schema_version'] = 1
+        legacy['tasks']['root']['status'] = 'accepted'
+        for key in ('attempts', 'decision_reviews'):
+            legacy.pop(key)
+        self.state.write_text(json.dumps(legacy))
+        before = self.state.read_bytes()
+        result = self.status()
+        self.assertTrue(result['legacy_unrecorded_gates'])
+        self.assertEqual(result['tasks']['root']['historical_status'], 'accepted')
+        self.assertFalse(result['tasks']['root']['currently_accepted'])
+        self.assertNotIn('observed_attempts', result)
+        self.apply(event=self.event_data('cancelled', reason='legacy mutation'), ok=False)
+        self.snapshot(ok=False)
+        self.assertEqual(self.state.read_bytes(), before)
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

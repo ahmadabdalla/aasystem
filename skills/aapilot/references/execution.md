@@ -14,6 +14,12 @@ The lead owns framing, assignments, integration, acceptance, final proof and des
 
 For explicitly requested bounded autonomous work, use the experimental [bounded-work procedure](bounded-work.md) alongside this baseline; directly invoked specialists use it within their existing scope.
 
+## Decision authority
+
+Before implementation, identify consequential choices that establish or change product workflows or acceptance criteria, external contracts or data exposure, component responsibilities, state ownership or dependency directions, authority or trust boundaries, deployment or rollback, irreversible effects, or required visual review. Check whether the current request or accepted project records settle each applicable choice and identify its source; an explicit request can settle the choice. For any unresolved choice, ask one focused question or present concrete options with consequences and a recommendation; stop the whole process and wait for the actual human answer. A request to implement an outcome does not approve choices it leaves unspecified; a model recommendation or assumption is not human agreement. Use [Grill Me](../../grill-me/SKILL.md) only for several linked choices.
+
+Keep sourced requirements, delegated implementation proposals, and actual human agreements distinct in the existing brief or decision record. Record the agreed option and its answer/source reference before proceeding; a worker or receipt field cannot supply human agreement. Routine implementation details that preserve settled behavior and boundaries proceed within assigned authority, including private helpers, formatting, conventional visible affordances and extracting pure validators while preserving the agreed state owner. Return a contradiction or newly consequential choice to the owner before implementing it.
+
 ## Delegation
 
 1. **Check capability.** At workflow start, identify the agent tool, delegation restrictions and access workers need. Check supporting procedures too. Use configured or permitted inherited models; do not invent diversity.
@@ -31,11 +37,11 @@ Workflow configuration does not authorize unavailable tools or external actions.
 
 Label review assignments as independent discovery or confirmation/evidence audit. An open search for weaknesses uses discovery; checking specified claims uses an audit.
 
-For independent discovery, supply the objective, authoritative requirements, accepted constraints, source identity, original artifacts, and evidence/access limits. Exclude lead conclusions, suggested answers, earlier reviewer findings, and inherited discussion. Keep these inputs and the original artifact intact. If the artifact or host exposes prior assessments, identify that exposure in the review report.
+For independent discovery, supply the objective, authoritative requirements, accepted constraints, source identity, original artifacts, and evidence/access limits. Exclude lead conclusions, suggested answers, earlier reviewer findings, and inherited discussion. Keep these inputs and the original artifact intact. Record exposure to prior assessments from assignment through the initial returned findings, including exposure through artifacts, host context, messages, or reporting assistance. Disclose it in the review report.
 
-Start each reviewer without the parent conversation. If the host cannot exclude it, report which prior context the reviewer receives. Do not share findings between reviewers until all initial reports return. Then compare the reports against evidence. A fresh worker or different model alone does not establish independent discovery. Report isolation limits.
+Start each reviewer without the parent conversation. If the host cannot exclude it, report which prior context the reviewer receives. Retain each reviewer’s initial findings before lead help with formatting or receipt metadata, and preserve that initial version. Do not share findings between reviewers until all initial reports return. Then compare the reports against evidence. A fresh worker or different model alone does not establish independent discovery. Report isolation limits.
 
-For a confirmation/evidence audit, supply claims and sources, authoritative requirements and original evidence. Treat claims as hypotheses. Derive expected results from requirements, examine supporting and contradictory evidence, and report supported, contradicted, or inconclusive results. Audit agreement does not establish independent discovery.
+For a confirmation/evidence audit, supply claims and sources, authoritative requirements and original evidence. Treat claims as hypotheses. Derive expected results from requirements, examine supporting and contradictory evidence, and report supported, contradicted, or inconclusive results. Audit agreement does not establish independent discovery or satisfy a gate that requires it.
 
 For independent corroboration of a lead conclusion, collect and retain initial discovery reports before revealing it. A confirmation/evidence audit needs no preceding discovery review. Model diversity is optional.
 

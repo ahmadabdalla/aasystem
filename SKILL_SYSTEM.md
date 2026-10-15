@@ -128,13 +128,13 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 The [execution contract](skills/aapilot/references/execution.md) adds:
 
 - Caller-owned phase transitions
-- Scoped decision authority
+- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](skills/aapilot/references/execution.md#decision-authority)
 - Non-overlapping canonical writes
 - Freshness checks after supporting work returns
 - No implied scheduler, runtime lock, or automatic approval
 - Fresh workers for independent tasks
 - Independent candidates and judges
-- Review inputs distinguishing independent discovery from confirmation/evidence audits
+- Review inputs distinguishing independent discovery from confirmation/evidence audits, including exposure through initial returned findings and preserved initial reports
 - Adversarial review where the playbook requires it
 
 Local styling cannot silently change a shared design system.
@@ -149,11 +149,11 @@ The [Architect design trigger](skills/architect/SKILL.md#design-trigger) owns th
 
 ### Experimental bounded autonomous work
 
-The first-party [bounded-work reference](skills/aapilot/references/bounded-work.md) owns the optional receipt procedure for explicitly requested bounded autonomy. [work_receipts.py](skills/aapilot/scripts/work_receipts.py) is its Python-standard-library structural helper: one owner-held run, literal declared authority subsets, a shared nonrefundable dispatch budget, current artifact/proof identities, explicit human pause/resume and uncertain-effect reconciliation. Native host tools execute work; existing task/domain owners retain scope, semantic acceptance and canonical records. Direct specialists use the same foundation without a second coordinator.
+The first-party [bounded-work reference](skills/aapilot/references/bounded-work.md) owns the optional receipt procedure for explicitly requested bounded autonomy. [work_receipts.py](skills/aapilot/scripts/work_receipts.py) is its Python-standard-library structural helper: one owner-held run, current decision reviews and mandatory checkpoint obligations, recorded native dispatch reservations/results, frozen initial findings, current artifact/proof identities, explicit human pause/resume and uncertain-effect reconciliation. Initial spawn and its receipt consume one allocation; each native continuation reserves another under the same nonrefundable root budget. Native host tools execute work; existing task/domain owners retain scope, semantic acceptance and canonical records. Direct specialists use the same foundation without a second coordinator.
 
-The same CLI entry delegates internally to the private `_work_receipts` package: `state.py` owns run mutation and locked commit orchestration; `evidence.py` owns input identity, report/proof inspection and protected snapshot effects; `__init__.py` marks the package. Named event/proof helpers expose policy responsibilities within those boundaries. The executable and all package Python files are automatically included in proof input identity. Keep this implementation closure in the complete copied skill tree; it introduces no new skill or domain owner.
+The same CLI entry delegates internally to the private `_work_receipts` package: `state.py` owns run mutation and locked commit orchestration; `evidence.py` owns input identity, report/proof inspection and protected snapshot effects; `gates.py` owns read-only decision, native-attempt and review-interval policy checks; `__init__.py` marks the package. Named event/proof helpers expose policy responsibilities within those boundaries. State schema 2 keeps snapshot schema 1; old state is historical read-only status with unmet new gates. The executable and all package Python files are automatically included in proof input identity. Keep this implementation closure in the complete copied skill tree; it introduces no new skill or domain owner.
 
-Aapilot routes to this conditional reference, and the execution baseline links it for direct owners. No new portable skill, launcher or permission enforcement is introduced. State/evidence remain outside the installed tree/cache. Python 3.10+ and actual native delegation are prerequisites; package checks and local CLI proof do not establish host discovery, session survival or other-host support. [The capability-first plan](docs/plans/issue-17-feature-flags-poc.md) owns this implementation checklist and the later website exercise boundary.
+Aapilot routes to this conditional reference, and the execution baseline links it for direct owners. No new portable skill, launcher or permission enforcement is introduced. Receipt validation does not authenticate human answers or detect omitted semantic choices, undeclared exposure or direct native-tool bypass. State/evidence remain outside the installed tree/cache. Python 3.10+ and actual native delegation are prerequisites; package checks and local CLI proof do not establish host discovery, session survival or other-host support. [The capability-first plan](docs/plans/issue-17-feature-flags-poc.md) owns this implementation checklist and the later website exercise boundary.
 
 ### Design, implementation, and independent verification
 
