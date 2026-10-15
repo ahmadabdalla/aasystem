@@ -69,12 +69,15 @@ For bounded edits against a settled design or contract, use [`implement`](skills
 
 For a bounded code or design assessment, use [`maintainability`](skills/maintainability/SKILL.md). It examines reader effort, local change cost, and ease of verification, then returns findings to the caller; it does not select a top-level task route or own implementation.
 
+For the experimental bounded-autonomy capability, see [Bounded work](skills/aapilot/references/bounded-work.md). Request it explicitly with your existing entry skill; its shared receipt helper supports native delegation, current proof, repair and human checkpoints. The [PoC plan](docs/plans/issue-17-feature-flags-poc.md) separates local capability proof from later website testing.
+
 ## Repository map
 
 | Path | Contents |
 | --- | --- |
 | [`skills/`](skills/) | Portable skills, references, assets, and orchestrator playbooks |
 | [Evaluation playbook](skills/aapilot/playbooks/eval.md) | Temporary experiments for assessing instruction changes |
+| [Bounded-autonomy PoC plan](docs/plans/issue-17-feature-flags-poc.md) | Implement and prove the reusable capability here; later exercise website delivery paths |
 | [`visualizations/skill-library/`](visualizations/skill-library/) | Interactive system graph |
 | [`AGENTS.md`](AGENTS.md) | Repository maintenance rules |
 | [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) | Architecture, ownership, sources, and adaptations |

@@ -147,6 +147,14 @@ The [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md) ow
 
 The [Architect design trigger](skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
 
+### Experimental bounded autonomous work
+
+The first-party [bounded-work reference](skills/aapilot/references/bounded-work.md) owns the optional receipt procedure for explicitly requested bounded autonomy. [work_receipts.py](skills/aapilot/scripts/work_receipts.py) is its Python-standard-library structural helper: one owner-held run, literal declared authority subsets, a shared nonrefundable dispatch budget, current artifact/proof identities, explicit human pause/resume and uncertain-effect reconciliation. Native host tools execute work; existing task/domain owners retain scope, semantic acceptance and canonical records. Direct specialists use the same foundation without a second coordinator.
+
+The same CLI entry delegates internally to the private `_work_receipts` package: `state.py` owns run mutation and locked commit orchestration; `evidence.py` owns input identity, report/proof inspection and protected snapshot effects; `__init__.py` marks the package. Named event/proof helpers expose policy responsibilities within those boundaries. The executable and all package Python files are automatically included in proof input identity. Keep this implementation closure in the complete copied skill tree; it introduces no new skill or domain owner.
+
+Aapilot routes to this conditional reference, and the execution baseline links it for direct owners. No new portable skill, launcher or permission enforcement is introduced. State/evidence remain outside the installed tree/cache. Python 3.10+ and actual native delegation are prerequisites; package checks and local CLI proof do not establish host discovery, session survival or other-host support. [The capability-first plan](docs/plans/issue-17-feature-flags-poc.md) owns this implementation checklist and the later website exercise boundary.
+
 ### Design, implementation, and independent verification
 
 [`architect`](skills/architect/SKILL.md) owns design only: caller usage, interfaces, data shapes, ownership, rationale, and proof planning. A direct design-and-build request needs a coordinating playbook to retain implementation and completion scope. Implementation evidence that contradicts the design returns through the caller for design revision.

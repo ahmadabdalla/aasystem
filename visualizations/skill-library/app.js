@@ -380,7 +380,7 @@ const nodes = [
     title: "Execution contract",
     type: "foundation",
     subtitle: "Applies to all procedures",
-    purpose: "Defines ownership, handoffs, delegation decisions, result acceptance, completion, review context, verification through the project, evidence, and delivery.",
+    purpose: "Defines ownership, handoffs, delegation decisions, result acceptance, completion, review context, verification through the project, evidence, and delivery; links experimental bounded-work receipts for explicitly requested autonomy.",
     owns: "The shared operating rules read by every procedural skill and worker.",
     source: "../../skills/aapilot/references/execution.md",
     x: 2224,

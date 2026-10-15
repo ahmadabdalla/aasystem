@@ -12,6 +12,8 @@ Keep owner, objective, constraints, evidence and limits, applicable principles, 
 
 The lead owns framing, assignments, integration, acceptance, final proof and design decisions within its recorded authority.
 
+For explicitly requested bounded autonomous work, use the experimental [bounded-work procedure](bounded-work.md) alongside this baseline; directly invoked specialists use it within their existing scope.
+
 ## Delegation
 
 1. **Check capability.** At workflow start, identify the agent tool, delegation restrictions and access workers need. Check supporting procedures too. Use configured or permitted inherited models; do not invent diversity.

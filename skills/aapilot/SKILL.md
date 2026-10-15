@@ -44,6 +44,8 @@ Dedicated procedures for performance tuning, hillclimbing, forensics, general-pu
 
 ## Coordinate and finish
 
+When the user explicitly requests bounded autonomous work or the bounded-autonomy PoC, follow [Bounded work](references/bounded-work.md) alongside the selected procedure. It adds shared work receipts for authority, budget, current proof and human checkpoints; the existing owner retains execution and acceptance.
+
 Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect returns design, [Implement](../implement/SKILL.md) returns production edits and development checks, and a separate worker supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
 
 For substantial, multi-phase or unattended work, use [show-me-your-work](../show-me-your-work/SKILL.md) from the first consequential decision. The log links detailed solution records, design packages and evidence.

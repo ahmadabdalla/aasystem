@@ -16,6 +16,8 @@ The map intentionally does not draw a foundation edge from every procedural skil
 
 The execution contract owns [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot assigns execution and checks results under those shared rules; review context distinguishes independent discovery from confirmation/evidence audits.
 
+The existing shared foundation also links the experimental [bounded-work procedure](../../skills/aapilot/references/bounded-work.md) for explicitly requested bounded autonomy: owner-held receipts accompany native delegation and current evidence. Existing owners and handoffs remain in place; the helper adds no coordinator or skill node.
+
 Architect owns design and verification planning only. Feature, Bug Fix, Refactoring, and Figure It Out call Implement for bounded edits and development checks, then assign a separate verification agent under the execution contract. The agent uses the project-owned verifier; it is labeled **Agent role** and is excluded from the skill count. Caller handoffs return design contradictions to Architect, which returns revised design packages to those callers. There is no Architect-owned implementation runtime.
 
 The project verifier is a procedure, the verification agent executes it, and Interrogate supplies adversarial review. The caller owns integration and acceptance. Existing prescribed low-impact presentation exceptions remain in the execution contract.
