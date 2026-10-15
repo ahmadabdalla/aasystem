@@ -16,10 +16,10 @@ Reuse the brief, completed grounding, behavior contract, explicit visual instruc
 
 ## Refine
 
-Follow [the refinement loop](references/refinement-loop.md). Assign [Interaction Design](../interaction-design/SKILL.md) bounded interaction/presentation scope and [Prototype](../prototype/SKILL.md) when rendering is needed. Reuse adequate reviewed artifacts. One candidate can suffice; alternatives require an unsettled choice.
+Follow [the refinement loop](references/refinement-loop.md). Assign [Interaction Design](../interaction-design/SKILL.md) bounded interaction/presentation scope and [Prototype](../prototype/SKILL.md) when rendering is needed, using the loop's [rendering assignment rules](references/refinement-loop.md#rendering-assignments). Reuse adequate reviewed artifacts. One candidate can suffice; alternatives require an unsettled choice.
 
 ## Review and return
 
-Apply scoped [interaction review checks](../interaction-design/references/review-checks.md). Preserve actual human feedback and limits. At a human checkpoint, ask one focused question and stop for the answer.
+Apply scoped [interaction review checks](../interaction-design/references/review-checks.md). Preserve actual human feedback and limits. Use the shared [human checkpoint handoff](../aapilot/references/execution.md#decision-authority).
 
 Return the artifact revision, useful rendered views, owning behavior/interaction records, component/style references, review scope and authority, gaps and next action. Follow the [interaction contract](../interaction-design/references/interaction-contract.md) for visual-reference contents and recording. Keep a resumable checkpoint in the current project record; no separate backlog or mandatory report is required. Do not restart the caller's workflow or begin production implementation.

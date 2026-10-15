@@ -587,6 +587,7 @@ def status(state):
                 'revision': state['revision'],
                 'remaining_dispatches': state['brief']['budget']['dispatches'] - state['dispatched'],
                 'tasks': {key: {'historical_status': task['status'], 'verified_now': False,
+                    'proof_status': 'unverified',
                     'acceptance_eligible_now': False, 'currently_accepted': False,
                     'dispatch_eligible_now': False, 'dispatch_gates': ['legacy_unrecorded_gates: new version2 run required'],
                     'gates': ['legacy_unrecorded_gates: new version2 run required']}
@@ -610,9 +611,17 @@ def status(state):
     for key, task in state['tasks'].items():
         errors = gates(state, key)
         dispatch = dispatch_errors(state, task)
+        verified = bool(task['claims']) and not proof_errors(state, key)
+        if not task['claims']:
+            proof_status = 'no_claims'
+        elif verified:
+            proof_status = 'verified'
+        else:
+            proof_status = 'unverified'
         result['tasks'][key] = {
             'historical_status': task['status'],
-            'verified_now': not proof_errors(state, key),
+            'verified_now': verified,
+            'proof_status': proof_status,
             'acceptance_eligible_now': not errors,
             'currently_accepted': task['status'] == 'accepted' and (not errors),
             'dispatch_eligible_now': not dispatch,

@@ -92,7 +92,7 @@ class WorkReceiptsCLI(unittest.TestCase):
     def initialize(self):
         if self.state.exists():
             self.state.unlink()
-        self.call(['init', '--state', str(self.state), '--brief', str(self.json_file('brief.json', self.brief))])
+        return self.call(['init', '--state', str(self.state), '--brief', str(self.json_file('brief.json', self.brief))])
 
     def current(self):
         return json.loads(self.state.read_text())
@@ -281,8 +281,38 @@ class WorkReceiptsCLI(unittest.TestCase):
     def test_returned_is_not_verified_or_accepted(self):
         report = self.report(task='root', name='return', producer='editor')
         self.apply('returned', report=report)
-        self.assertEqual(self.status()['tasks']['root']['historical_status'], 'returned')
+        root = self.status()['tasks']['root']
+        self.assertEqual(root['historical_status'], 'returned')
+        self.assertIs(root['verified_now'], False)
+        self.assertEqual(root['proof_status'], 'unverified')
         self.accept(ok=False)
+
+    def test_claimless_status_through_return_and_acceptance_is_read_only(self):
+        self.brief.update(claims=[], proof_kind='scoped')
+        initialized = self.initialize()['tasks']['root']
+        self.assertIs(initialized['verified_now'], False)
+        self.assertEqual(initialized['proof_status'], 'no_claims')
+        self.assertFalse(initialized['acceptance_eligible_now'])
+        report = self.report(name='claimless-return', task='root', claims={}, snapshot=None,
+            review_mode='scoped', executable=False)
+        returned = self.apply('returned', report=report)['tasks']['root']
+        self.assertEqual(returned['historical_status'], 'returned')
+        self.assertIs(returned['verified_now'], False)
+        self.assertEqual(returned['proof_status'], 'no_claims')
+        accepted = self.accept()['tasks']['root']
+        self.assertTrue(accepted['currently_accepted'])
+        self.assertIs(accepted['verified_now'], False)
+        self.assertEqual(accepted['proof_status'], 'no_claims')
+        before = self.state.read_bytes()
+        revision = self.current()['revision']
+        modified = self.state.stat().st_mtime_ns
+        for _ in range(2):
+            self.assertEqual(self.status()['tasks']['root'], accepted)
+        self.assertEqual(self.state.read_bytes(), before)
+        self.assertEqual(self.current()['revision'], revision)
+        self.assertEqual(self.state.stat().st_mtime_ns, modified)
+        self.assertNotIn('verified_now', self.current()['tasks']['root'])
+        self.assertNotIn('proof_status', self.current()['tasks']['root'])
 
     def test_nested_global_budget_and_literal_grants(self):
         self.brief['budget']['dispatches'] = 2
@@ -308,7 +338,8 @@ class WorkReceiptsCLI(unittest.TestCase):
     def test_production_proof_and_owner_acceptance(self):
         self.proof()
         before = self.status()['tasks']['root']
-        self.assertTrue(before['verified_now'])
+        self.assertIs(before['verified_now'], True)
+        self.assertEqual(before['proof_status'], 'verified')
         self.assertFalse(before['currently_accepted'])
         self.accept()
         self.assertTrue(self.status()['tasks']['root']['currently_accepted'])
@@ -325,7 +356,9 @@ class WorkReceiptsCLI(unittest.TestCase):
             report = self.report(name='later-' + status, claims={'behavior': {'status': status, 'observations': 'new same-artifact observation'}})
             self.apply('returned', task='verify', actor='worker', report=report)
             self.apply('verification', target='root', verifier_task='verify', report=report)
-            self.assertFalse(self.status()['tasks']['root']['verified_now'])
+            root = self.status()['tasks']['root']
+            self.assertIs(root['verified_now'], False)
+            self.assertEqual(root['proof_status'], 'unverified')
             self.accept(ok=False)
         self.integrated_proof_after_resume()
         self.accept()
@@ -358,6 +391,9 @@ class WorkReceiptsCLI(unittest.TestCase):
             with self.subTest(path=path.name):
                 original = path.read_bytes()
                 path.write_bytes(original + b'\n')
+                root = self.status()['tasks']['root']
+                self.assertIs(root['verified_now'], False)
+                self.assertEqual(root['proof_status'], 'unverified')
                 result = self.accept(ok=False)
                 self.assertIn(str(path), result['error'])
                 path.write_bytes(original)
@@ -407,7 +443,11 @@ class WorkReceiptsCLI(unittest.TestCase):
     def test_checkpoint_stops_and_resume_invalidates_proof(self):
         self.proof()
         self.apply('checkpoint', checkpoint_id='visual', package=str(self.checkpoint_package()), reason='requires eyeballing', decision='approve preview')
-        used = self.status()['remaining_dispatches']
+        paused = self.status()
+        self.assertIs(paused['tasks']['root']['verified_now'], True)
+        self.assertEqual(paused['tasks']['root']['proof_status'], 'verified')
+        self.assertFalse(paused['tasks']['root']['acceptance_eligible_now'])
+        used = paused['remaining_dispatches']
         self.assign('blocked', ok=False)
         self.accept(ok=False)
         response = self.checkpoint_response()
@@ -658,15 +698,27 @@ class WorkReceiptsCLI(unittest.TestCase):
                 self.assertIn('uncertain', self.assign('retry', resources=[retry], ok=False)['error'])
 
     def test_accepted_child_returned_artifact_is_protected(self):
-        self.assign('child', owner='child-owner')
+        assigned = self.assign('child', owner='child-owner')['tasks']['child']
+        self.assertIs(assigned['verified_now'], False)
+        self.assertEqual(assigned['proof_status'], 'no_claims')
         artifact = self.write(self.run / 'child-artifact.txt', 'accepted design artifact')
         report = self.report(name='child-return', task='child', producer='designer', snapshot=None, claims={}, artifacts=[str(artifact)], evidence=[])
-        self.apply('returned', task='child', actor='child-owner', report=report)
-        self.apply('accept', task='child', actor='child-owner', rationale='inspected returned design', evidence_refs=[str(self.evidence)])
+        returned = self.apply('returned', task='child', actor='child-owner', report=report)['tasks']['child']
+        self.assertIs(returned['verified_now'], False)
+        self.assertEqual(returned['proof_status'], 'no_claims')
+        accepted = self.apply('accept', task='child', actor='child-owner', rationale='inspected returned design', evidence_refs=[str(self.evidence)])['tasks']['child']
+        self.assertTrue(accepted['currently_accepted'])
+        self.assertIs(accepted['verified_now'], False)
+        self.assertEqual(accepted['proof_status'], 'no_claims')
         evidence = self.integrated_proof()
         self.apply('accept', rationale='integrated inspection', evidence_refs=[str(evidence)])
         artifact.write_text('changed design')
-        self.assertFalse(self.status()['tasks']['root']['currently_accepted'])
+        status = self.status()['tasks']
+        self.assertFalse(status['root']['currently_accepted'])
+        self.assertFalse(status['child']['currently_accepted'])
+        self.assertEqual(status['child']['proof_status'], 'no_claims')
+        self.assertIs(status['child']['verified_now'], False)
+        self.apply('accept', task='child', actor='child-owner', rationale='mutated artifact', evidence_refs=[str(self.evidence)], ok=False)
 
     def test_resume_allows_fresh_proof_and_acceptance_after_old_acceptance(self):
         self.proof()
@@ -752,7 +804,9 @@ class WorkReceiptsCLI(unittest.TestCase):
             'exposures': [{'kind': 'prior-conclusions', 'stage': 'after-execution-before-initial-findings',
                 'source_ref': str(self.host), 'description': 'Prior lead passing-readiness conclusions received'}]}
         self.proof(context=context)
-        self.assertFalse(self.status()['tasks']['root']['verified_now'])
+        root = self.status()['tasks']['root']
+        self.assertIs(root['verified_now'], False)
+        self.assertEqual(root['proof_status'], 'unverified')
         # A final report claiming clean context cannot improve frozen facts.
         final = self.report(name='clean-summary')
         self.apply('returned', task='verify', actor='worker', report=final)
@@ -1006,6 +1060,9 @@ class WorkReceiptsCLI(unittest.TestCase):
             self.initialize()
             shutil.rmtree(self.run / 'snapshot', ignore_errors=True)
             self.proof(**changes)
+            root = self.status()['tasks']['root']
+            self.assertIs(root['verified_now'], False)
+            self.assertEqual(root['proof_status'], 'unverified')
             final = self.report(name='upgraded')
             self.apply('returned', task='verify', actor='worker', report=final)
             self.apply('verification', target='root', verifier_task='verify', report=final)
@@ -1072,7 +1129,14 @@ class WorkReceiptsCLI(unittest.TestCase):
         result = self.status()
         self.assertTrue(result['legacy_unrecorded_gates'])
         self.assertEqual(result['tasks']['root']['historical_status'], 'accepted')
-        self.assertFalse(result['tasks']['root']['currently_accepted'])
+        root = result['tasks']['root']
+        self.assertIs(root['verified_now'], False)
+        self.assertEqual(root['proof_status'], 'unverified')
+        self.assertFalse(root['currently_accepted'])
+        self.assertFalse(root['acceptance_eligible_now'])
+        self.assertFalse(root['dispatch_eligible_now'])
+        self.assertEqual(root['gates'], ['legacy_unrecorded_gates: new version2 run required'])
+        self.assertEqual(root['dispatch_gates'], root['gates'])
         self.assertNotIn('observed_attempts', result)
         self.apply(event=self.event_data('cancelled', reason='legacy mutation'), ok=False)
         self.snapshot(ok=False)

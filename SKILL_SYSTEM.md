@@ -128,7 +128,7 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 The [execution contract](skills/aapilot/references/execution.md) adds:
 
 - Caller-owned phase transitions
-- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](skills/aapilot/references/execution.md#decision-authority)
+- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](skills/aapilot/references/execution.md#decision-authority), which owns the inspectable human checkpoint handoff and stop/wait rule
 - Non-overlapping canonical writes
 - Freshness checks after supporting work returns
 - No implied scheduler, runtime lock, or automatic approval
@@ -177,6 +177,7 @@ The [UI refinement loop](skills/ui-refinement/references/refinement-loop.md) add
 - Product ownership of business meaning
 - Interaction Design ownership of visual-reference content
 - Prototype ownership of the rendered candidate
+- Bounded composition under the loop's [rendering assignment rules](skills/ui-refinement/references/refinement-loop.md#rendering-assignments), preserving role ownership and required independence
 - Feature ownership of delivery and final comparison
 - Existing records for the review checkpoint and evidence
 

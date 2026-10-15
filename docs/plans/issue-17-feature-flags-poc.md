@@ -94,13 +94,83 @@ The reusable findings are decision authority and evidence limits: a short kickof
 
 The user confirmed that aapilot should pause before implementing an unresolved consequential product or architectural choice: "yes and it should ask a question or present a choice". Present a clear focused question or concrete options, adding a recommendation and tradeoffs when useful, then stop and wait for the actual human response. Routine implementation remains delegated. Use a Grill Me interview only when several linked decisions warrant it; an interview is not mandatory at every checkpoint. Preserve the generic native-delegation/stdlib-receipt foundation, current state/evidence ownership and small script responsibilities; do not add a launcher, domain taxonomy, use-case hardcoding or speculative modules.
 
-This is the single current follow-up checklist under [Skill authoring](../../skills/aapilot/playbooks/authoring-a-skill.md). The user subsequently authorized the recommended native delegation plus recorded CLI gates, with lean, direct instructions. Shared decision rules stay in the [execution contract](../../skills/aapilot/references/execution.md); the [bounded-work reference](../../skills/aapilot/references/bounded-work.md) owns the optional protocol. [Decision context](../../skills/principle-preserve-decision-context/SKILL.md) is retained at handoffs. Delivery is local and uncommitted; no installation, publication or push is authorized here.
+This checklist records the implemented capability follow-up and remaining field gate under [Skill authoring](../../skills/aapilot/playbooks/authoring-a-skill.md); the next proposed work is in the planned PoC finishing pass below. The user subsequently authorized the recommended native delegation plus recorded CLI gates, with lean, direct instructions. Shared decision rules stay in the [execution contract](../../skills/aapilot/references/execution.md); the [bounded-work reference](../../skills/aapilot/references/bounded-work.md) owns the optional protocol. [Decision context](../../skills/principle-preserve-decision-context/SKILL.md) is retained at handoffs. Delivery is local and uncommitted; no installation, publication or push is authorized here.
 
 1. [x] **Agree decision authority and human checkpoints.** **Owner:** caller and human. The actual answer above settles the preference: ask a focused question or concrete options for unresolved consequential choices, then stop and wait. Routine details remain delegated. The later authorization selects native execution with recorded gates, not a launcher or host permission enforcement.
 2. [x] **Correct acceptance/proof semantics.** **Owners:** bounded implementation and separate independent verification workers; caller reconciles acceptance. Schema 2 requires current recorded decision review, governing/design identity, mandatory checkpoint obligations, linked native reservations/results and verifier preflight. Frozen initial findings cover assignment through initial return; later clean metadata cannot erase exposure or failed claims. Final independent CLI discovery supports the exercised corrected gates; historical schema-1 state remains read-only status with current eligibility unmet. Purpose, routine-versus-consequential classification and omitted choices still require owner judgment; declarations neither authenticate humans nor intercept native tools.
 3. [x] **Reduce handoff and receipt friction.** **Owners:** instruction and implementation workers; fresh verifier. Requirement-only discovery packets preserve source constraints, explicit exposure intervals and original initial findings before metadata help. Status separates allocations, observed attempts, pending reservations and remaining budget, and exposes prospective dispatch gates. Initial spawn uses its assignment allocation; continuations reserve another. Native request/result links and public CLI checks provide recorded provenance, with no claim of automatic host attestation or cost enforcement.
 4. [ ] **Exercise actual human response/resumption and visual inspection.** **Owners:** caller and human, then separate execution/verification workers. Both native comparison workers asked about the unsettled external contract and paused; neither received a human answer or resumed. No behavioral superiority is established. Final-source native interruption did show a live owned process, blocked followup/retry while uncertain, and confirmed cleanup before known reconciliation. This is partial recovery evidence; an actual human choice, inspected visual evidence, response/resume and current resumed proof remain open. Use the next-exercise guidance below; synthetic answers do not close these gates.
 5. [x] **Validate and deliver the authorized local change.** **Owners:** fresh independent verifier and evaluators; caller reconciliation. Final discovery ran 68 tests, independent adversarial CLI/effect probes, complete copied-tree execution from an unrelated working directory, package checks for 25 skills/adapters and 426 local paths, and publication-helper syntax checks. Frozen source bytes/modes remained unchanged. Retained initial harness faults and earlier product failures are distinguished below. Evaluation supports scoped recorded behavior only; actual host discovery, human/visual completion and general superiority remain unverified. Local implementation is complete within those limits.
+
+## Implemented local PoC finishing pass
+
+The three source refinements below are implemented locally; the genuine human continuation
+remains open. A native prototype return and a presented question do not establish human viewing,
+an answer, resumed delivery or current final proof. The user's later authorization covers commit
+and push for this pass; delivery is pending separately and does not alter historical boundaries.
+
+1. [x] **Make the checkpoint actionable.** **Owners:** instruction worker; caller accepts wording.
+   [Execution decision authority](../../skills/aapilot/references/execution.md#decision-authority)
+   owns the compact handoff: artifact stage and awaiting decision, checked/unverified limits,
+   an identifiable inspectable artifact/evidence pointer, next authorized action, and the exact
+   focused question/options ending the response. Include consequences and a recommendation
+   when useful, then stop the whole process and wait for the actual human answer.
+   Visual decisions require a usable preview or retained rendered views with access instructions;
+   name cleanup ownership when an active preview needs it. Nonvisual decisions use relevant
+   evidence. These essentials belong
+   in the response itself. The [UI loop](../../skills/ui-refinement/references/refinement-loop.md)
+   links this owner; project records and existing bounded-work package/response binding remain.
+   **Observed:** initial trials exposed incomplete caller-visible handoffs; the shared rule was
+   corrected and a fresh visual return supplied stage, images, limits, next action and final question.
+   Agent inspection is never recorded as human acceptance.
+
+2. [x] **Correct empty-claim status.** **Owners:** receipt worker; separate public-CLI verifier.
+   Only the `status()` projection in existing
+   [state.py](../../skills/aapilot/scripts/_work_receipts/state.py) changed: `verified_now` stays
+   boolean, true only with nonempty declared claims and no current proof errors. One derived
+   `proof_status` is `no_claims`, `verified` or `unverified`; schema-1 stays false/`unverified`
+   with existing diagnostics. [Bounded work](../../skills/aapilot/references/bounded-work.md)
+   documents it. `no_claims` certifies neither correct scope nor approval. Saved state/schema,
+   `proof_errors`, acceptance/dispatch gates and commands are unchanged; no module/helper added.
+   **Observed:** [public-CLI tests](../../tests/test_work_receipts.py) and independent probes cover
+   claimless roots/children before/after return, valid scoped acceptance, artifact-mutation rejection,
+   missing/current/failed/stale/exposed proof and legacy diagnostics. Repeated status preserves
+   state bytes/revision; projected fields remain absent from saved state. A verified task can still
+   await a mandatory human checkpoint. Finite compatibility checks do not establish unknown
+   external consumers' behavior.
+
+3. [x] **Make coupled UI composition explicit.** **Owners:** UI instruction worker; caller accepts.
+   The owning [refinement loop](../../skills/ui-refinement/references/refinement-loop.md) permits
+   one worker to perform Interaction Design then Prototype for one bounded coupled candidate
+   when business meaning is settled, artifact ownership/checkpoint are shared, required
+   candidate/reviewer independence is preserved, and host invocation permits both procedures.
+   Both scopes, ownership, checks and return limits are named; both procedures are read and
+   interaction rationale plus inspected rendered evidence returned. Otherwise use separate
+   assignments or report the unavailable handoff. [UI refinement](../../skills/ui-refinement/SKILL.md)
+   links these conditions; the [system map](../../SKILL_SYSTEM.md) and
+   [graph descriptions](../../visualizations/skill-library/README.md) align existing handoffs.
+   **Observed:** native trials exercised coupled rendering and separate authors/reviewer with
+   retained original findings. Production verification and required reviews stay separate;
+   business authority and production promotion do not expand.
+
+4. [ ] **Continue one real human loop.** **Owners:** caller/human, delivery worker, fresh verifier.
+   Keep the original installed tree pinned and preserve the exact actual answer matching its
+   checkpoint. If adopting changed identities, use the existing new-run path with attributable
+   accepted context; old approval/proof never automatically transfers to new bytes.
+   Obtain actual human viewing and an answer, retain reviewed scope, resume authorized work,
+   then obtain fresh separate final-artifact verification. Reconcile one existing project task
+   list with closing owners/checks; keep later commit review separate. No actual human approval
+   is recorded yet. **Done:** observed viewing/answer/resume, current authority and final proof;
+   original-source evidence proves that version, while updated behavior needs updated-tree proof.
+
+Validation followed [Skill authoring](../../skills/aapilot/playbooks/authoring-a-skill.md) and a
+small temporary [eval](../../skills/aapilot/playbooks/eval.md): 69 tests, 25 skills/adapters and
+432 local paths passed, with finite independent CLI probes and a frozen executable identity.
+Clean Code/Pragmatic Programmer review initially scored 9/10; its one if/else readability fix was applied.
+The original three trials retain partial handoffs; the shared rule was corrected. A fresh judge supports
+rendered handoff, coupled roles and an actual stop: scoped instruction-use support with disclosed trace/retention limits.
+No human acceptance or baseline improvement is claimed. Detailed local decision log/reports remain
+outside maintained source through review; this plan reconciliation is excluded from the executable freeze.
 
 ## Evidence and acceptance
 
