@@ -16,7 +16,7 @@ release_pr_url="${3:?Release PR URL is required}"
 [[ "$(git rev-parse HEAD)" == "$release_sha" ]] || fail 'Checkout differs from merged release commit'
 git merge-base --is-ancestor "$release_sha" origin/main
 git diff --exit-code HEAD -- . > /dev/null
-ruby scripts/validate-release.rb
+python3 scripts/validate-release.py
 [[ "$(jq -r .version plugin.json)" == "$version" ]] || fail 'PR version differs from manifest'
 
 export RELEASE_TAG="v$version"

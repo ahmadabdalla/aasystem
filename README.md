@@ -81,6 +81,8 @@ Browse [`skills/`](skills/) for all available skills.
 
 Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md). The [evaluation playbook](skills/aapilot/playbooks/eval.md) covers experiments for assessing instruction changes.
 
+For local or cloud development, follow the [maintainer setup](RELEASING.md#maintainer-setup) to install Python dependencies and run the package checks.
+
 ## Export the library
 
 Keep the [export contents](SKILL_SYSTEM.md#export-boundary) together, including both plugin manifests, all skills, and the license notices.
