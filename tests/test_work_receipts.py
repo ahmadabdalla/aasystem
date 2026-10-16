@@ -1118,6 +1118,218 @@ class WorkReceiptsCLI(unittest.TestCase):
             context=context, context_evidence_refs=[str(self.host)], ok=False)
         self.apply('returned', task='verify', actor='worker', report=str(findings), ok=False)
 
+    def presentation(self, minimal=False):
+        self.brief.update(verification_requirement='owner-presentation', purpose='implementation',
+            presentation_eligibility={'classification': 'prescribed-presentation', 'request_ref': str(self.req),
+                'locator': 'line 1', 'prescription': 'Change the existing label from create to Create',
+                'basis': 'Exact request; existing component; meaning, behavior, data, contracts, permissions, dependencies and deployment unchanged; all decisions settled',
+                'components': [str(self.source)]})
+        if minimal:
+            for name in ('purpose', 'proof_kind', 'requirements', 'decisions', 'procedures', 'principles',
+                         'checkpoints', 'checkpoint_obligations', 'source', 'constraints', 'expected_outputs', 'next_action'):
+                self.brief.pop(name, None)
+        self.initialize()
+
+    def owner_report(self, name='owner-proof', **changes):
+        report = {'id': name, 'task': 'root', 'producer': 'lead', 'proof_basis': 'owner-presentation',
+            'snapshot': str(self.run / 'owner-snapshot' / 'manifest.json'), 'environment': str(self.env),
+            'claims': {'behavior': {'status': 'pass', 'observations': 'Prescribed label and unchanged surrounding source checked'}},
+            'commands': [{'command': 'inspect final source and diff', 'exit_code': 0}],
+            'diff_ref': str(self.write(self.run / (name + '.diff'), '-create\n+Create\n')),
+            'eligibility_review': 'Final diff only changes the prescribed case; eligibility still applies',
+            'evidence': [str(self.evidence)], 'coverage': 'source and diff', 'effects': 'one label',
+            'limitations': 'Appearance not exercised; source inspection only'}
+        report.update(changes)
+        return str(self.json_file(name + '.json', report))
+
+    def owner_proof(self, **changes):
+        self.source.write_text('print("Create")\n')
+        self.snapshot(name='owner-snapshot')
+        report = self.owner_report(**changes)
+        self.apply('returned', report=report)
+        return report
+
+    def test_compact_public_cli_is_zero_worker_and_honest_about_owner_proof(self):
+        self.brief['budget']['dispatches'] = 0
+        self.presentation(minimal=True)
+        before_edit = self.current()['presentation_eligibility']
+        self.assertIn(str(self.source), before_edit['source_hashes'])
+        self.owner_proof()
+        # The compact entry generates routine review metadata; callers author no
+        # native-worker packet and may reference that current review implicitly.
+        self.apply(event=self.event_data('accept', rationale='Actual source and diff checked', evidence_refs=[str(self.evidence)]))
+        status = self.status()
+        root = status['tasks']['root']
+        self.assertEqual((status['allocated_dispatches'], status['observed_attempts']), (0, 0))
+        self.assertEqual(root['verification_requirement'], 'owner-presentation')
+        self.assertEqual(root['actual_proof_basis'], 'owner-presentation')
+        self.assertEqual(root['proof_status'], 'owner-checked')
+        self.assertTrue(root['checked_now'])
+        self.assertFalse(root['verified_now'])
+        self.assertTrue(root['currently_accepted'])
+        self.assertEqual(self.current()['tasks']['root']['acceptance']['proof_reports'], ['owner-proof'])
+        self.assertEqual(list(self.current()['tasks']), ['root'])
+        self.apply('returned', report=self.owner_report(name='later-failure',
+            claims={'behavior': {'status': 'fail', 'observations': 'Later contradictory observation'}}))
+        self.assertFalse(self.status()['tasks']['root']['currently_accepted'])
+        self.accept(ok=False)
+
+    def test_owner_requirement_rejects_missing_or_ineligible_basis_and_empty_claims(self):
+        self.presentation()
+        original = copy.deepcopy(self.brief)
+        for changes in ({'claims': []}, {'presentation_eligibility': None},
+                        {'presentation_eligibility': original['presentation_eligibility'] | {'classification': 'business-semantic'}},
+                        {'presentation_eligibility': original['presentation_eligibility'] | {'request_ref': str(self.evidence)}},
+                        {'presentation_eligibility': original['presentation_eligibility'] | {'components': []}}):
+            self.brief = original | changes
+            self.state.unlink(missing_ok=True)
+            self.call(['init', '--state', str(self.state), '--brief', str(self.json_file('brief.json', self.brief))], False)
+            self.assertFalse(self.state.exists())
+
+    def test_owner_proof_cannot_cover_edits_outside_prescribed_components(self):
+        self.presentation()
+        self.owner_proof()
+        self.req.write_text('Changed request meaning after eligibility')
+        self.accept(ok=False)
+        self.req.write_text('Create once; duplicate leaves state unchanged.\n')
+        self.brief['source'] = {'mode': 'roots', 'roots': [str(self.project)], 'exclude': [], 'required': []}
+        self.initialize()
+        self.config.write_text('{"behavior":"changed"}\n')
+        shutil.rmtree(self.run / 'owner-snapshot')
+        self.owner_proof()
+        self.assertIn('outside prescribed presentation components', ';'.join(self.status()['tasks']['root']['gates']))
+        self.accept(ok=False)
+
+    def test_owner_missing_later_failed_or_claimless_report_blocks_older_pass(self):
+        self.presentation()
+        self.accept(ok=False)
+        for case, changes in (
+                ('claimless', {'claims': {}}),
+                ('failed', {'claims': {'behavior': {'status': 'fail', 'observations': 'Changed meaning'}}}),
+                ('missing eligibility review', {'eligibility_review': ''}),
+                ('missing diff', {'diff_ref': None}),
+                ('missing commands', {'commands': []}),
+                ('missing evidence', {'evidence': []}),
+                ('wrong producer', {'producer': 'other'})):
+            with self.subTest(case=case):
+                self.presentation()
+                shutil.rmtree(self.run / 'owner-snapshot', ignore_errors=True)
+                self.owner_proof()
+                self.assertTrue(self.status()['tasks']['root']['checked_now'])
+                self.apply('returned', report=self.owner_report(name='later-' + str(self.counter), **changes))
+                self.accept(ok=False)
+                self.assertFalse(self.status()['tasks']['root']['checked_now'])
+
+    def test_owner_older_pass_replay_cannot_replace_latest_failure(self):
+        self.presentation()
+        passing_report = self.owner_proof(name='pass-a')
+        self.assertTrue(self.status()['tasks']['root']['checked_now'])
+        self.apply('returned', report=self.owner_report(name='failure-b',
+            claims={'behavior': {'status': 'fail', 'observations': 'Later contradictory observation'}}))
+        self.assertFalse(self.status()['tasks']['root']['checked_now'])
+
+        replay = self.event_data('returned', report=passing_report)
+        before = self.state.read_bytes()
+        result = self.apply(event=replay, ok=False)
+        self.assertIn('older return cannot replace latest report', result['error'])
+        self.assertEqual(before, self.state.read_bytes())
+        self.assertEqual(self.current()['tasks']['root']['returns'], ['pass-a', 'failure-b'])
+        self.accept(ok=False)
+        self.assertFalse(self.status()['tasks']['root']['checked_now'])
+
+    def test_owner_current_source_evidence_and_diff_are_required(self):
+        for stale in ('source', 'evidence', 'diff'):
+            with self.subTest(stale=stale):
+                self.presentation()
+                shutil.rmtree(self.run / 'owner-snapshot', ignore_errors=True)
+                report = self.owner_proof()
+                path = {'source': self.source, 'evidence': self.evidence,
+                        'diff': Path(json.loads(Path(report).read_text())['diff_ref'])}[stale]
+                path.write_text(path.read_text() + '\nchanged')
+                self.accept(ok=False)
+                before = self.state.read_bytes()
+                self.assertFalse(self.status()['tasks']['root']['checked_now'])
+                self.assertEqual(before, self.state.read_bytes())
+
+    def test_escalation_strengthens_same_run_without_changing_authority_or_budget(self):
+        self.presentation()
+        self.owner_proof()
+        original = self.current()
+        self.apply('verification_escalated', requirement='independent', reason='Actual diff includes behavior',
+            evidence_refs=[str(self.evidence)], actions=['write'], resources=['repo'])
+        current = self.current()
+        for key in ('budget', 'actions', 'resources'):
+            self.assertEqual(current['brief'][key], original['brief'][key])
+        for key in ('dispatched', 'authority_revision', 'reports', 'proofs'):
+            self.assertEqual(current[key], original[key])
+        self.assertEqual(current['brief']['verification_requirement'], 'independent')
+        self.assertEqual(self.status()['tasks']['root']['actual_proof_basis'], 'none')
+        self.accept(ok=False)
+        self.apply('verification_escalated', requirement='owner-presentation', reason='Try downgrade', evidence_refs=[str(self.evidence)], ok=False)
+        self.proof()
+        self.accept()
+        self.assertTrue(self.status()['tasks']['root']['verified_now'])
+
+    def test_escalated_compact_root_has_explicit_non_dispatch_diagnostic(self):
+        self.brief['budget']['dispatches'] = 0
+        self.presentation(minimal=True)
+        self.owner_proof()
+        self.apply('verification_escalated', requirement='independent', reason='Actual diff includes behavior',
+            evidence_refs=[str(self.evidence)])
+        before = self.state.read_bytes()
+        root = self.status()['tasks']['root']
+        self.assertEqual(before, self.state.read_bytes())
+        self.assertFalse(root['dispatch_eligible_now'])
+        self.assertIn('root owner is not a native child assignment', root['dispatch_gates'])
+        self.assertNotIn("'inputs'", root['dispatch_gates'])
+        self.assertFalse(root['acceptance_eligible_now'])
+        self.assertIn('missing verification', ';'.join(root['gates']))
+        result = self.apply('accept', ok=False, rationale='Owner proof cannot satisfy independent requirement',
+            evidence_refs=[str(self.evidence)])
+        self.assertIn('missing verification', result['error'])
+        self.assertIn('root dispatch budget exhausted', result['error'])
+
+    def test_escalation_rejects_widening_and_records_exhausted_proof_obligation(self):
+        self.presentation()
+        payload = {'requirement': 'independent', 'reason': 'Broader effects', 'evidence_refs': [str(self.evidence)]}
+        for changes in ({'actions': ['publish']}, {'resources': ['outside']}, {'budget': {'dispatches': 999}}):
+            self.apply('verification_escalated', **(payload | changes), ok=False)
+        self.brief['budget']['dispatches'] = 0
+        self.initialize()
+        self.apply('verification_escalated', **payload)
+        self.assertEqual(self.status()['remaining_dispatches'], 0)
+        self.assertEqual(self.status()['tasks']['root']['verification_requirement'], 'independent')
+        self.assertIn('budget exhausted', ';'.join(self.status()['tasks']['root']['gates']))
+        self.accept(ok=False)
+        self.assign(ok=False)
+
+    def test_owner_requirement_cannot_be_used_by_children_or_downgraded_on_resume(self):
+        self.assign('child', verification_requirement='owner-presentation', ok=False)
+        self.presentation()
+        self.apply('verification_escalated', requirement='independent', reason='Need behavior proof', evidence_refs=[str(self.evidence)])
+        self.apply('checkpoint', checkpoint_id='decision', package=str(self.checkpoint_package()), reason='Actual answer', decision='fixture-decision')
+        self.apply('resume', checkpoint_id='decision', authority_revision=0, human_response=str(self.checkpoint_response()),
+            updated_brief=self.brief, ok=False)
+
+    def test_new_absent_requirement_is_independent_and_version2_is_read_only(self):
+        self.assertEqual(self.current()['brief']['verification_requirement'], 'independent')
+        self.proof()
+        self.accept()
+        self.assertEqual(self.status()['tasks']['root']['actual_proof_basis'], 'independent')
+        self.assertTrue(self.status()['tasks']['root']['checked_now'])
+        legacy = self.current()
+        legacy['schema_version'] = 2
+        self.state.write_text(json.dumps(legacy))
+        before = self.state.read_bytes()
+        root = self.status()['tasks']['root']
+        self.assertEqual(root['historical_status'], 'accepted')
+        self.assertFalse(root['verified_now'])
+        self.assertFalse(root['checked_now'])
+        self.assertEqual(root['verification_requirement'], 'unrecorded')
+        self.apply(event=self.event_data('cancelled', reason='legacy mutation'), ok=False)
+        self.snapshot(ok=False)
+        self.assertEqual(before, self.state.read_bytes())
+
     def test_legacy_state_reports_history_without_inventing_recorded_gates(self):
         legacy = self.current()
         legacy['schema_version'] = 1
@@ -1135,7 +1347,7 @@ class WorkReceiptsCLI(unittest.TestCase):
         self.assertFalse(root['currently_accepted'])
         self.assertFalse(root['acceptance_eligible_now'])
         self.assertFalse(root['dispatch_eligible_now'])
-        self.assertEqual(root['gates'], ['legacy_unrecorded_gates: new version2 run required'])
+        self.assertEqual(root['gates'], ['legacy_unrecorded_gates: new version3 run required'])
         self.assertEqual(root['dispatch_gates'], root['gates'])
         self.assertNotIn('observed_attempts', result)
         self.apply(event=self.event_data('cancelled', reason='legacy mutation'), ok=False)

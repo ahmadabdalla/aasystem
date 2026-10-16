@@ -41,6 +41,7 @@ Run `/skills` in Copilot to check that aasystem's skills are available.
 
 You can always start with [`aapilot`](skills/aapilot/SKILL.md) to drive your work. Give it the task; it selects the appropriate playbook or specialist and coordinates the work through completion within your requested scope. Use your host's plugin invocation above.
 
+- Read [How Aapilot works](docs/design/verification-contract.md) to learn how task ownership, specialist handoffs, human decisions, and verification fit together
 - Open [Ahmad Abdalla's Pilot System Graph](visualizations/skill-library/index.html) to inspect routes and handoffs
 - Read [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) for ownership, sources, and adaptations
 
@@ -65,11 +66,11 @@ For a focused task, you can invoke a flagship skill directly:
 
 All skills remain available from [`skills/`](skills/).
 
-For bounded edits against a settled design or contract, use [`implement`](skills/implement/SKILL.md). It returns the changed artifact and development-check evidence to its caller. Architect remains design-only; the coordinating playbook assigns a separate verification agent to run the project’s checks and owns acceptance.
+For bounded edits against a settled design or contract, use [`implement`](skills/implement/SKILL.md). It returns the changed artifact and development-check evidence to its caller. A direct request meeting the shared [owner-presentation eligibility rule](skills/aapilot/references/execution.md#owner-presentation-eligibility) can stay with that owner through checks and acceptance. Other production changes require separate verification. Architect remains design-only.
 
 For a bounded code or design assessment, use [`maintainability`](skills/maintainability/SKILL.md). It examines reader effort, local change cost, and ease of verification, then returns findings to the caller; it does not select a top-level task route or own implementation.
 
-For the experimental bounded-autonomy capability, see [Bounded work](skills/aapilot/references/bounded-work.md). Request it explicitly with your existing entry skill; its shared receipt helper supports native delegation, current proof, repair and human checkpoints. The [PoC plan](docs/plans/issue-17-feature-flags-poc.md) separates local capability proof from later website testing.
+Retained production changes use the [verification contract](skills/aapilot/references/verification-contract.md) through the existing entry skills by default. One owner retains the request, authority, scope, current proof and acceptance; specialists contribute to that same run. Eligible prescribed presentation edits use owner proof with no required worker. Read-only answers and design work retain their scoped obligations. [How Aapilot works](docs/design/verification-contract.md) explains this operating model and its limits.
 
 ## Repository map
 
@@ -77,7 +78,7 @@ For the experimental bounded-autonomy capability, see [Bounded work](skills/aapi
 | --- | --- |
 | [`skills/`](skills/) | Portable skills, references, assets, and orchestrator playbooks |
 | [Evaluation playbook](skills/aapilot/playbooks/eval.md) | Temporary experiments for assessing instruction changes |
-| [Bounded-autonomy PoC plan](docs/plans/issue-17-feature-flags-poc.md) | Implement and prove the reusable capability here; later exercise website delivery paths |
+| [How Aapilot works](docs/design/verification-contract.md) | Current operating design: task ownership, handoffs, human decisions, verification, and limits |
 | [`visualizations/skill-library/`](visualizations/skill-library/) | Interactive system graph |
 | [`AGENTS.md`](AGENTS.md) | Repository maintenance rules |
 | [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) | Architecture, ownership, sources, and adaptations |

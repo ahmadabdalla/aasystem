@@ -6,7 +6,7 @@ or turn a declaration into evidence of a real human or native tool invocation.
 from pathlib import Path
 from .evidence import (
     require, text_fields, string_list, file_refs, fingerprint, read_json,
-    check_record, check_snapshot, Rejected, inside,
+    check_record, check_snapshot, changed, Rejected, inside,
 )
 
 
@@ -324,8 +324,55 @@ def validate_claim_proof(state, task, claim, proof, current):
         require(report['review_mode'] == task.get('required_review_mode', 'independent-discovery'), 'review mode does not satisfy required proof obligation')
 
 
+def validate_owner_proof(state, task, report_id, current):
+    require(task['id'] == state['brief']['id'] and task.get('parent') is None, 'owner-presentation is root-only')
+    require(task['claims'], 'owner-presentation requires nonempty claims')
+    eligibility = state.get('presentation_eligibility')
+    require(eligibility, 'before-edit presentation eligibility required')
+    check_hashes(eligibility['request_hashes'])
+    check_decision_review(state, task.get('decision_review'), task, current=current)
+    record = state['reports'][report_id]
+    report = record['report']
+    check_record(record)
+    require(record['authority_revision'] == state['authority_revision'], 'owner proof predates resume')
+    require(report.get('proof_basis') == 'owner-presentation', 'owner-presentation proof_basis required')
+    require(report['producer'] == task['owner'] and report['task'] == task['id'], 'root owner must produce owner proof')
+    manifest = check_snapshot(state, report.get('snapshot'), current=current)
+    scope = set(eligibility['declaration']['components'])
+    require(set(changed(eligibility['source_hashes'], manifest['inputs'])) <= scope,
+            'changes outside prescribed presentation components require independent proof')
+    require(report.get('environment') == state['brief']['environment'], 'environment descriptor identity missing/mismatched')
+    validate_owner_observations(task, report)
+
+
+def validate_owner_observations(task, report):
+    text_fields(report, ('diff_ref', 'eligibility_review', 'coverage', 'effects'))
+    fingerprint(report['diff_ref'])
+    require(report.get('limitations') is not None, 'limitations required')
+    require(string_list(report.get('evidence'), 'evidence', True), 'owner evidence required')
+    require(isinstance(report.get('commands'), list) and report['commands'], 'source/diff checks required')
+    require(all(isinstance(c, dict) and c.get('command') and type(c.get('exit_code')) is int and c['exit_code'] == 0
+                for c in report['commands']), 'source/diff check missing/failing')
+    claims = report.get('claims', {})
+    require(isinstance(claims, dict), 'claims map required')
+    for claim in task['claims']:
+        observation = claims.get(claim, {})
+        require(isinstance(observation, dict) and observation.get('status') == 'pass' and observation.get('observations'),
+                f'{claim}: owner claim missing or not observed passing')
+
+
 def proof_errors(state, target, current=True, selected_reports=None):
     task = state['tasks'][target]
+    if task.get('verification_requirement', 'independent') == 'owner-presentation':
+        try:
+            require(task['returns'], 'missing returned owner-presentation report')
+            report_id = task['returns'][-1]
+            validate_owner_proof(state, task, report_id, current)
+            if selected_reports is not None:
+                selected_reports.append(report_id)
+            return []
+        except (Rejected, KeyError, TypeError, ValueError, OSError) as exc:
+            return [f'{target}: {exc}']
     errors = []
     for claim in task['claims']:
         candidates = [

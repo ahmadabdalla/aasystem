@@ -10,13 +10,13 @@ Direct skill installations omit the plugin prefix, for example `$aapilot` or `$p
 
 Keep the complete skill tree together. Follow the host's invocation restrictions and report any unavailable required handoff.
 
-## Experimental bounded-autonomy PoC
+## Verification contract
 
-Install the changed branch's complete `skills/` tree together through the host's supported standalone discovery, retaining sibling references, scripts, adapters and license notices. Record the installed revision and local differences. No plugin prefix is used for standalone `$aapilot` or `$architect`. Actual discovery and supporting-skill composition must be checked in that host; files on disk do not prove invocation.
+Use the existing entry skill with the desired outcome; retained production changes use the [verification contract](skills/aapilot/references/verification-contract.md) by default. No special activation phrase is required. Read-only and design-only assignments keep their scoped boundaries. Direct Implement can own a request meeting [owner-presentation eligibility](skills/aapilot/references/execution.md#owner-presentation-eligibility); other production work retains separate verification and applicable human checkpoints.
 
-Request the mode explicitly, for example `$aapilot Use the bounded-autonomy PoC to carry this authorized task through verification; return at the agreed human checkpoints.` A direct `$architect` assignment can request the same mode for design-only work. Preserve an explicit planning-only boundary when given.
+Keep the complete [export tree](SKILL_SYSTEM.md#export-boundary), including runtime CLI, private Python package, references, adapters and license notices. The CLI ships with the skills; repository tests and temporary evaluation evidence stay outside that export. For standalone discovery, record the installed revision and local differences; invoke `$aapilot` or the relevant specialist without a plugin prefix. Check actual discovery and supporting-skill composition in that host; files on disk do not prove invocation.
 
-The [bounded-work reference](skills/aapilot/references/bounded-work.md) owns usage and receipt fields. Its helper requires Python 3.10+ with no third-party dependencies and native delegation permitted by the actual host. Runtime state, reports and snapshots belong in the target project's evidence location outside the installed skill tree/cache; resolve the helper from that installed tree, independently of the current working directory. Local helper checks do not establish Codex discovery, worker isolation, automatic recovery or website behavior. The user performs the later website installation/exercise under the [PoC plan](docs/plans/issue-17-feature-flags-poc.md).
+The helper requires Python 3.10+ with no third-party dependencies. Resolve it from the installed tree independently of the working directory. Diagnose and repair missing Python/helper access within authority, or report validation unmet; do not silently bypass the receipt. State, reports and snapshots belong in the target project's evidence location outside the installed tree/cache. Native delegation requires actual host permission when needed; owner-presentation work requires no worker. Local helper checks do not establish worker isolation, automatic recovery or website behavior. Read [How Aapilot works](docs/design/verification-contract.md) for the operating design and its limits.
 
 ## Invocation policy
 

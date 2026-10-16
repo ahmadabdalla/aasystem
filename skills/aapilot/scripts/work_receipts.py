@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
-"""Owner-held bounded work receipts (Python 3.10+, state schema 2).
+"""Owner-held verification contract receipts (Python 3.10+, state schema 3).
 
 Records declarations and retained evidence; never executes native tools, controls
 permissions, or authenticates humans. Keep state outside the installed skill tree.
 init --brief FILE --state FILE; apply --state FILE --event FILE;
 snapshot --state FILE --task ID --out NEW_DIRECTORY; status --state FILE.
-Schema1 state is read-only historical status; snapshots retain separate schema1.
+Schema1/2 state is read-only historical status; snapshots retain separate schema1.
 
 Brief: existing objective, authority/source/environment, actions/resources, budget,
 claims/proof fields plus mandatory purpose: implementation|verification|other;
 checkpoint_obligations:[{id,before:implementation|acceptance}] references allowed
 checkpoints. required_review_mode defaults independent-discovery for production.
+verification_requirement defaults independent. Explicit owner-presentation is
+root-only and requires nonempty claims and before-edit presentation_eligibility:
+{classification:prescribed-presentation,request_ref,locator,prescription,basis,
+components:[existing absolute files]}. The owner judges unchanged meaning,
+behavior, data, contracts, permissions, dependencies, deployment and settled
+decisions; this helper validates declarations and identity, not that judgment.
+For that explicit path only, init fills missing routine brief metadata from the
+request, selects component roots, and records a routine decision review. Required
+inputs include governing files, environment and helper sources automatically.
+Keep explicit id,owner,project_root,objective,authority_source,environment,actions,
+resources,budget,claims. Other work retains the full independent contract.
 Child assignments also require purpose. Implementation needs decision_review ID
 and inputs containing that review's exact artifact_refs. Verification needs
 review:{target,mode:independent-discovery|confirmation-audit,claims:[IDs]}.
@@ -44,6 +55,9 @@ updated_brief(optional, no authority/budget widening). Response JSON:
 {checkpoint_event,question_id,package_hash:SHA256,authority_revision,answer,
 source_ref,selected_option(choice only)}. Human response source is retained.
 returned:report; verification:target,verifier_task,report;
+verification_escalated:requirement:independent,reason,evidence_refs; optional
+actions/resources must be existing subsets. This only strengthens obligations,
+even at zero remaining budget; it never widens authority or resets consumption.
 accept:decision_review,rationale,evidence_refs; interrupted:intended_effects,
 last_worker_ref,observations; reconciled:evidence_refs,worker_active:false,
 outcome:known|unknown,observations; cancelled:reason. No allocations are refunded.
@@ -52,6 +66,20 @@ claims/status/observations, commands/effects, evidence/artifacts, coverage/limit
 All paths are absolute nonsymlink regular local files. Production proof requires
 successful executable checks by the started fresh noneditor worker, current source,
 matching frozen first findings and the target's required review mode.
+
+Owner presentation instead reuses the latest root returned report:
+{id,task,producer:ROOT_OWNER,proof_basis:owner-presentation,snapshot,environment,
+claims:{ID:{status:pass,observations}},commands:[{command,exit_code:0}],diff_ref,
+eligibility_review,coverage,effects,limitations,evidence:[absolute files]}.
+Retain the actual diff and check results. No native host, preflight or frozen
+findings are needed. Changed files outside prescribed components require stronger
+proof. Hashes cannot establish diff authenticity or semantic eligibility. Accept
+may omit decision_review to reuse the generated/current owner review. Owner proof
+uses zero dispatches. Missing/later failed/stale reports block earlier passes.
+Status checked_now covers valid owner OR independent proof; verified_now means
+independent only. actual_proof_basis:none|owner-presentation|independent and
+verification_requirement expose both actual and required basis. proof_status is
+owner-checked|verified|unverified|no_claims. Acceptance stays an explicit event.
 """
 from __future__ import annotations
 

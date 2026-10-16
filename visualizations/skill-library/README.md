@@ -2,6 +2,8 @@
 
 Open `index.html` directly, or serve this directory with any static HTTP server.
 
+Read [How Aapilot works](../../docs/design/verification-contract.md) for the operating design behind these routes, handoffs, human decisions, and verification paths. The guide explains the model; the linked skill instructions own its procedures.
+
 The map is a curated semantic view of the current skill library rather than an automatic Markdown-link graph. It distinguishes:
 
 - routes selected by `aapilot`;
@@ -18,11 +20,11 @@ The execution contract owns [decision authority](../../skills/aapilot/references
 
 UI refinement owns the [rendering assignment rules](../../skills/ui-refinement/references/refinement-loop.md#rendering-assignments) for coupled Interaction Design and Prototype work. Existing role ownership, caller delivery and required independent reviews and production verification remain in place.
 
-The existing shared foundation also links the experimental [bounded-work procedure](../../skills/aapilot/references/bounded-work.md) for explicitly requested bounded autonomy: owner-held decision reviews, mandatory checkpoint obligations, native attempt receipts and frozen initial findings accompany current evidence. Existing owners and handoffs remain in place; the helper adds no coordinator or skill node.
+The shared foundation links the standard [verification contract](../../skills/aapilot/references/verification-contract.md) for retained production changes: one root owner retains scope, current evidence, limits and acceptance; specialists contribute to that same run. Feature and direct Implement expose the [owner-presentation path](../../skills/aapilot/references/execution.md#owner-presentation-eligibility), whose owner proof needs no worker. Read-only and design work keep scoped obligations. Existing owners and handoffs remain in place; no coordinator or skill node is added.
 
-Architect owns design and verification planning only. Feature, Bug Fix, Refactoring, and Figure It Out call Implement for bounded edits and development checks, then assign a separate verification agent under the execution contract. The agent uses the project-owned verifier; it is labeled **Agent role** and is excluded from the skill count. Caller handoffs return design contradictions to Architect, which returns revised design packages to those callers. There is no Architect-owned implementation runtime.
+Architect owns design and verification planning only. Feature, Bug Fix, Refactoring, and Figure It Out call Implement for bounded edits and development checks, then assign a separate verification agent when required under the execution contract. The agent uses the project-owned verifier; it is labeled **Agent role** and is excluded from the skill count. Caller handoffs return design contradictions to Architect, which returns revised design packages to those callers. There is no Architect-owned implementation runtime.
 
-The project verifier is a procedure, the verification agent executes it, and Interrogate supplies adversarial review. The caller owns integration and acceptance. Existing prescribed low-impact presentation exceptions remain in the execution contract.
+The project verifier is a procedure, the verification agent executes it, and Interrogate supplies adversarial review. The caller owns integration and acceptance. The execution contract owns owner-presentation eligibility and escalation; that proof is explicitly distinct from independent verification.
 
 Maintainability is a conditional supporting assessment for Architect, Refactoring, and Interrogate. It returns findings to its caller, which retains the design, review, or implementation decision; it is not an aapilot route.
 

@@ -24,6 +24,8 @@ from .evidence import (
     utc,
     file_refs,
     validate_brief,
+    apply_brief_defaults,
+    presentation_identity,
     input_manifest,
     check_snapshot,
     read_report_record,
@@ -52,6 +54,7 @@ def compatible_replacement(original, replacement):
         and set(replacement['resources']) <= set(original['resources'])
         and set(original['claims']) <= set(replacement['claims'])
         and (original['proof_kind'] != 'production' or replacement['proof_kind'] == 'production')
+        and replacement.get('verification_requirement', 'independent') == 'independent'
         and (original.get('required_review_mode', 'independent-discovery') != 'independent-discovery' or replacement.get('required_review_mode', 'independent-discovery') == 'independent-discovery')
         and (not original.get('required', True) or replacement.get('required', True))
     )
@@ -113,6 +116,14 @@ def resources_overlap(state, left, right):
 
 def gates(state, task_id):
     errors = proof_errors(state, task_id)
+    task = state['tasks'][task_id]
+    if errors and task.get('verification_requirement') == 'independent' and state['dispatched'] >= state['brief']['budget']['dispatches']:
+        errors.append('independent proof unmet; root dispatch budget exhausted')
+    if task.get('escalation'):
+        try:
+            policy.check_hashes(task['escalation']['hashes'])
+        except (Rejected, OSError, ValueError) as exc:
+            errors.append(str(exc))
     errors.extend(resumption_errors(state))
     try:
         policy.check_decision_review(state, state['tasks'][task_id].get('decision_review'), state['tasks'][task_id])
@@ -181,6 +192,8 @@ def assign_task(state, task, event):
         parent_values = task[key] if isinstance(task[key], list) else list(task[key])
         require(set(assignment[key]) <= set(parent_values), f'child {key} widen parent authority')
     require(assignment.get('purpose') in ('implementation', 'verification', 'other'), 'explicit purpose required')
+    require(assignment.get('verification_requirement', 'independent') == 'independent', 'owner-presentation is root-only')
+    assignment['verification_requirement'] = 'independent'
     require(assignment.get('required_review_mode', 'independent-discovery') in ('independent-discovery', 'confirmation-audit'), 'invalid required_review_mode')
     if assignment['purpose'] == 'implementation':
         policy.check_decision_review(state, assignment.get('decision_review'), assignment, implementation=True)
@@ -228,6 +241,7 @@ def assign_task(state, task, event):
 
 
 def dispatch_ready(state, task):
+    require(task['id'] != state['brief']['id'], 'root owner is not a native child assignment')
     require(not state['checkpoint'], 'human checkpoint pending')
     require(task['status'] in ('assigned', 'returned'), 'task is closed')
     require(datetime.now(timezone.utc) < utc(task['deadline_utc']), 'deadline expired')
@@ -322,7 +336,8 @@ def record_initial_findings(state, task, event):
 
 
 def record_return(state, task, event):
-    require(task['status'] in ('assigned', 'returned'), 'task cannot return in current state')
+    owner_proof = task.get('parent') is None and task.get('verification_requirement') == 'owner-presentation'
+    require(task['status'] in ('assigned', 'returned') or (owner_proof and task['status'] == 'accepted'), 'task cannot return in current state')
     report_id, record = read_report_record(state, event['report'])
     if task.get('parent'):
         policy.started_dispatch(state, task, record['report']['producer'])
@@ -332,6 +347,8 @@ def record_return(state, task, event):
     require(state['reports'][report_id]['report']['task'] == task['id'], 'return task mismatch')
     if report_id not in task['returns']:
         task['returns'].append(report_id)
+    elif owner_proof and task['returns'][-1] != report_id:
+        raise Rejected('older return cannot replace latest report')
     task['status'] = 'returned'
 
 
@@ -359,7 +376,10 @@ def accept_task(state, task, event):
     text_fields(event, ('rationale',))
     file_refs(event.get('evidence_refs'), 'evidence_refs')
     require(bool(event['evidence_refs']), 'inspected evidence required')
-    policy.check_decision_review(state, event.get('decision_review'), task)
+    review_id = event.get('decision_review')
+    if task.get('verification_requirement') == 'owner-presentation' and review_id is None:
+        review_id = task.get('decision_review')
+    policy.check_decision_review(state, review_id, task)
     errors = gates(state, task['id'])
     require(not errors, '; '.join(errors))
     proof_reports = []
@@ -367,7 +387,7 @@ def accept_task(state, task, event):
     task['status'] = 'accepted'
     task['acceptance'] = {
         'rationale': event['rationale'],
-        'decision_review': event['decision_review'],
+        'decision_review': review_id,
         'evidence': {v: fingerprint(v) for v in event['evidence_refs']},
         'revision': state['revision'] + 1,
         'authority_revision': state['authority_revision'],
@@ -397,8 +417,13 @@ def pause_at_checkpoint(state, task, event):
 def validate_resumed_brief(state, updated_brief):
     """Return a validated copy without changing the run or its tasks."""
     brief = copy.deepcopy(updated_brief)
+    apply_brief_defaults(brief)
     validate_brief(brief, Path(state['state_path']))
     old = state['brief']
+    require(old.get('verification_requirement', 'independent') != 'independent' or brief['verification_requirement'] == 'independent', 'resume cannot weaken verification_requirement')
+    require(set(old['claims']) <= set(brief['claims']), 'resume cannot remove required claims')
+    if brief['verification_requirement'] == 'owner-presentation':
+        require(brief['presentation_eligibility'] == old['presentation_eligibility'], 'resume cannot replace before-edit eligibility')
     for key in ('id', 'owner', 'project_root', 'resources', 'source', 'environment', 'proof_kind'):
         require(brief[key] == old[key], f'resume cannot change {key} in v0')
     require(set(brief['actions']) <= set(old['actions']), 'resume cannot widen actions')
@@ -437,6 +462,7 @@ def resume_run(state, task, event):
         state['brief'] = brief
         state['tasks'][brief['id']]['actions'] = brief['actions']
         state['tasks'][brief['id']]['claims'] = brief['claims']
+        state['tasks'][brief['id']]['verification_requirement'] = brief['verification_requirement']
         for other_task in state['tasks'].values():
             other_task['deadline_utc'] = min(other_task['deadline_utc'], brief['budget']['deadline_utc'], key=utc)
     state['resumptions'].append({'event': event['id'], 'checkpoint': state['checkpoint'], 'human_response': event['human_response'], 'hash': fingerprint(event['human_response']), 'response': response, 'hashes': response_hashes})
@@ -460,6 +486,25 @@ def record_reconciliation(state, task, event):
         require(event['worker_active'] is False, 'worker still active')
         task['uncertain'] = False
     task['reconciliation'] = {'outcome': event['outcome'], 'evidence': {v: fingerprint(v) for v in event['evidence_refs']}, 'observations': event['observations']}
+
+
+def escalate_verification(state, task, event):
+    require(task['id'] == state['brief']['id'] and event['actor'] == task['owner'], 'only root owner escalates verification')
+    require(task.get('verification_requirement') == 'owner-presentation' and event.get('requirement') == 'independent',
+            'verification can only strengthen owner-presentation to independent')
+    text_fields(event, ('reason',))
+    file_refs(event.get('evidence_refs'), 'evidence_refs')
+    require(event['evidence_refs'], 'escalation evidence required')
+    require('budget' not in event, 'escalation cannot change budget')
+    for key in ('actions', 'resources'):
+        if key in event:
+            string_list(event[key], key, True)
+            require(set(event[key]) <= set(task[key]), f'escalation cannot widen {key}; authorized linked run required')
+    task['verification_requirement'] = 'independent'
+    state['brief']['verification_requirement'] = 'independent'
+    task['escalation'] = {'event': event['id'], 'reason': event['reason'], 'hashes': policy.retained(event['evidence_refs'])}
+    if task['status'] == 'accepted':
+        task['status'] = 'returned'
 
 
 def transition(state, event):
@@ -491,6 +536,8 @@ def transition(state, event):
         record_return(state, task, event)
     elif kind == 'verification':
         record_verification(state, task, event)
+    elif kind == 'verification_escalated':
+        escalate_verification(state, task, event)
     elif kind == 'accept':
         accept_task(state, task, event)
     elif kind == 'checkpoint':
@@ -545,13 +592,14 @@ def save(path, state):
 
 def load(path):
     state = read_json(path)
-    require(state.get('schema_version') in (1, VERSION), 'unsupported state schema version')
+    require(state.get('schema_version') in (1, 2, VERSION), 'unsupported state schema version')
     require(state.get('state_path') == str(path), 'state path changed; explicit new run required')
     return state
 
 
 def initialize(path, brief_path):
     brief = read_json(brief_path)
+    apply_brief_defaults(brief)
     validate_brief(brief, path)
     require(not path.exists(), 'state already exists')
     root = copy.deepcopy(brief)
@@ -575,22 +623,34 @@ def initialize(path, brief_path):
         'checkpoint': None,
         'resumptions': [],
     }
-    input_manifest(state)
+    inputs = input_manifest(state)
+    if brief['verification_requirement'] == 'owner-presentation':
+        state['presentation_eligibility'] = copy.deepcopy(presentation_identity(brief))
+        state['presentation_eligibility']['source_hashes'] = inputs
+        review = {'id': 'presentation-eligibility', 'expected_revision': -1, 'task': root['id'],
+                  'authority_revision': 0, 'resources': root['resources'],
+                  'artifact_refs': [brief['presentation_eligibility']['request_ref']],
+                  'coverage': brief['presentation_eligibility']['basis'],
+                  'rationale': brief['presentation_eligibility']['prescription'], 'decisions': [], 'unresolved': []}
+        state['decision_reviews'][review['id']] = {**review, 'hashes': policy.validate_decision_review(state, review)}
+        root['decision_review'] = review['id']
     result = status(state)
     save(path, state)
     return result
 
 
 def status(state):
-    if state['schema_version'] == 1:
-        return {'schema_version': 1, 'legacy_unrecorded_gates': True,
+    if state['schema_version'] != VERSION:
+        diagnostic = 'legacy_unrecorded_gates: new version3 run required'
+        return {'schema_version': state['schema_version'], 'legacy_unrecorded_gates': True,
                 'revision': state['revision'],
                 'remaining_dispatches': state['brief']['budget']['dispatches'] - state['dispatched'],
-                'tasks': {key: {'historical_status': task['status'], 'verified_now': False,
+                'tasks': {key: {'historical_status': task['status'], 'verified_now': False, 'checked_now': False,
+                    'verification_requirement': 'unrecorded', 'actual_proof_basis': 'none',
                     'proof_status': 'unverified',
                     'acceptance_eligible_now': False, 'currently_accepted': False,
-                    'dispatch_eligible_now': False, 'dispatch_gates': ['legacy_unrecorded_gates: new version2 run required'],
-                    'gates': ['legacy_unrecorded_gates: new version2 run required']}
+                    'dispatch_eligible_now': False, 'dispatch_gates': [diagnostic],
+                    'gates': [diagnostic]}
                     for key, task in state['tasks'].items()}}
     attempts = list(state['attempts'].values())
     result = {
@@ -611,16 +671,23 @@ def status(state):
     for key, task in state['tasks'].items():
         errors = gates(state, key)
         dispatch = dispatch_errors(state, task)
-        verified = bool(task['claims']) and not proof_errors(state, key)
+        checked = bool(task['claims']) and not proof_errors(state, key)
+        requirement = task.get('verification_requirement', 'independent')
+        verified = checked and requirement == 'independent'
         if not task['claims']:
             proof_status = 'no_claims'
         elif verified:
             proof_status = 'verified'
+        elif checked:
+            proof_status = 'owner-checked'
         else:
             proof_status = 'unverified'
         result['tasks'][key] = {
             'historical_status': task['status'],
             'verified_now': verified,
+            'checked_now': checked,
+            'verification_requirement': requirement,
+            'actual_proof_basis': requirement if checked else 'none',
             'proof_status': proof_status,
             'acceptance_eligible_now': not errors,
             'currently_accepted': task['status'] == 'accepted' and (not errors),
@@ -662,7 +729,7 @@ def execute_command(args):
             result = initialize(path, args.brief)
         else:
             state = load(path)
-            require(args.command == 'status' or state['schema_version'] == VERSION, 'legacy state is read-only; create a new version2 run')
+            require(args.command == 'status' or state['schema_version'] == VERSION, 'legacy state is read-only; create a new version3 run')
             if args.command == 'apply':
                 result = apply_event(path, state, args.event)
             elif args.command == 'snapshot':

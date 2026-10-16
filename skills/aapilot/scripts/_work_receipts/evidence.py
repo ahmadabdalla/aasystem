@@ -8,7 +8,7 @@ import shutil
 import stat
 import subprocess
 from datetime import datetime
-STATE_VERSION = 2
+STATE_VERSION = 3
 SNAPSHOT_VERSION = 1
 VERSION = STATE_VERSION
 ENTRY_PATH = Path(__file__).resolve().parent.parent / 'work_receipts.py'
@@ -118,7 +118,43 @@ def brief_refs(brief):
     for name in ('requirements', 'decisions', 'procedures', 'principles'):
         refs.extend(brief[name])
     refs.extend(brief['source'].get('required', []))
+    if brief.get('verification_requirement') == 'owner-presentation':
+        refs.extend(brief['presentation_eligibility']['components'])
     return sorted(set(refs))
+
+
+def apply_brief_defaults(brief):
+    """Apply the proof default and declared presentation metadata in place."""
+    brief.setdefault('verification_requirement', 'independent')
+    if brief['verification_requirement'] != 'owner-presentation':
+        return
+    eligibility = brief.get('presentation_eligibility')
+    require(isinstance(eligibility, dict), 'presentation_eligibility required')
+    for key, value in {
+        'purpose': 'implementation', 'proof_kind': 'production',
+        'requirements': [brief.get('authority_source')], 'decisions': [], 'procedures': [],
+        'principles': [], 'checkpoints': [], 'checkpoint_obligations': [],
+        'source': {'mode': 'roots', 'roots': eligibility.get('components'), 'exclude': [], 'required': []},
+        'constraints': [eligibility.get('basis')], 'expected_outputs': [eligibility.get('prescription')],
+        'next_action': eligibility.get('prescription'),
+    }.items():
+        brief.setdefault(key, value)
+
+
+def presentation_identity(brief):
+    eligibility = brief.get('presentation_eligibility')
+    require(isinstance(eligibility, dict), 'presentation_eligibility required')
+    require(eligibility.get('classification') == 'prescribed-presentation', 'only prescribed-presentation is eligible')
+    text_fields(eligibility, ('request_ref', 'locator', 'prescription', 'basis'))
+    require(eligibility['request_ref'] in {brief['authority_source'], *brief['requirements']}, 'eligibility must cite governing request')
+    components = string_list(eligibility.get('components'), 'presentation components', True)
+    root = local(brief['project_root'])
+    for component in components:
+        require(inside(local(component), root), 'presentation component outside project')
+        require(any(not resource.startswith('named:') and inside(Path(component), local(resource))
+                    for resource in brief['resources'].values()), 'presentation component outside resources')
+        fingerprint(component)
+    return {'declaration': eligibility, 'request_hashes': {eligibility['request_ref']: fingerprint(eligibility['request_ref'])}}
 
 
 def validate_brief(brief, state_path):
@@ -143,6 +179,7 @@ def validate_brief(brief, state_path):
     require(len({(o['id'], o['before']) for o in obligations}) == len(obligations), 'duplicate checkpoint obligation')
     require(brief.get('proof_kind') in ('scoped', 'production'), 'invalid proof_kind')
     require(brief['proof_kind'] != 'production' or bool(brief['claims']), 'production requires nonempty claims')
+    require(brief.get('verification_requirement', 'independent') in ('independent', 'owner-presentation'), 'invalid verification_requirement')
     for key in ('constraints', 'expected_outputs'):
         require(key in brief, f'{key} required')
     resources = brief.get('resources')
@@ -153,6 +190,10 @@ def validate_brief(brief, state_path):
             require(len(value) > 6, 'empty named resource')
         else:
             local(value)
+    if brief.get('verification_requirement') == 'owner-presentation':
+        require(bool(brief['claims']), 'owner-presentation requires nonempty claims')
+        require(brief['purpose'] == 'implementation', 'owner-presentation requires implementation purpose')
+        presentation_identity(brief)
     budget(brief.get('budget'))
     source = brief.get('source', {})
     require(source.get('mode') in ('git', 'roots'), 'source mode must be git or roots')
@@ -255,16 +296,21 @@ def check_snapshot(state, path, current=True, current_authority=True):
 
 def read_report_record(state, path):
     report = read_json(path)
-    text_fields(report, ('id', 'task', 'producer', 'host_ref'))
+    text_fields(report, ('id', 'task', 'producer'))
     require(report['task'] in state['tasks'], 'report task not assigned')
-    refs = [str(local(path)), report['host_ref']]
+    owner_report = report['task'] == state['brief']['id'] and report.get('proof_basis') == 'owner-presentation'
+    if not owner_report:
+        text_fields(report, ('host_ref',))
+    refs = [str(local(path))]
+    if report.get('host_ref'):
+        refs.append(report['host_ref'])
     for name in ('artifacts', 'evidence'):
         values = report.get(name, [])
         file_refs(values, name)
         refs.extend(values)
     if report.get('snapshot'):
         refs.append(report['snapshot'])
-    for name in ('environment', 'verifier'):
+    for name in ('environment', 'verifier', 'diff_ref'):
         if report.get(name):
             refs.append(report[name])
     context = report.get('context', {})
