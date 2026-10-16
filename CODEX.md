@@ -10,6 +10,14 @@ Direct skill installations omit the plugin prefix, for example `$aapilot` or `$p
 
 Keep the complete skill tree together. Follow the host's invocation restrictions and report any unavailable required handoff.
 
+## Verification contract
+
+Use the existing entry skill with the desired outcome; retained production changes use the [verification contract](skills/aapilot/references/verification-contract.md) by default. No special activation phrase is required. Read-only and design-only assignments keep their scoped boundaries. Direct Implement can own a request meeting [owner-presentation eligibility](skills/aapilot/references/execution.md#owner-presentation-eligibility); other production work retains separate verification and applicable human checkpoints.
+
+Keep the complete [export tree](SKILL_SYSTEM.md#export-boundary), including runtime CLI, private Python package, references, adapters and license notices. The CLI ships with the skills; repository tests and temporary evaluation evidence stay outside that export. For standalone discovery, record the installed revision and local differences; invoke `$aapilot` or the relevant specialist without a plugin prefix. Check actual discovery and supporting-skill composition in that host; files on disk do not prove invocation.
+
+The helper requires Python 3.10+ with no third-party dependencies. Resolve it from the installed tree independently of the working directory. Diagnose and repair missing Python/helper access within authority, or report validation unmet; do not silently bypass the receipt. State, reports and snapshots belong in the target project's evidence location outside the installed tree/cache. Native delegation requires actual host permission when needed; owner-presentation work requires no worker. Local helper checks do not establish worker isolation, automatic recovery or website behavior. Read [How Aapilot works](docs/design/verification-contract.md) for the operating design and its limits.
+
 ## Invocation policy
 
 Every portable skill includes `agents/openai.yaml` with:

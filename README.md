@@ -1,6 +1,6 @@
 # Ahmad Abdalla's Pilot System
 
-A portable skill system for planning, building, reviewing, and verifying engineering work.
+A portable skill library for AI coding agents to plan, build, review, and verify engineering work. Use Aapilot for a complete task or a specialist for focused work.
 
 Inspired by [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan and [Matt Pocock's skills](https://github.com/mattpocock/skills).
 
@@ -8,7 +8,7 @@ Inspired by [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Laur
 
 Install `aasystem` from the [ahmadabdalla/plugins](https://github.com/ahmadabdalla/plugins) marketplace in Codex CLI, Claude Code, or GitHub Copilot CLI.
 
-Add the marketplace once in each host you use, then install aasystem. If you already added it for Azure Cost Calculator, [refresh the marketplace](https://github.com/ahmadabdalla/plugins#marketplace-commands) and install aasystem.
+Add the marketplace once in each host. If already configured, [refresh it](https://github.com/ahmadabdalla/plugins#marketplace-commands) before installing aasystem.
 
 ### Codex CLI
 
@@ -39,20 +39,22 @@ Run `/skills` in Copilot to check that aasystem's skills are available.
 
 ## Start here
 
-You can always start with [`aapilot`](skills/aapilot/SKILL.md) to drive your work. Give it the task; it selects the appropriate playbook or specialist and coordinates the work through completion within your requested scope. Use your host's plugin invocation above.
+Invoke [`aapilot`](skills/aapilot/SKILL.md) using your host's syntax above. Describe the outcome you want and any constraints:
 
-- Open [Ahmad Abdalla's Pilot System Graph](visualizations/skill-library/index.html) to inspect routes and handoffs
-- Read [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) for ownership, sources, and adaptations
+> Add search to the notes list. Follow the existing design, preserve current filters, and verify the result. Open a PR for review.
 
-## Use a flagship skill directly
+Aapilot selects the appropriate playbook and specialists and coordinates checks within your requested scope. It pauses for unresolved consequential choices and required visual review. Verification scales with the change. [How Aapilot works](docs/design/verification-contract.md) explains the process and its limits.
 
-For a focused task, you can invoke a flagship skill directly:
+## Choose a focused skill
+
+Use a specialist directly when you already know the work you need:
 
 | Need | Entry point |
 | --- | --- |
 | Define product behavior | [`product`](skills/product/SKILL.md) |
 | Choose an overall approach | [`solution`](skills/solution/SKILL.md) |
 | Design implementation boundaries | [`architect`](skills/architect/SKILL.md) |
+| Make bounded edits against a settled design or contract | [`implement`](skills/implement/SKILL.md) |
 | Design interactions | [`interaction-design`](skills/interaction-design/SKILL.md) |
 | Refine a rendered experience | [`ui-refinement`](skills/ui-refinement/SKILL.md) |
 | Build a throwaway experiment | [`prototype`](skills/prototype/SKILL.md) |
@@ -60,48 +62,30 @@ For a focused task, you can invoke a flagship skill directly:
 | Reconstruct prior rationale | [`why`](skills/why/SKILL.md) |
 | Test an assumption | [`probe`](skills/probe/SKILL.md) |
 | Challenge existing work | [`interrogate`](skills/interrogate/SKILL.md) |
-| Explore activities or resolve choices through an interview | [`grill-me`](skills/grill-me/SKILL.md) |
-| Clarify terminology or record a consequential decision | [`domain-modeling`](skills/domain-modeling/SKILL.md) |
+| Assess readability and ease of change | [`maintainability`](skills/maintainability/SKILL.md) |
+| Explore choices through an interview | [`grill-me`](skills/grill-me/SKILL.md) |
+| Clarify terms or record a decision | [`domain-modeling`](skills/domain-modeling/SKILL.md) |
 
-All skills remain available from [`skills/`](skills/).
+Architect is design-only. Implement makes bounded edits and returns the changed artifact with development-check evidence. See [How Aapilot works](docs/design/verification-contract.md) for delivery ownership and verification requirements.
 
-For bounded edits against a settled design or contract, use [`implement`](skills/implement/SKILL.md). It returns the changed artifact and development-check evidence to its caller. Architect remains design-only; the coordinating playbook assigns a separate verification agent to run the project’s checks and owns acceptance.
+Browse [`skills/`](skills/) for all available skills.
 
-For a bounded code or design assessment, use [`maintainability`](skills/maintainability/SKILL.md). It examines reader effort, local change cost, and ease of verification, then returns findings to the caller; it does not select a top-level task route or own implementation.
+## Explore the system
 
-## Repository map
-
-| Path | Contents |
-| --- | --- |
-| [`skills/`](skills/) | Portable skills, references, assets, and orchestrator playbooks |
-| [Evaluation playbook](skills/aapilot/playbooks/eval.md) | Temporary experiments for assessing instruction changes |
-| [`visualizations/skill-library/`](visualizations/skill-library/) | Interactive system graph |
-| [`AGENTS.md`](AGENTS.md) | Repository maintenance rules |
-| [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md) | Architecture, ownership, sources, and adaptations |
-| [`CODEX.md`](CODEX.md) | Codex invocation settings |
-| [`RELEASING.md`](RELEASING.md) | Release validation, publication and marketplace handoff |
-| [`CHANGELOG.md`](CHANGELOG.md) | Version history and invocation migration |
-| [`plugin.json`](plugin.json) | Portable plugin identity and OpenAI presentation metadata |
-| [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json) | Claude compatibility manifest |
+- [System graph](visualizations/skill-library/index.html): explore routes and handoffs
+- [System structure and sources](SKILL_SYSTEM.md): ownership, adaptations, and upstream references
+- [Codex usage](CODEX.md): invocation settings and limits
+- [Version history](CHANGELOG.md): releases and invocation migration
 
 ## Change the library
 
-1. Read [`AGENTS.md`](AGENTS.md)
-2. Follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md)
-3. Edit the owning file
-4. Update the system map when relationships change
-5. Update the graph when routes or handoffs change
-6. Run the owning validation checks
+Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md). The [evaluation playbook](skills/aapilot/playbooks/eval.md) covers experiments for assessing instruction changes.
 
 ## Export the library
 
 Keep the [export contents](SKILL_SYSTEM.md#export-boundary) together, including both plugin manifests, all skills, and the license notices.
 
-Host-specific invocation support varies.
-
-For versioned releases and existing-user upgrades, see [RELEASING.md](RELEASING.md).
-
-See [`CODEX.md`](CODEX.md) for the included Codex adapter.
+Host-specific invocation support varies. See the [release guide](RELEASING.md) for validation, publication, and existing-user upgrades.
 
 ## License and attribution
 

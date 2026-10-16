@@ -6,6 +6,7 @@ It does not define maintenance steps or Codex invocation settings.
 
 - **Maintenance rules:** [`AGENTS.md`](AGENTS.md)
 - **Codex settings:** [`CODEX.md`](CODEX.md)
+- **Operating design:** [How Aapilot works](docs/design/verification-contract.md)
 - **Visual map:** [Ahmad Abdalla's Pilot System Graph](visualizations/skill-library/index.html)
 
 ## System flow
@@ -128,13 +129,13 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 The [execution contract](skills/aapilot/references/execution.md) adds:
 
 - Caller-owned phase transitions
-- Scoped decision authority
+- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](skills/aapilot/references/execution.md#decision-authority), which owns the inspectable human checkpoint handoff and stop/wait rule
 - Non-overlapping canonical writes
 - Freshness checks after supporting work returns
 - No implied scheduler, runtime lock, or automatic approval
 - Fresh workers for independent tasks
 - Independent candidates and judges
-- Review inputs distinguishing independent discovery from confirmation/evidence audits
+- Review inputs distinguishing independent discovery from confirmation/evidence audits, including exposure through initial returned findings and preserved initial reports
 - Adversarial review where the playbook requires it
 
 Local styling cannot silently change a shared design system.
@@ -147,13 +148,25 @@ The [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md) ow
 
 The [Architect design trigger](skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
 
+### Standard verification contract
+
+The first-party [verification-contract reference](skills/aapilot/references/verification-contract.md) owns the common receipt procedure for retained production changes through existing entry skills. One root owner retains request/authority, scope, source identity, nonempty claims, observations, evidence, limits and explicit acceptance. Specialists contribute to the same run within their existing scope. Read-only answers and design work keep scoped obligations without production ceremony.
+
+The [execution contract](skills/aapilot/references/execution.md#owner-presentation-eligibility) owns the narrow owner-presentation eligibility rule, before/after checks and escalation. Feature exposes that short path before its six phases; direct Implement can own an eligible request without a coordinator wrapper or worker. Owner-presentation proof is distinct from independent proof. Other retained production changes require separate verification and applicable human checkpoints.
+
+[work_receipts.py](skills/aapilot/scripts/work_receipts.py) is the Python 3.10+ standard-library structural helper. The thin CLI delegates to private `_work_receipts` modules: `state.py` owns run mutation and locked commit orchestration; `evidence.py` owns input identity, report/proof inspection and protected snapshot effects; `gates.py` owns read-only eligibility, decision, native-attempt and review-interval checks; `__init__.py` marks the package. Keep that implementation closure and the complete export tree together. Repository tests and temporary evaluation artifacts are not runtime dependencies and remain outside the export.
+
+The common mechanism retains current decision reviews, mandatory checkpoints, native attempt reservations/results when workers run, frozen initial independent findings, current artifact/proof identities, human pause/resume and uncertain-effect reconciliation. Each actual continuation uses the same nonrefundable root budget; generated owner-presentation metadata requires no fake native attempt. Existing owners retain semantic acceptance and canonical records. State/evidence remain outside the installed tree/cache. Diagnose missing Python/helper access or leave validation unmet.
+
+Receipt validation neither authenticates people/native calls nor detects omitted semantic choices, undeclared exposure or direct native-tool bypass. It adds no coordinator, daemon, installer, portable skill or domain profile. Package checks and local CLI proof do not establish host discovery, session survival or other-host support. [How Aapilot works](docs/design/verification-contract.md) explains the current operating design, proof paths, and limits; the linked execution and verification contracts own the procedures.
+
 ### Design, implementation, and independent verification
 
 [`architect`](skills/architect/SKILL.md) owns design only: caller usage, interfaces, data shapes, ownership, rationale, and proof planning. A direct design-and-build request needs a coordinating playbook to retain implementation and completion scope. Implementation evidence that contradicts the design returns through the caller for design revision.
 
-[`implement`](skills/implement/SKILL.md) is shared bounded execution support for Feature, Bug Fix, Refactoring, and Figure It Out. Each caller supplies its settled design or contract, file ownership, constraints, and assigned checks; Implement returns edits and development evidence to that caller.
+[`implement`](skills/implement/SKILL.md) is shared bounded execution support for Feature, Bug Fix, Refactoring, and Figure It Out. Each caller supplies its settled design or contract, file ownership, constraints, and assigned checks; Implement returns edits and development evidence into that caller’s run. A direct eligible owner-presentation request can stay with Implement through acceptance.
 
-The [execution contract](skills/aapilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and the existing low-impact presentation exception. The worker runs the project-owned verifier procedure against the identified artifact; it is an agent role, not another portable skill. The caller retains integration, semantic acceptance, and final proof. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
+The [execution contract](skills/aapilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and [owner-presentation eligibility](skills/aapilot/references/execution.md#owner-presentation-eligibility). The worker runs the project-owned verifier procedure against the identified artifact; it is an agent role, not another portable skill. The caller retains integration, semantic acceptance, and final proof. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
 
 ### Maintainability
 
@@ -169,6 +182,7 @@ The [UI refinement loop](skills/ui-refinement/references/refinement-loop.md) add
 - Product ownership of business meaning
 - Interaction Design ownership of visual-reference content
 - Prototype ownership of the rendered candidate
+- Bounded composition under the loop's [rendering assignment rules](skills/ui-refinement/references/refinement-loop.md#rendering-assignments), preserving role ownership and required independence
 - Feature ownership of delivery and final comparison
 - Existing records for the review checkpoint and evidence
 

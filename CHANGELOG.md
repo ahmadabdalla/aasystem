@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0]
+
+- Make the shared verification contract and receipts standard for retained production changes through existing entry skills, with one root owner and run.
+- Allow exact prescribed, low-impact presentation edits to use current owner checks without a worker; label that proof separately from independent production verification.
+- Retain common native-dispatch, current-proof and human decision/visual checkpoints, including stopping for an actual human answer before resumption.
+- Ship the Python 3.10+ standard-library receipt runtime under `skills/`. State schemas 1 and 2 remain historical read-only records; start a new schema-3 run without automatic approval or proof migration.
+- Keep actual human viewing/resumption and other-host support unverified until exercised; local package and CLI checks do not establish them.
+
 ## [0.2.1]
 
 - Define delegation capability checks, execution assignments and result acceptance; plan and verify closing work before completion.
