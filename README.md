@@ -2,6 +2,8 @@
 
 A portable skill library for AI coding agents to plan, build, review, and verify engineering work. Use Aapilot for a complete task or a specialist for focused work.
 
+Marketplace installations use published releases. The `main` branch may include unreleased changes—see [release notes](https://github.com/ahmadabdalla/aasystem/releases) for what has shipped.
+
 Inspired by [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan and [Matt Pocock's skills](https://github.com/mattpocock/skills).
 
 ## Install the plugin

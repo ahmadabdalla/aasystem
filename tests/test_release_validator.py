@@ -1,5 +1,6 @@
 """Exercise the package validator against disposable, deliberately broken exports."""
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -22,9 +23,38 @@ class ReleaseValidatorTests(unittest.TestCase):
         shutil.copytree(ROOT, self.repo, ignore=shutil.ignore_patterns(".git", "__pycache__", ".DS_Store", ".venv"))
         subprocess.run(["git", "init", str(self.repo)], check=True, capture_output=True)
 
-    def validate(self, cwd=None):
+    def validate(self, cwd=None, **env):
         return subprocess.run([sys.executable, str(self.repo / "scripts/validate-release.py")],
-                              cwd=cwd or self.repo, text=True, capture_output=True)
+                              cwd=cwd or self.repo, env=dict(os.environ, **env), text=True, capture_output=True)
+
+    def test_release_pr_contract(self):
+        subprocess.run(["git", "add", "plugin.json"], cwd=self.repo, check=True, capture_output=True)
+        subprocess.run(["git", "-c", "user.name=Test", "-c", "user.email=test@example.com",
+                        "commit", "-m", "Base version"], cwd=self.repo, check=True, capture_output=True)
+        original = json.loads((self.repo / "plugin.json").read_text())["version"]
+        major, minor, patch = map(int, original.split("."))
+        newer = f"{major}.{minor}.{patch + 1}"
+        cases = [
+            (original, "fix: ordinary work", "main", None),
+            (original, f"release: v{original}", "main", "must increase"),
+            (newer, f"release: v{newer}", "main", None),
+            (newer, "fix: ordinary work", "main", "require PR title"),
+            (newer, f"release: v{original}", "main", "require PR title"),
+            (newer, f"release: v{newer} extra", "main", "require PR title"),
+            (newer, f"release: v{newer}", "develop", "must target main"),
+            ("0.0.0", "release: v0.0.0", "main", "must increase"),
+        ]
+        for version, title, target, error in cases:
+            with self.subTest(version=version, title=title, target=target):
+                for name in ("plugin.json", ".claude-plugin/plugin.json"):
+                    path = self.repo / name
+                    manifest = json.loads(path.read_text())
+                    path.write_text(json.dumps(dict(manifest, version=version)))
+                (self.repo / "CHANGELOG.md").write_text(f"# Changelog\n\n## [{version}]\n\nRelease notes.\n")
+                result = self.validate(RELEASE_BASE="HEAD", PR_TITLE=title, PR_TARGET=target)
+                self.assertEqual(result.returncode, 1 if error else 0, result.stdout + result.stderr)
+                if error:
+                    self.assertIn(error, result.stderr)
 
     def assert_invalid(self, message):
         result = self.validate()

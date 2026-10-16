@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+
+- Enforce the manually prepared release PR contract and automate reviewed marketplace adoption after successful publication.
+
 ## [0.3.0]
 
 - Make the shared verification contract and receipts standard for retained production changes through existing entry skills, with one root owner and run.
