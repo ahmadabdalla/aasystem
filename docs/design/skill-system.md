@@ -281,6 +281,6 @@ Export these files together:
 
 The portable root manifest and Claude compatibility manifest package the same skill tree as `aasystem`. The root manifest owns the portable identity, version and OpenAI presentation metadata. The [release validator](../../scripts/validate-release.py) checks the compatibility identity and version mechanically. Packaging preserves the library's invocation policies and specialist boundaries.
 
-The [release process](../ops/releasing.md) adapts Azure Cost Calculator's tag/release and changelog helpers. Merging a reviewed release PR into `main` triggers validation and publication of its exact merged commit, with safe retries. Marketplace adoption remains separate. Release automation does not change skill routes or handoffs.
+The [release process](../ops/releasing.md) adapts Azure Cost Calculator's tag/release and changelog helpers. Merging a reviewed, manually versioned release PR into `main` triggers validation and publication of its exact merged commit, with safe retries. Successful publication prepares a separate reviewed marketplace adoption PR. Release automation does not change skill routes or handoffs.
 
 See [`docs/ops/codex.md`](../ops/codex.md) for Codex adapters and invocation limits.

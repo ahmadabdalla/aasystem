@@ -25,6 +25,9 @@ jobs:
       (github.event.pull_request.merged == true &&
        startsWith(github.event.pull_request.title, 'release: v'))
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+      sha: ${{ steps.release.outputs.sha }}
     permissions:
       contents: write
       pull-requests: read
@@ -68,3 +71,79 @@ jobs:
           RELEASE_SHA: ${{ steps.release.outputs.sha }}
           RELEASE_PR_URL: ${{ steps.release.outputs.pr_url }}
         run: bash scripts/publish-release.sh "$VERSION" "$RELEASE_SHA" "$RELEASE_PR_URL"
+
+  marketplace:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: main
+          path: source
+          persist-credentials: false
+      - name: Create marketplace token
+        id: app
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        with:
+          app-id: ${{ vars.MARKETPLACE_APP_ID }}
+          private-key: ${{ secrets.MARKETPLACE_APP_PRIVATE_KEY }}
+          owner: ahmadabdalla
+          repositories: plugins
+          permission-contents: write
+          permission-pull-requests: write
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          repository: ahmadabdalla/plugins
+          ref: main
+          path: marketplace
+          fetch-depth: 0
+          token: ${{ steps.app.outputs.token }}
+          persist-credentials: false
+      - name: Prepare marketplace files
+        id: catalog
+        working-directory: marketplace
+        env:
+          VERSION: ${{ needs.publish.outputs.version }}
+        run: python3 ../source/scripts/prepare-marketplace.py "$VERSION"
+      - name: Validate and describe adoption
+        if: steps.catalog.outputs.changed == 'true'
+        working-directory: marketplace
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.publish.outputs.version }}
+          RELEASE_SHA: ${{ needs.publish.outputs.sha }}
+        run: |
+          python3 scripts/validate-marketplace.py --base origin/main > "$RUNNER_TEMP/marketplace-validation.txt"
+          cat "$RUNNER_TEMP/marketplace-validation.txt"
+          {
+            printf 'Adopt aasystem %s from its successfully published release.\n\n' "$VERSION"
+            printf 'Tag: `v%s`\n\nCommit: `%s`\n\n' "$VERSION" "$RELEASE_SHA"
+            printf 'Release: https://github.com/ahmadabdalla/aasystem/releases/tag/v%s\n\n' "$VERSION"
+            printf 'Source workflow: %s/%s/actions/runs/%s\n\n' "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+            printf 'Catalog validation:\n\n```text\n'
+            cat "$RUNNER_TEMP/marketplace-validation.txt"
+            printf '```\n\nHost upgrade checks remain separate; record available results before adoption.\n'
+          } > "$RUNNER_TEMP/marketplace-pr.md"
+      - name: Open or update marketplace PR
+        if: steps.catalog.outputs.changed == 'true'
+        id: adoption
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7
+        with:
+          path: marketplace
+          token: ${{ steps.app.outputs.token }}
+          branch: automation/aasystem-release
+          base: main
+          add-paths: |
+            .claude-plugin/marketplace.json
+            README.md
+          commit-message: 'chore: adopt aasystem v${{ needs.publish.outputs.version }}'
+          title: 'chore: adopt aasystem v${{ needs.publish.outputs.version }}'
+          body-path: ${{ runner.temp }}/marketplace-pr.md
+      - name: Summarize handoff
+        if: steps.adoption.outputs.pull-request-url != ''
+        env:
+          PR_URL: ${{ steps.adoption.outputs.pull-request-url }}
+        run: |
+          printf 'Published; awaiting marketplace review: %s\n' "$PR_URL" >> "$GITHUB_STEP_SUMMARY"

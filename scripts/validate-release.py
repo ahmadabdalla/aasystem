@@ -13,6 +13,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEM_MAP = Path("docs/design/skill-system.md")
+VERSION = r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
 
 
 def check(condition, message):
@@ -22,6 +23,16 @@ def check(condition, message):
 
 def read(path):
     return Path(path).read_text(encoding="utf-8")
+
+
+def validate_release_pr(version, base_ref, title, target):
+    previous = json.loads(subprocess.check_output(["git", "show", f"{base_ref}:plugin.json"], text=True))["version"]
+    if version == previous and not title.startswith("release:"):
+        return
+    check(target == "main", "Release PRs must target main")
+    check(title == f"release: v{version}", "Version changes require PR title release: vX.Y.Z matching the manifests")
+    check(tuple(map(int, version.split("."))) > tuple(map(int, previous.split("."))),
+          "Release version must increase from the PR base")
 
 
 def parse_yaml(source, path):
@@ -72,7 +83,7 @@ def validate():
     claude = json.loads(read(".claude-plugin/plugin.json"))
     check(portable["name"] == "aasystem", "Installation identity must remain aasystem")
     version = portable["version"]
-    check(isinstance(version, str) and re.fullmatch(r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", version),
+    check(isinstance(version, str) and re.fullmatch(VERSION, version),
           "Use a stable X.Y.Z version")
     for key in ("name", "version"):
         check(portable[key] == claude[key], f"Manifest {key} values differ")
@@ -108,6 +119,8 @@ def validate():
     notes = re.split(rf"^## \[{re.escape(version)}\]\s*$", read("CHANGELOG.md"), maxsplit=1, flags=re.MULTILINE)
     check(len(notes) == 2 and re.split(r"^## \[", notes[1], maxsplit=1, flags=re.MULTILINE)[0].strip(),
           "Missing versioned release notes")
+    if os.environ.get("RELEASE_BASE"):
+        validate_release_pr(version, os.environ["RELEASE_BASE"], os.environ["PR_TITLE"], os.environ["PR_TARGET"])
     guard = "skills/bootstrap-verification/assets/check-verification-output.sh"
     check(subprocess.run(["sh", "-n", guard]).returncode == 0, "Shipped helper syntax failed")
     check(subprocess.run(["sh", guard]).returncode == 0, "Verification output guard failed")
@@ -118,5 +131,5 @@ def validate():
 if __name__ == "__main__":
     try:
         validate()
-    except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError) as error:
+    except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError, subprocess.CalledProcessError) as error:
         sys.exit(f"FAIL: {error}")
