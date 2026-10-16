@@ -2,7 +2,7 @@
 
 Aapilot turns an engineering request into a chosen procedure, bounded contributions and an inspected result. The human supplies the outcome and authority. One owner keeps the work coherent, brings in domain experts when needed, checks evidence and decides whether the authorized task is complete.
 
-This guide explains that operating model. The [Aapilot entry skill](../../skills/aapilot/SKILL.md) selects routes; the [execution contract](../../skills/aapilot/references/execution.md) owns authority, delegation and completion; the [verification contract](../../skills/aapilot/references/verification-contract.md) owns receipts and their detailed protocol.
+This guide explains that operating model. The [Aapilot entry skill](../../skills/aapilot/SKILL.md) selects routes; the [execution contract](../../skills/aapilot/references/execution.md) owns authority, delegation and completion; [engineering verification](../../skills/aapilot/references/engineering-verification.md) owns the combined independent assessment and executable-check assignment; the [verification contract](../../skills/aapilot/references/verification-contract.md) owns receipts and their detailed protocol.
 
 ## One owner, proportional work
 
@@ -36,11 +36,11 @@ Human: outcome + authority + required checkpoints
 
 Read-only and design-only work keeps its scoped evidence obligations without production receipts or implementation ceremony. A plan-only request ends with the plan. Retained production changes use the common verification contract through existing entry skills; no special activation phrase is needed.
 
-The narrow [owner-presentation path](../../skills/aapilot/references/execution.md#owner-presentation-eligibility) covers an exact prescribed, low-impact presentation edit inside existing components. Meaning, behavior, data, contracts, permissions, dependencies and deployment must remain unchanged, with required decisions already settled. A short edit can still change business meaning: changing a billing term or consent statement needs the appropriate authority and proof.
+The narrow [owner-presentation path](../../skills/aapilot/references/execution.md#owner-presentation-eligibility) covers an exact prescribed, low-impact presentation edit inside existing components. Meaning, behavior, data, contracts, permissions, dependencies and deployment must remain unchanged, with required decisions already settled. It cannot waive independent engineering assessment required by the user, project, or task. A short edit can still change business meaning: changing a billing term or consent statement needs the appropriate authority and proof.
 
 The owner records eligibility before editing and checks the actual diff afterward. The receipt keeps specific claims, current artifact identity, actual source/diff observations, an available preview and unexercised limits. This is **owner-checked** proof. It does not establish independence. No worker assignment, verifier preflight or frozen findings packet is required for that path; the root can have zero native workers. Direct [Implement](../../skills/implement/SKILL.md) can own an eligible request through acceptance without an Aapilot wrapper.
 
-Other retained production changes require a fresh verifier separate from every product editor. Development checks help an implementation worker find problems; they do not satisfy that independent gate.
+Other retained production changes require a fresh verifier separate from every editor. That same worker assesses the actual diff and executes affected project checks. Development checks help an implementation worker find problems; they do not satisfy that independent gate.
 
 | Example | Appropriate path |
 | --- | --- |
@@ -60,10 +60,13 @@ The selected [playbook](skill-system.md#orchestrator-playbooks) supplies the seq
 | Navigation and interaction structure | [Interaction Design](../../skills/interaction-design/SKILL.md) |
 | Inspectable rendered candidate and human review loop | [Prototype](../../skills/prototype/SKILL.md) and [UI Refinement](../../skills/ui-refinement/SKILL.md) |
 | Bounded production edits and development checks | [Implement](../../skills/implement/SKILL.md) |
-| Executable acceptance observations | A separate verification worker using the project verifier |
+| Reusable criteria and conditional deeper assessment | [Maintainability](../../skills/maintainability/SKILL.md) |
+| Bounded scope/structure assessment and executable acceptance observations | One separate verification worker using Maintainability criteria and the project verifier |
 | Integration, canonical records and final acceptance | The current task owner |
 
 An assignment names its inputs, deliverable, file ownership, authority, budget and checks. A specialist returns artifacts, observations and limits. New consequential choices or contradictions return to the owner. Accepted project decisions constrain the work; they do not prove that the implementation works. See the complete [ownership map](skill-system.md#ownership-boundaries).
+
+Implement reads the relevant Maintainability criteria while making assigned edits. The independent verifier uses those same criteria for its assessment. This shares one criteria owner without adding a mandatory Maintainability worker or another specialist chain; a deeper specialist assessment remains conditional on its ability to change a decision.
 
 ## Native workers do the work; the CLI records it
 
@@ -80,7 +83,7 @@ The owner uses the host's actual delegation tools. The shipped [receipt CLI](../
                                   |
                   Returned artifact + development checks
                                   |
-            +-> Fresh verifier: frozen inputs + project recipes
+            +-> Fresh verifier: criteria + frozen inputs + recipes
             |                     |
             |    Original findings + executable evidence
             |           /                    \
@@ -97,7 +100,7 @@ The owner reserves an attempt before calling the native tool, checks current dis
 
 For independent discovery, the verifier receives requirements, accepted constraints, original artifacts and runnable project recipes without prior conclusions. Its initial findings are preserved before lead assistance. Context exposure is tracked through that first return. A confirmation audit can examine supplied claims, but agreement in an audit does not establish independent discovery. The [review-context rule](../../skills/aapilot/references/execution.md#review-context) owns that distinction.
 
-The verifier exercises the identified artifact in a separate materialized workspace, inspects relevant effects and returns pass, fail or unverified observations. It changes neither product code nor expectations. The owner reconciles findings, assigns bounded repairs and obtains fresh affected proof for the current combined artifact.
+The verifier inspects the combined diff for authorized scope and concrete structural concerns, then exercises the identified artifact in a separate materialized workspace and inspects relevant effects. Its one report separates qualitative findings from executable pass, fail or unverified observations. It changes neither product code nor expectations. The owner reconciles each material finding through a correction or an explicit evidenced disposition, assigns bounded repairs, and obtains fresh affected assessment and executable proof for the current combined artifact before accepting it. [Engineering verification](../../skills/aapilot/references/engineering-verification.md) owns that procedure.
 
 The CLI validates recorded transitions, declared scope subsets, budget, checkpoint bindings and input/evidence identities. Semantic eligibility, complete scope, real authority, worker isolation and truthful observations still require inspection. It cannot authenticate a human or native call, sandbox host tools, detect every omitted consequential choice or intercept direct tool use.
 
@@ -121,6 +124,8 @@ Project verification recipes -----------> Observations + effects + limits
 A snapshot records copied inputs and hashes so a report identifies what was exercised. Relevant source, requirements, loaded procedures/helper, verifier/configuration and environment descriptor join that identity. The tested workspace is separate from the protected archive. Relevant dependencies must be included; copying unrelated repository contents does not improve a scoped claim.
 
 Claims describe concrete expected results. Evidence records what was observed through the real UI, CLI, API or library entry point and its relevant side effects. A build, mock or worker summary cannot establish an unexercised boundary. Remote services and deployment instances need their own observations. Hashing an environment descriptor does not prove where a command ran.
+
+The owner declares the required engineering-assessment claim alongside executable claims before editing. Its pass means a bounded review was performed with its scope, material findings and limits disclosed; it does not certify absolute maintainability or prove behavior. Missing, failing or unverified required claims block acceptance, and review completion cannot waive unresolved material findings. Finding dispositions remain part of the owner's acceptance rationale. Receipt validation checks recorded structure and identity; it cannot judge the substance of those dispositions.
 
 The three distinctions below prevent arrival, proof and approval from collapsing into one label:
 
