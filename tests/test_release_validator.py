@@ -92,6 +92,15 @@ class ReleaseValidatorTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.reject_edit(path, contents, f"Invalid YAML in {path}:")
 
+    def test_invalid_tagged_scalars_include_filename(self):
+        for path, policy, value in ((SKILL, "disable-model-invocation", "true"),
+                                    (ADAPTER, "allow_implicit_invocation", "false")):
+            original = (self.repo / path).read_text()
+            for scalar in ("!!bool invalid", "!!int invalid", "!!float invalid"):
+                with self.subTest(path=path, scalar=scalar):
+                    contents = original.replace(f"{policy}: {value}", f"{policy}: {scalar}")
+                    self.reject_edit(path, contents, f"Invalid YAML in {path}:")
+
     def test_skill_invocation_policy_requires_boolean_true(self):
         original = (self.repo / SKILL).read_text()
         for value in ("false", "'true'", "1", "null"):

@@ -27,7 +27,7 @@ def read(path):
 def parse_yaml(source, path):
     try:
         return yaml.safe_load(source)
-    except yaml.YAMLError as error:
+    except (yaml.YAMLError, KeyError, ValueError) as error:
         raise ValueError(f"Invalid YAML in {path}: {error}") from error
 
 
