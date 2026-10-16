@@ -71,7 +71,7 @@ Rerun the failed Actions job. For a release PR merged before automation was enab
 gh workflow run publish-release.yml --ref main -f release_pr=your_pr_number
 ```
 
-Retries use the same PR and commit, including a successful matching publication retry before marketplace handoff. Conflicting tags or release contents stop publication; never move a released tag or overwrite its contents.
+Retries use the same PR and commit, including a successful matching publication retry before marketplace handoff. Marketplace preparation uses the workflow's exact commit, so it does not drift with `main` and can still adopt older releases that lack the preparation helper. Conflicting tags or release contents stop publication; never move a released tag or overwrite its contents.
 
 ## Upgrade an installed plugin
 

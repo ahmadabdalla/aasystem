@@ -80,7 +80,8 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          ref: main
+          # Pin tooling to this workflow revision; older releases lack the helper.
+          ref: ${{ github.workflow_sha }}
           path: source
           persist-credentials: false
       - name: Create marketplace token
