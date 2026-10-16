@@ -5,9 +5,9 @@ This file defines the rules for changing the repository.
 ## Read before editing
 
 - **Project entry:** [`README.md`](README.md)
-- **System structure and sources:** [`SKILL_SYSTEM.md`](SKILL_SYSTEM.md)
+- **System structure and sources:** [`docs/design/skill-system.md`](docs/design/skill-system.md)
 - **Skill authoring:** [`skills/aapilot/playbooks/authoring-a-skill.md`](skills/aapilot/playbooks/authoring-a-skill.md)
-- **Codex invocation:** [`CODEX.md`](CODEX.md)
+- **Codex invocation:** [`docs/ops/codex.md`](docs/ops/codex.md)
 
 ## Edit skills
 
@@ -20,8 +20,8 @@ This file defines the rules for changing the repository.
 ## Update documentation
 
 - Update `README.md` when entry points or repository navigation change
-- Update `SKILL_SYSTEM.md` when skills, playbooks, relationships, sources, or adaptations change
-- Update `CODEX.md` when Codex invocation settings change
+- Update `docs/design/skill-system.md` when skills, playbooks, relationships, sources, or adaptations change
+- Update `docs/ops/codex.md` when Codex invocation settings change
 - Update the [system graph](visualizations/skill-library/README.md) when routes, handoffs, or ownership change
 
 ## Validate changes

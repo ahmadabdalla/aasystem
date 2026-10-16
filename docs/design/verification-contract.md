@@ -50,7 +50,7 @@ Other retained production changes require a fresh verifier separate from every p
 
 ## Domain experts contribute bounded results
 
-The selected [playbook](../../SKILL_SYSTEM.md#orchestrator-playbooks) supplies the sequence. Specialists supply expertise within that sequence:
+The selected [playbook](skill-system.md#orchestrator-playbooks) supplies the sequence. Specialists supply expertise within that sequence:
 
 | Responsibility | Owner |
 | --- | --- |
@@ -63,7 +63,7 @@ The selected [playbook](../../SKILL_SYSTEM.md#orchestrator-playbooks) supplies t
 | Executable acceptance observations | A separate verification worker using the project verifier |
 | Integration, canonical records and final acceptance | The current task owner |
 
-An assignment names its inputs, deliverable, file ownership, authority, budget and checks. A specialist returns artifacts, observations and limits. New consequential choices or contradictions return to the owner. Accepted project decisions constrain the work; they do not prove that the implementation works. See the complete [ownership map](../../SKILL_SYSTEM.md#ownership-boundaries).
+An assignment names its inputs, deliverable, file ownership, authority, budget and checks. A specialist returns artifacts, observations and limits. New consequential choices or contradictions return to the owner. Accepted project decisions constrain the work; they do not prove that the implementation works. See the complete [ownership map](skill-system.md#ownership-boundaries).
 
 ## Native workers do the work; the CLI records it
 
@@ -169,7 +169,7 @@ An interruption records intended effects and the last known worker/process. The 
 
 ## Keep runtime and project evidence in their own places
 
-The installed library ships portable skills, references, adapters, assets, the thin Python CLI and its private package. Keep the [complete export tree](../../SKILL_SYSTEM.md#export-boundary) together. The helper needs Python 3.10+ and the standard library; repository tests and temporary evaluation artifacts are outside its runtime dependencies.
+The installed library ships portable skills, references, adapters, assets, the thin Python CLI and its private package. Keep the [complete export tree](skill-system.md#export-boundary) together. The helper needs Python 3.10+ and the standard library; repository tests and temporary evaluation artifacts are outside its runtime dependencies.
 
 Run inputs, state, reports, snapshots and evidence belong in the target project's evidence location, outside installed skills/cache. Project verification procedures and feature maps remain durable project records. Temporary review evidence follows the project's retention policy; deliberately retained proof needs an identified future reader and purpose. The [project evidence contract](../../skills/bootstrap-verification/references/project-contract.md#evidence-and-retention) owns those lifetimes.
 

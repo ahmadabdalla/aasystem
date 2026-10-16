@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Adapted from Azure Cost Calculator's create-tag-and-release.sh and
-# extract-changelog.sh; see RELEASING.md for attribution and operating steps.
+# extract-changelog.sh; see docs/ops/releasing.md for attribution and operating steps.
 set -euo pipefail
 
 fail() { echo "FAIL: $*" >&2; exit 1; }

@@ -371,7 +371,7 @@ const nodes = [
     subtitle: "Canonical records",
     purpose: "Represents project-owned requirements, decisions, design records, feature maps, verifier recipes, and retained proof.",
     owns: "Durable project context; individual skills own only their scoped contribution and handoff.",
-    source: "../../SKILL_SYSTEM.md",
+    source: "../../docs/design/skill-system.md",
     x: 1776,
     y: 1035,
   },

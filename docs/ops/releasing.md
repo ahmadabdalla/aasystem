@@ -4,7 +4,7 @@ Merging a release PR into `main` automatically creates its tag and GitHub Releas
 
 ## Maintainer setup
 
-Use Python 3.10+, Git, Bash, a POSIX shell and `jq` for repository checks. Publication also needs the authenticated GitHub CLI (`gh`). Create a virtual environment and install the pinned development dependencies from [requirements-dev.txt](requirements-dev.txt):
+Use Python 3.10+, Git, Bash, a POSIX shell and `jq` for repository checks. Publication also needs the authenticated GitHub CLI (`gh`). Create a virtual environment and install the pinned development dependencies from [requirements-dev.txt](../../requirements-dev.txt):
 
 ```bash
 python3 -m venv .venv

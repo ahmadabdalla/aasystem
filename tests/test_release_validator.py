@@ -61,7 +61,8 @@ class ReleaseValidatorTests(unittest.TestCase):
                                  f"Manifest {key} values differ")
 
     def test_missing_required_exports(self):
-        for path in ("README.md", "LICENSE", "skills/aapilot/agents/openai.yaml"):
+        for path in ("README.md", "LICENSE", "skills/aapilot/agents/openai.yaml",
+                     "docs/design/skill-system.md", "docs/ops/codex.md", "docs/ops/releasing.md"):
             with self.subTest(path=path):
                 target = self.repo / path
                 contents = target.read_bytes()

@@ -12,6 +12,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SYSTEM_MAP = Path("docs/design/skill-system.md")
 
 
 def check(condition, message):
@@ -77,7 +78,7 @@ def validate():
         check(portable[key] == claude[key], f"Manifest {key} values differ")
 
     required = (
-        "README.md", "SKILL_SYSTEM.md", "CODEX.md", "LICENSE", "PSTACK_LICENSE.txt",
+        "README.md", SYSTEM_MAP, "docs/ops/codex.md", "docs/ops/releasing.md", "LICENSE", "PSTACK_LICENSE.txt",
         "MATT_POCOCK_LICENSE.txt", "skills/principles/INDEX.md", "skills/aapilot/SKILL.md",
         "skills/aapilot/agents/openai.yaml",
     )
@@ -91,12 +92,17 @@ def validate():
         validate_skill(path)
 
     # The system inventory links every portable skill, catching incomplete exports.
-    inventory = set(re.findall(r"\]\((skills/[^)]+/SKILL\.md)\)", read("SKILL_SYSTEM.md")))
+    inventory = {
+        (SYSTEM_MAP.parent / target).resolve().relative_to(ROOT).as_posix()
+        for target in re.findall(r"\]\(((?:\.\./)*skills/[^)]+/SKILL\.md)\)", read(SYSTEM_MAP))
+    }
     check(sorted(inventory) == skills, "System inventory and portable skill tree differ")
 
-    documents = sorted(Path("skills").glob("**/*.md")) + list(map(Path, (
-        "README.md", "SKILL_SYSTEM.md", "CODEX.md", "AGENTS.md", "CHANGELOG.md", "RELEASING.md",
-    )))
+    documents = (
+        sorted(Path("skills").glob("**/*.md"))
+        + sorted(Path("docs").glob("**/*.md"))
+        + list(map(Path, ("README.md", "AGENTS.md", "CHANGELOG.md")))
+    )
     links = validate_local_links(documents)
 
     notes = re.split(rf"^## \[{re.escape(version)}\]\s*$", read("CHANGELOG.md"), maxsplit=1, flags=re.MULTILINE)
