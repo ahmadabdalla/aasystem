@@ -2,6 +2,36 @@
 
 Merging a release PR into `main` automatically creates its tag and GitHub Release after validation.
 
+## Maintainer setup
+
+Use Python 3.10+, Git, Bash, a POSIX shell and `jq` for repository checks. Publication also needs the authenticated GitHub CLI (`gh`). Create a virtual environment and install the pinned development dependencies from [requirements-dev.txt](../../requirements-dev.txt):
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+. .venv/bin/activate
+```
+
+PyYAML provides real YAML parsing for the release validator and workflow tests. It is a development dependency only; the shipped work-receipts helper still uses Python 3.10+ and the standard library without third-party dependencies. Neither repository checks nor installed skills require Ruby.
+
+For a cloud environment, make Python (including `venv`), Git, Bash, a POSIX shell and `jq` available in the base image. Use these install instructions after checkout, adjusting the checkout path if needed:
+
+```bash
+cd /workspace/aasystem
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+```
+
+Use these start instructions for each session so subprocesses also use the environment's Python:
+
+```bash
+cd /workspace/aasystem
+. .venv/bin/activate
+python3 scripts/validate-release.py
+bash -n scripts/publish-release.sh
+python3 -m unittest discover -s tests
+```
+
 ## Prepare and merge
 
 1. Choose the version in `plugin.json`, then set the same version in `.claude-plugin/plugin.json`. Keep the name `aasystem`.
@@ -10,7 +40,7 @@ Merging a release PR into `main` automatically creates its tag and GitHub Releas
 4. Open a PR titled exactly `release: vX.Y.Z`, targeting `main`. Review it and wait for the `validate` check to pass, then merge.
 
 ```bash
-ruby scripts/validate-release.rb
+python3 scripts/validate-release.py
 bash -n scripts/publish-release.sh
 python3 -m unittest discover -s tests
 ```

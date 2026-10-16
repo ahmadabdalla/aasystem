@@ -4,8 +4,11 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
+
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,7 +20,7 @@ class ReleaseTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
         self.repo = self.base / "repo"
-        shutil.copytree(ROOT, self.repo, ignore=shutil.ignore_patterns(".git", "__pycache__", ".DS_Store"))
+        shutil.copytree(ROOT, self.repo, ignore=shutil.ignore_patterns(".git", "__pycache__", ".DS_Store", ".venv"))
         self.version = json.loads((self.repo / "plugin.json").read_text())["version"]
         self.tag = "v" + self.version
         major, minor, patch = self.version.split(".")
@@ -70,9 +73,7 @@ else:
                               cwd=self.repo, env=dict(self.env, **env), text=True, capture_output=True)
 
     def resolve_pr(self, **changes):
-        workflow = json.loads(subprocess.check_output(
-            ["ruby", "-rjson", "-ryaml", "-e", "puts JSON.generate(YAML.safe_load(File.read(ARGV[0])))",
-             str(self.repo / ".github/workflows/publish-release.yml")], text=True))
+        workflow = yaml.safe_load((self.repo / ".github/workflows/publish-release.yml").read_text())
         script = next(step["run"] for step in workflow["jobs"]["publish"]["steps"] if step.get("id") == "release")
         pr = dict(merged=True, title="release: " + self.tag, merge_commit_sha=self.sha,
                   base={"ref": "main", "repo": {"full_name": "example/aasystem"}})
@@ -95,6 +96,54 @@ else:
         notes = json.loads(self.state.read_text())["body"]
         self.assertIn("Release PR: " + outputs["pr_url"], notes)
         self.assertNotIn("Host checks:", notes)
+
+    def test_malformed_workflow_yaml_is_rejected(self):
+        (self.repo / ".github/workflows/publish-release.yml").write_text("jobs: [\n")
+        with self.assertRaises(yaml.YAMLError):
+            self.resolve_pr()
+        self.assert_no_remote_tag()
+
+    def test_workflow_pip_caches_name_an_existing_dependency_file(self):
+        for path in (self.repo / ".github/workflows").glob("*.yml"):
+            workflow = yaml.safe_load(path.read_text())
+            for job in workflow["jobs"].values():
+                for step in job["steps"]:
+                    settings = step.get("with", {})
+                    if settings.get("cache") == "pip":
+                        with self.subTest(workflow=path.name):
+                            dependency = settings.get("cache-dependency-path")
+                            self.assertIsNotNone(dependency, "Pip cache needs an explicit dependency file")
+                            self.assertTrue((self.repo / dependency).is_file())
+
+    def test_publication_bootstrap_supports_legacy_and_current_commits(self):
+        workflow = yaml.safe_load((self.repo / ".github/workflows/publish-release.yml").read_text())
+        install = next(step["run"] for step in workflow["jobs"]["publish"]["steps"]
+                       if step.get("name") == "Install development dependencies")
+        requirements = self.repo / "requirements-dev.txt"
+        contents = requirements.read_text()
+        self.git("rm", "requirements-dev.txt")
+        self.git("commit", "-m", "Legacy release without development requirements")
+        legacy_sha = self.git("rev-parse", "HEAD").stdout.strip()
+        requirements.write_text(contents)
+        self.git("add", "requirements-dev.txt")
+        self.git("commit", "-m", "Migrate release development requirements")
+        current_sha = self.git("rev-parse", "HEAD").stdout.strip()
+
+        install_log = self.base / "install.log"
+        python = self.bin / "python3"
+        python.write_text('#!/bin/sh\nprintf "%s\\n" "$@" > "$TEST_INSTALL_LOG"\n')
+        python.chmod(0o755)
+        for sha, needs_dependencies in ((legacy_sha, False), (current_sha, True)):
+            with self.subTest(needs_dependencies=needs_dependencies):
+                self.git("checkout", "--detach", sha)
+                result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", install],
+                                        cwd=self.repo, env=dict(self.env, TEST_INSTALL_LOG=str(install_log)),
+                                        text=True, capture_output=True)
+                self.assert_success(result)
+                self.assertEqual(install_log.exists(), needs_dependencies)
+                if needs_dependencies:
+                    self.assertEqual(install_log.read_text().splitlines(),
+                                     ["-m", "pip", "install", "-r", "requirements-dev.txt"])
 
     def test_workflow_rejects_unmerged_wrong_base_and_nonrelease_prs(self):
         cases = [dict(merged=False), dict(title="fix: ordinary change"), dict(title="release: " + self.tag + " extra"),
@@ -178,11 +227,11 @@ else:
         manifest = json.loads(original)
         manifest["version"] = self.other_version
         manifest_path.write_text(json.dumps(manifest))
-        result = subprocess.run(["ruby", "scripts/validate-release.rb"], cwd=self.repo, capture_output=True)
+        result = subprocess.run([sys.executable, "scripts/validate-release.py"], cwd=self.repo, capture_output=True)
         self.assertNotEqual(result.returncode, 0)
         manifest_path.write_text(original)
         shutil.rmtree(self.repo / "skills/product")
-        result = subprocess.run(["ruby", "scripts/validate-release.rb"], cwd=self.repo, capture_output=True)
+        result = subprocess.run([sys.executable, "scripts/validate-release.py"], cwd=self.repo, capture_output=True)
         self.assertNotEqual(result.returncode, 0)
 
 

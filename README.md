@@ -73,22 +73,24 @@ Browse [`skills/`](skills/) for all available skills.
 ## Explore the system
 
 - [System graph](visualizations/skill-library/index.html): explore routes and handoffs
-- [System structure and sources](SKILL_SYSTEM.md): ownership, adaptations, and upstream references
-- [Codex usage](CODEX.md): invocation settings and limits
+- [System structure and sources](docs/design/skill-system.md): ownership, adaptations, and upstream references
+- [Codex usage](docs/ops/codex.md): invocation settings and limits
 - [Version history](CHANGELOG.md): releases and invocation migration
 
 ## Change the library
 
 Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md). The [evaluation playbook](skills/aapilot/playbooks/eval.md) covers experiments for assessing instruction changes.
 
+For local or cloud development, follow the [maintainer setup](docs/ops/releasing.md#maintainer-setup) to install Python dependencies and run the package checks.
+
 ## Export the library
 
-Keep the [export contents](SKILL_SYSTEM.md#export-boundary) together, including both plugin manifests, all skills, and the license notices.
+Keep the [export contents](docs/design/skill-system.md#export-boundary) together, including both plugin manifests, all skills, and the license notices.
 
-Host-specific invocation support varies. See the [release guide](RELEASING.md) for validation, publication, and existing-user upgrades.
+Host-specific invocation support varies. See the [release guide](docs/ops/releasing.md) for validation, publication, and existing-user upgrades.
 
 ## License and attribution
 
 Original contributions are licensed under the [MIT License](LICENSE), copyright Ahmad Abdalla. This system adapts upstream work from Lauren Tan's pstack and Matt Pocock's skills. Their original MIT notices are preserved in [PSTACK_LICENSE.txt](PSTACK_LICENSE.txt) and [MATT_POCOCK_LICENSE.txt](MATT_POCOCK_LICENSE.txt).
 
-The [source and adaptation inventory](SKILL_SYSTEM.md#skill-inventory) identifies the upstream sources and local changes for each skill.
+The [source and adaptation inventory](docs/design/skill-system.md#skill-inventory) identifies the upstream sources and local changes for each skill.

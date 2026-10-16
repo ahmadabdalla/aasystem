@@ -1,0 +1,2 @@
+# Release validation and repository tests only; installed skills use the standard library.
+PyYAML==6.0.3

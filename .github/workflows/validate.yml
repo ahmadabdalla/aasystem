@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - run: ruby scripts/validate-release.rb
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.10'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: python3 scripts/validate-release.py
       - run: bash -n scripts/publish-release.sh
       - run: python3 -m unittest discover -s tests
