@@ -22,6 +22,6 @@ Name the required runtime roles, where they run, and their important dependencie
 
 Keep the selected technologies, runtime arrangement, tradeoffs, and evidence limits in the existing solution record.
 
-For each material unresolved choice, name who must resolve it, what must be established, and when it becomes blocking: before selection, implementation, release, or a stated future trigger. Record a credible fallback when available; otherwise keep the recommendation conditional.
+For each material unresolved choice, name who must resolve it, what must be established, and when it becomes blocking: before selection, implementation, release, or a stated future trigger. Apply Solution's [comparison and commitment review](../SKILL.md#compare-and-challenge) to consequential provider, data-format, and runtime commitments; retain the reversal cost and exit condition in that record. A replacement interface alone does not establish that data, contracts, or operations can migrate. Record a credible fallback when available; otherwise keep the recommendation conditional.
 
 Stop when the technical direction is justified and the remaining uncertainty has a clear next step. Leave routine library and code-shape choices to architect.

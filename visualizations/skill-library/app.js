@@ -38,8 +38,8 @@ const nodes = [
     title: "Solution",
     type: "skill",
     subtitle: "Overall direction",
-    purpose: "Researches and compares overall approaches while the problem, ownership, trust model, or direction remains open.",
-    owns: "The solution decision, its rationale, and conditions for reconsideration.",
+    purpose: "Compares viable existing and simpler approaches while direction remains open, exposing consequential assumptions and demonstrated reversal costs.",
+    owns: "The solution decision, its rationale, and observable conditions for reconsideration or exit.",
     source: "../../skills/solution/SKILL.md",
     x: 879,
     y: 55,
@@ -71,7 +71,7 @@ const nodes = [
     title: "Architect",
     type: "skill",
     subtitle: "Implementation shape",
-    purpose: "Designs caller usage, data shapes, signatures, ownership, and module boundaries; plans proof and revises the design when the caller returns contradictory evidence.",
+    purpose: "Designs caller usage, data shapes, ownership, and boundaries; applies Maintainability criteria and justifies added structure against present callers and invariants.",
     owns: "The design trigger, implementation design, rationale, and proof plan; returns a design package to the caller.",
     source: "../../skills/architect/SKILL.md",
     x: 2224,
@@ -192,8 +192,8 @@ const nodes = [
     title: "Maintainability",
     type: "skill",
     subtitle: "Reader & change burden",
-    purpose: "Assesses whether supplied code or a design is easy to understand, change, and verify, then returns concrete findings to its caller.",
-    owns: "The bounded assessment and its evidence-backed findings; the caller decides on design, edits, and records.",
+    purpose: "Owns criteria for reader and change burden, consumed directly in design, edits, and independent verification; supplies deeper assessments when needed.",
+    owns: "Reusable criteria and bounded findings; the caller decides on design, edits, and records.",
     source: "../../skills/maintainability/SKILL.md",
     x: 2224,
     y: 455,
@@ -313,7 +313,7 @@ const nodes = [
     title: "Implement",
     type: "skill",
     subtitle: "Bounded edits & checks",
-    purpose: "Executes a supplied design or contract within assigned ownership and returns edits, evidence, and design concerns; can own an eligible prescribed presentation request through owner proof and acceptance.",
+    purpose: "Applies Maintainability criteria to bounded edits against a supplied design or contract, returning development evidence and concerns; can own an eligible presentation request unless independent review is required.",
     owns: "Bounded implementation and development evidence; the caller retains integration and acceptance except for a direct eligible owner-presentation request.",
     source: "../../skills/implement/SKILL.md",
     x: 1327,
@@ -324,9 +324,9 @@ const nodes = [
     title: "Independent verification",
     type: "role",
     subtitle: "Separate verification worker",
-    purpose: "Derives expectations from the authoritative contract and exercises the identified changed artifact using the project verifier procedure.",
-    owns: "Observed verification results, failures, and gaps; returns evidence to the caller for acceptance and correction assignments.",
-    source: "../../skills/aapilot/references/execution.md#independent-implementation-verification",
+    purpose: "Assesses the actual diff using Maintainability criteria and exercises the identified artifact using the project verifier, separately from every editor.",
+    owns: "Bounded qualitative findings and executable observations in one run/report; the caller reconciles material findings and accepts current proof.",
+    source: "../../skills/aapilot/references/engineering-verification.md",
     x: 879,
     y: 1145,
     w: 270,
@@ -559,10 +559,13 @@ connect("work", "show-work", "support", "records substantial work");
 // Shared implementation support; the caller retains all phase transitions.
 ["feature", "bug-fix", "refactoring", "figure-it-out"].forEach((owner) => {
   connect(owner, "implement", "support", "assigns bounded edits and checks");
-  connect(owner, "independent-verification", "support", "assigns separate proof worker");
+  connect(owner, "independent-verification", "support", "assigns assessment and proof worker");
   connect("architect", owner, "handoff", "returns design or revision via caller");
 });
 connect("implement", "project-records", "handoff", "returns artifact and evidence via caller");
+// Criteria consumption does not dispatch a Maintainability specialist.
+connect("implement", "maintainability", "support", "reads local / applicable boundary criteria");
+connect("independent-verification", "maintainability", "support", "applies criteria in same verification run");
 connect("independent-verification", "project-records", "support", "uses project verifier procedure");
 connect("independent-verification", "bootstrap-verification", "handoff", "returns missing proof path via caller");
 connect("independent-verification", "maintain-verification", "handoff", "returns recipe drift via caller");

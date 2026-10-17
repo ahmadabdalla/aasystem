@@ -8,6 +8,7 @@ The map is a curated semantic view of the current skill library rather than an a
 
 - routes selected by `aapilot`;
 - conditional supporting calls;
+- direct consumption of shared assessment criteria;
 - ownership handoffs and feedback;
 - shared execution and principle foundations;
 - agent roles that execute project-owned procedures without adding portable skills.
@@ -20,13 +21,13 @@ The execution contract owns [decision authority](../../skills/aapilot/references
 
 UI refinement owns the [rendering assignment rules](../../skills/ui-refinement/references/refinement-loop.md#rendering-assignments) for coupled Interaction Design and Prototype work. Existing role ownership, caller delivery and required independent reviews and production verification remain in place.
 
-The shared foundation links the standard [verification contract](../../skills/aapilot/references/verification-contract.md) for retained production changes: one root owner retains scope, current evidence, limits and acceptance; specialists contribute to that same run. Feature and direct Implement expose the [owner-presentation path](../../skills/aapilot/references/execution.md#owner-presentation-eligibility), whose owner proof needs no worker. Read-only and design work keep scoped obligations. Existing owners and handoffs remain in place; no coordinator or skill node is added.
+The shared foundation links the standard [verification contract](../../skills/aapilot/references/verification-contract.md) for retained production changes: one root owner retains scope, current evidence, limits and acceptance; specialists contribute to that same run. Feature and direct Implement expose the [owner-presentation path](../../skills/aapilot/references/execution.md#owner-presentation-eligibility), whose owner proof needs no worker. That exception cannot waive independent engineering review required by the user, project, or task. Read-only and design work keep scoped obligations. Existing owners and handoffs remain in place; no coordinator or skill node is added.
 
 Architect owns design and verification planning only. Feature, Bug Fix, Refactoring, and Figure It Out call Implement for bounded edits and development checks, then assign a separate verification agent when required under the execution contract. The agent uses the project-owned verifier; it is labeled **Agent role** and is excluded from the skill count. Caller handoffs return design contradictions to Architect, which returns revised design packages to those callers. There is no Architect-owned implementation runtime.
 
-The project verifier is a procedure, the verification agent executes it, and Interrogate supplies adversarial review. The caller owns integration and acceptance. The execution contract owns owner-presentation eligibility and escalation; that proof is explicitly distinct from independent verification.
+The project verifier is a procedure; the existing verification agent assesses the actual diff and executes affected checks under [engineering verification](../../skills/aapilot/references/engineering-verification.md). Qualitative findings and executable observations remain separate claims in one run and report. The caller owns integration, material-finding dispositions and acceptance based on current proof. Interrogate supplies adversarial review. The execution contract owns owner-presentation eligibility and escalation; that proof is explicitly distinct from independent verification.
 
-Maintainability is a conditional supporting assessment for Architect, Refactoring, and Interrogate. It returns findings to its caller, which retains the design, review, or implementation decision; it is not an aapilot route.
+Maintainability owns reusable criteria. Implement and the independent verifier have explicit criteria-consumption relationships to it; these edges do not dispatch another worker. Architect also reads the criteria during design. A deeper Maintainability assessment remains conditional support for Architect, Refactoring, and Interrogate, returning findings to the decision owner; it is not an aapilot route.
 
 Bug Fix and Refactoring use the [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) for their design assignments. Architect owns that criterion; editing several function bodies alone does not select the route.
 

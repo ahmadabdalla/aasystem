@@ -23,6 +23,8 @@ Trace material concerns through concrete usage or a likely change. Compare the c
 
 ## Return a bounded assessment
 
-For each material finding, return **location → causal reader or change burden → recommendation → tradeoff → verification needed**, with supporting evidence and its limits. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty assessment is valid.
+For each material finding, return **location → causal reader or change burden → recommendation → tradeoff → verification needed**, with supporting evidence and its limits. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty assessment is valid; name the inspected scope, criteria, and limits rather than asserting absolute cleanliness.
+
+When supplying criteria or findings to the common [independent implementation verification](../aapilot/references/execution.md#independent-implementation-verification) gate, preserve its distinction between qualitative assessment and executable proof. A separate Maintainability invocation is unnecessary when that verifier can apply the relevant criteria itself.
 
 Return in the caller's working record or conversation; follow the execution contract's retention rules rather than creating a report by default. The caller decides which findings change its design, review verdict, or implementation plan and owns final verification.
