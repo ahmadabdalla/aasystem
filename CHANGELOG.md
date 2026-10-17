@@ -2,8 +2,12 @@
 
 ## [Unreleased]
 
+## [0.3.1]
+
+- Require a bounded engineering assessment alongside executable checks in the existing independent verification receipt and report, with material findings reconciled before acceptance.
 - Clarify test independence and generated-source ownership in shared engineering assessment criteria.
 - Enforce the manually prepared release PR contract and automate reviewed marketplace adoption after successful publication.
+- Use Python release tooling with pinned development dependencies and reorganize maintainer documentation under `docs/`.
 
 ## [0.3.0]
 
