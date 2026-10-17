@@ -20,7 +20,7 @@ For a direct invocation meeting [owner-presentation eligibility](../aapilot/refe
 
 ## Execute and return
 
-Apply the caller’s decomposition: [swarm](../swarm/SKILL.md) for independent slices, [arena](../arena/SKILL.md) for meaningful unsettled alternatives. Preserve other contributors’ work and project formats. Return material design contradictions to the owner for [architect](../architect/SKILL.md) revision; report discovered defects separately instead of changing scope or behavior. Before returning, inspect the actual diff against the assignment and remove owned speculative abstractions, unrelated cleanup, and investigation-only changes; return any needed scope expansion to the owner before making it.
+Apply the caller’s decomposition: [swarm](../swarm/SKILL.md) for independent slices, [arena](../arena/SKILL.md) for unsettled alternatives selected under the shared comparison rule. Preserve other contributors’ work and project formats. Return material design contradictions to the owner for [architect](../architect/SKILL.md) revision; report discovered defects separately instead of changing scope or behavior. Before returning, inspect the actual diff against the assignment and remove owned speculative abstractions, unrelated cleanup, and investigation-only changes; return any needed scope expansion to the owner before making it.
 
 Run assigned checks after meaningful units, including the refactoring baseline or failing reproduction for corrections. Follow [project verification and evidence rules](../aapilot/references/execution.md#verification-through-the-project) for observations, source identity, failure classification, and unchanged expectations.
 

@@ -489,7 +489,7 @@ connect("architect", "domain-modeling", "support", "clarifies concepts / ADRs");
 connect("architect", "how", "support", "traces affected behavior");
 connect("architect", "why", "support", "checks ownership history");
 connect("architect", "interaction-design", "handoff", "returns unsettled interactions");
-connect("architect", "arena", "support", "compares implementation shapes");
+connect("architect", "arena", "support", "conditionally compares unresolved implementation shapes");
 connect("architect", "interrogate", "support", "reviews contested design");
 connect("architect", "maintainability", "support", "assesses candidate burden");
 

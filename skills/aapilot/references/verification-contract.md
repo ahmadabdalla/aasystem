@@ -33,7 +33,7 @@ The owner report retains actual source/diff checks and an available preview, obs
 
 1. **Reserve, dispatch and retain native receipts.** `assign` reserves the initial spawn allocation. Immediately before each native call, inspect `status.tasks[task_id].dispatch_eligible_now` and `dispatch_gates`. Invoke the native tool, then record `dispatch` with its exact request/result and worker identity. Each followup needs `dispatch_reserved` before the call; fresh retries need fresh assignments. Nested work, failed launches, continuations and abandoned reservations consume the same nonrefundable root budget. Unknown outcomes require reconciliation before retry.
 2. **Freeze findings before importing independent proof.** Assign a fresh verifier, snapshot its inputs and record `review_preflight` before native dispatch. Exercise project recipes in a separate materialized workspace. Record `initial_findings` over the full context interval before lead formatting/metadata help, preserving original bytes. Import `returned` and `verification` reports linked to those findings. Exposure, missing receipts, failed checks or stale inputs leave the relevant gate unmet. New observations need a fresh review attempt.
-3. **Repair within authority.** Use a fresh bounded correction naming its superseded assignment; preserve failed evidence. Replacement keeps the original parent, action/resource scope, claims and proof strength. Unrelated claimless work cannot waive obligations or uncertain effects. Repeat affected independent proof against the current combined artifact.
+3. **Repair within authority.** Use the shared correction-continuity rule; preserve failed evidence. A replacement assignment names the superseded assignment and keeps the original parent, action/resource scope, claims and proof strength. Unrelated claimless work cannot waive obligations or uncertain effects. Repeat affected independent proof against the current combined artifact.
 
 ## Commands and receipts
 
@@ -131,7 +131,7 @@ Every event includes `id`, `expected_revision`, `type`, `actor`, `task`, `source
 | --- | --- |
 | `decision_review` | Current `authority_revision`, resource IDs, exact `artifact_refs`, nonempty `coverage` and `rationale`, classified `decisions` and `unresolved` choices |
 | `assign` | `assignment`: child `id`, `parent`, `owner`, `objective`, `procedure`, `purpose` (`implementation`, `verification`, `other`), literal `actions`/`resources`, `claims`/`proof_kind`, `inputs`/`expected_artifacts`, optional `deadline_utc`, `required` and `supersedes`; implementation binds a current `decision_review` |
-| `dispatch_reserved` | Before a followup: unique `attempt_id`, `operation: followup`, existing `worker_id` and live-state necessity in `reason` |
+| `dispatch_reserved` | Before a followup: unique `attempt_id`, `operation: followup`, existing `worker_id` and the permitted continuity or live-state rationale in `reason` |
 | `dispatch` | Reserved `attempt_id`, `operation` (`spawn`, `followup`), exact `request_ref`, actual native `host_ref`, `outcome` (`started`, `failed`, `unknown`) and `worker_id`; initial spawn attempt ID is the assignment ID |
 | `review_preflight` | On a verification assignment, before dispatch: `snapshot`, `environment`, `mode`, `context`, exact `host_request_ref` |
 | `initial_findings` | After started dispatch, before return: `preflight_event`, `dispatch_event`, original `findings`, complete `context` and `context_evidence_refs`; one immutable initial record per attempt |

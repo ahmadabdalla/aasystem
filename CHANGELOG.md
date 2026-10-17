@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Select additional workers and Arena comparisons for concrete task needs; allow bounded implementer corrections while keeping independent review fresh.
+
 - Assess scope and stage-appropriate proof before advancing a requested outcome, and allow the current owner to apply supporting procedures directly while preserving independent production verification and human checkpoints.
 - Retain owner development returns without invented native dispatches; exclude the root owner from independent production proof.
 

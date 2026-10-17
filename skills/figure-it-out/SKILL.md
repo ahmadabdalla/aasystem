@@ -20,7 +20,7 @@ Name any missing specialized procedure or external prerequisite. A custom workfl
 
 Divide the task into independently checkable units with explicit inputs, owners, artifacts, evidence gates, and dependencies. Put the riskiest unknowns and necessary baseline or harness work first. Use [probe](../probe/SKILL.md) for empirical uncertainty and [architect](../architect/SKILL.md) for an unresolved consequential shape; this workflow retains implementation.
 
-Use [swarm](../swarm/SKILL.md) only for independent ready slices and [arena](../arena/SKILL.md) for unresolved alternatives. Reuse settled designs. Establish a stopping or reconsideration condition for repeated failed hypotheses and a practical bound for expensive experiments. New information can change the plan; record why.
+Use [swarm](../swarm/SKILL.md) only for independent ready slices and [arena](../arena/SKILL.md) for unresolved alternatives selected under the shared comparison rule. Reuse settled designs. Establish a stopping or reconsideration condition for repeated failed hypotheses and a practical bound for expensive experiments. New information can change the plan; record why.
 
 ## Execute and record
 
