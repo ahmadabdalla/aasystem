@@ -10,6 +10,8 @@ Retain a separate supporting artifact only when canonical records inadequately s
 
 Keep owner, objective, constraints, evidence and limits, applicable principles, expected results and next action in one brief. Reuse settled grounding. Give each contributor a bounded deliverable, a work or time budget, accessible evidence and artifact paths, write ownership and a verification method; specify what it must return. Every worker, including nested delegates, must load the baseline and read its procedure and relevant project instructions before work. Reuse that baseline within its context. Give workers accessible paths, the current brief and later corrections; restrict execution to the assigned phase. The root owns receipt administration: supply workers their precise assignment and return contract without making them load the owner-only receipt cookbook. Workers return out-of-scope findings to the caller with evidence and a proposed assignment; they do not start that workflow. Helpers may compose bounded support under the same caller and checkpoint.
 
+For time bounds, read an actual clock and normalize timestamps to one time zone; the local calendar date alone cannot establish expiry. Check remaining time and dispatch/work limits before each phase, native call or retry. If a pending tool overruns, retain the consumed or unknown budget and stop new work when control returns; do not silently extend the grant.
+
 The lead owns framing, assignments, integration, acceptance, final proof and design decisions within its recorded authority.
 
 For retained production changes, use the [verification contract](verification-contract.md) by default within the selected procedure. Keep one root owner and run; assigned specialists contribute artifacts and evidence to that owner without initializing another run. Read-only answers and design-only work keep their scoped evidence obligations without a production receipt or implementation workflow.
@@ -98,6 +100,18 @@ The root owner reads [engineering verification](engineering-verification.md) bef
 Plan applicable decision reconciliation, verification maintenance and evidence retention in the existing task list, with owners and completion criteria. Delegate under the procedure above.
 
 Before reporting completion, check required results, reconcile consequential findings into canonical records, and verify affected references. Report incomplete assignments and unmet gates within the requested scope and delivery boundary.
+
+## Bounded autonomy
+
+Before authorized unattended work, reuse the existing brief to establish the outcome and required evidence, invariants, permitted choices and effects, delivery boundary, practical budget, and stopping/fallback behavior. Use actual user instructions and accepted project records as authority. A duration such as overnight establishes no additional permission.
+
+Proceed with routine decisions within those bounds. An explicit advance instruction may settle a consequential choice or its permitted range; preserve its source and limits. A model-selected preference or an unspecified reversible action does not settle an unresolved consequential choice.
+
+Resolve observable and technical uncertainty within the declared budget. Stop when a required human decision, unresolved authority conflict, unavailable mandatory proof, exhausted limit or uncertain external effect prevents authorized continuation. Reconcile uncertain effects under the existing receipt procedure. Do not silently expand scope or reset consumed budget.
+
+At a human checkpoint, stop the whole process and wait. Continuing independent units past that checkpoint remains outside this procedure. Report completed, failed, unverified and blocked outcomes with current artifacts, evidence, consumed or unknown budget, and the next required decision or observation.
+
+For production runs, map these bounds into existing authority sources, actions/resources, constraints, expected outputs, next action, checkpoints and budget fields. Research/design work retains its existing scoped records and evidence. Add no scheduler, persistent runner, recovery promise or universal receipt for non-production work.
 
 ## Delivery
 
