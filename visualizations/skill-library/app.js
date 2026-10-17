@@ -14,8 +14,8 @@ const nodes = [
     title: "aapilot",
     type: "work",
     subtitle: "Fundamental entry point",
-    purpose: "Selects the path, keeps one owner, coordinates supporting skills, and remains accountable through verification and delivery.",
-    owns: "Task framing, routing, integration, final proof, and completion.",
+    purpose: "Establishes shared understanding, assesses scope and proof, and applies or assigns supporting procedures through the requested delivery boundary.",
+    owns: "Task framing, routing, direct or delegated execution, integration, final proof, and completion.",
     source: "../../skills/aapilot/SKILL.md",
     x: -310,
     y: 530,
@@ -507,7 +507,7 @@ connect("arena", "probe", "support", "reconciles disputed evidence");
 connect("interrogate", "probe", "support", "checks material claims");
 connect("interrogate", "maintainability", "support", "checks maintainability claims");
 connect("prototype-playbook", "probe", "support", "defines empirical method");
-connect("prototype-playbook", "prototype", "support", "delegates inspectable artifact");
+connect("prototype-playbook", "prototype", "support", "applies or assigns inspectable artifact");
 connect("prototype-playbook", "feature", "handoff", "passes selected direction");
 connect("prototype-playbook", "architect", "handoff", "passes design evidence");
 connect("prototype", "probe", "support", "uses empirical method");
@@ -558,7 +558,7 @@ connect("work", "show-work", "support", "records substantial work");
 
 // Shared implementation support; the caller retains all phase transitions.
 ["feature", "bug-fix", "refactoring", "figure-it-out"].forEach((owner) => {
-  connect(owner, "implement", "support", "assigns bounded edits and checks");
+  connect(owner, "implement", "support", "applies or assigns bounded edits and checks");
   connect(owner, "independent-verification", "support", "assigns assessment and proof worker");
   connect("architect", owner, "handoff", "returns design or revision via caller");
 });

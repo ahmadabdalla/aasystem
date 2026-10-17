@@ -280,6 +280,7 @@ def validate_production_proof(state, report, verifier):
         'production review_mode required',
     )
     editors = set(string_list(report.get('editors'), 'editors'))
+    editors.add(state['brief']['owner'])
     for other_task in state['tasks'].values():
         for report_id in other_task.get('returns', []):
             returned = state['reports'][report_id]['report']

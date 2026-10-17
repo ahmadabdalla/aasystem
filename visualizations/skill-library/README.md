@@ -7,7 +7,7 @@ Read [How Aapilot works](../../docs/design/verification-contract.md) for the ope
 The map is a curated semantic view of the current skill library rather than an automatic Markdown-link graph. It distinguishes:
 
 - routes selected by `aapilot`;
-- conditional supporting calls;
+- conditional supporting calls, which may apply a procedure in the current context or dispatch a bounded worker;
 - direct consumption of shared assessment criteria;
 - ownership handoffs and feedback;
 - shared execution and principle foundations;

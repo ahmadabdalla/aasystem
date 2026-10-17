@@ -1,6 +1,6 @@
 # How Aapilot works
 
-Aapilot turns an engineering request into a chosen procedure, bounded contributions and an inspected result. The human supplies the outcome and authority. One owner keeps the work coherent, brings in domain experts when needed, checks evidence and decides whether the authorized task is complete.
+Aapilot carries a requested outcome from product ideation through design, engineering delivery and verification, stopping at the requested boundary. The human supplies the outcome and authority. One owner keeps the work coherent, brings in domain experts when needed, checks evidence and decides whether the authorized task is complete.
 
 This guide explains that operating model. The [Aapilot entry skill](../../skills/aapilot/SKILL.md) selects routes; the [execution contract](../../skills/aapilot/references/execution.md) owns authority, delegation and completion; [engineering verification](../../skills/aapilot/references/engineering-verification.md) owns the combined independent assessment and executable-check assignment; the [verification contract](../../skills/aapilot/references/verification-contract.md) owns receipts and their detailed protocol.
 
@@ -20,7 +20,7 @@ Human: outcome + authority + required checkpoints
      Read / design   Prescribed low-impact   Other retained
      scoped evidence presentation edit      production work
              |              |                |
-     Answer / design Owner edits + checks   Native specialists
+     Answer / design Owner edits + checks   Owner or specialists
      within scope    zero workers allowed   + separate verifier
              |              |                |
              |              +--------+-------+
@@ -40,13 +40,13 @@ The narrow [owner-presentation path](../../skills/aapilot/references/execution.m
 
 The owner records eligibility before editing and checks the actual diff afterward. The receipt keeps specific claims, current artifact identity, actual source/diff observations, an available preview and unexercised limits. This is **owner-checked** proof. It does not establish independence. No worker assignment, verifier preflight or frozen findings packet is required for that path; the root can have zero native workers. Direct [Implement](../../skills/implement/SKILL.md) can own an eligible request through acceptance without an Aapilot wrapper.
 
-Other retained production changes require a fresh verifier separate from every editor. That same worker assesses the actual diff and executes affected project checks. Development checks help an implementation worker find problems; they do not satisfy that independent gate.
+Other retained production changes require a fresh verifier separate from every editor. That same worker assesses the actual diff and executes affected project checks. Development checks help the owner or an implementation worker find problems; they do not satisfy that independent gate.
 
 | Example | Appropriate path |
 | --- | --- |
 | Change an existing label to exact supplied wording, preserving meaning and behavior | Owner-presentation checks, if the full eligibility rule holds |
 | Change one word that alters a billing or consent commitment | Settle the consequential choice and use full production proof |
-| Add new behavior | Bounded specialists and independent proof, with human checkpoints where required |
+| Add new behavior | Owner or bounded specialists and independent proof, with human checkpoints where required |
 
 ## Domain experts contribute bounded results
 
@@ -68,18 +68,18 @@ An assignment names its inputs, deliverable, file ownership, authority, budget a
 
 Implement reads the relevant Maintainability criteria while making assigned edits. The independent verifier uses those same criteria for its assessment. This shares one criteria owner without adding a mandatory Maintainability worker or another specialist chain; a deeper specialist assessment remains conditional on its ability to change a decision.
 
-## Native workers do the work; the CLI records it
+## The owner and native workers do the work; the CLI records it
 
-The owner uses the host's actual delegation tools. The shipped [receipt CLI](../../skills/aapilot/scripts/work_receipts.py) records and checks the declared run. It does not launch workers or grant host permissions.
+The owner applies procedures directly or uses the host's actual delegation tools for bounded assignments. Skill responsibilities remain distinct in either execution structure. The shipped [receipt CLI](../../skills/aapilot/scripts/work_receipts.py) records and checks the declared run. It does not launch workers or grant host permissions.
 
 ```text
                          ONE ROOT OWNER / RUN
                                   |
                   Brief + authority + decision review
                                   |
-                  Reserve -> native dispatch -> receipt
+                  Owner execution, or reserve -> dispatch -> receipt
                                   |
-                   Bounded domain / Implement worker
+                   Relevant domain / Implement procedure
                                   |
                   Returned artifact + development checks
                                   |

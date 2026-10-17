@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Assess scope and stage-appropriate proof before advancing a requested outcome, and allow the current owner to apply supporting procedures directly while preserving independent production verification and human checkpoints.
+- Retain owner development returns without invented native dispatches; exclude the root owner from independent production proof.
+
 ## [0.3.1]
 
 - Require a bounded engineering assessment alongside executable checks in the existing independent verification receipt and report, with material findings reconciled before acceptance.

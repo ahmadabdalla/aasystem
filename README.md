@@ -2,7 +2,7 @@
 
 Skills and playbooks for AI coding agents to explore ideas, understand a product, build changes, and check that they work. Use them in Codex CLI, Claude Code, or GitHub Copilot CLI.
 
-Each skill contains instructions for a particular job. [Aapilot](skills/aapilot/SKILL.md) is the starting skill: describe what you want, and it chooses the steps and supporting skills. There are playbooks for bug fixes, features, and other engineering tasks.
+Each skill contains instructions for a particular job. Aapilot may apply those instructions in its own context or assign bounded work to another agent; required independent verification remains separate. [Aapilot](skills/aapilot/SKILL.md) is the starting skill: describe what you want, and it chooses the steps and supporting skills. There are playbooks for bug fixes, features, and other engineering tasks.
 
 ## Why I created this
 

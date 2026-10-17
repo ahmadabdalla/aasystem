@@ -24,7 +24,7 @@ Use [swarm](../swarm/SKILL.md) only for independent ready slices and [arena](../
 
 ## Execute and record
 
-When execution is authorized, follow the phase list and use [show-me-your-work](../show-me-your-work/SKILL.md) from the first consequential decision. For each unit, state the expected effect, assign production edits and development checks to [Implement](../implement/SKILL.md), and inspect the returned artifact before retaining or revising it. Non-production units follow their assigned procedure. Verify each unit before dependent work starts. Revert only owned experimental changes whose hypothesis failed.
+When execution is authorized, follow the phase list and use [show-me-your-work](../show-me-your-work/SKILL.md) from the first consequential decision. For each unit, state the expected effect, execute or assign production edits and development checks using [Implement](../implement/SKILL.md), and inspect the artifact before retaining or revising it. Non-production units follow their assigned procedure. Verify each unit before dependent work starts. Revert only owned experimental changes whose hypothesis failed.
 
 Use [independent verification](../aapilot/references/execution.md#independent-implementation-verification) for production implementation and separate adversarial review when warranted. If a check passes suspiciously easily, inspect its observation method. Fix a defective check as a separately explained change; never lower the product contract to make the result pass. Record verified, failed, and inconclusive results distinctly. If a required gate cannot be met, stop dependent work and return the established evidence and precise gap.
 

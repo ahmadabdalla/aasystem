@@ -277,6 +277,46 @@ class WorkReceiptsCLI(unittest.TestCase):
             'question_id': checkpoint['content']['question_id'], 'package_hash': checkpoint['hash']['sha256'],
             'authority_revision': self.current()['authority_revision'], 'answer': 'Continue fixture', 'source_ref': str(source)})
 
+    def test_hostless_owner_return_does_not_satisfy_independent_proof(self):
+        report = self.report(name='owner-development', task='root', producer='lead', host_ref=None)
+        self.apply('returned', report=report)
+        self.assertEqual(self.status()['tasks']['root']['proof_status'], 'unverified')
+        self.accept(ok=False)
+
+    def test_owner_edit_accepts_only_with_separate_current_verifier(self):
+        self.brief['purpose'] = 'implementation'
+        self.initialize()
+        self.review()
+        self.write(self.source, 'print("corrected")\n')
+        report = self.report(name='owner-development', task='root', producer='lead', host_ref=None)
+        self.apply('returned', report=report)
+        self.assertEqual(self.status()['observed_attempts'], 0)
+        self.assertEqual(self.status()['remaining_dispatches'], 10)
+        self.accept(ok=False)
+        self.proof()
+        self.accept()
+        self.assertTrue(self.status()['tasks']['root']['currently_accepted'])
+        self.assertEqual(self.status()['observed_attempts'], 1)
+        self.assertEqual(self.status()['remaining_dispatches'], 9)
+        self.write(self.source, 'print("changed after proof")\n')
+        root = self.status()['tasks']['root']
+        self.assertEqual(root['historical_status'], 'accepted')
+        self.assertFalse(root['currently_accepted'])
+
+    def test_hostless_root_return_requires_owner_producer(self):
+        report = self.report(name='wrong-owner', task='root', producer='other', host_ref=None)
+        self.apply('returned', report=report, ok=False)
+
+    def test_hostless_child_return_remains_rejected(self):
+        self.assign('child')
+        report = self.report(name='hostless-child', task='child', host_ref=None)
+        self.apply('returned', task='child', actor='worker', report=report, ok=False)
+
+    def test_owner_cannot_verify_even_without_a_root_return(self):
+        self.proof(producer='lead', editors=[])
+        self.assertFalse(self.status()['tasks']['root']['verified_now'])
+        self.accept(ok=False)
+
     # Lifecycle, authority and proof eligibility.
     def test_returned_is_not_verified_or_accepted(self):
         report = self.report(task='root', name='return', producer='editor')

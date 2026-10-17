@@ -1,6 +1,6 @@
 ---
 name: aapilot
-description: Coordinate an engineering task through a selected playbook, supporting skills, and evidence of completion. Use for product discovery and definition, investigations, bug fixes, features, refactoring, prototypes, and skill work; supporting skills remain available directly.
+description: Carry a requested outcome from product ideation through design, engineering delivery, and verification using the relevant procedures. Use for product discovery and definition, investigations, bug fixes, features, refactoring, prototypes, and skill work; supporting skills remain available directly.
 disable-model-invocation: true
 ---
 
@@ -12,7 +12,7 @@ Own framing through verification. Select the procedure, coordinate contributors,
 
 ## Select the path
 
-Read the request, project instructions and task evidence. State the outcome and selected path; inspect observable unknowns. Apply [decision authority](references/execution.md#decision-authority) before implementation. Preserve plan-only, research-only and explicit checkpoints.
+Read the request, project instructions and task evidence. For a new or materially changed request, briefly replay the intended outcome, what must remain true, material uncertainties and the next action. Reuse an adequate existing brief. Establish [scope and proof](references/execution.md#scope-and-proof), then select the relevant procedures. A replay alone requires no approval; a clear authorized request proceeds. Apply [decision authority](references/execution.md#decision-authority) before dependent commitments. Preserve plan-only, research-only and explicit checkpoints.
 
 Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and exceptions with the brief. Borrowed workflow requirements do not establish personal preferences.
 
@@ -36,7 +36,7 @@ Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and
 | Capture learning or a stated judgment                                                                                 | [Reflect](../reflect/SKILL.md)                                                                                             |
 | No bundled procedure fits, or a change spans several coupled phases                                                   | [Figure it out](../figure-it-out/SKILL.md)                                                                                 |
 
-For production delivery needing UI refinement, select Feature with a supporting UI Refinement assignment. Design/prototype-only requests can route directly to UI Refinement.
+For production delivery needing UI refinement, select Feature with supporting UI Refinement scope. Design/prototype-only requests can route directly to UI Refinement.
 
 Read the selected procedure in full. For OpenSpec projects, follow the [OpenSpec reference](references/openspec.md). Keep one implementation task list: reuse the active change's list, retaining playbook steps as headings or untracked notes. For work meeting [owner-presentation eligibility](references/execution.md#owner-presentation-eligibility), use Feature's short path without copying its six phases. Otherwise copy numbered steps into the checklist before task-specific details and keep inapplicable steps with reasons. For saved steps, rebase links or link the source procedure with plain step labels; validate links from the saved location. Direct skill routes use that skill's phases. Include applicable closing assignments under the [completion rules](references/execution.md#completion) before execution starts. Keep coupled tasks with one owner. Identify defects discovered during refactoring as separate bug-fix tasks; empirical unknowns may use bounded prototypes. Update the route when evidence changes the task, retaining completed grounding.
 
@@ -46,7 +46,7 @@ Dedicated procedures for performance tuning, hillclimbing, forensics, general-pu
 
 For retained production changes, follow the [verification contract](references/verification-contract.md) by default alongside the selected procedure. Own one run and acceptance; supporting specialists return into it. Apply its owner-presentation path only under [shared eligibility](references/execution.md#owner-presentation-eligibility). Read-only and design-only requests retain scoped evidence without production ceremony.
 
-Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect returns design, [Implement](../implement/SKILL.md) returns production edits and development checks, and a separate worker supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
+Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect supplies design, [Implement](../implement/SKILL.md) supplies production edits and development checks, and a separate worker supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
 
 For substantial, multi-phase or unattended work, use [show-me-your-work](../show-me-your-work/SKILL.md) from the first consequential decision. The log links detailed solution records, design packages and evidence.
 

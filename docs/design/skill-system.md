@@ -32,7 +32,7 @@ All procedural skills use:
 
 Use these boundaries when skills interact:
 
-- **aapilot:** routing, coordination, and completion
+- **aapilot:** shared understanding, scope and proof assessment, routing, direct or delegated execution, and completion
 - **Product:** journeys, behavior, rules, and acceptance scenarios
 - **Grill me:** attributed interview evidence
 - **Interaction design:** navigation, interactions, and information hierarchy
@@ -140,7 +140,7 @@ The [execution contract](../../skills/aapilot/references/execution.md) adds:
 
 Local styling cannot silently change a shared design system.
 
-Shared rules stay in the execution contract. Its [delegation procedure](../../skills/aapilot/references/execution.md#delegation) owns capability checks, execution assignments and result acceptance; its [completion rules](../../skills/aapilot/references/execution.md#completion) own planned closing assignments and final reconciliation.
+Shared rules stay in the execution contract. Its [delegation procedure](../../skills/aapilot/references/execution.md#delegation) owns capability checks, direct or delegated execution and result acceptance; its [completion rules](../../skills/aapilot/references/execution.md#completion) own planned closing assignments and final reconciliation.
 
 Specialists keep only actionable scope reminders.
 
