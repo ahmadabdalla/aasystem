@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Clarify test independence and generated-source ownership in shared engineering assessment criteria.
 - Enforce the manually prepared release PR contract and automate reviewed marketplace adoption after successful publication.
 
 ## [0.3.0]
