@@ -12,6 +12,8 @@ Keep the complete skill tree together. Follow the host's invocation restrictions
 
 ## Verification contract
 
+The contracts are host-independent. There is no demonstrated Codex integration satisfying the conditional [host acceptance contract](../../skills/aapilot/references/host-acceptance.md); ordinary skill invocation does not establish host-enforced acceptance.
+
 Use the existing entry skill with the desired outcome; retained production changes use the [verification contract](../../skills/aapilot/references/verification-contract.md) by default. No special activation phrase is required. Read-only and design-only assignments keep their scoped boundaries. Direct Implement can own a request meeting [owner-presentation eligibility](../../skills/aapilot/references/execution.md#owner-presentation-eligibility); other production work retains separate verification and applicable human checkpoints.
 
 Keep the complete [export tree](../design/skill-system.md#export-boundary), including runtime CLI, private Python package, references, adapters and license notices. The CLI ships with the skills; repository tests and temporary evaluation evidence stay outside that export. For standalone discovery, record the installed revision and local differences; invoke `$aapilot` or the relevant specialist without a plugin prefix. Check actual discovery and supporting-skill composition in that host; files on disk do not prove invocation.

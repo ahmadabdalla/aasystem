@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Distinguish lead acceptance requests from required independent proof, with domain criteria and specialist procedures assigned to a verifier separate from assessed-work producers.
+- Define a portable host acceptance contract and distinguish owner-held local receipts from host-owned authoritative acceptance; no host integration or enforcement is shipped.
+
 - Bound authorized active-session autonomy with explicit authority, proof, clock/budget checks and whole-process human stops.
 
 - Select additional workers and Arena comparisons for concrete task needs; allow bounded implementer corrections while keeping independent review fresh.

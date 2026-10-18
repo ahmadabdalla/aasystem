@@ -69,7 +69,7 @@ This is where my thinking about trust and verification started to develop, helpe
 
 Language models can respond differently to the same request. My thinking is that an agent harness, the software running the agent, can use deterministic code to check what the model proposes and control when work proceeds. In this library, the CLI checks recorded assignments, required decisions, and verification evidence. It cannot intercept every tool call or guarantee that an agent followed the instructions.
 
-The [execution contract](skills/aapilot/references/execution.md) defines what each assignment must include: what was agreed, what may change, who edits which files, and what needs to be checked. It also defines when the agent must stop for your answer. The lead agent checks the contributions against your request and decides whether the work is complete.
+The [execution contract](skills/aapilot/references/execution.md) defines what each assignment must include: what was agreed, what may change, who edits which files, and what needs to be checked. It also defines when the agent must stop for your answer. The lead agent checks the contributions against your request and owns acceptance requests; required independent proof comes from a separate verifier.
 
 ```text
 You                       Lead agent                   Other agents
@@ -115,6 +115,8 @@ Lead agent's decision: complete or still needs work
 Missing or failing required checks leave the work incomplete. If the checked code or requirements change, the affected checks must run again.
 
 The lead agent uses the library's [command-line tool](skills/aapilot/scripts/work_receipts.py) to record the receipt. The tool flags missing entries, changed inputs, and required decisions that have not been recorded. Agents use your coding tool to edit files and run checks. The receipt tool cannot prove that a recorded observation actually happened, so the lead agent must inspect the work and evidence.
+
+Host-enforced acceptance additionally requires a demonstrated integration satisfying the [host acceptance contract](skills/aapilot/references/host-acceptance.md). This library ships the portable requirements; local receipts and ordinary skill invocation do not establish that enforcement.
 
 The final report says what changed, what passed or failed, and what was not checked. Read [How Aapilot works](docs/design/verification-contract.md) for the detailed rules and limitations.
 

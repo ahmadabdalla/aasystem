@@ -2,7 +2,7 @@
 
 Aapilot carries a requested outcome from product ideation through design, engineering delivery and verification, stopping at the requested boundary. The human supplies the outcome and authority. One owner keeps the work coherent, brings in domain experts when needed, checks evidence and decides whether the authorized task is complete.
 
-This guide explains that operating model. The [Aapilot entry skill](../../skills/aapilot/SKILL.md) selects routes; the [execution contract](../../skills/aapilot/references/execution.md) owns authority, delegation and completion; [engineering verification](../../skills/aapilot/references/engineering-verification.md) owns the combined independent assessment and executable-check assignment; the [verification contract](../../skills/aapilot/references/verification-contract.md) owns receipts and their detailed protocol.
+This guide explains that operating model. The [Aapilot entry skill](../../skills/aapilot/SKILL.md) selects routes; the [execution contract](../../skills/aapilot/references/execution.md) owns authority, delegation and completion; [engineering verification](../../skills/aapilot/references/engineering-verification.md) owns the combined independent assessment and executable-check assignment; the [verification contract](../../skills/aapilot/references/verification-contract.md) owns receipts and their detailed protocol. The conditional [host acceptance contract](../../skills/aapilot/references/host-acceptance.md) defines what an integration must demonstrate before claiming host-enforced acceptance; no such integration is shipped here.
 
 ## One owner, proportional work
 
@@ -61,10 +61,12 @@ The selected [playbook](skill-system.md#orchestrator-playbooks) supplies the seq
 | Inspectable rendered candidate and human review loop | [Prototype](../../skills/prototype/SKILL.md) and [UI Refinement](../../skills/ui-refinement/SKILL.md) |
 | Bounded production edits and development checks | [Implement](../../skills/implement/SKILL.md) |
 | Reusable criteria and conditional deeper assessment | [Maintainability](../../skills/maintainability/SKILL.md) |
-| Bounded scope/structure assessment and executable acceptance observations | One separate verification worker using Maintainability criteria and the project verifier |
-| Integration, canonical records and final acceptance | The current task owner |
+| Required independent domain assessment and executable observations | A verifier separate from every producer, using relevant specialist procedures; production engineering uses Maintainability criteria and the project verifier |
+| Integration, canonical records and acceptance requests | The current task owner |
 
 An assignment names its inputs, deliverable, file ownership, authority, budget and checks. A specialist returns artifacts, observations and limits. New consequential choices or contradictions return to the owner. Accepted project decisions constrain the work; they do not prove that the implementation works. See the complete [ownership map](skill-system.md#ownership-boundaries).
+
+The [delegation rule](../../skills/aapilot/references/execution.md#delegation) owns required domain coverage, governing criteria and expected evidence. One capable separate verifier can cover related domains; uncovered assessment stays unverified.
 
 Implement reads the relevant Maintainability criteria while making assigned edits. The independent verifier uses those same criteria for its assessment. This shares one criteria owner without adding a mandatory Maintainability worker or another specialist chain; a deeper specialist assessment remains conditional on its ability to change a decision.
 
@@ -103,6 +105,8 @@ For independent discovery, the verifier receives requirements, accepted constrai
 The verifier inspects the combined diff for authorized scope and concrete structural concerns, then exercises the identified artifact in a separate materialized workspace and inspects relevant effects. Its one report separates qualitative findings from executable pass, fail or unverified observations. It changes neither product code nor expectations. The owner reconciles each material finding through a correction or an explicit evidenced disposition, assigns bounded repairs, and obtains fresh affected assessment and executable proof for the current combined artifact before accepting it. [Engineering verification](../../skills/aapilot/references/engineering-verification.md) owns that procedure.
 
 The CLI validates recorded transitions, declared scope subsets, budget, checkpoint bindings and input/evidence identities. Semantic eligibility, complete scope, real authority, worker isolation and truthful observations still require inspection. It cannot authenticate a human or native call, sandbox host tools, detect every omitted consequential choice or intercept direct tool use.
+
+Local state is held by the root owner and retains those declaration limits. Under the conditional host contract, the host owns authoritative state and captures results directly; the owner submits development evidence and acceptance requests. The host's actual acceptance consumer must enforce the contract. A local receipt or an owner acceptance decision alone does not establish host enforcement.
 
 ## Records explain decisions; evidence supports claims
 
