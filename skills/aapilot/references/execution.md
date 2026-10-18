@@ -10,9 +10,25 @@ Retain a separate supporting artifact only when canonical records inadequately s
 
 Keep owner, objective, constraints, evidence and limits, applicable principles, expected results and next action in one brief. Reuse settled grounding. Give each contributor a bounded deliverable, a work or time budget, accessible evidence and artifact paths, write ownership and a verification method; specify what it must return. Every worker, including nested delegates, must load the baseline and read its procedure and relevant project instructions before work. Reuse that baseline within its context. Give workers accessible paths, the current brief and later corrections; restrict execution to the assigned phase. The root owns receipt administration: supply workers their precise assignment and return contract without making them load the owner-only receipt cookbook. Workers return out-of-scope findings to the caller with evidence and a proposed assignment; they do not start that workflow. Helpers may compose bounded support under the same caller and checkpoint.
 
-The lead owns framing, assignments, integration, acceptance, final proof and design decisions within its recorded authority.
+For time bounds, read an actual clock and normalize timestamps to one time zone; the local calendar date alone cannot establish expiry. Check remaining time and dispatch/work limits before each phase, native call or retry. If a pending tool overruns, retain the consumed or unknown budget and stop new work when control returns; do not silently extend the grant.
+
+The lead owns framing, assignments, integration, acceptance requests and design decisions within its recorded authority. Required independent proof comes from a verifier separate from every producer of the assessed work. When claiming host-enforced verification or acceptance, apply the conditional [host acceptance contract](host-acceptance.md).
 
 For retained production changes, use the [verification contract](verification-contract.md) by default within the selected procedure. Keep one root owner and run; assigned specialists contribute artifacts and evidence to that owner without initializing another run. Read-only answers and design-only work keep their scoped evidence obligations without a production receipt or implementation workflow.
+
+## Scope and proof
+
+Keep the outcome, invariants, delivery boundary, decision authority, material uncertainties and proof obligations in the existing brief. Inspect affected journeys, consumers, shared state and dependencies before confirming the execution structure. Reassess when these facts or the consequences change; retain settled grounding.
+
+Inspect observable unknowns. Use a bounded check for technical uncertainty. Choose routine details within authority. Where reasonable interpretations produce materially different outcomes and no accepted source settles the choice, use the human checkpoint before depending on that choice. Resolve conflicting requirements through their sources and authority.
+
+Assess reversibility of effects, affected people and systems, and actual authority together. Reverting code does not undo deleted data, external communications or customer effects. A reversible action still needs authority.
+
+Before advancing a material claim into dependent work, identify its supporting source or observation, its status and limits, and the check or decision needed at this stage. Reuse requirements, scenarios and decision records; create no parallel claim registry.
+
+For ideation and discovery, distinguish sourced needs from hypotheses and inspect evidence that could contradict consequential assumptions. For product definition, check scenarios, invariants and decision authority. For interaction and design, inspect journey coverage, failure and recovery states, and required human review. For retained implementation, apply the [engineering proof rules](#independent-implementation-verification). An accepted proposal does not prove demand, usability or runtime behavior.
+
+If required evidence is missing, obtain it within scope or report the gap. Research and design may end with a conditional recommendation when that is the requested result. An unresolved prerequisite blocks dependent implementation or acceptance; an unrelated successful check cannot discharge it.
 
 ## Decision authority
 
@@ -25,13 +41,19 @@ Keep sourced requirements, delegated implementation proposals, and actual human 
 ## Delegation
 
 1. **Check capability.** At workflow start, identify the agent tool, delegation restrictions and access workers need. Check supporting procedures too. Use configured or permitted inherited models; do not invent diversity.
-2. **Assign execution.** Delegate investigation, design, implementation and record maintenance using the selected procedures. Workers execute their assigned scope; supporting delegation follows their procedure. The lead executes directly under the [owner-presentation exception](#owner-presentation-eligibility), another explicit procedure exception or a concrete delegation limitation. Name the exception, missing tool, delegation restriction, denied access or failed dispatch.
-3. **Structure the work.** For nontrivial implementation, record blocking prerequisites, independent workstreams, shared mutable state and the smallest safe decomposition. Explain any choice to use one worker; revisit the structure at phase changes. Complete blockers first. Give coupled work to one worker; parallelize independent ready assignments within actual limits. Sequence work when slots are occupied. Workers unable to spawn return required supporting assignments to their caller.
-4. **Accept results.** Inspect returned artifacts and evidence against completion criteria before advancing. Assign corrections with the updated brief. Self-review cannot satisfy a required independent gate; keep it incomplete when independence cannot be achieved.
+2. **Choose execution ownership.** The current owner may investigate, design, implement and maintain records by applying the selected procedures in its own context. A skill defines responsibility and method; selecting it does not itself require another agent. Delegate bounded work for a concrete benefit from independent ready work, evidence access or context separation. Preserve explicitly required independent reviews, comparisons and verification. Direct execution retains every procedure's scope, decision authority and evidence obligations.
+3. **Structure the work.** For nontrivial implementation, record blocking prerequisites, independent workstreams, shared mutable state and the smallest safe decomposition. Revisit the structure when scope, dependencies, consequences or proof needs change. Complete blockers first. Keep coupled work with one execution owner; parallelize independent ready assignments when their benefit justifies the handoff and actual limits permit it. Sequence work when slots are occupied. Workers unable to spawn return required supporting assignments to their caller.
+4. **Accept results.** Inspect artifacts and evidence against completion criteria before advancing. Make bounded corrections within current authority or assign them with the updated brief; return changed design or authority to its owner. Self-review cannot satisfy a required independent gate; keep it incomplete when independence cannot be achieved.
 
-Route large documents, verbose outputs, screenshots and broad exploration to bounded subagents. Give them artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. Without delegation, narrow reads and save bulky output to files.
+Use bounded subagents for large documents, verbose outputs, screenshots or broad exploration when separate coverage or context separation provides a concrete benefit. Give them artifact pointers and the consolidated brief; request concise findings, evidence paths and gaps. For direct work, narrow reads and save bulky output to files.
 
-Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for every new assignment, including fixes and retries. Resume a worker only when its live process, local changes or costly state is necessary. Transfer the consolidated brief and corrections; select review inputs under the [review-context rule](#review-context). Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Give parallel writers separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each returned brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted status; recheck stale or conflicting findings.
+For each required independent assessment, name the affected domains, governing criteria and expected evidence in the assignment. Give the relevant specialist procedures to a verifier separate from every producer of the assessed work, following [review context](#review-context). One capable verifier may cover related domains; add specialists only when required separate coverage needs them. Uncovered assessment remains unverified.
+
+Use [swarm](../../swarm/SKILL.md) for partitioned work or coverage and [arena](../../arena/SKILL.md) for competing alternatives and synthesis. Use a fresh worker for required independent verification or review and for assignments needing isolation. A bounded correction may stay with its current implementer when scope and authority remain valid and independence is not required. Reassign when changed scope, missing capability or repeated failure makes a different context necessary. Preserve earlier findings, consumed budget and actual native followup receipts. Transfer the consolidated brief and corrections; select review inputs under the [review-context rule](#review-context). Tell workers they share the codebase, must preserve others' changes and return actual artifacts and evidence. Give parallel writers separate artifacts or explicitly nonoverlapping sections; serialize shared canonical sections. Before integration, check each returned brief and source revision against current task/project records, including the latest assigned proposal. Preserve proposed versus accepted status; recheck stale or conflicting findings.
+
+For an additional execution worker, record the concrete reason in the existing assignment: an independent ready deliverable, a required evidence/tool capability, or a context-separation need. Name dependencies, write ownership, return evidence and integration responsibility. A skill name, file count or apparent task size alone does not establish that reason. Required independent gates remain mandatory.
+
+For competing alternatives, identify the unresolved choice, materially different plausible options and the evidence independent candidates could add. Apply the owning comparison procedure; retain Arena's isolated candidates and separate judging when Arena is selected. Reuse an adequate settled decision unless changed evidence warrants reopening it.
 
 Workflow configuration does not authorize unavailable tools or external actions.
 
@@ -80,6 +102,18 @@ The root owner reads [engineering verification](engineering-verification.md) bef
 Plan applicable decision reconciliation, verification maintenance and evidence retention in the existing task list, with owners and completion criteria. Delegate under the procedure above.
 
 Before reporting completion, check required results, reconcile consequential findings into canonical records, and verify affected references. Report incomplete assignments and unmet gates within the requested scope and delivery boundary.
+
+## Bounded autonomy
+
+Before authorized unattended work, reuse the existing brief to establish the outcome and required evidence, invariants, permitted choices and effects, delivery boundary, practical budget, and stopping/fallback behavior. Use actual user instructions and accepted project records as authority. A duration such as overnight establishes no additional permission.
+
+Proceed with routine decisions within those bounds. An explicit advance instruction may settle a consequential choice or its permitted range; preserve its source and limits. A model-selected preference or an unspecified reversible action does not settle an unresolved consequential choice.
+
+Resolve observable and technical uncertainty within the declared budget. Stop when a required human decision, unresolved authority conflict, unavailable mandatory proof, exhausted limit or uncertain external effect prevents authorized continuation. Reconcile uncertain effects under the existing receipt procedure. Do not silently expand scope or reset consumed budget.
+
+At a human checkpoint, stop the whole process and wait. Continuing independent units past that checkpoint remains outside this procedure. Report completed, failed, unverified and blocked outcomes with current artifacts, evidence, consumed or unknown budget, and the next required decision or observation.
+
+For production runs, map these bounds into existing authority sources, actions/resources, constraints, expected outputs, next action, checkpoints and budget fields. Research/design work retains its existing scoped records and evidence. Add no scheduler, persistent runner, recovery promise or universal receipt for non-production work.
 
 ## Delivery
 

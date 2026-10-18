@@ -42,7 +42,7 @@ Explain consequential surfaces and groups of controls in the smallest useful for
 
 Related routine controls may share a parent interaction's rationale. Do not invent a product requirement for every control merely to populate a traceability table. A defensible presentation choice can derive from an outcome, usability evidence, a constraint, or an established pattern; make that derivation clear.
 
-When a consequential interaction remains unsettled, compare structurally different alternatives through the entry skill's arena route. Keep alternatives within the same behavior contract unless proposed semantic differences are explicit. Use a prototype when rendering or exercising it can answer the assigned interaction or presentation question. Record the selected base, incorporated strengths, tradeoffs, remaining disagreement, and conditions for reconsideration. Independent candidates and reviewer consensus do not confer product-owner acceptance.
+When a consequential interaction remains unsettled, compare structurally different alternatives, using the entry skill's Arena route when independent candidates could supply evidence that changes the choice. Keep alternatives within the same behavior contract unless proposed semantic differences are explicit. Use a prototype when rendering or exercising it can answer the assigned interaction or presentation question. Record the selected base, incorporated strengths, tradeoffs, remaining disagreement, and conditions for reconsideration. Independent candidates and reviewer consensus do not confer product-owner acceptance.
 
 ### Preserve an inspectable visual reference when needed
 

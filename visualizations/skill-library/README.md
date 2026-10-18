@@ -7,7 +7,7 @@ Read [How Aapilot works](../../docs/design/verification-contract.md) for the ope
 The map is a curated semantic view of the current skill library rather than an automatic Markdown-link graph. It distinguishes:
 
 - routes selected by `aapilot`;
-- conditional supporting calls;
+- conditional supporting calls, which may apply a procedure in the current context or dispatch a bounded worker;
 - direct consumption of shared assessment criteria;
 - ownership handoffs and feedback;
 - shared execution and principle foundations;
@@ -17,7 +17,7 @@ Hover or select a node to suppress unrelated lines and inspect its incoming and 
 
 The map intentionally does not draw a foundation edge from every procedural skill to the execution contract and principle index. Their system-wide scope is recorded on the foundation nodes without obscuring task flows.
 
-The execution contract owns [decision authority](../../skills/aapilot/references/execution.md#decision-authority), including the inspectable human checkpoint handoff and stop/wait rule, [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot assigns execution and checks results under those shared rules; review context distinguishes independent discovery from confirmation/evidence audits and preserves initial findings before reporting assistance.
+The execution contract owns [decision authority](../../skills/aapilot/references/execution.md#decision-authority), including the inspectable human checkpoint handoff and stop/wait rule, [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot applies or assigns execution and checks results under those shared rules; bounded unattended work preserves the whole-process human-checkpoint stop; review context distinguishes independent discovery from confirmation/evidence audits and preserves initial findings before reporting assistance.
 
 UI refinement owns the [rendering assignment rules](../../skills/ui-refinement/references/refinement-loop.md#rendering-assignments) for coupled Interaction Design and Prototype work. Existing role ownership, caller delivery and required independent reviews and production verification remain in place.
 
@@ -25,7 +25,9 @@ The shared foundation links the standard [verification contract](../../skills/aa
 
 Architect owns design and verification planning only. Feature, Bug Fix, Refactoring, and Figure It Out call Implement for bounded edits and development checks, then assign a separate verification agent when required under the execution contract. The agent uses the project-owned verifier; it is labeled **Agent role** and is excluded from the skill count. Caller handoffs return design contradictions to Architect, which returns revised design packages to those callers. There is no Architect-owned implementation runtime.
 
-The project verifier is a procedure; the existing verification agent assesses the actual diff and executes affected checks under [engineering verification](../../skills/aapilot/references/engineering-verification.md). Qualitative findings and executable observations remain separate claims in one run and report. The caller owns integration, material-finding dispositions and acceptance based on current proof. Interrogate supplies adversarial review. The execution contract owns owner-presentation eligibility and escalation; that proof is explicitly distinct from independent verification.
+The project verifier is a procedure; the existing verification agent assesses the actual diff and executes affected checks under [engineering verification](../../skills/aapilot/references/engineering-verification.md). Required independent assessments name affected domains, criteria and evidence under [Delegation](../../skills/aapilot/references/execution.md#delegation); one capable verifier can cover related domains separately from their producers. Qualitative findings and executable observations remain separate claims in one run and report. The caller owns integration, material-finding dispositions and acceptance requests based on current proof. Interrogate supplies adversarial review. The execution contract owns owner-presentation eligibility and escalation; that proof is explicitly distinct from independent verification.
+
+The conditional [host acceptance contract](../../skills/aapilot/references/host-acceptance.md) defines requirements for a future demonstrated integration. The graph adds no runtime role for it; local receipts do not establish host enforcement.
 
 Maintainability owns reusable criteria. Implement and the independent verifier have explicit criteria-consumption relationships to it; these edges do not dispatch another worker. Architect also reads the criteria during design. A deeper Maintainability assessment remains conditional support for Architect, Refactoring, and Interrogate, returning findings to the decision owner; it is not an aapilot route.
 

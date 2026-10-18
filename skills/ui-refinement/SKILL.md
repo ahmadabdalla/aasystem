@@ -16,7 +16,7 @@ Reuse the brief, completed grounding, behavior contract, explicit visual instruc
 
 ## Refine
 
-Follow [the refinement loop](references/refinement-loop.md). Assign [Interaction Design](../interaction-design/SKILL.md) bounded interaction/presentation scope and [Prototype](../prototype/SKILL.md) when rendering is needed, using the loop's [rendering assignment rules](references/refinement-loop.md#rendering-assignments). Reuse adequate reviewed artifacts. One candidate can suffice; alternatives require an unsettled choice.
+Follow [the refinement loop](references/refinement-loop.md). Use [Interaction Design](../interaction-design/SKILL.md) for bounded interaction/presentation scope and [Prototype](../prototype/SKILL.md) when rendering is needed, using the loop's [rendering assignment rules](references/refinement-loop.md#rendering-assignments). Reuse adequate reviewed artifacts. One candidate can suffice; alternatives require an unsettled choice.
 
 ## Review and return
 

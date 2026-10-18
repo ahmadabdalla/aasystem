@@ -298,7 +298,10 @@ def read_report_record(state, path):
     report = read_json(path)
     text_fields(report, ('id', 'task', 'producer'))
     require(report['task'] in state['tasks'], 'report task not assigned')
-    owner_report = report['task'] == state['brief']['id'] and report.get('proof_basis') == 'owner-presentation'
+    owner_report = report['task'] == state['brief']['id'] and (
+        report.get('proof_basis') == 'owner-presentation'
+        or report['producer'] == state['brief']['owner']
+    )
     if not owner_report:
         text_fields(report, ('host_ref',))
     refs = [str(local(path))]

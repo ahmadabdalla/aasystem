@@ -14,8 +14,8 @@ const nodes = [
     title: "aapilot",
     type: "work",
     subtitle: "Fundamental entry point",
-    purpose: "Selects the path, keeps one owner, coordinates supporting skills, and remains accountable through verification and delivery.",
-    owns: "Task framing, routing, integration, final proof, and completion.",
+    purpose: "Establishes shared understanding, assesses scope and proof, and applies or assigns supporting procedures through the requested delivery boundary.",
+    owns: "Task framing, routing, direct or delegated execution, integration, acceptance requests, and completion within recorded authority.",
     source: "../../skills/aapilot/SKILL.md",
     x: -310,
     y: 530,
@@ -324,8 +324,8 @@ const nodes = [
     title: "Independent verification",
     type: "role",
     subtitle: "Separate verification worker",
-    purpose: "Assesses the actual diff using Maintainability criteria and exercises the identified artifact using the project verifier, separately from every editor.",
-    owns: "Bounded qualitative findings and executable observations in one run/report; the caller reconciles material findings and accepts current proof.",
+    purpose: "Assesses affected domains using governing criteria and specialist procedures, separately from every producer; production engineering also exercises the identified artifact using the project verifier.",
+    owns: "Required domain coverage, bounded findings and executable observations; the caller reconciles findings and requests acceptance against current proof.",
     source: "../../skills/aapilot/references/engineering-verification.md",
     x: 879,
     y: 1145,
@@ -380,7 +380,7 @@ const nodes = [
     title: "Execution contract",
     type: "foundation",
     subtitle: "Applies to all procedures",
-    purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; applies the standard production receipt with one owner, current proof and distinct owner-presentation eligibility.",
+    purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; links local receipts and conditional host-acceptance requirements while preserving owner-presentation eligibility.",
     owns: "The shared operating rules read by every procedural skill and worker.",
     source: "../../skills/aapilot/references/execution.md",
     x: 2224,
@@ -489,7 +489,7 @@ connect("architect", "domain-modeling", "support", "clarifies concepts / ADRs");
 connect("architect", "how", "support", "traces affected behavior");
 connect("architect", "why", "support", "checks ownership history");
 connect("architect", "interaction-design", "handoff", "returns unsettled interactions");
-connect("architect", "arena", "support", "compares implementation shapes");
+connect("architect", "arena", "support", "conditionally compares unresolved implementation shapes");
 connect("architect", "interrogate", "support", "reviews contested design");
 connect("architect", "maintainability", "support", "assesses candidate burden");
 
@@ -507,7 +507,7 @@ connect("arena", "probe", "support", "reconciles disputed evidence");
 connect("interrogate", "probe", "support", "checks material claims");
 connect("interrogate", "maintainability", "support", "checks maintainability claims");
 connect("prototype-playbook", "probe", "support", "defines empirical method");
-connect("prototype-playbook", "prototype", "support", "delegates inspectable artifact");
+connect("prototype-playbook", "prototype", "support", "applies or assigns inspectable artifact");
 connect("prototype-playbook", "feature", "handoff", "passes selected direction");
 connect("prototype-playbook", "architect", "handoff", "passes design evidence");
 connect("prototype", "probe", "support", "uses empirical method");
@@ -558,7 +558,7 @@ connect("work", "show-work", "support", "records substantial work");
 
 // Shared implementation support; the caller retains all phase transitions.
 ["feature", "bug-fix", "refactoring", "figure-it-out"].forEach((owner) => {
-  connect(owner, "implement", "support", "assigns bounded edits and checks");
+  connect(owner, "implement", "support", "applies or assigns bounded edits and checks");
   connect(owner, "independent-verification", "support", "assigns assessment and proof worker");
   connect("architect", owner, "handoff", "returns design or revision via caller");
 });
