@@ -35,7 +35,7 @@ Use these boundaries when skills interact:
 - **aapilot:** shared understanding, scope and proof assessment, routing, direct or delegated execution, and completion
 - **Product:** journeys, behavior, rules, and acceptance scenarios
 - **Grill me:** attributed interview evidence
-- **Interaction design:** navigation, interactions, and information hierarchy
+- **Interaction design:** navigation, interactions, information hierarchy, and coordination of assigned independent rendered UX assessments
 - **UI refinement:** the bounded human review loop
 - **Prototype:** the inspectable throwaway artifact
 - **Solution:** the overall approach
@@ -179,6 +179,12 @@ The user supplied local Clean Code and Pragmatic Programmer references as concep
 The library authors its own bounded adaptations rather than copying those manuals: names and flow that expose intent, meaningful failure contracts, preserved rationale, duplication judged as shared knowledge, explicit invariants, test independence, generated-source ownership, and evidence about coupling and reversal cost. Solution owns approach and commitment comparisons. Maintainability owns the criteria consumed by Architect for design, Implement for assigned edits, and the existing verifier for independent assessment. The [engineering-verification reference](../../skills/aapilot/references/engineering-verification.md) is a first-party procedure for that gate. Fixed cleanliness scores, size quotas, blanket extraction or error-handling policies, speculative abstractions, and unrelated cleanup are not adopted.
 
 ### UI review
+
+[Independent rendered UX assessment](../../skills/interaction-design/references/rendered-ux-assessment.md) is a first-party reference under Interaction Design, added for [issue 33](https://github.com/ahmadabdalla/aasystem/issues/33) using the user-agreed two-domain model. It adds no portable skill. Aapilot routes the assessment to Interaction Design; UI Refinement can use it within an assigned refinement slice. Routine design and model reviews retain their existing flow.
+
+The reference owns setup and reconciliation for exactly two fresh nonproducer assessors working in parallel. [Visual composition](../../skills/interaction-design/references/visual-assessment.md) owns the static composition rubric; [Interaction and continuity](../../skills/interaction-design/references/interaction-assessment.md) owns the exercised interaction rubric. Each receives its own instructions, common grounded constraints and explicit domain boundaries, with separate sessions and isolated mutable fixtures. Initial reports remain separate until returned. The caller retains delivery, material decisions and existing human/production-verification gates. Missing required independence or access leaves the affected assessment incomplete.
+
+This shape keeps the rubric with the existing design owner while making assessment separately reachable. It follows the preserve-decision-context principle by carrying accepted constraints and evidence limits into each domain assignment rather than inheriting producer discussion. Explicit routes and domain references are authored behavior; comparative improvement, participant usability and cross-host execution require observed evidence and are not established by this structure alone.
 
 The [UI refinement loop](../../skills/ui-refinement/references/refinement-loop.md) adds:
 

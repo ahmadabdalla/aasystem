@@ -1,6 +1,6 @@
 ---
 name: interaction-design
-description: Translate product outcomes into navigation, interactions, and information hierarchy with requirement coverage and decision rationale. Use to design or review consequential user experiences; product owns business behavior and architect owns implementation design.
+description: Design navigation, interactions and information hierarchy, or coordinate an independent rendered UX assessment. Product owns business behavior and architect owns implementation design.
 disable-model-invocation: true
 ---
 
@@ -9,6 +9,12 @@ disable-model-invocation: true
 Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own the interaction model for the assigned scope. The caller assigns this responsibility and integrates the result; a standalone request ends with the requested design or review. Product owns intended behavior and business meaning, while architect owns technical implementation design. This skill proposes how people encounter and act on that behavior.
+
+## Select the assignment
+
+For an independent assessment of an existing rendered interface, follow [Independent rendered UX assessment](references/rendered-ux-assessment.md). It requires two parallel nonproducer assessors with separate domain instructions and rubrics. Return their reconciled findings and evidence; use the design phases below only when the assignment also includes a new or revised interaction model.
+
+For interaction design or model review, follow Ground and design, then Review and return below.
 
 ## Ground and design
 

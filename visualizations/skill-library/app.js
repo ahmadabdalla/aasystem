@@ -49,8 +49,8 @@ const nodes = [
     title: "Interaction design",
     type: "skill",
     subtitle: "Experience structure",
-    purpose: "Turns product outcomes into navigation, interaction, and information-visibility decisions.",
-    owns: "The interaction model and presentation rationale for its assigned scope.",
+    purpose: "Turns product outcomes into interaction decisions and coordinates assigned independent rendered UX assessments through two parallel domain assessors.",
+    owns: "The interaction model, presentation rationale, and rendered-assessment setup/reconciliation for its assigned scope.",
     source: "../../skills/interaction-design/SKILL.md",
     x: 1327,
     y: 55,
@@ -97,6 +97,28 @@ const nodes = [
     owns: "Glossary meaning and scoped product, design, or software decision records.",
     source: "../../skills/domain-modeling/SKILL.md",
     x: 879,
+    y: 165,
+  },
+  {
+    id: "visual-assessor",
+    title: "Visual assessor",
+    type: "role",
+    subtitle: "Independent composition",
+    purpose: "Assesses actual rendering against its visual rubric, in parallel with the separate interaction assessor and without producer discussion.",
+    owns: "Hierarchy, alignment, spacing, typography, visual meaning, contrast, and responsive composition findings; no interface edits.",
+    source: "../../skills/interaction-design/references/visual-assessment.md",
+    x: 1327,
+    y: 165,
+  },
+  {
+    id: "interaction-assessor",
+    title: "Interaction assessor",
+    type: "role",
+    subtitle: "Independent continuity",
+    purpose: "Exercises journeys against its interaction rubric, in parallel with the separate visual assessor and without producer discussion.",
+    owns: "Control states, feedback, motion, stability, retrieval, navigation, and keyboard/reduced-motion findings; no interface edits.",
+    source: "../../skills/interaction-design/references/interaction-assessment.md",
+    x: 1776,
     y: 165,
   },
   {
@@ -432,7 +454,7 @@ function connect(from, to, type, label) {
 // aapilot's explicit task router.
 [
   ["product", "define product behavior"],
-  ["interaction-design", "design interactions"],
+  ["interaction-design", "design / assess rendered UX"],
   ["grill-me", "interview for choices"],
   ["domain-modeling", "clarify meaning"],
   ["investigation", "explain or research"],
@@ -477,11 +499,15 @@ connect("interaction-design", "ui-refinement", "handoff", "returns review need v
 connect("interaction-design", "product", "handoff", "returns meaning changes via caller");
 connect("interaction-design", "architect", "handoff", "returns feasibility via caller");
 connect("interaction-design", "solution", "handoff", "reopens overall direction");
+connect("interaction-design", "visual-assessor", "support", "assigns parallel visual assessment");
+connect("interaction-design", "interaction-assessor", "support", "assigns parallel interaction assessment");
+connect("visual-assessor", "interaction-design", "handoff", "returns initial visual findings");
+connect("interaction-assessor", "interaction-design", "handoff", "returns initial interaction findings");
 
 connect("ui-refinement", "how", "support", "checks current mechanics");
 connect("ui-refinement", "why", "support", "checks consequential rationale");
 connect("ui-refinement", "product", "support", "resolves business rules");
-connect("ui-refinement", "interaction-design", "support", "owns interaction choices");
+connect("ui-refinement", "interaction-design", "support", "interaction choices / assigned assessment");
 connect("ui-refinement", "prototype", "support", "builds rendered candidate");
 
 connect("architect", "product", "handoff", "returns product-rule gaps");
