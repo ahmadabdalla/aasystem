@@ -160,6 +160,7 @@ If you already know which part of the work needs attention, you can ask for that
 | Define who a product serves and how it should work | [`product`](skills/product/SKILL.md) |
 | Clarify terms or record a decision | [`domain-modeling`](skills/domain-modeling/SKILL.md) |
 | Design navigation, screens, and interactions | [`interaction-design`](skills/interaction-design/SKILL.md) |
+| Independently assess an existing rendered interface | [`interaction-design`](skills/interaction-design/SKILL.md#select-the-assignment) — two parallel domain assessors |
 | Improve a working interface through visual review | [`ui-refinement`](skills/ui-refinement/SKILL.md) |
 | Plan how code, interfaces, and data fit together | [`architect`](skills/architect/SKILL.md) |
 | Make assigned edits from an agreed plan | [`implement`](skills/implement/SKILL.md) |
@@ -169,6 +170,8 @@ If you already know which part of the work needs attention, you can ask for that
 | Check and update your project's verification instructions | [`maintain-verification`](skills/maintain-verification/SKILL.md) |
 
 Browse [`skills/`](skills/) for all available skills.
+
+For example, ask aapilot or Interaction Design to independently assess a rendered records page, including long names, finding older records and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses separate visual-composition and interaction/continuity assessors, each with its own instructions and rubric. It returns reconciled findings, exercised coverage and gaps to the task owner.
 
 ## Explore the system
 
