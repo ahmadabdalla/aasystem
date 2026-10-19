@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.5.1]
+
+- Add independent rendered UX assessment through Interaction Design, using separate visual and interaction assessors with evidence-backed findings and explicit coverage gaps.
+- Require the smallest retained integration slice to exercise unresolved assumptions before dependent feature work expands; keep final independent verification.
+- Add a shared `10x` skill for design growth scenarios, constraints, tradeoffs, proof needs and reconsideration triggers. Reuse it in Solution, Architect, Interaction Design and ADR creation, with required checks carried into engineering verification.
+- End default ADRs with an `At 10x scale` section while preserving established project formats. Update skill navigation and the system graph for the new assessment routes.
+
 ## [0.5.0]
 
 - Simplify delivery around shared understanding, bounded specialist work, independent verification and human review. Reuse the checkout or one task worktree across correction rounds.
