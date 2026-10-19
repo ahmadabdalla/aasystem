@@ -44,6 +44,8 @@ Related routine controls may share a parent interaction's rationale. Do not inve
 
 When a consequential interaction remains unsettled, compare structurally different alternatives, using the entry skill's Arena route when independent candidates could supply evidence that changes the choice. Keep alternatives within the same behavior contract unless proposed semantic differences are explicit. Use a prototype when rendering or exercising it can answer the assigned interaction or presentation question. Record the selected base, incorporated strengths, tradeoffs, remaining disagreement, and conditions for reconsideration. Independent candidates and reviewer consensus do not confer product-owner acceptance.
 
+Before settling a consequential interaction model, use [10x](../../10x/SKILL.md); carry its findings into the presentation rationale and verification handoff.
+
 ### Preserve an inspectable visual reference when needed
 
 For requested UI refinement or explicit presentation constraints, treat the rendered experience as a reviewable design artifact. Carry explicit user instructions alongside behavior requirements; a property does not become discretionary because it is cosmetic. Preserve the affected component, placement relative to its surrounding layout, applicable viewport/state and relevant style tokens or values. Reuse existing component definitions rather than maintaining a second style catalog. Treat established shared tokens and component rules as constraints. Prototype overrides remain local proposals; changes to shared design-system definitions need a caller-assigned owner and review of affected consumers before production adoption.

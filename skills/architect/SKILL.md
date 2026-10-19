@@ -38,6 +38,8 @@ Write realistic caller usage before types. Sketch data shapes, signatures, owner
 
 Read Maintainability's [boundary criteria](../maintainability/references/boundaries.md) when evaluating these sketches and supply that reference to Arena candidates; add its [local-code criteria](../maintainability/references/local-code.md) only when local structure matters to the choice. Apply the criteria in the comparison, including the simplest viable shape; justify each new boundary against present callers, enforced invariants, and concrete change cost. Reading criteria does not require a separate specialist. When Arena is used, check its synthesized design package and selection rationale against the contract and adopt it unless a material gap requires revision. Use a bounded [maintainability](../maintainability/SKILL.md) assessment when unresolved reader burden, ownership, or change cost could change the choice; reuse a settled assessment when its artifact and evidence remain current. Use [interrogate](../interrogate/SKILL.md) on a contested design before delivery. Incorporate supported findings and retain unresolved risks in the package.
 
+Before settling a consequential implementation design, use [10x](../10x/SKILL.md); carry its findings into the rationale and verification plan.
+
 Write the design package into the caller’s designated artifact when supplied, preserving solution rationale and links to canonical decisions. Deliver usage, sketch, rationale, alternatives, and the verification plan; clearly state that implementation is unverified.
 
 ## Return and reconsider

@@ -33,6 +33,8 @@ Maintainability owns reusable criteria. Implement and the independent verifier h
 
 Bug Fix and Refactoring use the [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) for their design assignments. Architect owns that criterion; editing several function bodies alone does not select the route.
 
+[10x](../../skills/10x/SKILL.md) is shared growth-assessment support for Solution, Architect, Interaction Design and Domain Modeling's ADR procedure, and a direct Aapilot route. Its findings return into existing design records and required checks travel through the existing verification handoff. The skill owns the method; ADR owns formatting, domain callers own decisions, and invocation requires no additional worker.
+
 ## Maintain the map
 
 - Edit node titles, descriptions, source links, and positions in the `nodes` array in `app.js`.

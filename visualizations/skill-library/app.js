@@ -100,6 +100,17 @@ const nodes = [
     y: 165,
   },
   {
+    id: "10x",
+    title: "10x",
+    type: "skill",
+    subtitle: "Growth & tradeoffs",
+    purpose: "Assesses plausible growth, the first constraint, present and deferred tradeoffs, proof needs and reconsideration triggers.",
+    owns: "The shared assessment method; domain callers retain decisions and verification retains observed proof.",
+    source: "../../skills/10x/SKILL.md",
+    x: 1327,
+    y: 165,
+  },
+  {
     id: "investigation",
     title: "Investigation",
     type: "playbook",
@@ -437,6 +448,7 @@ function connect(from, to, type, label) {
   ["domain-modeling", "clarify meaning"],
   ["investigation", "explain or research"],
   ["solution", "choose direction"],
+  ["10x", "assess plausible growth"],
   ["bug-fix", "correct a defect"],
   ["feature", "change behavior"],
   ["refactoring", "change structure"],
@@ -492,6 +504,11 @@ connect("architect", "interaction-design", "handoff", "returns unsettled interac
 connect("architect", "arena", "support", "conditionally compares unresolved implementation shapes");
 connect("architect", "interrogate", "support", "reviews contested design");
 connect("architect", "maintainability", "support", "assesses candidate burden");
+
+// Shared growth assessment; callers reuse findings within their own decision.
+["solution", "architect", "interaction-design", "domain-modeling"].forEach((owner) => {
+  connect(owner, "10x", "support", "assesses growth before settling a decision");
+});
 
 // Investigation and experiment mechanics.
 connect("investigation", "how", "support", "grounds current behavior");

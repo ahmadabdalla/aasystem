@@ -53,9 +53,11 @@ The framework default requires a title and prose stating:
 - At least one alternative considered and why it was rejected.
 - Expected effects, including costs and limitations.
 
-State standing and authority using the rules below. Aim for 1–3 sentences; use more to cover the required information. Headings and simple ASCII flows are optional.
+State standing and authority using the rules below. Aim for 1–3 sentences; use more to cover the required information. Simple ASCII flows and headings beyond the scale section below are optional.
 
-Authors and reviewers use the same selected rules. For each failure, cite the rule and identify the missing information or format error. Require specific headings only when project rules require them. Link sources and substantial evidence; keep requirements, implementation steps and detailed verification scenarios in their owning documents.
+When creating an ADR or changing its choice, use [10x](../../10x/SKILL.md), reusing a current assessment. Under the framework default, end the record with `## At 10x scale`: briefly state the growth scenario, consequences or constraints of this choice, what is accommodated or deferred, and the condition for reconsideration. Link the assessment or verification plan for detail. If growth does not affect the choice, state why. Under selected project rules or an existing format, put this content in the equivalent section without imposing a new heading. Evidence-only updates need no fresh assessment.
+
+Authors and reviewers use the same selected rules. For each failure, cite the rule and identify the missing information or format error. Require specific headings only when the selected rules require them. Link sources and substantial evidence; keep requirements, implementation steps and detailed verification scenarios in their owning documents.
 
 Make standing and authority clear using the project's format:
 
