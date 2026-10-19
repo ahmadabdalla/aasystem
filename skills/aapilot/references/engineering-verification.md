@@ -12,6 +12,8 @@ Follow [review context](execution.md#review-context): independent discovery star
 
 Inspect the actual diff for authorised scope, concrete defects and maintainability risks. Run the affected project checks against the identified artifact through the [local execution procedure](verification-contract.md#local-execution). Exercise the reported surface and relevant side effects; a unit test alone does not prove an unexercised API or UI path.
 
+For decisions assessed with [10x](../../10x/SKILL.md), exercise the required growth checks from the design handoff and report the actual volumes, rates or concurrency tested. Keep deferred targets separate from acceptance requirements; missing required proof remains a gap.
+
 Do not change product code or expectations while verifying. Return harness faults for bounded repair and leave blocked observations unverified. Record actual commands, observed results, tested identity, findings, evidence and limitations. Keep qualitative review distinct from executable outcomes; no universal report schema is required.
 
 ## Correct and deliver

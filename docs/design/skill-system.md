@@ -40,6 +40,7 @@ Use these boundaries when skills interact:
 - **Prototype:** the inspectable throwaway artifact
 - **Solution:** the overall approach
 - **Architect:** implementation shape, boundaries, rationale, and verification planning; design-only
+- **10x:** shared growth assessment; domain callers retain decisions and carry required proof into delivery
 - **Implement:** bounded edits against a supplied design or contract, development checks, and evidence return
 - **Maintainability:** reusable criteria for reader effort, local change cost, and ease of verification; also returns bounded assessments to its caller
 - **Feature playbook:** authorized production delivery
@@ -83,6 +84,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`product`](../../skills/product/SKILL.md) | Define journeys and behavior | First-party split; [OpenSpec](https://github.com/Fission-AI/OpenSpec/blob/main/docs/concepts.md) | Owns discovery synthesis and separates facts, proposals, and agreements |
 | [`solution`](../../skills/solution/SKILL.md) | Choose the overall approach | pstack [`investigation`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/investigation.md); [selected engineering inputs](#selected-engineering-inputs) | Compares viable existing and simpler approaches, exposes consequential assumptions, and records demonstrated reversal costs and reconsideration conditions |
 | [`architect`](../../skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md); [selected engineering inputs](#selected-engineering-inputs) | Applies Maintainability criteria and justifies added structure against present callers, invariants, and change burden; returns a design package and proof plan while the caller retains implementation and acceptance |
+| [`10x`](../../skills/10x/SKILL.md) | Assess decisions under plausible growth | First-party; user-requested | Returns scenarios, first constraints, accommodate/defer tradeoffs, proof needs and reconsideration triggers to domain callers |
 | [`implement`](../../skills/implement/SKILL.md) | Execute bounded edits and development checks | First-party extraction from the library’s implementation workflows and [execution contract](../../skills/aapilot/references/execution.md); [selected engineering inputs](#selected-engineering-inputs) | Applies relevant Maintainability criteria within settled scope, returns edits and development evidence, and returns design contradictions to the caller; final acceptance remains with the owner |
 | [`maintainability`](../../skills/maintainability/SKILL.md) | Assess reader effort, local change, and ease of verification | pstack [`Minimize Reader Load`](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-minimize-reader-load/SKILL.md) and [`Architect red flags`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md); Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md) and [`code-review`](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md); [selected engineering inputs](#selected-engineering-inputs) | Owns reusable criteria in [`SKILL.md`](../../skills/maintainability/SKILL.md), [`local code`](../../skills/maintainability/references/local-code.md), and [`boundaries`](../../skills/maintainability/references/boundaries.md), consumed directly by design, implementation, and independent verification |
 | [`interaction-design`](../../skills/interaction-design/SKILL.md) | Design consequential interactions | pstack [`Experience First`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-experience-first/SKILL.md), [`Exhaust the Design Space`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-exhaust-the-design-space/SKILL.md), Matt Pocock [`wayfinder`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/wayfinder/SKILL.md) | Keeps product meaning and implementation architecture with their owners |
@@ -168,6 +170,12 @@ The [execution contract](../../skills/aapilot/references/execution.md#independen
 
 [Feature](../../skills/aapilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
 
+### Growth assessment
+
+[`10x`](../../skills/10x/SKILL.md) owns one reusable assessment method. Solution, Architect and Interaction Design apply it before settling consequential designs, reusing current findings and extending only newly exposed constraints. Aapilot also routes standalone growth-assessment requests to it. Direct application and bounded independent assignments use the same contract; invocation creates no new coordinator or mandatory worker.
+
+The assessment states a baseline and growth scenario, first constraint, present/deferred tradeoff, proof need and reconsideration trigger. Assumptions, proposed targets and observed capacity remain distinct. Existing design handoffs carry required checks to [engineering verification](../../skills/aapilot/references/engineering-verification.md); deferred targets do not become release requirements. ADR formatting remains owned by [Domain Modeling](../../skills/domain-modeling/references/adr.md).
+
 ### Maintainability
 
 [`maintainability`](../../skills/maintainability/SKILL.md) is a conditional supporting assessment for Architect, Refactoring, and Interrogate when its findings can change a design, structural improvement, or review verdict.
@@ -207,7 +215,7 @@ It is not required for every UI edit.
 The [ADR convention](../../skills/domain-modeling/references/adr.md) preserves Matt Pocock’s rules:
 
 - Require reversal cost, surprising rationale, and a real tradeoff
-- Default to a title and one to three short sentences
+- Keep the core rationale short, using one to three sentences where sufficient
 - Lazy creation and sequential numbering
 - System-wide and established-context scope
 
@@ -221,10 +229,11 @@ The local system adds:
 - Explicit update, split, and supersession handling
 - Project rules before existing scoped conventions (including older formats), then a framework default
 - Required default content and review failures tied to the selected rules
+- A final `At 10x scale` section in the framework default, with equivalent content placed within established project formats
 
 Poteto supplies workflow ideas, not the ADR taxonomy.
 
-The default content and shared author/reviewer contract adapt pstack's [architecture rationale template](https://github.com/cursor/plugins/blob/1dcc2bacde73ddd284803b7af28164d0436198fc/pstack/skills/architect/references/rationale-template.md). ADR convention selection is a local addition; the default requires decision meaning without mandatory headings.
+The default content and shared author/reviewer contract adapt pstack's [architecture rationale template](https://github.com/cursor/plugins/blob/1dcc2bacde73ddd284803b7af28164d0436198fc/pstack/skills/architect/references/rationale-template.md). ADR convention selection is a local addition; the default requires decision meaning and the compact scale section above.
 
 Accepted decisions constrain work but do not prove the result.
 

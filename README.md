@@ -152,6 +152,7 @@ If you already know which part of the work needs attention, you can ask for that
 | --- | --- |
 | Work through a decision by answering questions | [`grill-me`](skills/grill-me/SKILL.md) |
 | Compare ways to solve a problem | [`solution`](skills/solution/SKILL.md) |
+| Assess a design under plausible growth | [`10x`](skills/10x/SKILL.md) |
 | Run a check to find out whether an assumption holds | [`probe`](skills/probe/SKILL.md) |
 | Build a throwaway experiment | [`prototype`](skills/prototype/SKILL.md) |
 | Find out how something works today | [`how`](skills/how/SKILL.md) |
