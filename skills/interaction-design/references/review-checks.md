@@ -23,6 +23,10 @@ Review the actual interaction artifact against its product sources, owning decis
 - Are responsive or accessibility adaptations within the established constraints and discretion? Return material conflicts rather than silently dropping an accepted instruction.
 - Are observed differences supported changes, defects to correct, or unverified gaps? Functional success does not establish fidelity, and similar screenshots do not establish behavior.
 
+## Independent rendered UX assessment, when assigned
+
+Use [Independent rendered UX assessment](rendered-ux-assessment.md) to assess the existing rendered experience, with or without an approved visual reference. It owns the two parallel domain assignments and their rubrics. Keep fidelity differences distinct from design concerns about the reference itself; a routine model review does not automatically start this assessment.
+
 ## Alternatives and handoff
 
 - Did consequential unsettled alternatives receive a fair comparison under shared constraints? Does the synthesis preserve tradeoffs and disagreements rather than count votes? Have required human decisions remained with the human?
