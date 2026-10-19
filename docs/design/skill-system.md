@@ -166,6 +166,8 @@ Local implementation and verification reuse the checkout or one task worktree. T
 
 The [execution contract](../../skills/aapilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and [owner-presentation eligibility](../../skills/aapilot/references/execution.md#owner-presentation-eligibility). The first-party [engineering-verification reference](../../skills/aapilot/references/engineering-verification.md) defines that worker's combined assignment: bounded scope and structure assessment using Maintainability criteria, plus affected project-verifier checks. Its result distinguishes qualitative findings from executable observations. The verifier is an existing agent role, not another portable skill or review pool. The caller retains integration, material-finding dispositions, current proof, and explicit semantic acceptance. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
 
+[Feature](../../skills/aapilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
+
 ### Maintainability
 
 [`maintainability`](../../skills/maintainability/SKILL.md) is a conditional supporting assessment for Architect, Refactoring, and Interrogate when its findings can change a design, structural improvement, or review verdict.
