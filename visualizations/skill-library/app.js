@@ -325,7 +325,7 @@ const nodes = [
     type: "role",
     subtitle: "Separate verification worker",
     purpose: "Assesses affected domains using governing criteria and specialist procedures, separately from every producer; production engineering also exercises the identified artifact using the project verifier.",
-    owns: "Required domain coverage, bounded findings and executable observations; the caller reconciles findings and requests acceptance against current proof.",
+    owns: "Required coverage, findings, executable observations and workspace/writer handoff; the caller reconciles proof and resource disposition before acceptance.",
     source: "../../skills/aapilot/references/engineering-verification.md",
     x: 879,
     y: 1145,
@@ -337,7 +337,7 @@ const nodes = [
     type: "skill",
     subtitle: "Establish proof paths",
     purpose: "Creates or adopts a project-local verifier, feature map, operating procedure, and demonstrated readiness evidence.",
-    owns: "Verification setup and declared coverage gaps.",
+    owns: "Verification setup, project-owned execution lifecycle and declared coverage gaps.",
     source: "../../skills/bootstrap-verification/SKILL.md",
     x: 430,
     y: 1035,
@@ -380,7 +380,7 @@ const nodes = [
     title: "Execution contract",
     type: "foundation",
     subtitle: "Applies to all procedures",
-    purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; links local receipts and conditional host-acceptance requirements while preserving owner-presentation eligibility.",
+    purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; keeps handoffs and current verification evidence proportional to the task, with a narrow presentation exception.",
     owns: "The shared operating rules read by every procedural skill and worker.",
     source: "../../skills/aapilot/references/execution.md",
     x: 2224,
@@ -565,7 +565,7 @@ connect("work", "show-work", "support", "records substantial work");
 connect("implement", "project-records", "handoff", "returns artifact and evidence via caller");
 // Criteria consumption does not dispatch a Maintainability specialist.
 connect("implement", "maintainability", "support", "reads local / applicable boundary criteria");
-connect("independent-verification", "maintainability", "support", "applies criteria in same verification run");
+connect("independent-verification", "maintainability", "support", "applies criteria within the assigned assessment");
 connect("independent-verification", "project-records", "support", "uses project verifier procedure");
 connect("independent-verification", "bootstrap-verification", "handoff", "returns missing proof path via caller");
 connect("independent-verification", "maintain-verification", "handoff", "returns recipe drift via caller");

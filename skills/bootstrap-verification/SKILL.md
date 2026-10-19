@@ -34,6 +34,8 @@ For a new map, create `features/README.md` inside the project verifier and one f
 
 Establish build identity, readiness checks, isolated data, observation, reset, and cleanup before driving the app. Generate project-local evidence locations and retention instructions using the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention). Follow the project's actual permission and environment limits. Repair scoped setup or harness faults; record unrelated product defects. If required access or infrastructure is unavailable, preserve discovery and mark the affected procedure partial or blocked.
 
+Prefer the existing checkout or a reusable task worktree. Add execution copies only for a demonstrated check requirement, with complete inputs, known storage cost and owned cleanup. Prove direct project invocation without depending on the plugin.
+
 For a greenfield project, map proposed behavior as planned. Prove the first runnable slice when it exists; do not invent commands, observed coverage, or a successful setup for an app that cannot yet run.
 
 ## Prove and connect

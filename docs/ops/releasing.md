@@ -12,7 +12,7 @@ python3 -m venv .venv
 . .venv/bin/activate
 ```
 
-PyYAML provides real YAML parsing for the release validator and workflow tests. It is a development dependency only; the shipped work-receipts helper still uses Python 3.10+ and the standard library without third-party dependencies. Neither repository checks nor installed skills require Ruby.
+PyYAML provides real YAML parsing for the release validator and workflow tests. It is a development dependency only; the optional input-identity helper uses Python 3.10+, Git and the standard library without third-party dependencies. Neither repository checks nor installed skills require Ruby.
 
 For a cloud environment, make Python (including `venv`), Git, Bash, a POSIX shell and `jq` available in the base image. Use these install instructions after checkout, adjusting the checkout path if needed:
 

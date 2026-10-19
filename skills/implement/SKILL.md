@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
-Own assigned edits and development evidence; the caller owns integration, acceptance, and [independent verification](../aapilot/references/execution.md#independent-implementation-verification). Contribute to the caller’s existing verification-contract run without initializing another run.
+Own assigned edits and development evidence; the caller owns integration, acceptance, and [independent verification](../aapilot/references/execution.md#independent-implementation-verification). Return into the caller’s task without starting another coordinator.
 
 ## Establish the assignment
 
@@ -16,7 +16,7 @@ Use the assigned brief and retrieve its linked inputs before editing: behavior c
 
 Before choosing local structure, read Maintainability's [local-code criteria](../maintainability/references/local-code.md); read its [boundary criteria](../maintainability/references/boundaries.md) when the assignment touches callers, owned knowledge, or invariant enforcement. Use the relevant criteria in the edits and return material tradeoffs with the rationale. This consumes shared criteria within Implement's scope; it does not start another assessment workflow or reopen settled design.
 
-For a direct invocation meeting [owner-presentation eligibility](../aapilot/references/execution.md#owner-presentation-eligibility), own the request, execute it directly and return its current owner-presentation receipt and acceptance under the [verification contract](../aapilot/references/verification-contract.md); no coordinator wrapper or worker is required. For other direct invocations without an execution assignment, the invoking lead remains the sole coordinator: select the change playbook through [aapilot](../aapilot/SKILL.md), execute or assign Implement under the shared delegation rule, then arrange verification and acceptance. An assigned worker executes and returns to its owner; it starts neither another workflow nor another Implement wrapper. Follow the contract’s [delegation and invocation rules](../aapilot/references/execution.md#delegation).
+For a direct invocation meeting [owner-presentation eligibility](../aapilot/references/execution.md#owner-presentation-eligibility), own the request, execute it directly and return the actual diff/preview checks and limitations under the [verification contract](../aapilot/references/verification-contract.md); no coordinator wrapper or worker is required. For other direct invocations without an execution assignment, the invoking lead remains the sole coordinator: select the change playbook through [aapilot](../aapilot/SKILL.md), execute or assign Implement under the shared delegation rule, then arrange verification and acceptance. An assigned worker executes and returns to its owner; it starts neither another workflow nor another Implement wrapper. Follow the contract’s [delegation and invocation rules](../aapilot/references/execution.md#delegation).
 
 ## Execute and return
 

@@ -2,7 +2,7 @@
 
 Own the design and acceptance criteria. Use the shared [verification contract](../references/verification-contract.md) for retained production changes.
 
-Before entering the phases below, check [owner-presentation eligibility](../references/execution.md#owner-presentation-eligibility). For an eligible request, record the basis, make the prescribed edit directly, inspect the actual diff and available rendered surface, then return current owner-presentation proof, explicit acceptance and limits. Reuse settled grounding and project evidence; do not create architecture, delegation or six-phase completion work for this path. If eligibility fails before or after editing, follow the shared escalation rule and use the applicable phases below.
+Before entering the phases below, check [owner-presentation eligibility](../references/execution.md#owner-presentation-eligibility). For an eligible request, record the basis, make the prescribed edit directly, inspect the actual diff and available rendered surface, then report the result as owner-checked with evidence and limits. Reuse settled grounding and project evidence; do not create architecture, delegation or six-phase completion work for this path. If eligibility fails before or after editing, follow the shared escalation rule and use the applicable phases below.
 
 For other work, execute or assign bounded implementation under the shared delegation rule, inspect it, and prove the integrated feature.
 
