@@ -28,6 +28,8 @@ Consolidate live recipes to reuse setup without losing distinct entry points or 
 
 Follow the local launch, health, identity, reset, evidence, and cleanup procedure. Recheck the instance after a surprising result and confirm evidence survives teardown. When a verifier fault prevents progress, make a bounded repair and retry the affected path; persistent external prerequisites stay blocked.
 
+Audit unnecessary copying, required input identity, fixture ownership and evidence lifetime.
+
 ## Classify and repair
 
 | Finding | Action |

@@ -67,7 +67,7 @@ Use a [focused skill](#choose-a-focused-skill) directly when you want help with 
 
 This is where my thinking about trust and verification started to develop, helped by people in the community sharing their experiences. Building trust in what agents do is hard, especially when several agents work together. I wanted to explore whether a shared contract could make their communication with each other, and with me, more reliable.
 
-Language models can respond differently to the same request. My thinking is that an agent harness, the software running the agent, can use deterministic code to check what the model proposes and control when work proceeds. In this library, the CLI checks recorded assignments, required decisions, and verification evidence. It cannot intercept every tool call or guarantee that an agent followed the instructions.
+Language models can respond differently to the same request. My thinking is that an agent harness, the software running the agent, can use deterministic code to check what the model proposes and control when work proceeds. This library uses shared contracts, project checks and input-identity comparisons to support verification. These do not intercept tool calls or guarantee that an agent followed the instructions.
 
 The [execution contract](skills/aapilot/references/execution.md) defines what each assignment must include: what was agreed, what may change, who edits which files, and what needs to be checked. It also defines when the agent must stop for your answer. The lead agent checks the contributions against your request and owns acceptance requests; required independent proof comes from a separate verifier.
 
@@ -89,36 +89,25 @@ The agent making a change runs checks while it works. For a feature or bug fix, 
 
 > For example, an exact label change that preserves meaning and behavior may qualify for checks by the same agent that made the edit. The full eligibility rules still apply.
 
-## Receipts connect the request to the result
+## Evidence connects the request to the result
 
-When the agent says a change is complete, I want to see how it reached that conclusion. For changes you intend to keep, the lead agent records the request, changes, and verification evidence in a work receipt. The receipt and its evidence stay in your project, outside the installed library. Research and design tasks provide their sources and reasoning without this receipt process.
+When the agent says a change is complete, I want to see the result, what was checked, and what still needs attention. Reuse the project's task, PR or evidence format to connect agreed expectations to the tested work and actual observations. Research and design provide their sources and reasoning.
 
 ```text
-Request + permission to make the change
-             |
-             v
-Expected results + exact version checked
-             |
-             v
-Checks run + results + saved evidence
-             |
-             v
-Lead agent's decision: complete or still needs work
-
-   Recorded in one work receipt
+Your request -> Shared understanding -> Design / build / research
+                         ^                       |
+                         |              Independent assessment
+                         |                       |
+                         +---- Decisions / corrections
+                                                 |
+                                      Result for your review
 ```
 
-> For example, search should preserve the active filters:
->
-> The receipt links that expectation to the source version checked, the observed results, and saved evidence such as test output.
+For a feature or bug fix, a separate verifier reviews the combined change and runs the affected project checks. The owner reconciles findings and obtains current checks after corrections. Missing or failing required checks leave the work incomplete. The [limited presentation exception](skills/aapilot/references/execution.md#owner-presentation-eligibility) stays explicitly owner-checked.
 
-Missing or failing required checks leave the work incomplete. If the checked code or requirements change, the affected checks must run again.
+Local work uses the current checkout or one task worktree when separation is useful. Implementer and verifier take turns, and input identity checks detect stale results without archiving the repository each round. Required configuration and external inputs still need deliberate inclusion. A worktree containing pending review changes is a deliverable, not disposable scratch.
 
-The lead agent uses the library's [command-line tool](skills/aapilot/scripts/work_receipts.py) to record the receipt. The tool flags missing entries, changed inputs, and required decisions that have not been recorded. Agents use your coding tool to edit files and run checks. The receipt tool cannot prove that a recorded observation actually happened, so the lead agent must inspect the work and evidence.
-
-Host-enforced acceptance additionally requires a demonstrated integration satisfying the [host acceptance contract](skills/aapilot/references/host-acceptance.md). This library ships the portable requirements; local receipts and ordinary skill invocation do not establish that enforcement.
-
-The final report says what changed, what passed or failed, and what was not checked. Read [How Aapilot works](docs/design/verification-contract.md) for the detailed rules and limitations.
+Keep useful findings and evidence through review; clean up owned processes and disposable outputs. Retain bulky artifacts only for a specific need. The final report distinguishes observed success, failure and unverified scope. Read [How Aapilot works](docs/design/verification-contract.md) for the workflow and limitations.
 
 ## Install the plugin
 

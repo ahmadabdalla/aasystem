@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.5.0]
+
+- Simplify delivery around shared understanding, bounded specialist work, independent verification and human review. Reuse the checkout or one task worktree across correction rounds.
+- Retire the work-receipts state machine, full-copy archives and managed execution runtime. Keep tested-input identity with an optional read-only streaming fingerprint check.
+- Breaking tooling change: existing project verifiers using the retired CLI/runtime need explicit maintenance. Historical evidence and project files are not automatically migrated or deleted.
+
 ## [0.4.0]
 
 - Distinguish lead acceptance requests from required independent proof, with domain criteria and specialist procedures assigned to a verifier separate from assessed-work producers.

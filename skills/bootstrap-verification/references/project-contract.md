@@ -61,7 +61,11 @@ Identify the build or source actually exercised. A Git revision alone is insuffi
 
 Capture output needed to establish the claim. Collect additional diagnostics for a specific investigation, without default whole-workspace inventory. Reuse existing harness output instead of creating another report.
 
-Cleanup releases owned processes and fixture state, including after failure. It does not dispose of evidence. Confirm proof remains accessible after teardown. Ordinary evidence stays available through the task's review; unresolved failures through investigation or an explicit handoff that transfers access and retention responsibility. At delivery, report the evidence location and retention boundary. After that boundary, the task owner may dispose of the run's temporary output.
+Cleanup stops owned processes and releases disposable fixture/output resources, including failed attempts. Preserve pending review changes and useful evidence; uncertain ownership or active writers must be resolved before claiming completion. Keep evidence through review, and unresolved failures through investigation or an explicit handoff. At delivery, report its location and anything deliberately retained with its reason and review boundary. After that boundary, the owner may retire unneeded artifacts without breaking durable references.
+
+Use the existing checkout or a reusable task worktree under the [local execution contract](../../aapilot/references/verification-contract.md#local-execution). Do not generate full-copy archives by default. Establish complete runtime inputs and tested identity, including required ignored configuration. Generated commands must work without the plugin; reuse project facilities and add a helper only for a demonstrated missing operation.
+
+For checks that genuinely require extra copies, document selected inputs, expected storage including output, ownership and disposal. Stop owned writers before cleanup, preserve pending review changes, and refuse ambiguous deletion. A worktree is not a security sandbox.
 
 Publish or commit selected evidence only when an identified future reader needs an auditable trail. Use an existing review, CI or project evidence location. Durable records explain the conclusion, scope, limitations and rerun procedure without depending on temporary files. Before disposal, resolve durable references by retaining necessary proof or explicitly recording its unavailability; a summary is not a substitute where the retained claim requires the original evidence.
 
