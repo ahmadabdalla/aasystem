@@ -8,7 +8,7 @@ One owner carries the request through the agreed delivery boundary. Keep the out
 
 Each assignment needs accessible inputs, a bounded deliverable, write ownership, relevant constraints and checks, and what to return. Workers preserve others' edits and project formats, and return out-of-scope findings to the owner. Keep decision context retrievable under the [handoff principle](../../principle-preserve-decision-context/SKILL.md).
 
-Carry relevant effort conditions, consequence-driven checks and resource limits into each assignment. A smaller local assignment cannot weaken inherited constraints. Recipients reuse settled inputs and return material scope changes or contradictions to the owner, who reassesses the effort and updates affected assignments when evidence changes scope, coupling, consequence or proof needs.
+Assignments inherit relevant effort conditions, consequence-driven checks and resource limits; smaller local scope cannot weaken them. The owner reassesses effort and updates affected assignments when evidence changes scope, coupling, consequence or proof needs.
 
 ## Scope and proof
 

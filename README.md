@@ -189,7 +189,7 @@ Read more about how the system works:
 
 A change to one skill can affect the skills that call it. Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md) to check those relationships. The [evaluation playbook](skills/aapilot/playbooks/eval.md) describes how to try instruction changes on realistic tasks and inspect the results.
 
-For local or cloud development, follow the [maintainer setup](docs/ops/releasing.md#maintainer-setup) to install Python dependencies and run the package checks.
+For development, follow the [maintainer setup](docs/ops/releasing.md#maintainer-setup) to install Python dependencies and run the package checks.
 
 ## Export the library
 

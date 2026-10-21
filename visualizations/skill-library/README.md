@@ -17,7 +17,7 @@ Hover or select a node to suppress unrelated lines and inspect its incoming and 
 
 The map intentionally does not draw a foundation edge from every procedural skill to the execution contract and principle index. Their system-wide scope is recorded on the foundation nodes without obscuring task flows.
 
-Aapilot uses the [effort rubric](../../skills/aapilot/references/effort.md) for S/M/L execution conditions and separate consequence-driven scrutiny. The execution foundation carries inheritance and reassessment across existing handoffs; standalone owners size their own deliverable when no assessment covers it. This reference adds no skill, agent role or route, and size cannot waive required procedures or proof.
+The [effort rubric](../../skills/aapilot/references/effort.md) uses the existing execution foundation and handoffs; it adds no skill, agent role or route.
 
 The execution contract owns [decision authority](../../skills/aapilot/references/execution.md#decision-authority), including the inspectable human checkpoint handoff and stop/wait rule, [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot applies or assigns execution and checks results under those shared rules; bounded unattended work preserves the whole-process human-checkpoint stop; review context distinguishes independent discovery from confirmation/evidence audits and preserves initial findings before reporting assistance.
 

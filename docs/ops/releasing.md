@@ -14,18 +14,9 @@ python3 -m venv .venv
 
 PyYAML provides real YAML parsing for the release validator and workflow tests. It is a development dependency only; the optional input-identity helper uses Python 3.10+, Git and the standard library without third-party dependencies. Neither repository checks nor installed skills require Ruby.
 
-For a cloud environment, make Python (including `venv`), Git, Bash, a POSIX shell and `jq` available in the base image. Use these install instructions after checkout, adjusting the checkout path if needed:
+From the repository root, use these start instructions for each session so subprocesses also use the environment's Python:
 
 ```bash
-cd /workspace/aasystem
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-dev.txt
-```
-
-Use these start instructions for each session so subprocesses also use the environment's Python:
-
-```bash
-cd /workspace/aasystem
 . .venv/bin/activate
 python3 scripts/validate-release.py
 bash -n scripts/publish-release.sh
@@ -99,4 +90,3 @@ For Copilot CLI:
 copilot plugin marketplace update ahmadabdalla-plugins
 copilot plugin update aasystem@ahmadabdalla-plugins
 ```
-

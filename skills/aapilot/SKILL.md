@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # aapilot
 
-Apply the [effort rubric](references/effort.md) before selecting procedures, and carry its execution conditions into downstream assignments.
+Apply the [effort rubric](references/effort.md) before selecting procedures.
 
 Before starting, read the [shared execution contract](references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 

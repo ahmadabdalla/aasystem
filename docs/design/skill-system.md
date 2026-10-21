@@ -128,7 +128,7 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 
 ### Coordination
 
-The first-party [effort rubric](../../skills/aapilot/references/effort.md) adds user-requested S/M/L execution profiles with separate consequence-driven scrutiny. Aapilot sizes the overall ask; standalone specialists size their requested deliverable when no current assessment covers it. The [execution contract](../../skills/aapilot/references/execution.md#ownership-and-handoffs) owns inheritance and reassessment, so assigned work reuses conditions without restarting coordination or weakening inherited constraints. The rubric scales planning and coordination while retaining required procedures, independent verification and human checkpoints. It adds no skill, runtime, automatic worker count or sizing report; token, latency and storage improvements require observed evidence.
+The first-party, user-requested [effort rubric](../../skills/aapilot/references/effort.md) owns S/M/L profiles and consequence-driven scrutiny. The [execution contract](../../skills/aapilot/references/execution.md#scope-and-proof) owns application by task owners and standalone specialists, with [inheritance and reassessment](../../skills/aapilot/references/execution.md#ownership-and-handoffs) across assignments.
 
 The [execution contract](../../skills/aapilot/references/execution.md) adds:
 

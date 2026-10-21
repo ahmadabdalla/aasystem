@@ -24,4 +24,4 @@ An S permission fix can require strong security checks. Increase size when addre
 
 State the size, reason, scope and execution conditions in the existing brief or scope replay. Include consequence-driven checks and resource needs; create no separate sizing report or routine approval step. Follow [ownership and handoffs](execution.md#ownership-and-handoffs) for inheritance and reassessment.
 
-Use resources appropriate to the local or cloud environment. Additional agents, workspaces and retained artifacts need a concrete purpose and ownership; preserve needed evidence before an ephemeral workspace disappears. The execution contract owns [delegation](execution.md#delegation), [local execution](verification-contract.md#local-execution), [completion](execution.md#completion) and [evidence retention](../../bootstrap-verification/references/project-contract.md#evidence-and-retention).
+Follow the existing [local execution rules](verification-contract.md#local-execution) for workspace and resource decisions.
