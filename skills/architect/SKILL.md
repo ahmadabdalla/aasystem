@@ -28,7 +28,7 @@ Trace affected behavior with [how](../how/SKILL.md); use [why](../why/SKILL.md) 
 
 Read the project verifier and feature map when present. Identify affected outcomes, alternate entry points, and dependent callers; preserve documented coverage gaps. Record missing verification capability in the plan and return the prerequisite to the caller; designing a proof does not establish observed implementation behavior.
 
-For seed/fixture design or representative state needed by the proof plan, read [Seed scenarios](references/seed-scenarios.md). Reuse adequate existing context and carry the scenario decisions into the design package.
+For seed/fixture design or representative state needed by the proof plan, read [Seed scenarios](references/seed-scenarios.md).
 
 In the verification plan, map each important requirement to a concrete input or action, expected observable result, the real surface used to exercise it, and evidence to retain. Include failure, retry, concurrency, or migration cases when they carry the design risk. Derive expected results from the contract, independently of the implementation. Check that the project can actually support this proof; name missing access or infrastructure as a verification gap.
 

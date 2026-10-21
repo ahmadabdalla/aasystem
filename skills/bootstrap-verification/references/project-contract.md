@@ -16,11 +16,9 @@ Generated instructions use real project paths and commands, with no unfinished p
 
 ## Scenario coverage
 
-For scenario-dependent work, account for changed semantics and fields, including optional fields, in the affected recipes. Pair adequate starting context with real feature actions, contract-derived expectations and relevant persisted, constraint and isolation observations. Loading/checking data or passing old tests alone does not establish feature completion. Keep scenario references, actions, evidence and gaps in existing project records; add no scenario machinery for inapplicable work. Read [Seed scenarios](../../architect/references/seed-scenarios.md) when setup or lifecycle design is unresolved.
+For scenario-dependent work, map changed semantics and fields, including optional ones, to starting context, real feature actions, contract-derived expectations and relevant persistence, constraint and isolation observations in affected recipes. Seed checks and old test passes cannot replace missing feature proof. Keep scenario references, evidence and gaps in existing project records. Read [Seed scenarios](../../architect/references/seed-scenarios.md) when setup or lifecycle needs design; skip seeding where inapplicable.
 
-Inspect suite selectors, skip conditions and the actual local and CI commands. Distinguish a usable procedure, an observed local pass, configured automation and an enforced merge check. A documented or proposed gate is not mechanical enforcement.
-
-Generate project-owned completion instructions with real commands and expectations; do not copy portable-library links into the project's verifier.
+Inspect suite selectors, skip conditions and actual local/CI commands. Distinguish a usable procedure, an observed local pass, configured automation and an enforced merge check; prose alone supplies no enforcement.
 
 ## Discovery and feature map
 

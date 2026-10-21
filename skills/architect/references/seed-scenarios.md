@@ -1,27 +1,25 @@
 # Seed scenarios
 
-Use when designing seed/fixture data or when verification needs representative state. Keep the decisions and proof plan in the existing design package or feature recipe.
+Use for seed/fixture design or representative state in a proof plan.
 
 ## Choose the minimum context
 
-Inspect existing framework loaders, factories, fixtures and project requirements first. Reuse adequate context; add or extend a scenario only for a missing need. Keep focused failure cases in tests rather than expanding permanent demo data. Inapplicable work needs no seeding subsystem.
+Reuse project loaders, factories and fixtures; add or extend a scenario only for a missing need. Keep focused failure cases in tests, and skip seeding for inapplicable work.
 
-Distinguish required production reference/bootstrap data, optional contributor/demo data and focused test fixtures. State each scenario's purpose, authors/consumers and invocation. These purposes can share existing facilities without sharing every lifecycle policy.
+Distinguish required production reference/bootstrap data, optional contributor/demo data and focused test fixtures. Identify purpose, authors/consumers and invocation; shared facilities need not share lifecycle policies.
 
-## Define the scenario
+## Define the scenario and proof
 
-Describe the actors, permissions, relationships and lifecycle state needed by the caller. Where callers need to locate seeded records, provide stable logical references rather than depending on generated database IDs. Keep authored meaning deterministic; use synthetic identities for contributor/demo/test data, omit secrets and do not invent audit history. Required production reference data follows the project's actual contract.
+Describe needed actors, permissions, relationships and lifecycle states, with stable logical references for callers. Keep authored meaning deterministic. Use synthetic contributor/demo/test identities; production reference data follows the project's contract. Omit secrets and fabricated audit history.
 
-Use existing framework facilities that respect current domain rules for ordinary valid scenarios. Derive values from their authoritative records or operations rather than inserting fabricated results. Historical, migration and intentionally invalid fixtures may need separate controlled construction; document why and keep that exception scoped.
+Use framework facilities respecting current domain rules for ordinary valid scenarios; derive values through their owning records or operations. Historical, migration or intentionally invalid fixtures may use controlled construction; explain and scope the exception.
 
-Connect starting context to the changed action and contract-derived expected observations under the [project completion rule](../../bootstrap-verification/references/project-contract.md#scenario-coverage). Existing context followed by a feature action can be sufficient; a scenario need not mirror every database field or test case.
-
-For example, an existing account and draft order can support adding an optional delivery note: enter the note through the changed UI or API, save, and read it back. No permanent demo edit is required. Exercise a total through its underlying items and calculation, and relationship constraints through real creation and rejection paths rather than loader output alone.
+Connect context to actions under the [project completion rule](../../bootstrap-verification/references/project-contract.md#scenario-coverage). An existing draft order can support an optional delivery note: enter it through the changed UI/API, save and read back, without a permanent demo edit. Exercise changed relationships through creation/readback and relevant parent/tenant rejection. Scenarios need not mirror every field or test case.
 
 ## Decide lifecycle and delivery boundaries
 
-Name the target and data owner, then settle first load, repeat, refresh/reset, edit preservation, schema compatibility and partial-failure recovery to the extent the scenario needs them. A disposable isolated fixture may use reset-and-recreate; retained contributor edits require a deliberate repeat/rebuild policy. Prefer existing framework mechanisms. Add coordination or persistent loader state only for a demonstrated risk.
+For the target and data owner, decide first load, repeat, refresh/reset, edit preservation, schema compatibility and partial-failure recovery as needed. Disposable fixtures may reset and recreate; retained edits need an explicit repeat/rebuild policy. Add coordination or persistent loader state only for a demonstrated risk.
 
-Record source placement, compilation, release/deployed contents and runtime invocation as separate decisions, including explicit deferrals. Compiling with the app does not settle release inclusion or execution. Required production data and optional data may need different choices; apply project requirements rather than a blanket production prohibition or allowance.
+Treat source placement, compilation, release/deployed contents and runtime invocation as separate decisions with explicit deferrals. Compilation settles neither release inclusion nor invocation; apply the project's production requirements.
 
-Return these decisions, the minimum scenario changes and the proof plan in the existing design package. Link owned project instructions instead of introducing a separate scenario registry, prescribed schema or folder layout. The [execution contract](../../aapilot/references/execution.md) owns authority, resource isolation, evidence and independent verification.
+Return decisions, minimum scenario changes and proof plan in the existing design package or feature recipe. Preserve project formats without imposing a registry, schema or folder layout.
