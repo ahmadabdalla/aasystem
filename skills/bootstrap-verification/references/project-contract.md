@@ -10,9 +10,15 @@ The project skill needs a discriminating name and description in YAML frontmatte
 - **Health and identity:** Confirm the intended instance, current build or source revision, owned port/data location, and required access. Without a Git revision, record a reproducible fingerprint of relevant source and checks. Stop or reset when identity cannot be established.
 - **Drive and observe:** Operate the public surface through existing tools or documented helpers. Record actions and resulting state, including persistence or other consequential effects. A simulated dependency only supports a claim about that simulation.
 - **Reset and cleanup:** Restore a known fixture state and release owned resources, including after failure. State where evidence survives. Do not stop unrelated processes or remove unrelated data.
-- **Completion:** Select recipes by affected behavior, entry points, and dependencies; derive expected results from the contract. Report pass, fail, and unverified outcomes separately. Include an explicit mismatch when checks ran against a different artifact.
+- **Completion:** Select recipes by affected behavior, entry points, and dependencies; derive expected results from the contract and apply [scenario coverage](#scenario-coverage) where relevant. Report pass, fail, and unverified outcomes separately. Include an explicit mismatch when checks ran against a different artifact.
 
 Generated instructions use real project paths and commands, with no unfinished placeholders or references to the author's machine. Existing external tooling prerequisites are named and checked. New helper invocations are documented and actually executed.
+
+## Scenario coverage
+
+For scenario-dependent work, map changed semantics and fields, including optional ones, to starting context, real feature actions, contract-derived expectations and relevant persistence, constraint and isolation observations in affected recipes. Seed checks and old test passes cannot replace missing feature proof. Keep scenario references, evidence and gaps in existing project records. Read [Seed scenarios](../../architect/references/seed-scenarios.md) when setup or lifecycle needs design; skip seeding where inapplicable.
+
+Inspect suite selectors, skip conditions and actual local/CI commands. Distinguish a usable procedure, an observed local pass, configured automation and an enforced merge check; prose alone supplies no enforcement.
 
 ## Discovery and feature map
 

@@ -170,6 +170,8 @@ The [execution contract](../../skills/aapilot/references/execution.md#independen
 
 [Feature](../../skills/aapilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
 
+Architect's first-party [seed scenario reference](../../skills/architect/references/seed-scenarios.md) owns data purpose, minimal context, lifecycle and source/build/release/invocation decisions. Feature reads it when proof depends on state. The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#scenario-coverage) owns completion and automation criteria through existing Bootstrap/Maintain routes. Decisions and proof stay in current assignments and project records. A conditional reference avoids a separate skill and repeated lifecycle guidance.
+
 ### Growth assessment
 
 [`10x`](../../skills/10x/SKILL.md) owns one reusable assessment method. Solution, Architect and Interaction Design apply it before settling consequential designs, reusing current findings and extending only newly exposed constraints. Aapilot also routes standalone growth-assessment requests to it. Direct application and bounded independent assignments use the same contract; invocation creates no new coordinator or mandatory worker.
