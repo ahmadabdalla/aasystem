@@ -6,15 +6,17 @@ disable-model-invocation: true
 
 # aapilot
 
-Apply the [effort rubric](references/effort.md) before selecting procedures.
-
 Before starting, read the [shared execution contract](references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own framing through verification. Select the procedure, coordinate contributors, inspect results and explain the outcome. Consolidate results under the execution contract's ownership and retention rules.
 
 ## Select the path
 
-Read the request, project instructions and task evidence. For a new or materially changed request, briefly replay the intended outcome, what must remain true, material uncertainties and the next action. Reuse an adequate existing brief. Establish [scope and proof](references/execution.md#scope-and-proof), then select the relevant procedures. A replay alone requires no approval; a clear authorized request proceeds. Apply [decision authority](references/execution.md#decision-authority) before dependent commitments. Preserve plan-only, research-only and explicit checkpoints.
+Read the request, project instructions and task evidence. For a new or materially changed request, briefly replay the intended outcome, what must remain true, material uncertainties and the next action. Reuse an adequate existing brief.
+
+Establish [scope and proof](references/execution.md#scope-and-proof), applying the [effort rubric](references/effort.md) when no current assessment covers the request, then select the relevant procedures.
+
+A replay alone requires no approval; a clear authorized request proceeds. Apply [decision authority](references/execution.md#decision-authority) before dependent commitments. Preserve plan-only, research-only and explicit checkpoints.
 
 Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and exceptions with the brief. Borrowed workflow requirements do not establish personal preferences.
 
