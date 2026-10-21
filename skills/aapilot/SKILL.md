@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # aapilot
 
+Apply the [effort rubric](references/effort.md) before selecting procedures, and carry its execution conditions into downstream assignments.
+
 Before starting, read the [shared execution contract](references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own framing through verification. Select the procedure, coordinate contributors, inspect results and explain the outcome. Consolidate results under the execution contract's ownership and retention rules.

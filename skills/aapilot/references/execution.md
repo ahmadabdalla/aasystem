@@ -8,9 +8,13 @@ One owner carries the request through the agreed delivery boundary. Keep the out
 
 Each assignment needs accessible inputs, a bounded deliverable, write ownership, relevant constraints and checks, and what to return. Workers preserve others' edits and project formats, and return out-of-scope findings to the owner. Keep decision context retrievable under the [handoff principle](../../principle-preserve-decision-context/SKILL.md).
 
+Carry relevant effort conditions, consequence-driven checks and resource limits into each assignment. A smaller local assignment cannot weaken inherited constraints. Recipients reuse settled inputs and return material scope changes or contradictions to the owner, who reassesses the effort and updates affected assignments when evidence changes scope, coupling, consequence or proof needs.
+
 ## Scope and proof
 
 Replay a new or materially changed request: what to achieve, what must remain true, uncertainties and next action. A clear authorised request proceeds; replay is not an approval ceremony. Respect research-only, design-only and other explicit stopping points.
+
+An owning invocation, including a standalone specialist, applies the [effort rubric](effort.md) to its requested deliverable when no current assessment covers it. Assigned work consumes the caller's assessment rather than restarting overall sizing or coordination.
 
 Inspect observable unknowns before depending on them. Reuse project requirements, accepted decisions and verification procedures. Distinguish sourced facts, proposals, human agreements and observations. A design proposal is not permission to build; model agreement is not evidence of correctness.
 

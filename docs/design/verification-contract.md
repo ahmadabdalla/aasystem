@@ -29,6 +29,8 @@ An unresolved consequential decision or required visual review pauses the whole 
 
 ## Expertise without mandatory agent chains
 
+The [effort rubric](../../skills/aapilot/references/effort.md) sets S/M/L execution conditions after brief discovery, with separate scrutiny for consequential failures. Standalone owners apply it to their requested deliverable; assigned specialists inherit relevant conditions and return changed scope to the owner. Size scales coordination without waiving required procedures, verification or human decisions, and does not prescribe a worker count or workspace for either local or cloud execution.
+
 The selected playbook provides the procedure. Product owns behaviour and acceptance scenarios; Interaction Design owns interactions; Solution compares approaches; Architect designs implementation boundaries; Implement makes bounded edits. Aapilot can apply these procedures itself or delegate for useful expertise, parallel work or context separation.
 
 Specialists return bounded artifacts and observations to the existing owner. [Swarm](../../skills/swarm/SKILL.md) partitions independent work; [Arena](../../skills/arena/SKILL.md) compares alternatives with separate judging. Neither is mandatory for ordinary delivery. The [system map](skill-system.md) records the complete ownership and source inventory.

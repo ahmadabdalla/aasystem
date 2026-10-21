@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add an S/M/L effort rubric with brief discovery, consequence-driven scrutiny and inherited execution conditions. Apply it to standalone owners while preserving required procedures, verification and human checkpoints.
+
 ## [0.5.1]
 
 - Add independent rendered UX assessment through Interaction Design, using separate visual and interaction assessors with evidence-backed findings and explicit coverage gaps.
