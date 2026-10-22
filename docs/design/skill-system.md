@@ -128,6 +128,8 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 
 ### Coordination
 
+The first-party, user-requested [effort rubric](../../skills/aapilot/references/effort.md) owns S/M/L profiles and consequence-driven scrutiny. The [execution contract](../../skills/aapilot/references/execution.md#scope-and-proof) owns application by task owners and standalone specialists, with [inheritance and reassessment](../../skills/aapilot/references/execution.md#ownership-and-handoffs) across assignments.
+
 The [execution contract](../../skills/aapilot/references/execution.md) adds:
 
 - Caller-owned phase transitions

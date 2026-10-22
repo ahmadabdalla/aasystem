@@ -63,6 +63,8 @@ The request tells the agent how much work you want to delegate. Say what you wan
 
 Use a [focused skill](#choose-a-focused-skill) directly when you want help with one job.
 
+Aapilot briefly inspects the ask and uses the [effort rubric](skills/aapilot/references/effort.md) to choose S, M or L execution conditions. Consequence is assessed separately: a small permission fix can still need strong security checks. The assessment travels with downstream work; size does not waive required verification or human decisions.
+
 ## Contracts define the working rules
 
 This is where my thinking about trust and verification started to develop, helped by people in the community sharing their experiences. Building trust in what agents do is hard, especially when several agents work together. I wanted to explore whether a shared contract could make their communication with each other, and with me, more reliable.
@@ -187,7 +189,7 @@ Read more about how the system works:
 
 A change to one skill can affect the skills that call it. Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md) to check those relationships. The [evaluation playbook](skills/aapilot/playbooks/eval.md) describes how to try instruction changes on realistic tasks and inspect the results.
 
-For local or cloud development, follow the [maintainer setup](docs/ops/releasing.md#maintainer-setup) to install Python dependencies and run the package checks.
+For development, follow the [maintainer setup](docs/ops/releasing.md#maintainer-setup) to install Python dependencies and run the package checks.
 
 ## Export the library
 
