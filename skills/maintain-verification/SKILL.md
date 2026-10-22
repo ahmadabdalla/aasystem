@@ -28,7 +28,7 @@ Consolidate live recipes to reuse setup without losing distinct entry points or 
 
 Follow the local launch, health, identity, reset, evidence, and cleanup procedure. Recheck the instance after a surprising result and confirm evidence survives teardown. When a verifier fault prevents progress, make a bounded repair and retry the affected path; persistent external prerequisites stay blocked.
 
-Audit unnecessary copying, required input identity, fixture ownership and evidence lifetime.
+Audit executable copying, input identity, output locations and ownership against the [evidence lifecycle](../bootstrap-verification/references/project-contract.md#evidence-and-retention). Reconcile incompatible harness behavior, exercise cleanup/retention and run the project-local durable-reference check; prose changes alone do not establish adoption.
 
 ## Classify and repair
 

@@ -189,6 +189,12 @@ class ReleaseValidatorTests(unittest.TestCase):
         subprocess.run(["git", "add", "-f", str(output)], cwd=self.repo, check=True, capture_output=True)
         self.assert_invalid("Verification output guard failed")
 
+    def test_durable_temporary_reference_is_rejected(self):
+        # No Markdown link is needed: local command/configuration references also expire.
+        with (self.repo / "README.md").open("a") as document:
+            document.write('\nPrevious evidence: file:///tmp/verification-run/result.json\n')
+        self.assert_invalid("Temporary reference check failed")
+
 
 if __name__ == "__main__":
     unittest.main()

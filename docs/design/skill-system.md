@@ -255,15 +255,16 @@ It separates:
 
 Local additions include:
 
-- Project conventions before fallback paths
-- `.verification/runs/` as the uncommitted fallback
+- Suitable project facilities with explicit ownership and lifecycle
+- Native OS temporary allocation and one owned output root per invocation
 - Retention through review or investigation
 - Explicit disposal and migration rules
 - Source identity for the exercised artifact
 - A Git guard for temporary verification output
+- A deterministic local check for durable files referencing disposable paths
 - Durable proof only for a named future reader
 
-The guard can reuse or install the [shell asset](../../skills/bootstrap-verification/assets/check-verification-output.sh).
+Projects reuse equivalent checks or install the [Git guard](../../skills/bootstrap-verification/assets/check-verification-output.sh) when output lives in a checkout and the standalone [reference checker](../../skills/bootstrap-verification/assets/check-temporary-references.py) for selected durable UTF-8 files. The latter reports file/line locations without source contents and detects literal temporary paths independently of target existence; computed references and unselected files remain outside its scope. Bootstrap proves generated output/cleanup behavior, while Maintain reconciles actual adopted harnesses. No lifecycle engine, registry or new skill is added.
 
 Unrelated workspace inventory is outside evidence identity.
 
