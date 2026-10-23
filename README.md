@@ -60,6 +60,8 @@ If the work uncovers a decision that needs my input, I want the agent to show me
 
 ## How I check the work
 
+Implementation starts with [readiness to deliver and prove](skills/principle-deliver-and-prove/SKILL.md), a personal principle applied through Implement's opening procedure.
+
 The agent making a change runs checks while it works. For a feature or bug fix, the [verification contract](skills/aapilot/references/verification-contract.md) requires a separate agent to review the changes and run the affected project checks. There is a [limited exception for appearance edits](skills/aapilot/references/execution.md#owner-presentation-eligibility).
 
 When the agent says it's finished, I want to be able to inspect:

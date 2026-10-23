@@ -420,6 +420,18 @@ const nodes = [
     y: 1035,
   },
   {
+    id: "deliver-and-prove",
+    title: "Deliver and prove",
+    type: "principle",
+    subtitle: "Implementation readiness",
+    purpose: "Asks whether the implementation has what it needs for delivery and runnable proof before dependent work begins.",
+    owns: "The judgment to establish delivery and verification readiness within the assigned scope and existing task brief.",
+    source: "../../skills/principle-deliver-and-prove/SKILL.md",
+    x: 430,
+    y: 1145,
+    w: 270,
+  },
+  {
     id: "principles-index",
     title: "Principle index",
     type: "foundation",
@@ -637,6 +649,8 @@ connect("work", "project-records", "handoff", "consolidates canonical evidence")
 
 connect("execution-contract", "work", "governance", "governs delegation, proof and completion");
 connect("principles-index", "work", "governance", "routes approved judgments");
+connect("principles-index", "deliver-and-prove", "governance", "matches implementation readiness");
+connect("deliver-and-prove", "implement", "governance", "establishes delivery and proof readiness");
 connect("principles-index", "preserve-context", "governance", "matches handoff changes");
 connect("principles-index", "ui-meaning", "governance", "matches UI structure changes");
 connect("execution-contract", "project-records", "governance", "defines evidence retention");
