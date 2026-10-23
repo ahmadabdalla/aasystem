@@ -43,6 +43,8 @@ Bug Fix and Refactoring use the [Architect design trigger](../../skills/architec
 
 ## Maintain the map
 
+Grill Me loads [Grilling](../../skills/grill-me/references/grilling.md) for plans and its discovery procedure for product interviews. The Domain Modeling edge records agreed terms and qualifying decisions when authorized; "with docs" uses this same path. Aapilot remains the entry point. No skill is added.
+
 - Edit node titles, descriptions, source links, and positions in the `nodes` array in `app.js`.
 - Keep the five main columns about 449 SVG units apart. If the outer columns move, update `lanes` and `fullView` together so the overview retains its margins.
 - Add or remove a relationship with `connect(from, to, type, label)`. Use `route`, `support`, `handoff`, or `governance`.

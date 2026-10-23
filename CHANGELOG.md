@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Ask independent Grill Me questions together and confirm shared understanding before implementation. Record agreed terms and qualifying decisions when authorized. Load the selected interview procedure on demand; product discovery keeps its own procedure.
 - Add an S/M/L effort rubric with brief discovery, consequence-driven scrutiny and inherited execution conditions. Apply it to standalone owners while preserving required procedures, verification and human checkpoints.
 
 ## [0.5.1]
