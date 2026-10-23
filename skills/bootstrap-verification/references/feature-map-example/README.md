@@ -7,9 +7,9 @@ The example's product contract requires non-empty trimmed titles, stable increas
 ## Baseline and driving conventions
 
 - Work from the example project's root containing `notes.py`, using Python 3.
-- The local verifier checks source identity and creates an owned temporary directory, recorded as `NOTES_VERIFY_DATA`. Each recipe starts with an absent `notes.json` inside that directory.
+- The verifier allocates one unique OS temporary run root through Python's temporary-directory API. Child recipes use isolated fixture subdirectories recorded as `NOTES_VERIFY_DATA`, each starting without `notes.json`; evidence occupies a sibling directory under the same root. Source identity covers the working project and required configuration without source copies.
 - Each command starts a fresh CLI process. Compare parsed JSON values, exit status, stderr, and resulting stored data.
-- The verifier captures actions, observations, environment, and source identity in a unique ignored `.verification/runs/` directory outside the temporary data. Its cleanup removes only owned temporary data and confirms that evidence survives. Its local retention procedure keeps evidence through review, or investigation for an unresolved failure, and names who disposes of it afterward.
+- The generated verifier supplies project-local cleanup and retention commands under the [lifecycle contract](../project-contract.md#evidence-and-retention). Its result record identifies retained evidence, its owner and retirement event.
 
 ## Features and coverage
 

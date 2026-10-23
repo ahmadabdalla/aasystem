@@ -263,15 +263,15 @@ It separates:
 
 Local additions include:
 
-- Project conventions before fallback paths
-- `.verification/runs/` as the uncommitted fallback
+- Suitable project facilities with explicit ownership and lifecycle
+- Native OS temporary allocation and one owned output root per invocation
 - Retention through review or investigation
 - Explicit disposal and migration rules
 - Source identity for the exercised artifact
 - A Git guard for temporary verification output
 - Durable proof only for a named future reader
 
-The guard can reuse or install the [shell asset](../../skills/bootstrap-verification/assets/check-verification-output.sh).
+The [Git guard](../../skills/bootstrap-verification/assets/check-verification-output.sh) rejects indexed disposable output when runs live inside a checkout. Bootstrap checks adopted executable harnesses; Maintain reconciles drift. The project contract owns evidence retention and retirement.
 
 Unrelated workspace inventory is outside evidence identity.
 

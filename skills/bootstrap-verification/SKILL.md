@@ -28,11 +28,11 @@ Separate intended behavior and its authority from current observations. When the
 
 ## Adopt or build the project procedure
 
-Read [the project contract](references/project-contract.md) before writing outputs. Extend an existing verifier in its established location when it can serve the project. Otherwise use the host's project skill convention; `.agents/skills/verify-<project>/` is the default. Keep commands, recipes, and evidence locations local to the project. The generated skill must work without this authoring conversation or the portable toolbox installed.
+Read [the project contract](references/project-contract.md) before writing outputs. Extend a suitable existing verifier in its established location; inspect its executable commands and output locations before adopting its pattern. Otherwise use the host's project skill convention; `.agents/skills/verify-<project>/` is the default. Keep commands and recipes project-owned. The generated skill must work without this conversation or the portable toolbox installed.
 
 For a new map, create `features/README.md` inside the project verifier and one file per identified user-facing feature. Read [the feature-map example](references/feature-map-example/README.md) for the index and recipe shape; the project contract defines their contents. Preserve an established equivalent map instead of creating a second one. Link the map from the generated verifier and write detailed recipes for the selected scope, recording the remaining gaps. Reuse existing tests and tools by reference; add helpers only where they provide a missing repeatable operation or check. Keep reusable source findings with the procedure and temporary tracing with task evidence.
 
-Establish build identity, readiness checks, isolated data, observation, reset, and cleanup before driving the app. Generate project-local evidence locations and retention instructions using the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention). Follow the project's actual permission and environment limits. Repair scoped setup or harness faults; record unrelated product defects. If required access or infrastructure is unavailable, preserve discovery and mark the affected procedure partial or blocked.
+Establish build identity, readiness, isolated data, observation and cleanup before driving the app. Apply the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention) to the executable harness and generated instructions. Repair incompatible adopted tooling within scope; updating prose alone is not migration. Follow project permissions and environment limits. Record unrelated product defects; unavailable access leaves the affected procedure partial or blocked.
 
 Prefer the existing checkout or a reusable task worktree. Add execution copies only for a demonstrated check requirement, with complete inputs, known storage cost and owned cleanup. Prove direct project invocation without depending on the plugin.
 
@@ -40,7 +40,7 @@ For a greenfield project, map proposed behavior as planned. Prove the first runn
 
 ## Prove and connect
 
-Run every distinct procedure advertised as usable: launch, check the instance and build, drive a selected real path, inspect the result and relevant side effects, retain evidence, and clean up. Recheck health or reset after a surprising result. Cleanup targets only resources the run owns, including failed attempts, and preserves evidence. Confirm that evidence exists after cleanup.
+Run every procedure advertised as usable: launch, confirm identity, drive a selected real path and inspect effects. Exercise shared lifecycle handling once per distinct implementation, covering success, failure, graceful cancellation and pending-review retention proportionally to the owned resources. Inspect actual outputs and repeated-run disposal; confirm required evidence survives teardown. Recheck health/reset after surprising results. State unexercised lifecycle cases as gaps.
 
 Record the sampled feature and entry point for a shared procedure. Unexercised features stay unverified. A procedure can be usable while exposing a product failure; distinguish verifier readiness from behavior passing. Report readiness per surface, together with checks performed, failures, and remaining prerequisites. Stop widening the run when the agreed scope is established and the gaps are recorded.
 
