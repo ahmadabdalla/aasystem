@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [0.6.0]
+
+- Add seed-scenario design and verification coverage guidance, including data purpose, lifecycle, delivery boundaries, and checks through real feature actions.
 - Add compact engineering guidance for dependency boundaries, refactoring moves, and business-state consistency through the existing Maintainability, Implement, and Architect skills.
 - Carry business-state guarantees and required failure, concurrency, replay, and recovery cases from design into implementation and independent verification. Update project verification recipes when coverage is missing or stale.
 - Document the engineering guidance's conceptual sources and how existing skills use it.
