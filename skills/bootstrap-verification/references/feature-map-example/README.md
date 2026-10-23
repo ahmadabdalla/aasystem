@@ -9,7 +9,7 @@ The example's product contract requires non-empty trimmed titles, stable increas
 - Work from the example project's root containing `notes.py`, using Python 3.
 - The verifier allocates one unique OS temporary run root through Python's temporary-directory API. Child recipes use isolated fixture subdirectories recorded as `NOTES_VERIFY_DATA`, each starting without `notes.json`; evidence occupies a sibling directory under the same root. Source identity covers the working project and required configuration without source copies.
 - Each command starts a fresh CLI process. Compare parsed JSON values, exit status, stderr, and resulting stored data.
-- Cleanup releases owned fixtures on success, failure or cancellation while preserving evidence needed for review/investigation. The existing result record names retained output, owner and retirement event. Necessary lasting proof moves to the project's designated evidence location; durable files pass the local disposable-reference check before completion/disposal. Interrupted output requires ownership assessment; OS housekeeping is a fallback. See the [lifecycle contract](../project-contract.md#evidence-and-retention) when authoring this procedure; generated instructions supply actual local commands.
+- The generated verifier supplies project-local cleanup and retention commands under the [lifecycle contract](../project-contract.md#evidence-and-retention). Its result record identifies retained evidence, its owner and retirement event.
 
 ## Features and coverage
 

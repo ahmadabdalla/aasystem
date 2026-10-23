@@ -261,10 +261,9 @@ Local additions include:
 - Explicit disposal and migration rules
 - Source identity for the exercised artifact
 - A Git guard for temporary verification output
-- A deterministic local check for durable files referencing disposable paths
 - Durable proof only for a named future reader
 
-Projects reuse equivalent checks or install the [Git guard](../../skills/bootstrap-verification/assets/check-verification-output.sh) when output lives in a checkout and the standalone [reference checker](../../skills/bootstrap-verification/assets/check-temporary-references.py) for selected durable UTF-8 files. The latter reports file/line locations without source contents and detects literal temporary paths independently of target existence; computed references and unselected files remain outside its scope. Bootstrap proves generated output/cleanup behavior, while Maintain reconciles actual adopted harnesses. No lifecycle engine, registry or new skill is added.
+The [Git guard](../../skills/bootstrap-verification/assets/check-verification-output.sh) rejects indexed disposable output when runs live inside a checkout. Bootstrap checks adopted executable harnesses; Maintain reconciles drift. The project contract owns evidence retention and retirement.
 
 Unrelated workspace inventory is outside evidence identity.
 

@@ -124,9 +124,6 @@ def validate():
     guard = "skills/bootstrap-verification/assets/check-verification-output.sh"
     check(subprocess.run(["sh", "-n", guard]).returncode == 0, "Shipped helper syntax failed")
     check(subprocess.run(["sh", guard]).returncode == 0, "Verification output guard failed")
-    references = "skills/bootstrap-verification/assets/check-temporary-references.py"
-    check(subprocess.run([sys.executable, references, "--root", str(ROOT), "--", *map(str, documents)]).returncode == 0,
-          "Temporary reference check failed")
     print(f"PASS: aasystem {version}; {len(skills)} skills and adapters; {links} local link paths; release notes.")
     print("Host installation, invocation, workflow evaluations and link anchors are separate checks.")
 

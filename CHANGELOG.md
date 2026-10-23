@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-- Prefer one owned OS temporary run root for project verification, with explicit cleanup and evidence retention. Require generated and maintained verifiers to check durable local files for disposable-path references; provide a standalone checker and run it in package validation.
+- Prefer one owned OS temporary run root for project verification. Require Bootstrap and Maintain to inspect adopted executable harnesses and verify cleanup, evidence retention and safe retirement.
 - Add an S/M/L effort rubric with brief discovery, consequence-driven scrutiny and inherited execution conditions. Apply it to standalone owners while preserving required procedures, verification and human checkpoints.
 
 ## [0.5.1]

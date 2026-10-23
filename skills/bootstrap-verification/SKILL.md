@@ -32,7 +32,7 @@ Read [the project contract](references/project-contract.md) before writing outpu
 
 For a new map, create `features/README.md` inside the project verifier and one file per identified user-facing feature. Read [the feature-map example](references/feature-map-example/README.md) for the index and recipe shape; the project contract defines their contents. Preserve an established equivalent map instead of creating a second one. Link the map from the generated verifier and write detailed recipes for the selected scope, recording the remaining gaps. Reuse existing tests and tools by reference; add helpers only where they provide a missing repeatable operation or check. Keep reusable source findings with the procedure and temporary tracing with task evidence.
 
-Establish build identity, readiness, isolated data, observation and cleanup before driving the app. Generate output ownership, retention and a deterministic durable-reference check under the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention). Repair incompatible adopted tooling within scope; updating prose alone is not migration. Follow project permissions and environment limits. Record unrelated product defects; unavailable access leaves the affected procedure partial or blocked.
+Establish build identity, readiness, isolated data, observation and cleanup before driving the app. Apply the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention) to the executable harness and generated instructions. Repair incompatible adopted tooling within scope; updating prose alone is not migration. Follow project permissions and environment limits. Record unrelated product defects; unavailable access leaves the affected procedure partial or blocked.
 
 Prefer the existing checkout or a reusable task worktree. Add execution copies only for a demonstrated check requirement, with complete inputs, known storage cost and owned cleanup. Prove direct project invocation without depending on the plugin.
 
@@ -40,7 +40,7 @@ For a greenfield project, map proposed behavior as planned. Prove the first runn
 
 ## Prove and connect
 
-Run every procedure advertised as usable: launch, confirm identity, drive a selected real path and inspect effects. Exercise success and failure cleanup, cancellation/interruption handling and pending-review retention proportionally to the owned resources. Inspect actual outputs, repeated-run disposal and the durable-reference check; confirm required evidence survives teardown. Recheck health/reset after surprising results. State unexercised lifecycle cases as gaps.
+Run every procedure advertised as usable: launch, confirm identity, drive a selected real path and inspect effects. Exercise shared lifecycle handling once per distinct implementation, covering success, failure, graceful cancellation and pending-review retention proportionally to the owned resources. Inspect actual outputs and repeated-run disposal; confirm required evidence survives teardown. Recheck health/reset after surprising results. State unexercised lifecycle cases as gaps.
 
 Record the sampled feature and entry point for a shared procedure. Unexercised features stay unverified. A procedure can be usable while exposing a product failure; distinguish verifier readiness from behavior passing. Report readiness per surface, together with checks performed, failures, and remaining prerequisites. Stop widening the run when the agreed scope is established and the gaps are recorded.
 
