@@ -30,10 +30,10 @@ Select a node to see its incoming and outgoing connections in the details panel.
 
 ## Understand the relationships
 
-The [system structure and sources](../../docs/design/skill-system.md) records the full responsibilities and adaptations. A few distinctions help when reading the graph:
+See [System structure and sources](../../docs/design/skill-system.md) for the full responsibilities and adaptations. A few distinctions help when reading the graph:
 
 - Architect designs the implementation and plans verification. Delivery playbooks call Implement to make the changes. If implementation reveals a design problem, it returns through the playbook to Architect.
-- The verification agent reviews the changes and runs the project's verification procedure. Interrogate contributes adversarial review findings. The [verification contract](../../skills/aapilot/references/verification-contract.md) explains the required checks and exceptions.
+- The verification agent reviews the changes and runs the relevant project checks. Aapilot brings the findings together and checks whether the agreed work is complete. Interrogate contributes adversarial review findings. The [verification contract](../../skills/aapilot/references/verification-contract.md) explains the required checks and exceptions.
 - Interaction Design can assign two separate agents to assess a rendered interface: one for visual composition and one for interactions. UI Refinement can use that assessment within its [review loop](../../skills/ui-refinement/references/refinement-loop.md). These checks support the required human review and production verification.
 - Maintainability supplies shared criteria for design, implementation, and verification. Reading those criteria doesn't start another worker. The [engineering adaptations](../../docs/design/skill-system.md#maintainability) describe the related boundary, refactoring, and business-state references and how their checks reach the verifier.
 - 10x supports growth assessments during design and can be called directly through Aapilot. The [growth assessment design](../../docs/design/skill-system.md#growth-assessment) explains how callers use its findings.

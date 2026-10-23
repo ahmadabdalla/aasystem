@@ -14,8 +14,6 @@ I find it hard to articulate ideas to AI, especially around user experience and 
 
 Once we've agreed on what to make, I want the agent to design it, build it, and verify it. That shared understanding lets me delegate the work. Trust comes from verification: I want to see the result, what was checked, and what still needs attention.
 
-I've learned from people sharing their skills, prompts, and workflows, including [Lauren Tan's pstack](https://github.com/cursor/plugins/tree/main/pstack) and [Matt Pocock's skills](https://github.com/mattpocock/skills). What stood out to me is that these systems encode a person's experience: their thought process, judgments, and decisions. Copying the system doesn't automatically transfer that experience or produce the same efficiencies.
-
 I'm sharing this so others can understand how I work and adapt what fits, as I've learned from others. I judge the system by what it helps me deliver: products customers love and pay for, work that supports a business, or something I enjoy building.
 
 ## How I use it
