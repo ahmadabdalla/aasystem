@@ -2,7 +2,7 @@
 
 Skills and playbooks for AI coding agents to explore ideas, understand a product, build changes, and check that they work. Use them in Codex CLI, Claude Code, or GitHub Copilot CLI.
 
-Each skill contains instructions for a particular job. Aapilot may apply those instructions in its own context or assign bounded work to another agent; required independent verification remains separate. [Aapilot](skills/aapilot/SKILL.md) is the starting skill: describe what you want, and it chooses the steps and supporting skills. There are playbooks for bug fixes, features, and other engineering tasks.
+Start with [Aapilot](skills/aapilot/SKILL.md): describe what you want, and it chooses the playbook and skills for the work. Each skill contains instructions for a particular job, such as product discovery, design, or implementation.
 
 ## Why I created this
 
@@ -14,40 +14,27 @@ I find it hard to articulate ideas to AI, especially around user experience and 
 
 Once we've agreed on what to make, I want the agent to design it, build it, and verify it. That shared understanding lets me delegate the work. Trust comes from verification: I want to see the result, what was checked, and what still needs attention.
 
-I'm sharing this so others can learn from my practices and adapt them, as I've learned from others. I judge the system by what it helps me deliver: products customers love and pay for, work that supports a business, or something I enjoy building.
+I've learned from people sharing their skills, prompts, and workflows, including [Lauren Tan's pstack](https://github.com/cursor/plugins/tree/main/pstack) and [Matt Pocock's skills](https://github.com/mattpocock/skills). What stood out to me is that these systems encode a person's experience: their thought process, judgments, and decisions. Copying the system doesn't automatically transfer that experience or produce the same efficiencies.
 
-## From idea to verified delivery
+I'm sharing this so others can understand how I work and adapt what fits, as I've learned from others. I judge the system by what it helps me deliver: products customers love and pay for, work that supports a business, or something I enjoy building.
 
-The starting point determines what the agent needs to do. An open idea needs exploration, an existing product may need investigation, and an agreed change can move into design and delivery.
+## How I use it
+
+I start with what I want to work out or change. Sometimes that's an idea I haven't settled on. Sometimes it's an existing product I need to understand, or a change that's ready to build.
 
 ```text
-              What to change and what to preserve
-                              |
-                           Aapilot
-                              |
-       Ideation <-> Discovery -> Delivery -> Verification
-          ^             ^                        |
-          |             +------------------------+
-          +--------------------------------------+
+                  Your idea or request
+                           |
+                        Aapilot
+                           |
+    Explore -> Understand -> Design -> Build -> Verify
+                  ^                              |
+                  +---- Findings / corrections --+
 ```
 
-> For example, in a notes app:
->
-> Ideation might compare adding search with improving navigation. Choosing search still leaves decisions about what should match and how filters should work. Discovery makes those choices explicit, and a visual or prototype can show the proposed experience before implementation. Once the behavior is agreed and built, verification tries actual searches, including empty results and searches with filters applied.
+For example, adding search to a notes app still leaves decisions about what should match and how filters should work. I want to agree on that behavior before building it. A visual or prototype can help me see what I'm asking for. Verification then tries actual searches, including empty results and searches with filters applied.
 
-You can stop at research or design. A recommendation should explain its sources and tradeoffs; a design should explain how the proposed parts fit together and how to check them.
-
-## Start here
-
-[Install the plugin](#install-the-plugin), then start `aapilot` in your agent:
-
-| Host | Entry point |
-| --- | --- |
-| Codex CLI | `$aasystem:aapilot` |
-| Claude Code | `/aasystem:aapilot` |
-| GitHub Copilot CLI | Run `/skills` to find the installed skills |
-
-The request tells the agent how much work you want to delegate. Say what you want, what must stay unchanged, and where to stop. For example:
+Tell the agent what you want, what must stay unchanged, and where to stop. Here are a few ways to start:
 
 **Explore an idea**
 
@@ -61,9 +48,7 @@ The request tells the agent how much work you want to delegate. Say what you wan
 
 > Add search to the notes list. Follow the existing design, preserve current filters, and verify the result. Open a PR for review.
 
-Use a [focused skill](#choose-a-focused-skill) directly when you want help with one job.
-
-Aapilot briefly inspects the ask and uses the [effort rubric](skills/aapilot/references/effort.md) to choose S, M or L execution conditions. Consequence is assessed separately: a small permission fix can still need strong security checks. The assessment travels with downstream work; size does not waive required verification or human decisions.
+You can stop at research or design, ask for local changes, or ask for a PR. Use a [focused skill](#choose-a-focused-skill) directly when you want help with one job.
 
 ## Contracts define the working rules
 
@@ -71,45 +56,25 @@ This is where my thinking about trust and verification started to develop, helpe
 
 Language models can respond differently to the same request. My thinking is that an agent harness, the software running the agent, can use deterministic code to check what the model proposes and control when work proceeds. This library uses shared contracts, project checks and input-identity comparisons to support verification. These do not intercept tool calls or guarantee that an agent followed the instructions.
 
-The [execution contract](skills/aapilot/references/execution.md) defines what each assignment must include: what was agreed, what may change, who edits which files, and what needs to be checked. It also defines when the agent must stop for your answer. The lead agent checks the contributions against your request and owns acceptance requests; required independent proof comes from a separate verifier.
+The [execution contract](skills/aapilot/references/execution.md) sets out what we agreed to build, what each agent can change, and how the work will be checked. Aapilot can follow a skill's instructions itself or assign work to another agent. It stays responsible for bringing the results together and checking them against the request.
 
-```text
-You                       Lead agent                   Other agents
- |                             |                             |
- +-- Request and permissions ->|                             |
- |                             +-- Task, files, checks ----->|
- |                             |<-- Work and check results --+
- |<-- Decision to make --------+                             |
- +-- Your answer ------------->|                             |
- |                             |                             |
- |<-- Result and evidence -----+                             |
-```
+If the work uncovers a decision that needs my input, I want the agent to show me the options and wait for my answer. When I need to review a visual design, I want a preview I can inspect before it continues. Getting agents to do this consistently is challenging, and I'm trying different ideas to make it more reliable.
 
-An assignment can uncover a decision that changes what you agreed to build. If that decision needs your input, the contract requires the lead agent to show the options and relevant work, ask, and wait. When visual review is required, it must give you a preview to inspect before continuing. Getting agents to do this consistently is challenging, and I'm trying different ideas to make it more reliable.
+## How I check the work
 
-The agent making a change runs checks while it works. For a feature or bug fix, the [verification contract](skills/aapilot/references/verification-contract.md) also requires another agent to review the changes and run the affected project checks. This gives the result a separate assessment against the agreed requirements. There is a [limited exception for appearance edits](skills/aapilot/references/execution.md#owner-presentation-eligibility).
+The agent making a change runs checks while it works. For a feature or bug fix, the [verification contract](skills/aapilot/references/verification-contract.md) requires a separate agent to review the changes and run the affected project checks. There is a [limited exception for appearance edits](skills/aapilot/references/execution.md#owner-presentation-eligibility).
 
-> For example, an exact label change that preserves meaning and behavior may qualify for checks by the same agent that made the edit. The full eligibility rules still apply.
+When the agent says it's finished, I want to be able to inspect:
 
-## Evidence connects the request to the result
+- What it made or changed
+- What was checked and what happened
+- What failed, wasn't checked, or still needs my attention
 
-When the agent says a change is complete, I want to see the result, what was checked, and what still needs attention. Reuse the project's task, PR or evidence format to connect agreed expectations to the tested work and actual observations. Research and design provide their sources and reasoning.
+For the search example, a passing build wouldn't tell me whether search finds the right notes or preserves the filters. I want checks that exercise the behavior we agreed on. If those checks fail or haven't run, the work is still incomplete.
 
-```text
-Your request -> Shared understanding -> Design / build / research
-                         ^                       |
-                         |              Independent assessment
-                         |                       |
-                         +---- Decisions / corrections
-                                                 |
-                                      Result for your review
-```
+For research or design, I want the sources, reasoning, and unresolved questions. The agent should use the project's existing task or PR format so I can review the result where the work already lives.
 
-For a feature or bug fix, a separate verifier reviews the combined change and runs the affected project checks. The owner reconciles findings and obtains current checks after corrections. Missing or failing required checks leave the work incomplete. The [limited presentation exception](skills/aapilot/references/execution.md#owner-presentation-eligibility) stays explicitly owner-checked.
-
-Local work uses the current checkout or one task worktree when separation is useful. Implementer and verifier take turns, and input identity checks detect stale results without archiving the repository each round. Required configuration and external inputs still need deliberate inclusion. A worktree containing pending review changes is a deliverable, not disposable scratch.
-
-Keep useful findings and evidence through review; clean up owned processes and disposable outputs. Retain bulky artifacts only for a specific need. The final report distinguishes observed success, failure and unverified scope. Read [How Aapilot works](docs/design/verification-contract.md) for the workflow and limitations.
+These contracts are instructions for the agents. Project checks help verify the result, but the library doesn't intercept tool calls or guarantee that an agent followed the instructions. [How Aapilot works](docs/design/verification-contract.md) explains the workflow, verification mechanics, and limitations.
 
 ## Install the plugin
 
@@ -146,36 +111,48 @@ Run `/skills` in Copilot to check that aasystem's skills are available.
 
 Marketplace installations use published releases. The `main` branch may include unreleased changes; see [release notes](https://github.com/ahmadabdalla/aasystem/releases) for what has shipped. See the [upgrade guide](docs/ops/releasing.md#upgrade-an-installed-plugin) for existing installations.
 
+## Start here
+
+After installation, start Aapilot in your agent:
+
+| Host               | Entry point                                |
+| ------------------ | ------------------------------------------ |
+| Codex CLI          | `$aasystem:aapilot`                        |
+| Claude Code        | `/aasystem:aapilot`                        |
+| GitHub Copilot CLI | Run `/skills` to find the installed skills |
+
+Describe the work in your own words, using the [examples above](#how-i-use-it) as a starting point.
+
 ## Choose a focused skill
 
 If you already know which part of the work needs attention, you can ask for that skill directly:
 
-| Need | Entry point |
-| --- | --- |
-| Work through a plan in question rounds and record agreed terms and decisions | [`grill-me`](skills/grill-me/SKILL.md) |
-| Compare ways to solve a problem | [`solution`](skills/solution/SKILL.md) |
-| Assess a design under plausible growth | [`10x`](skills/10x/SKILL.md) |
-| Run a check to find out whether an assumption holds | [`probe`](skills/probe/SKILL.md) |
-| Build a throwaway experiment | [`prototype`](skills/prototype/SKILL.md) |
-| Find out how something works today | [`how`](skills/how/SKILL.md) |
-| Find out why an earlier decision was made | [`why`](skills/why/SKILL.md) |
-| Define who a product serves and how it should work | [`product`](skills/product/SKILL.md) |
-| Clarify terms or record a decision | [`domain-modeling`](skills/domain-modeling/SKILL.md) |
-| Design navigation, screens, and interactions | [`interaction-design`](skills/interaction-design/SKILL.md) |
-| Independently assess an existing rendered interface | [`interaction-design`](skills/interaction-design/SKILL.md#select-the-assignment) — two parallel domain assessors |
-| Improve a working interface through visual review | [`ui-refinement`](skills/ui-refinement/SKILL.md) |
-| Plan how code, interfaces, and data fit together | [`architect`](skills/architect/SKILL.md) |
-| Make assigned edits from an agreed plan | [`implement`](skills/implement/SKILL.md) |
-| Find weaknesses in a plan, design, or implementation | [`interrogate`](skills/interrogate/SKILL.md) |
-| Review how hard code is to read and change | [`maintainability`](skills/maintainability/SKILL.md) |
-| Create instructions and checks for verifying your project | [`bootstrap-verification`](skills/bootstrap-verification/SKILL.md) |
-| Check and update your project's verification instructions | [`maintain-verification`](skills/maintain-verification/SKILL.md) |
+| Need                                                      | Entry point                                                                      |
+| --------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Work through a plan by answering questions                | [`grill-me`](skills/grill-me/SKILL.md)                                           |
+| Compare ways to solve a problem                           | [`solution`](skills/solution/SKILL.md)                                           |
+| Assess a design under plausible growth                    | [`10x`](skills/10x/SKILL.md)                                                     |
+| Run a check to find out whether an assumption holds       | [`probe`](skills/probe/SKILL.md)                                                 |
+| Build a throwaway experiment                              | [`prototype`](skills/prototype/SKILL.md)                                         |
+| Find out how something works today                        | [`how`](skills/how/SKILL.md)                                                     |
+| Find out why an earlier decision was made                 | [`why`](skills/why/SKILL.md)                                                     |
+| Define who a product serves and how it should work        | [`product`](skills/product/SKILL.md)                                             |
+| Clarify terms or record a decision                        | [`domain-modeling`](skills/domain-modeling/SKILL.md)                             |
+| Design navigation, screens, and interactions              | [`interaction-design`](skills/interaction-design/SKILL.md)                       |
+| Independently assess an existing rendered interface       | [`interaction-design`](skills/interaction-design/SKILL.md#select-the-assignment) |
+| Improve a working interface through visual review         | [`ui-refinement`](skills/ui-refinement/SKILL.md)                                 |
+| Plan how code, interfaces, and data fit together          | [`architect`](skills/architect/SKILL.md)                                         |
+| Make assigned edits from an agreed plan                   | [`implement`](skills/implement/SKILL.md)                                         |
+| Find weaknesses in a plan, design, or implementation      | [`interrogate`](skills/interrogate/SKILL.md)                                     |
+| Review how hard code is to read and change                | [`maintainability`](skills/maintainability/SKILL.md)                             |
+| Create instructions and checks for verifying your project | [`bootstrap-verification`](skills/bootstrap-verification/SKILL.md)               |
+| Check and update your project's verification instructions | [`maintain-verification`](skills/maintain-verification/SKILL.md)                 |
 
 Browse [`skills/`](skills/) for all available skills.
 
-Ask aapilot to "grill me about this plan" or "grill me with docs about this plan." Both ask independent questions together and use your answers to choose the next round. Agreed terms and qualifying decisions are recorded when edits are authorized; read-only work returns proposed notes. Confirm shared understanding before implementation. Product discovery uses its own interview procedure.
+For example, ask Aapilot to "grill me about this plan." It asks questions together, then uses your answers to choose the next round. The [Grill Me guide](skills/grill-me/references/grilling.md) explains how it records agreed terms and decisions.
 
-For example, ask aapilot or Interaction Design to independently assess a rendered records page, including long names, finding older records and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses separate visual-composition and interaction/continuity assessors, each with its own instructions and rubric. It returns reconciled findings, exercised coverage and gaps to the task owner.
+You can also ask it to assess an existing interface. For a records page, that might include long names, finding older records, and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses two separate agents to check visual composition and interactions, then brings their findings together.
 
 ## Explore the system
 

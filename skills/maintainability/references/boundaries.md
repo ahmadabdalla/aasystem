@@ -1,14 +1,54 @@
 # Boundaries
 
-Evaluate these questions against the project's constraints. Compare concrete consequences and tradeoffs for the supplied code or design.
+Evaluate the supplied code or design against real callers and project constraints.
+Compare the current shape with the simplest viable alternative.
 
-- **Caller burden:** Does the interface hide useful complexity, or must callers coordinate internal stages? Compare what each shape makes callers know, not just API size.
-- **Knowledge and ownership:** Which representation or policy decisions cross module boundaries? Would one change require coordinated edits? Does decomposition follow owned knowledge or merely execution order? For generated files, distinguish maintained scaffolding from regenerated output. Identify the authoritative inputs and customization boundary, and verify regeneration preserves the intended change.
-- **Meaningful boundaries:** Do forwarding methods add policy, adaptation, or a stable contract? Are internals accidentally becoming public dependencies? Compare hidden complexity with the indirection the boundary adds. Compare with retaining or extending the existing shape and a direct implementation; a predicted future consumer alone does not justify an abstraction.
-- **Data and state:** Trace the dominant access patterns. Name each state owner and examine concurrent writers, retries, and partial failure where applicable. Check claims of idempotence through observable effects.
-- **Invariants:** What enforces each invariant: a type, runtime boundary, test, or convention? Are caller obligations, successful results, and failure effects clear at the enforcing boundary? Check external input at its trust boundary; internal assertions do not replace required input validation. Are authoritative values derived or manually synchronized?
-- **Change locality:** Can a contributor make the intended change locally without breaking unseen consumers? Evaluate compatibility and migration requirements explicitly, including the cost of moving responsibility.
-- **Reversal cost:** For a consequential dependency or representation commitment, what must actually move to replace it: callers, stored data, contracts, or operating procedures? Compare that demonstrated cost with the complexity added to permit replacement. An adapter can reduce coupling without making migration cheap; do not require one solely for hypothetical portability.
-- **Verification:** Can the interface be exercised through real callers with an independent expected outcome? Can a failing check distinguish a design error from a broken observation method? Assess whether dependencies can be controlled without replacing the behavior under test.
+## Trace the contract
 
-For each material concern, show the causal path and likely consequence. An adapter, migration path, shared writer, or stage boundary can be justified by the actual contract. Do not import fixed file-count limits, unconditional deletion, or a universal preference for smaller APIs.
+- **Caller burden:** Include configuration, ordering, effects, failure modes, and
+  resource lifetime, not just signatures. What must callers coordinate themselves?
+- **Knowledge:** Identify the representation or policy each module owns. Trace a
+  credible change: which callers would need coordinated edits, and why?
+  Check grouping by owned knowledge rather than merely by execution order.
+- **Source ownership:** Distinguish maintained inputs from generated output.
+  Check that regeneration preserves customizations at the supported boundary.
+- **State:** Trace access patterns, writers, and owners. Inspect retries, concurrency,
+  partial failure, and observable effects before accepting an idempotence claim.
+- **Invariants:** Identify the type, constraint, runtime boundary, or other mechanism
+  enforcing each rule. Check external input at its trust boundary; an internal
+  assertion does not replace required validation.
+  Check whether authoritative values are derived or manually synchronized.
+
+## Assess the dependency
+
+When choosing a boundary, sketch the caller before and after the change.
+Name the knowledge hidden, the obligation exposed, and the reason to separate it.
+
+- Keep policy with its owner; translate framework or provider details where their
+  meanings cross into that policy. Trace imports, calls, and data formats together.
+- Choose dependency direction from that ownership. Use existing language and
+  framework mechanisms before adding another layer.
+- Justify an adapter through actual variation, external behavior, or a needed
+  control point. Adapter count alone does not establish value or needless complexity.
+- Ask what removing a wrapper would do: eliminate work or redistribute it among
+  callers? Forwarding can earn its place through policy, adaptation, or stability.
+- Keep internal test controls private unless production callers need them.
+  Substitutes prove their exercised contract; real integration needs its own checks.
+- Moving code does not automatically move permissions, transaction scope, process
+  isolation, or cleanup responsibility. Preserve those obligations explicitly.
+
+Example: a payment adapter may hide provider response formats, but it must preserve
+whether a timed-out request might have charged the customer. Mapping that uncertainty
+to "not charged" changes the contract rather than merely simplifying it.
+
+## Judge the result
+
+Assess change locality, compatibility, migration, and concrete reversal cost:
+what would replacing this choice require moving in callers, data, or operations?
+An interface does not by itself make replacement cheap.
+
+Identify checks through real callers with independently derived expectations.
+Distinguish a design defect from a faulty observation method.
+Trace material concerns to a causal burden, recommendation, tradeoff, and proof need.
+Apply project constraints; file counts, fixed layer counts, and hypothetical future
+consumers alone do not justify a finding or an abstraction.

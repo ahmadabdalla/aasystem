@@ -1,49 +1,47 @@
 # Ahmad Abdalla's Pilot System Graph
 
-Open `index.html` directly, or serve this directory with any static HTTP server.
+The [system map](index.html) shows which skills Aapilot calls, how they support each other, and where results return for review. Open `index.html` directly, or serve this directory with a static HTTP server.
 
-Read [How Aapilot works](../../docs/design/verification-contract.md) for the operating design behind these routes, handoffs, human decisions, and verification paths. The guide explains the model; the linked skill instructions own its procedures.
+For why I built the plugin and how to use it, start with the [main README](../../README.md). [How Aapilot works](../../docs/design/verification-contract.md) explains the workflow behind the map.
 
-The map is a curated semantic view of the current skill library rather than an automatic Markdown-link graph. It distinguishes:
+## Read the map
 
-- routes selected by `aapilot`;
-- conditional supporting calls, which may apply a procedure in the current context or dispatch a bounded worker;
-- direct consumption of shared assessment criteria;
-- ownership handoffs and feedback;
-- shared execution and principle foundations;
-- agent roles that execute project-owned procedures without adding portable skills.
+The map shows the relationships that matter to the workflow. It is maintained by hand, so it doesn't draw every link between Markdown files.
 
-Hover or select a node to suppress unrelated lines and inspect its incoming and outgoing interactions in the inspector. Use **Hide details** when the graph needs the full width. Focused paths are painted above the background network. To prevent labels from visually breaking dense arrows, on-canvas relationship labels appear only for a traced path. **Trace from aapilot** highlights a shortest directed path from the entry skill to the selected node and frames that route. Use the visible zoom controls, the scroll wheel, or pan the canvas for close inspection; **Fit map** restores the full overview. The URL hash preserves the selected node for later discussion.
+The connections represent:
 
-The map intentionally does not draw a foundation edge from every procedural skill to the execution contract and principle index. Their system-wide scope is recorded on the foundation nodes without obscuring task flows.
+- Routes: the skills and playbooks Aapilot selects for a task
+- Support: instructions, criteria, or help used for part of the work
+- Handoffs: results or unresolved decisions returned to the agent responsible for the next step
+- Governance: the shared execution contract and principles
 
-The [effort rubric](../../skills/aapilot/references/effort.md) uses the existing execution foundation and handoffs; it adds no skill, agent role or route.
+A connection doesn't necessarily mean another agent is started. An agent can read and apply a skill's instructions in its own context. Nodes marked **Agent role** represent agents assigned to do checks; they aren't counted as skills.
 
-The execution contract owns [decision authority](../../skills/aapilot/references/execution.md#decision-authority), including the inspectable human checkpoint handoff and stop/wait rule, [delegation](../../skills/aapilot/references/execution.md#delegation), [completion](../../skills/aapilot/references/execution.md#completion) and [review context](../../skills/aapilot/references/execution.md#review-context). Aapilot applies or assigns execution and checks results under those shared rules; bounded unattended work preserves the whole-process human-checkpoint stop; review context distinguishes independent discovery from confirmation/evidence audits and preserves initial findings before reporting assistance.
+The execution contract and principles apply across the library. Their foundation nodes describe that scope without drawing a line to every skill.
 
-UI refinement owns the [rendering assignment rules](../../skills/ui-refinement/references/refinement-loop.md#rendering-assignments) for coupled Interaction Design and Prototype work. Existing role ownership, caller delivery and required independent reviews and production verification remain in place.
+## Explore a route
 
-Interaction Design owns the [independent rendered UX assessment](../../skills/interaction-design/references/rendered-ux-assessment.md) route. Its two agent-role nodes represent exactly two parallel nonproducer assignments with separate [visual](../../skills/interaction-design/references/visual-assessment.md) and [interaction](../../skills/interaction-design/references/interaction-assessment.md) instructions/rubrics. They return initial findings for reconciliation by the caller and are excluded from the portable skill count. UI Refinement uses this path when assigned; the roles do not replace the human checkpoint or production verifier.
+Select a node to see its incoming and outgoing connections in the details panel. Hovering over a node also highlights its connections.
 
-The shared foundation links the standard [verification contract](../../skills/aapilot/references/verification-contract.md) for retained production changes: one task owner retains scope, current evidence, limits and delivery; specialists contribute to that task. Feature and direct Implement expose the [owner-presentation path](../../skills/aapilot/references/execution.md#owner-presentation-eligibility), whose owner proof needs no worker. That exception cannot waive independent engineering review required by the user, project, or task. Read-only and design work keep scoped obligations. Existing owners and handoffs remain in place; no coordinator or skill node is added.
+- Use **Trace from aapilot** to follow a shortest directed path to the selected node. Relationship labels appear on that traced path.
+- Use **Hide details** to give the map more room.
+- Zoom with the controls or scroll wheel, and pan to move around. **Fit map** restores the overview.
+- Copy the page URL to share a selected node. The selection is saved in the URL hash.
 
-Architect owns design and verification planning only. Feature, Bug Fix, Refactoring, and Figure It Out call Implement for bounded edits and development checks, then assign a separate verification agent when required under the execution contract. The agent uses the project-owned verifier; it is labeled **Agent role** and is excluded from the skill count. Caller handoffs return design contradictions to Architect, which returns revised design packages to those callers. There is no Architect-owned implementation runtime.
+## Understand the relationships
 
-Architect's [seed scenario reference](../../skills/architect/references/seed-scenarios.md) supplies context, lifecycle and build/invocation decisions conditionally to Feature and design work. Bootstrap and Maintain Verification consume [scenario coverage](../../skills/bootstrap-verification/references/project-contract.md#scenario-coverage) through their existing contract. Decisions and proof travel through existing assignments; no skill or agent node is added.
+The [system structure and sources](../../docs/design/skill-system.md) records the full responsibilities and adaptations. A few distinctions help when reading the graph:
 
-The project verifier is a procedure; the existing verification agent assesses the actual diff and executes affected checks under [engineering verification](../../skills/aapilot/references/engineering-verification.md). Required independent assessments name affected domains, criteria and evidence under [Delegation](../../skills/aapilot/references/execution.md#delegation); one capable verifier can cover related domains separately from their producers. The result distinguishes qualitative findings from executable observations. The caller owns integration, material-finding dispositions and acceptance requests based on current proof. Interrogate supplies adversarial review. The execution contract owns owner-presentation eligibility and escalation; that proof is explicitly distinct from independent verification.
-
-Local work reuses the checkout or one task worktree, with source editing paused for verification. A read-only [identity check](../../skills/aapilot/scripts/input_identity.py) can detect stale inputs without full archives. The caller resolves owned resources and preserves pending review changes.
-
-Maintainability owns reusable criteria. Implement and the independent verifier have explicit criteria-consumption relationships to it; these edges do not dispatch another worker. Architect also reads the criteria during design. A deeper Maintainability assessment remains conditional support for Architect, Refactoring, and Interrogate, returning findings to the decision owner; it is not an aapilot route.
-
-Bug Fix and Refactoring use the [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) for their design assignments. Architect owns that criterion; editing several function bodies alone does not select the route.
-
-[10x](../../skills/10x/SKILL.md) is shared growth-assessment support for Solution, Architect, Interaction Design and Domain Modeling's ADR procedure, and a direct Aapilot route. Its findings return into existing design records and required checks travel through the existing verification handoff. The skill owns the method; ADR owns formatting, domain callers own decisions, and invocation requires no additional worker.
+- Architect designs the implementation and plans verification. Delivery playbooks call Implement to make the changes. If implementation reveals a design problem, it returns through the playbook to Architect.
+- The verification agent reviews the changes and runs the project's verification procedure. Interrogate contributes adversarial review findings. The [verification contract](../../skills/aapilot/references/verification-contract.md) explains the required checks and exceptions.
+- Interaction Design can assign two separate agents to assess a rendered interface: one for visual composition and one for interactions. UI Refinement can use that assessment within its [review loop](../../skills/ui-refinement/references/refinement-loop.md). These checks support the required human review and production verification.
+- Maintainability supplies shared criteria for design, implementation, and verification. Reading those criteria doesn't start another worker. The [engineering adaptations](../../docs/design/skill-system.md#maintainability) describe the related boundary, refactoring, and business-state references and how their checks reach the verifier.
+- 10x supports growth assessments during design and can be called directly through Aapilot. The [growth assessment design](../../docs/design/skill-system.md#growth-assessment) explains how callers use its findings.
+- Grill Me uses Domain Modeling to record agreed terms and qualifying decisions when edits are authorized. The [Grilling procedure](../../skills/grill-me/references/grilling.md) explains the question rounds and records.
 
 ## Maintain the map
 
-Grill Me loads [Grilling](../../skills/grill-me/references/grilling.md) for plans and its discovery procedure for product interviews. The Domain Modeling edge records agreed terms and qualifying decisions when authorized; "with docs" uses this same path. Aapilot remains the entry point. No skill is added.
+Update the graph when routes, handoffs, or responsibilities change:
 
 - Edit node titles, descriptions, source links, and positions in the `nodes` array in `app.js`.
 - Keep the five main columns about 449 SVG units apart. If the outer columns move, update `lanes` and `fullView` together so the overview retains its margins.
