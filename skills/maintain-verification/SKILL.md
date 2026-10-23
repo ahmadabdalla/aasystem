@@ -22,6 +22,8 @@ Read `features/README.md` and compare its entries with the sibling feature files
 
 Check mapped entry points against executable paths, documentation, existing tests, and relevant recent changes. Use [how](../how/SKILL.md) for an unclear flow. Identify new or removed entry points and changes in prerequisites, persistence, dependencies, or driving tools. Cite concrete source evidence before adding a purported feature. Distinguish intended changes from unexplained discrepancies.
 
+Include affected business invariants, identity/context meanings, consistency and failure guarantees in that comparison. Reconcile their required cases from accepted requirements and design handoffs with runnable recipes or explicit gaps. Structural changes preserve still-authoritative expectations; recipe edits follow actual drift.
+
 When splitting delivery, separate increment acceptance from cumulative regression and assign every deferred assertion to a later increment. For rewritten contracts, compare source clauses and branches directly with actual destinations before consulting the author's mapping. Check new examples for unintended obligations, exclusions or prohibitions as well as tracing preserved behaviour.
 
 Consolidate live recipes to reuse setup without losing distinct entry points or assertions. Drive each feature in the declared audit scope through its verifier. A full audit must account for every mapped feature; source inspection alone does not establish live coverage. State which paths were exercised and which remain unverified. If an owned resource cannot be isolated for concurrent use, drive it serially.

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- Add compact engineering guidance for dependency boundaries, refactoring moves, and business-state consistency through the existing Maintainability, Implement, and Architect skills.
+- Carry business-state guarantees and required failure, concurrency, replay, and recovery cases from design into implementation and independent verification. Update project verification recipes when coverage is missing or stale.
+- Document the engineering guidance's conceptual sources and how existing skills use it.
+- Clarify the README's usage examples, working agreements, and verification expectations. Shorten the system graph guide to explain its controls and relationships.
 - Prefer one owned OS temporary run root for project verification. Require Bootstrap and Maintain to inspect adopted executable harnesses and verify cleanup, evidence retention and safe retirement.
 - Ask independent Grill Me questions together and confirm shared understanding before implementation. Record agreed terms and qualifying decisions when authorized. Load the selected interview procedure on demand; product discovery keeps its own procedure.
 - Add an S/M/L effort rubric with brief discovery, consequence-driven scrutiny and inherited execution conditions. Apply it to standalone owners while preserving required procedures, verification and human checkpoints.

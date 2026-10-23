@@ -30,6 +30,8 @@ Read the project verifier and feature map when present. Identify affected outcom
 
 For seed/fixture design or representative state needed by the proof plan, read [Seed scenarios](references/seed-scenarios.md).
 
+When the design changes business identity, invariant enforcement, state ownership, or coordination across business contexts, read [Business state and consistency](references/business-state.md). Carry its ownership and consistency decisions and required checks into the design package.
+
 In the verification plan, map each important requirement to a concrete input or action, expected observable result, the real surface used to exercise it, and evidence to retain. Include failure, retry, concurrency, or migration cases when they carry the design risk. Derive expected results from the contract, independently of the implementation. Check that the project can actually support this proof; name missing access or infrastructure as a verification gap.
 
 ## Sketch and compare
