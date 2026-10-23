@@ -19,6 +19,8 @@ A connection doesn't necessarily mean another agent is started. An agent can rea
 
 The execution contract and principles apply across the library. Their foundation nodes describe that scope without drawing a line to every skill.
 
+The [Deliver and prove principle](../../skills/principle-deliver-and-prove/SKILL.md) connects the principle index to Implement. Its two questions establish delivery and verification readiness within the assigned scope, using existing project procedures and task records.
+
 ## Explore a route
 
 Select a node to see its incoming and outgoing connections in the details panel. Hovering over a node also highlights its connections.

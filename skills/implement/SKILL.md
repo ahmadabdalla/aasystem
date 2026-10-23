@@ -12,6 +12,8 @@ Own assigned edits and development evidence; the caller owns integration, accept
 
 ## Establish the assignment
 
+Before editing, apply [Be ready to deliver and prove](../principle-deliver-and-prove/SKILL.md) to the assigned implementation. Use its two questions to establish delivery and verification readiness within the existing task brief.
+
 Use the assigned brief and retrieve its linked inputs before editing: behavior contract, settled design when needed, source identity, file ownership, invariants, compatibility, permitted effects, checks, and evidence destination. Return material conflicts or missing prerequisites to the owner; a routine local correction needs no architecture package.
 
 Before choosing local structure, read Maintainability's [local-code criteria](../maintainability/references/local-code.md); read its [boundary criteria](../maintainability/references/boundaries.md) when the assignment touches callers, owned knowledge, or invariant enforcement. Use the relevant criteria in the edits and return material tradeoffs with the rationale. This consumes shared criteria within Implement's scope; it does not start another assessment workflow or reopen settled design.

@@ -105,6 +105,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`bootstrap-verification`](../../skills/bootstrap-verification/SKILL.md) | Create project verification | pstack [`create-verification-skill`](https://github.com/cursor/plugins/blob/main/pstack/skills/create-verification-skill/SKILL.md) | Writes project-owned checks and a feature map |
 | [`maintain-verification`](../../skills/maintain-verification/SKILL.md) | Maintain project verification | pstack [`maintain-verification-skill`](https://github.com/cursor/plugins/blob/main/pstack/skills/maintain-verification-skill/SKILL.md) | Separates product defects from verifier drift |
 | [`principle-preserve-decision-context`](../../skills/principle-preserve-decision-context/SKILL.md) | Preserve decision inputs | User-approved judgment | Removes repetition only when the next decision stays informed |
+| [`principle-deliver-and-prove`](../../skills/principle-deliver-and-prove/SKILL.md) | Establish implementation readiness | User-stated and approved judgment | Applies two delivery/proof questions at Implement's entry, reusing project verification and the existing task brief |
 | [`principle-ui-meaning-through-structure`](../../skills/principle-ui-meaning-through-structure/SKILL.md) | Express UI meaning through structure | User-approved judgment | Retains text needed for safety, limits, or decisions |
 
 ## Orchestrator playbooks
