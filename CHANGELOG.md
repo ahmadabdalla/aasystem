@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [0.6.1]
+
+- Add the “Be ready to deliver and prove” principle to Implement's opening procedure. Establish delivery prerequisites and a runnable verification path before dependent work, and record material gaps in the existing task brief.
+- Update the principle index, skill inventory, README, and system graph for the readiness check.
+
 ## [0.6.0]
 
 - Add seed-scenario design and verification coverage guidance, including data purpose, lifecycle, delivery boundaries, and checks through real feature actions.
