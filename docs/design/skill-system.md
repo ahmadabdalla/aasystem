@@ -95,7 +95,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`probe`](../../skills/probe/SKILL.md) | Test an important assumption | pstack [`prototype`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/prototype.md) | Separates empirical questions from artifact prototyping |
 | [`arena`](../../skills/arena/SKILL.md) | Compare competing options | pstack [`arena`](https://github.com/cursor/plugins/blob/main/pstack/skills/arena/SKILL.md) | Uses an independent judge when available |
 | [`interrogate`](../../skills/interrogate/SKILL.md) | Find consequential weaknesses | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md) | Also challenges framing and selects review inputs through the shared context rule |
-| [`grill-me`](../../skills/grill-me/SKILL.md) | Run a bounded interview | Matt Pocock [`grilling`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) | Returns attributed evidence; Product owns synthesis |
+| [`grill-me`](../../skills/grill-me/SKILL.md) | Interview in decision rounds or conduct product discovery | Matt Pocock [`grilling`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling/SKILL.md) and [`grill-with-docs`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs/SKILL.md) | Loads one interview reference; reuses Domain Modeling for scoped inline capture; Product retains discovery synthesis |
 | [`domain-modeling`](../../skills/domain-modeling/SKILL.md) | Define terms and record decisions | Matt Pocock [`domain-modeling`](https://github.com/mattpocock/skills/blob/b0618bc436ad893b3c5e84e55fba86586d34a404/skills/engineering/domain-modeling/SKILL.md) | Adds ownership, evidence, layout, and supersession rules |
 | [`tdd`](../../skills/tdd/SKILL.md) | Prove a regression before a fix | pstack [`tdd`](https://github.com/cursor/plugins/blob/main/pstack/skills/tdd/SKILL.md) | Adds practical test limits and repeats the original check |
 | [`swarm`](../../skills/swarm/SKILL.md) | Coordinate parallel work | pstack [`swarm`](https://github.com/cursor/plugins/blob/main/pstack/skills/swarm/SKILL.md) | Uses available models; missing results remain unfinished |
@@ -153,6 +153,14 @@ The [skill authoring playbook](../../skills/aapilot/playbooks/authoring-a-skill.
 Worker selection follows a concrete parallelism, capability or context need. Comparison uses independent candidates when they can change an unresolved material choice; selected Arena comparisons retain isolation and separate judging. Bounded implementer continuity does not relax fresh independent verification.
 
 The [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](../../skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](../../skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
+
+### Grilling and documentation
+
+Aapilot and direct requests use the same [Grill Me entry](../../skills/grill-me/SKILL.md). The [grilling reference](../../skills/grill-me/references/grilling.md) owns the decision tree, question rounds, fact finding, recommendations and final confirmation. The execution contract supplies scope and authority. Pending facts block only dependent questions; each round waits for the user's answers.
+
+Load Domain Modeling when terms or consequential decisions emerge. Record them as they settle, following its glossary and ADR formats, recording thresholds and edit scope. "With docs" uses this same path. Requirements stay in their brief; read-only work returns proposed text. [Product-discovery interviews](../../skills/grill-me/references/discovery-interview.md) keep their one-question procedure and return attributed evidence to Product for synthesis.
+
+Load the selected interview reference and reuse shared instructions already in context. New contexts read the baseline. Skill count and invocation policies stay unchanged. Package checks alone do not establish host discovery or composition.
 
 ### Standard verification contract
 

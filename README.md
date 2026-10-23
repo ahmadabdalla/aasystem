@@ -152,7 +152,7 @@ If you already know which part of the work needs attention, you can ask for that
 
 | Need | Entry point |
 | --- | --- |
-| Work through a decision by answering questions | [`grill-me`](skills/grill-me/SKILL.md) |
+| Work through a plan in question rounds and record agreed terms and decisions | [`grill-me`](skills/grill-me/SKILL.md) |
 | Compare ways to solve a problem | [`solution`](skills/solution/SKILL.md) |
 | Assess a design under plausible growth | [`10x`](skills/10x/SKILL.md) |
 | Run a check to find out whether an assumption holds | [`probe`](skills/probe/SKILL.md) |
@@ -172,6 +172,8 @@ If you already know which part of the work needs attention, you can ask for that
 | Check and update your project's verification instructions | [`maintain-verification`](skills/maintain-verification/SKILL.md) |
 
 Browse [`skills/`](skills/) for all available skills.
+
+Ask aapilot to "grill me about this plan" or "grill me with docs about this plan." Both ask independent questions together and use your answers to choose the next round. Agreed terms and qualifying decisions are recorded when edits are authorized; read-only work returns proposed notes. Confirm shared understanding before implementation. Product discovery uses its own interview procedure.
 
 For example, ask aapilot or Interaction Design to independently assess a rendered records page, including long names, finding older records and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses separate visual-composition and interaction/continuity assessors, each with its own instructions and rubric. It returns reconciled findings, exercised coverage and gaps to the task owner.
 

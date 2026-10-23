@@ -81,8 +81,8 @@ const nodes = [
     id: "grill-me",
     title: "Grill me",
     type: "skill",
-    subtitle: "Dependent user choices",
-    purpose: "Interviews the user one question at a time when several consequential choices depend on their judgment.",
+    subtitle: "Decision rounds / discovery",
+    purpose: "Works through plans in question rounds or conducts product discovery. Records agreed terms and qualifying decisions when authorized.",
     owns: "Interview conduct and attributable evidence; its caller owns synthesis.",
     source: "../../skills/grill-me/SKILL.md",
     x: 430,
@@ -491,7 +491,8 @@ connect("product", "why", "support", "checks consequential rationale");
 connect("product", "domain-modeling", "support", "clarifies ambiguous terms");
 connect("product", "probe", "support", "settles testable assumptions");
 connect("product", "interrogate", "support", "challenges the contract");
-connect("product", "grill-me", "support", "collects dependent choices");
+connect("product", "grill-me", "support", "collects interview evidence");
+connect("grill-me", "domain-modeling", "support", "captures agreed terms / decisions");
 connect("product", "interaction-design", "handoff", "returns behavior contract");
 
 connect("solution", "product", "support", "fills behavior gaps");
