@@ -358,6 +358,7 @@ def handle_hook(state_dir, event):
     kind = event.get("hook_event_name")
     require(kind in EVENTS, "Unsupported hook event")
     path, cwd = task_path(state_dir, event.get("cwd", ""), event.get("session_id"))
+    recover_state(state_dir, path.parent.name)
     if kind == "UserPromptSubmit":
         capture(path, cwd, event["session_id"], event)
     if not path.parent.exists():
@@ -444,32 +445,37 @@ def finish_retirement(state_dir, key, owners):
     save_bindings(state_dir, owners)
 
 
-def recover_state(state_dir):
+def recover_state(state_dir, selected_key):
     owners = bindings(state_dir)
     for key in list(owners):
-        entry = owners[key]
-        if "retiring" in entry:
-            finish_retirement(state_dir, key, owners)
-        elif "initial" in entry:
-            path = state_dir / key / "task.json"
-            require(not path.parent.is_symlink(), "Task directory is a symlink")
-            path.parent.mkdir(mode=0o700, exist_ok=True)
-            pending = path.parent / ".task.pending"
-            if not path.exists():
-                if pending.exists() or pending.is_symlink():
-                    regular_owned(pending)
-                    pending.unlink()  # The committed registration retains the full initial request.
-                atomic_write(path, entry["initial"])
-            recover_task(path, entry["cwd"], entry["session"])
-            load_task(path, entry["cwd"], entry["session"])
-            del entry["initial"]
-            save_bindings(state_dir, owners)
-        elif (state_dir / key).exists():
-            require(not (state_dir / key).is_symlink(), "Task directory is a symlink")
-            require((state_dir / key).stat().st_uid == os.getuid(), "Foreign task directory")
-            recover_task(state_dir / key / "task.json", entry["cwd"], entry["session"])
-        else:
-            raise ValueError(f"Registered task is missing: {state_dir / key}; preserving ownership")
+        try:
+            entry = owners[key]
+            if "retiring" in entry:
+                finish_retirement(state_dir, key, owners)
+            elif "initial" in entry:
+                path = state_dir / key / "task.json"
+                require(not path.parent.is_symlink(), "Task directory is a symlink")
+                path.parent.mkdir(mode=0o700, exist_ok=True)
+                pending = path.parent / ".task.pending"
+                if not path.exists():
+                    if pending.exists() or pending.is_symlink():
+                        regular_owned(pending)
+                        pending.unlink()  # The committed registration retains the full initial request.
+                    atomic_write(path, entry["initial"])
+                recover_task(path, entry["cwd"], entry["session"])
+                load_task(path, entry["cwd"], entry["session"])
+                del entry["initial"]
+                save_bindings(state_dir, owners)
+            elif (state_dir / key).exists():
+                require(not (state_dir / key).is_symlink(), "Task directory is a symlink")
+                require((state_dir / key).stat().st_uid == os.getuid(), "Foreign task directory")
+                recover_task(state_dir / key / "task.json", entry["cwd"], entry["session"])
+            else:
+                raise ValueError(f"Registered task is missing: {state_dir / key}; preserving ownership")
+        except (OSError, ValueError, TypeError, KeyError):
+            # Failed peer state stays recoverable without blocking this task.
+            if key == selected_key:
+                raise
 
 
 def retained_text(task):
@@ -564,7 +570,6 @@ def main():
             execute(args, state_dir, event)
         else:
             with root_lock(state_dir):
-                recover_state(state_dir)
                 execute(args, state_dir, event)
     except (OSError, ValueError, TypeError, KeyError) as error:
         if args.command != "hook":
@@ -584,6 +589,7 @@ def execute(args, state_dir, event):
     else:
         require(args.cwd is not None, "--cwd is required")
         path, cwd = task_path(state_dir, args.cwd, args.session)
+        recover_state(state_dir, path.parent.name)
         if args.command == "resume":
             rendered, hashed = canonical_text(args.record)
             require(not args.record.resolve().is_relative_to(state_dir), "Canonical record must be outside scratch state")

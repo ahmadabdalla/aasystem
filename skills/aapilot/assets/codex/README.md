@@ -77,7 +77,10 @@ The coordinator invokes handoff. Kernel directory locking releases on process
 exit; fixed pending replacements and ownership receipts support next-use recovery
 of committed initial writes or verified interrupted retirement. Uncertain
 ownership, canonical proof or filesystem safety preserves state and reports a
-gap. There is no age/prefix sweep, daemon, `SessionEnd` handler or cleanup while
+gap to the affected task. Recovery failures in other tasks do not block the
+current hook or CLI command; safe leftovers still recover on next use. A malformed
+shared ownership index remains a root-wide failure. There is no age/prefix
+sweep, daemon, `SessionEnd` handler or cleanup while
 nothing runs. Task records, retained proof, generated configuration and native
 host transcripts/caches remain with their owners; added host context still counts
 toward the plugin's footprint.

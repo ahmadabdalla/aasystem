@@ -695,6 +695,8 @@ module.main()
         self.assert_recovery_hook_failure_is_bounded("Expecting property name")
         self.assertEqual(registry_path.read_text(), "{")
         self.assertEqual(task_path.read_bytes(), original)
+        self.session = "inactive-session"
+        self.assert_recovery_hook_failure_is_bounded("Expecting property name")
 
     def test_missing_registered_directory_returns_bounded_stop_json_and_recovery_warning(self):
         self.hook()
@@ -706,6 +708,91 @@ module.main()
         self.assert_recovery_hook_failure_is_bounded("Registered task is missing")
         self.assertEqual(registry_path.read_bytes(), original)
         self.assertFalse(task_path.parent.exists())
+
+    def assert_unrelated_failure_is_isolated(self, broken_session, message):
+        registry_path = self.state / "bindings.json"
+        before = json.loads(registry_path.read_text())
+        broken_key = next(key for key, entry in before.items() if entry["session"] == broken_session)
+        self.session = "inactive-session"
+        for kind in ("SessionStart", "SubagentStart", "Stop"):
+            self.assertEqual(self.hook(kind=kind), {})
+        self.assertEqual(self.hook(prompt="Ordinary conversation"), {})
+
+        self.session = "healthy-session"
+        self.assertIn("hookSpecificOutput", self.hook())
+        self.assertIn("hookSpecificOutput", self.hook(kind="SessionStart"))
+        self.hook(prompt="A correction for the healthy task")
+        body = self.body(status="complete")
+        body["obligations"][0].update(status="passed", evidence=[self.evidence("healthy-proof.txt")])
+        body["reconciliation"] = "Answered the healthy request and its correction"
+        self.update(body)
+        task = self.cli("show")
+        self.assertEqual(len(task["inputs"]), 2)
+        self.assertEqual(self.cli("checkpoint", "--expected-revision", str(task["revision"]))["checkpoint"], "passed")
+        work = Path(self.cli("workdir")["path"])
+        (work / "output.txt").write_text("Disposable healthy-task output")
+        self.retire(self.canonical("healthy-task.md"), workers_stopped=True)
+        self.assertEqual(self.hook(kind="Stop"), {})
+        self.assertEqual(json.loads(registry_path.read_text()), {broken_key: before[broken_key]})
+
+        self.session = broken_session
+        self.assert_recovery_hook_failure_is_bounded(message)
+
+    def test_unrelated_missing_registered_task_is_isolated(self):
+        self.hook()
+        broken_session = self.session
+        path = self.state_path()
+        path.unlink()
+        path.parent.rmdir()
+        self.assert_unrelated_failure_is_isolated(broken_session, "Registered task is missing")
+        self.assertFalse(path.parent.exists())
+
+    def test_unrelated_invalid_initial_recovery_is_isolated(self):
+        self.hook()
+        broken_session = self.session
+        path = self.state_path()
+        registry_path = self.state / "bindings.json"
+        owners = json.loads(registry_path.read_text())
+        owners[path.parent.name]["initial"] = self.cli("show")
+        registry_path.write_text(json.dumps(owners))
+        path.write_text("{")
+        self.assert_unrelated_failure_is_isolated(broken_session, "Expecting property name")
+        self.assertEqual(path.read_text(), "{")
+
+    def assert_unrelated_retirement_is_isolated(self, changed):
+        self.session = "broken-" + changed
+        self.hook()
+        self.update(self.completed())
+        path = self.state_path()
+        task = self.cli("show")
+        record = self.canonical("broken-task.md")
+        proof = Path(task["body"]["obligations"][0]["evidence"][0]["path"])
+        registry_path = self.state / "bindings.json"
+        owners = json.loads(registry_path.read_text())
+        owners[path.parent.name]["retiring"] = {
+            "path": str(record), "sha256": hashlib.sha256(record.read_bytes()).hexdigest(),
+            "revision": task["revision"], "evidence": task["body"]["obligations"][0]["evidence"]}
+        registry_path.write_text(json.dumps(owners))
+        damaged = record if changed == "record" else proof
+        original = damaged.read_bytes()
+        damaged.write_text("Changed after the retirement receipt")
+        task_before = path.read_bytes()
+        message = "destination changed" if changed == "record" else "Evidence changed"
+        self.assert_unrelated_failure_is_isolated(self.session, message)
+        self.assertEqual(path.read_bytes(), task_before)
+        self.assertEqual(damaged.read_text(), "Changed after the retirement receipt")
+
+        damaged.write_bytes(original)
+        self.session = "inactive-session"
+        self.assertEqual(self.hook(kind="Stop"), {})
+        self.assertFalse(path.parent.exists())
+        self.assertEqual(json.loads(registry_path.read_text()), {})
+
+    def test_unrelated_changed_retirement_record_is_isolated(self):
+        self.assert_unrelated_retirement_is_isolated("record")
+
+    def test_unrelated_changed_retirement_proof_is_isolated(self):
+        self.assert_unrelated_retirement_is_isolated("proof")
 
     def test_100_handed_off_intents_retain_only_fixed_metadata(self):
         proof = self.evidence()
