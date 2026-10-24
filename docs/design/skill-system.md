@@ -324,6 +324,8 @@ Other sources inform bounded parts of the system:
 
 ### Durable orchestration
 
+Delivery-judgment refinements in the [execution contract](../../skills/aapilot/references/execution.md) and [engineering verification](../../skills/aapilot/references/engineering-verification.md) address [issue 51](https://github.com/ahmadabdalla/aasystem/issues/51).
+
 [Task continuity](../../skills/aapilot/references/task-continuity.md) is first-party guidance for [issue 49](https://github.com/ahmadabdalla/aasystem/issues/49), extended by the user's agreed requirements for context recovery, scope-aware specialist work and optional local Codex enforcement. It keeps `aapilot` as the entry point, reuses the effort rubric and playbooks, and adds no portable skill. [Preserve decision context](../../skills/principle-preserve-decision-context/SKILL.md) informs the retrievable brief and bounded assignments: a shorter handoff must retain the information the next owner needs.
 
 The optional [Codex adapter](../../skills/aapilot/assets/codex/README.md) is an explicit host integration using the official [hooks protocol](https://learn.chatgpt.com/docs/hooks). It adds no SDK controller, shared plugin-manifest hook registration, tool interception or managed execution runtime. One coordinator owns the compact session-bound state; hooks restore context and check recorded obligations at attempted completion. The coordinator still selects the appropriate procedures, calls stage checks and judges the results. Installing portable skills alone does not enable hook enforcement.

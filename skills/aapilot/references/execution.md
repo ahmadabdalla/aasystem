@@ -16,6 +16,8 @@ Assignments inherit relevant effort conditions, consequence-driven checks and re
 
 Replay a new or materially changed request: what to achieve, what must remain true, uncertainties and next action. A clear authorised request proceeds; replay is not an approval ceremony. Respect research-only, design-only and other explicit stopping points.
 
+Define the smallest sufficient outcome and explicit exclusions. Before adding architecture, tooling or process, explain its contribution to that outcome; omit speculative additions. For substantial work, outline stages, ownership, verification targets and the authorised stopping point together.
+
 An owning invocation, including a standalone specialist, applies the [effort rubric](effort.md) to its requested deliverable when no current assessment covers it. Assigned work consumes the caller's assessment rather than restarting overall sizing or coordination.
 
 Inspect observable unknowns before depending on them. Reuse project requirements, accepted decisions and verification procedures. Distinguish sourced facts, proposals, human agreements and observations. A design proposal is not permission to build; model agreement is not evidence of correctness.
@@ -65,6 +67,8 @@ Other retained implementation requires a fresh verifier separate from every edit
 ## Completion
 
 Before delivery, reconcile material findings and decisions, check the final artifact against current evidence, update affected project records and resolve owned resources. Report what changed, actual checks and outcomes, unverified scope, evidence location and anything deliberately retained. Follow the [evidence lifetime](../../bootstrap-verification/references/project-contract.md#evidence-and-retention); retain bulky artifacts only for an identified need.
+
+Check that the result meets the sufficient outcome without unnecessary additions. At meaningful phase boundaries, state readiness, remaining gaps and the recommended next action; continue within existing authority. Stop expanding once the agreed outcome is verified.
 
 For substantial or unattended work, keep consequential decisions and their evidence with the existing task record; use [Show Me Your Work](../../show-me-your-work/SKILL.md) when a later reader needs that trail. Do not create parallel logs or routine action transcripts.
 

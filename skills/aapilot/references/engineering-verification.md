@@ -20,6 +20,8 @@ Inspect the actual diff for authorised scope, concrete defects and maintainabili
 
 Derive affected checks from the authorised contract and actual changes as well as the design handoff. Exercise rejection, competing writes, replay, partial failure, or recovery where they threaten those guarantees; passing existing tests does not cover a missing case. Keep structural findings separate from observed contract failures.
 
+Assess whether tests could miss changed behaviour; use targeted mutation checks or specialist review when a concrete risk warrants them. From the project’s normal entry point, independently locate the owner, applicable rules and runnable verification. Report missing or misleading guidance as a delivery gap.
+
 For decisions assessed with [10x](../../10x/SKILL.md), exercise the required growth checks from the design handoff and report the actual volumes, rates or concurrency tested. Keep deferred targets separate from acceptance requirements; missing required proof remains a gap.
 
 Do not change product code or expectations while verifying. Return harness faults for bounded repair and leave blocked observations unverified. Record actual commands, observed results, tested identity, findings, evidence and limitations. Keep qualitative review distinct from executable outcomes; no universal report schema is required.
