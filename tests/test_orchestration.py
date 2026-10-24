@@ -642,13 +642,13 @@ module.main()
 spec = importlib.util.spec_from_file_location('adapter', sys.argv[1])
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
-rmdir = os.rmdir
+rmdir = module.Path.rmdir
 def interrupt(path, *args, **kwargs):
     if str(path).endswith('/work'):
         print('ready', flush=True)
         os.kill(os.getpid(), signal.SIGSTOP)
     return rmdir(path, *args, **kwargs)
-os.rmdir = interrupt
+module.Path.rmdir = interrupt
 sys.argv = [sys.argv[1], *sys.argv[2:]]
 module.main()
 """
