@@ -48,6 +48,16 @@ Tell the agent what you want, what must stay unchanged, and where to stop. Here 
 
 You can stop at research or design, ask for local changes, or ask for a PR. Use a [focused skill](#choose-a-focused-skill) directly when you want help with one job.
 
+For substantial work, Aapilot keeps one [task brief](skills/aapilot/references/task-continuity.md),
+selects the needed specialists, restores context after handoffs or compaction, and
+checks the whole request before finishing. Describe the outcome; you need not repeat
+the orchestration instructions.
+
+Optional [local Codex hooks](docs/ops/codex.md#durable-orchestration-hooks) add
+context restoration and recorded completion checks after separate setup/trust.
+Checked handoff retires disposable adapter state while preserving the task record
+and proof. Ordinary invocation remains instruction-driven.
+
 ## Contracts define the working rules
 
 This is where my thinking about trust and verification started to develop, helped by people in the community sharing their experiences. Building trust in what agents do is hard, especially when several agents work together. I wanted to explore whether a shared contract could make their communication with each other, and with me, more reliable.

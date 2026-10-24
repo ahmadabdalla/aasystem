@@ -6,6 +6,8 @@
 
 One owner carries the request through the agreed delivery boundary. Keep the outcome, constraints, agreed decisions, open questions, expected results and evidence in the existing task brief; conversation can suffice. Specialists contribute to that task rather than starting another coordinator.
 
+For substantial, multi-stage or delegated work, use the [task continuity procedure](task-continuity.md) to persist intent, select bounded increments, reconcile results and recover after context resets. Assigned workers consume the same task's relevant record and return evidence to its owner.
+
 Each assignment needs accessible inputs, a bounded deliverable, write ownership, relevant constraints and checks, and what to return. Workers preserve others' edits and project formats, and return out-of-scope findings to the owner. Keep decision context retrievable under the [handoff principle](../../principle-preserve-decision-context/SKILL.md).
 
 Assignments inherit relevant effort conditions, consequence-driven checks and resource limits; smaller local scope cannot weaken them. The owner reassesses effort and updates affected assignments when evidence changes scope, coupling, consequence or proof needs.
