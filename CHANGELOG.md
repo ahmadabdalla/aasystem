@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Keep Aapilot's original intent, scope assessment, decisions and acceptance requirements retrievable across increments, specialist handoffs and context recovery. Reuse the existing rubric and routes for research, product, UX, architecture and implementation rather than require a fixed agent chain.
+- Add an opt-in local Codex adapter for temporary intent bindings, context restoration and mechanical completion checks. A checked handoff to an existing local task record retires owned scratch; explicit resume keeps intent identity across sessions. Hooks require explicit configuration and trust; portable invocation and other hosts retain their existing behavior. Recorded checks do not authenticate approval or prove semantic correctness.
+
 ## [0.6.1]
 
 - Add the “Be ready to deliver and prove” principle to Implement's opening procedure. Establish delivery prerequisites and a runnable verification path before dependent work, and record material gaps in the existing task brief.

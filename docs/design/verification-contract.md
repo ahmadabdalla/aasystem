@@ -33,6 +33,12 @@ The [effort rubric](../../skills/aapilot/references/effort.md) sets S/M/L execut
 
 The selected playbook provides the procedure. Product owns behaviour and acceptance scenarios; Interaction Design owns interactions; Solution compares approaches; Architect designs implementation boundaries; Implement makes bounded edits. Aapilot can apply these procedures itself or delegate for useful expertise, parallel work or context separation.
 
+The [continuity loop](../../skills/aapilot/references/task-continuity.md) keeps one
+retrievable brief: original intent, decisions, sizing, requirements and proof.
+The owner reloads it before stages and after context resets, selects needed work,
+checks results and resolves findings. Changed scope/proof needs trigger reassessment;
+research, design and implementation retain their own routes and stopping boundaries.
+
 Specialists return bounded artifacts and observations to the existing owner. [Swarm](../../skills/swarm/SKILL.md) partitions independent work; [Arena](../../skills/arena/SKILL.md) compares alternatives with separate judging. Neither is mandatory for ordinary delivery. The [system map](skill-system.md) records the complete ownership and source inventory.
 
 ## Verification and correction
@@ -54,6 +60,13 @@ Separate worktrees do not isolate ports, databases or external services. Use own
 ## Evidence and human review
 
 Reuse project task/PR records for the request, agreed expectations, tested identity, actual verifier, observed checks, findings and limitations. Deterministic project checks and identity comparisons support the process; this library does not authenticate people, sandbox processes, intercept tools or provide host-enforced acceptance.
+
+The optional [local Codex adapter](../ops/codex.md#durable-orchestration-hooks)
+adds recovery and recorded completion checks after explicit setup/trust. Checked
+handoff preserves the task before retiring scratch; resume retains intent identity
+and requires owner reconstruction. These checks do not establish semantic
+fulfillment or reviewer independence. Other hosts and ordinary invocation remain
+instruction-driven. Completion reconciles the original request and all later steering.
 
 Clean up only owned processes and disposable output. Preserve pending changes and useful evidence through review or investigation. After the review boundary, retire unneeded artifacts without breaking durable evidence references. The [project evidence contract](../../skills/bootstrap-verification/references/project-contract.md#evidence-and-retention) owns lifetime rules.
 

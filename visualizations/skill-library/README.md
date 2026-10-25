@@ -21,6 +21,8 @@ The execution contract and principles apply across the library. Their foundation
 
 The [Deliver and prove principle](../../skills/principle-deliver-and-prove/SKILL.md) connects the principle index to Implement. Its two questions establish delivery and verification readiness within the assigned scope, using existing project procedures and task records.
 
+Aapilot owns the [scope-aware continuity loop](../../skills/aapilot/references/task-continuity.md): retain the intent contract, reload it after handoffs or compaction, choose the needed specialist work, and reconcile the entire request before completion. The optional [local Codex adapter](../../docs/ops/codex.md#durable-orchestration-hooks) supports context restoration, recorded completion checks and checked retirement of disposable state into an existing task record. Intent identity is independent of the temporary coding session binding. It adds no skill or mandatory agent chain. These responsibilities are represented by the existing Aapilot and Project evidence nodes.
+
 ## Explore a route
 
 Select a node to see its incoming and outgoing connections in the details panel. Hovering over a node also highlights its connections.

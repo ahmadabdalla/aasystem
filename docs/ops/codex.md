@@ -16,6 +16,26 @@ Project verifier commands must remain usable without the plugin.
 
 Ordinary invocation does not provide tool interception, a process sandbox, host-enforced approval, scheduling or recovery after chat closure. Actual discovery and supporting-skill composition need host observation; files on disk alone do not establish them. Read [How Aapilot works](../design/verification-contract.md) for the operating model.
 
+## Durable orchestration hooks
+
+The optional [local Codex adapter](../../skills/aapilot/assets/codex/README.md) adds
+context restoration and recorded completion checks to `$aasystem:aapilot <outcome>`.
+It requires separate configuration and trust; installing skills does not activate it.
+
+Start with the guide's [setup](../../skills/aapilot/assets/codex/README.md#one-time-setup),
+then follow its [coordinator protocol](../../skills/aapilot/assets/codex/README.md#coordinator-protocol)
+and [handoff/resume steps](../../skills/aapilot/assets/codex/README.md#handoff-and-resume).
+Checked handoff preserves intent/proof in an existing task file before retiring
+owned scratch. Active state and pending review proof remain until safe retirement;
+there is no background or session-close collector.
+
+Hooks check recorded obligations, not semantic fulfillment, reviewer independence
+or authenticated approval. Verify actual callbacks in your host and read the
+[failure limits](../../skills/aapilot/assets/codex/README.md#stop-behavior-and-limits).
+Hosted orchestration and other harnesses may lack these callbacks; use the
+[portable continuity procedure](../../skills/aapilot/references/task-continuity.md)
+and disclose instruction-driven operation there.
+
 ## Invocation policy
 
 Every portable skill includes `agents/openai.yaml` with:

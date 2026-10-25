@@ -33,6 +33,8 @@ All procedural skills use:
 Use these boundaries when skills interact:
 
 - **aapilot:** shared understanding, scope and proof assessment, routing, direct or delegated execution, and completion
+- **Task continuity reference:** durable intent, scope-aware increments, recovery and task-wide reconciliation; existing rubric and procedures retain sizing, specialist responsibilities and proof requirements
+- **Optional Codex adapter:** session/cwd-bound local state, hook context restoration and recorded completion checks; it neither chooses the route nor authenticates semantic acceptance
 - **Product:** journeys, behavior, rules, and acceptance scenarios
 - **Grill me:** attributed interview evidence
 - **Interaction design:** navigation, interactions, information hierarchy, and coordination of assigned independent rendered UX assessments
@@ -320,6 +322,20 @@ Other sources inform bounded parts of the system:
 
 ## Evaluation
 
+### Durable orchestration
+
+Delivery-judgment refinements in the [execution contract](../../skills/aapilot/references/execution.md) and [engineering verification](../../skills/aapilot/references/engineering-verification.md) address [issue 51](https://github.com/ahmadabdalla/aasystem/issues/51).
+
+[Task continuity](../../skills/aapilot/references/task-continuity.md) is first-party guidance for [issue 49](https://github.com/ahmadabdalla/aasystem/issues/49), extended by the user's agreed requirements for context recovery, scope-aware specialist work and optional local Codex enforcement. It keeps `aapilot` as the entry point, reuses the effort rubric and playbooks, and adds no portable skill. [Preserve decision context](../../skills/principle-preserve-decision-context/SKILL.md) informs the retrievable brief and bounded assignments: a shorter handoff must retain the information the next owner needs.
+
+The optional [Codex adapter](../../skills/aapilot/assets/codex/README.md) is an explicit host integration using the official [hooks protocol](https://learn.chatgpt.com/docs/hooks). It adds no SDK controller, shared plugin-manifest hook registration, tool interception or managed execution runtime. One coordinator owns the compact session-bound state; hooks restore context and check recorded obligations at attempted completion. The coordinator still selects the appropriate procedures, calls stage checks and judges the results. Installing portable skills alone does not enable hook enforcement.
+
+The [harness adapter boundary](../../skills/aapilot/assets/README.md) reserves one folder per delivered integration, keeping host invocation, lifecycle, context, completion and configuration translation outside the portable procedure. Future integrations must be deliverable and verifiable in their actual target host before implementation; there are no Claude or Copilot adapter stubs or registrations. A second verified integration should share the existing state/check invariants through the smallest necessary extraction, rather than duplicate orchestration policy. The current Codex helper is not yet a dynamic adapter loader or a stable shared runtime API.
+
+The same boundary owns [consumer data lifecycle checks](../../skills/aapilot/assets/README.md#consumer-data-lifecycle): avoid redundant logs and archives, measure repeated-intent growth and verify teardown and interrupted-write recovery. The consumer audit exposed indefinite version 1 prompt/session retention and stale locks. Version 2 keeps independent intent identity with temporary session bindings, a checked handoff to an existing local task record, and exact-owned retirement. A small index retains only active ownership and interrupted handoff receipts, rather than completed intent history. Kernel locking and next-use recovery address interrupted writes; the coordinator remains responsible for stopped scratch users, canonical meaning and invoking handoff. There is no daemon, hard storage cap or native session-close cleanup claim. Plugin-directed proof/output and native transcripts retain their explicitly separate lifetimes.
+
+Session/working-directory separation addresses independent concurrent tasks; optimistic state updates address stale coordinator writes. Multiwriter coordination, distributed execution and authenticated approvals are outside scope. Evidence hashes protect referenced files from undetected endpoint changes, while source-artifact identity remains under the verification contract. Runtime checks and behavioral evaluations establish only the exercised coverage; they do not establish uniform behavior across hosts or eliminate model judgment.
+
 The [evaluation playbook](../../skills/aapilot/playbooks/eval.md) adapts [pstack’s Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript inspection, and lead reconciliation. Local adaptations use the shared host and invocation rules and project evidence conventions; the playbook owns temporary experiments and the criterion for retaining reusable regression cases. The library does not ship an evaluation runner or a standing fixture collection.
 
 ## Export boundary
@@ -337,6 +353,8 @@ Export these files together:
 - [`docs/ops/codex.md`](../ops/codex.md)
 
 The portable root manifest and Claude compatibility manifest package the same skill tree as `aasystem`. The root manifest owns the portable identity, version and OpenAI presentation metadata. The [release validator](../../scripts/validate-release.py) checks the compatibility identity and version mechanically. Packaging preserves the library's invocation policies and specialist boundaries.
+
+The optional Codex hook helper and setup guide travel inside the exported `skills/aapilot/` tree. Neither shared manifest auto-registers them; opting into the host-specific configuration is separate from installing the portable library.
 
 The [release process](../ops/releasing.md) adapts Azure Cost Calculator's tag/release and changelog helpers. Merging a reviewed, manually versioned release PR into `main` triggers validation and publication of its exact merged commit, with safe retries. Successful publication prepares a separate reviewed marketplace adoption PR. Release automation does not change skill routes or handoffs.
 
