@@ -25,27 +25,27 @@ a replay alone requires no approval. Preserve explicit stopping boundaries.
 
 Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and exceptions with the brief. Borrowed workflow requirements do not establish personal preferences.
 
-| Task | Procedure |
-| --- | --- |
-| Discover product structure, people and journeys, or define product behavior, business rules, and acceptance scenarios | [Product](../product/SKILL.md) |
-| Translate product outcomes into navigation, interactions, information visibility, and justified UI choices | [Interaction design](../interaction-design/SKILL.md) |
-| Independently assess an existing rendered interface for visual and interaction friction | [Interaction Design: independent rendered UX assessment](../interaction-design/SKILL.md#select-the-assignment) |
-| Work through a plan with the user and record agreed terms and decisions when authorized | [Grill me](../grill-me/SKILL.md) |
-| Clarify project terminology or record a consequential product, design or software decision | [Domain modeling](../domain-modeling/SKILL.md) |
-| Explain current behavior or investigate a question without changing the product | [Investigation](playbooks/investigation.md) |
-| Decide what solution should exist while direction, ownership, or constraints remain open | [Solution](../solution/SKILL.md) |
-| Assess how a decision or design holds up under plausible growth | [10x](../10x/SKILL.md) |
-| Correct a reported defect | [Bug fix](playbooks/bug-fix.md) |
-| Add or intentionally change behavior | [Feature](playbooks/feature.md) |
-| Change structure while preserving behavior | [Refactoring](playbooks/refactoring.md) |
-| Refine an inspectable UI/UX with human feedback and preserve a reviewed visual reference | [UI refinement](../ui-refinement/SKILL.md) |
-| Resolve a decision through a throwaway experiment | [Prototype](playbooks/prototype.md) |
-| Create or change a skill | [Skill authoring](playbooks/authoring-a-skill.md) |
-| Assess whether an instruction or skill change improves behavior | [Evaluation](playbooks/eval.md) |
-| Deliver an authorized repository change as a pull request | [Opening a PR](playbooks/opening-a-pr.md) |
-| Establish or audit project verification | [Bootstrap verification](../bootstrap-verification/SKILL.md) or [maintain verification](../maintain-verification/SKILL.md) |
-| Capture learning or a stated judgment | [Reflect](../reflect/SKILL.md) |
-| No bundled procedure fits, or a change spans several coupled phases | [Figure it out](../figure-it-out/SKILL.md) |
+| Task                                                                                                                  | Procedure                                                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Discover product structure, people and journeys, or define product behavior, business rules, and acceptance scenarios | [Product](../product/SKILL.md)                                                                                             |
+| Translate product outcomes into navigation, interactions, information visibility, and justified UI choices            | [Interaction design](../interaction-design/SKILL.md)                                                                       |
+| Independently assess an existing rendered interface for visual and interaction friction                               | [Interaction Design: independent rendered UX assessment](../interaction-design/SKILL.md#select-the-assignment)             |
+| Work through a plan with the user and record agreed terms and decisions when authorized                               | [Grill me](../grill-me/SKILL.md)                                                                                           |
+| Clarify project terminology or record a consequential product, design or software decision                            | [Domain modeling](../domain-modeling/SKILL.md)                                                                             |
+| Explain current behavior or investigate a question without changing the product                                       | [Investigation](playbooks/investigation.md)                                                                                |
+| Decide what solution should exist while direction, ownership, or constraints remain open                              | [Solution](../solution/SKILL.md)                                                                                           |
+| Assess how a decision or design holds up under plausible growth                                                       | [10x](../10x/SKILL.md)                                                                                                     |
+| Correct a reported defect                                                                                             | [Bug fix](playbooks/bug-fix.md)                                                                                            |
+| Add or intentionally change behavior                                                                                  | [Feature](playbooks/feature.md)                                                                                            |
+| Change structure while preserving behavior                                                                            | [Refactoring](playbooks/refactoring.md)                                                                                    |
+| Refine an inspectable UI/UX with human feedback and preserve a reviewed visual reference                              | [UI refinement](../ui-refinement/SKILL.md)                                                                                 |
+| Resolve a decision through a throwaway experiment                                                                     | [Prototype](playbooks/prototype.md)                                                                                        |
+| Create or change a skill                                                                                              | [Skill authoring](playbooks/authoring-a-skill.md)                                                                          |
+| Assess whether an instruction or skill change improves behavior                                                       | [Evaluation](playbooks/eval.md)                                                                                            |
+| Deliver an authorized repository change as a pull request                                                             | [Opening a PR](playbooks/opening-a-pr.md)                                                                                  |
+| Establish or audit project verification                                                                               | [Bootstrap verification](../bootstrap-verification/SKILL.md) or [maintain verification](../maintain-verification/SKILL.md) |
+| Capture learning or a stated judgment                                                                                 | [Reflect](../reflect/SKILL.md)                                                                                             |
+| No bundled procedure fits, or a change spans several coupled phases                                                   | [Figure it out](../figure-it-out/SKILL.md)                                                                                 |
 
 For production delivery needing UI refinement, select Feature with supporting UI Refinement scope. Design/prototype-only requests can route directly to UI Refinement.
 

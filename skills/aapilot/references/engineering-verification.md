@@ -20,7 +20,7 @@ Inspect the actual diff for authorised scope, concrete defects and maintainabili
 
 Derive affected checks from the authorised contract and actual changes as well as the design handoff. Exercise rejection, competing writes, replay, partial failure, or recovery where they threaten those guarantees; passing existing tests does not cover a missing case. Keep structural findings separate from observed contract failures.
 
-Assess whether tests could miss changed behaviour; use targeted mutation checks or specialist review when a concrete risk warrants them. From the project’s normal entry point, independently locate the owner, applicable rules and runnable verification. Report missing or misleading guidance as a delivery gap.
+Assess concrete gaps in changed-behaviour coverage; use targeted mutation checks or specialist review only for a named risk. Confirm the supplied owner, rules and checks are reachable from the project's normal entry point; report unrelated gaps separately without starting a wider audit.
 
 For decisions assessed with [10x](../../10x/SKILL.md), exercise the required growth checks from the design handoff and report the actual volumes, rates or concurrency tested. Keep deferred targets separate from acceptance requirements; missing required proof remains a gap.
 
@@ -28,7 +28,7 @@ Do not change product code or expectations while verifying. Return harness fault
 
 ## Correct and deliver
 
-The owner inspects original findings and the work. Correct material defects within authority or obtain an explicit evidenced disposition; do not silently dismiss them. Repeat affected independent assessment and runtime checks after changes. A targeted confirmation may use the original verifier with disclosed earlier context; new independent discovery uses a fresh context.
+The owner inspects original findings and the work. Follow the [working loop](verification-contract.md#working-loop) for correction scope, proof reuse and stopping limits; required rechecks remain independent. A targeted confirmation may use the original verifier with disclosed earlier context; new independent discovery uses a fresh context.
 
 Return missing or stale project recipes to the owner for scoped [verification maintenance](../../maintain-verification/SKILL.md), then re-exercise the affected path after repair. Preserve intended expectations and record unavailable required checks as gaps; an unchanged recipe needs no permanent edit.
 

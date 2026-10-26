@@ -36,8 +36,8 @@ scope ambiguity when it changes that choice.
 
 ## Choose and execute the next increment
 
-1. **Reload and size.** Read the brief and applicable rules before each stage or
-   assignment. Reconcile new input/findings. Reassess size when uncertainty,
+1. **Reload and size.** Use the current brief and applicable rules; reload missing
+   or changed inputs. Reconcile new findings. Reassess size when uncertainty,
    coupling, consequence or proof needs change; otherwise inherit it.
 2. **Select needed work.** Reuse capabilities and settled inputs. Missing product
    meaning or acceptance scenarios calls for Product; unsettled interactions for

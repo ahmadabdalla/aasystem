@@ -6,11 +6,13 @@ The [execution contract](execution.md) owns authority, delegation, human checkpo
 
 ## Working loop
 
-1. Establish expected results and the project checks before editing.
+1. Establish expected results and the project checks before editing. In the existing brief, map required outcomes to checks and set a total acceptance-verification time limit, including diagnosis, repairs and rechecks. The owner chooses it within user limits; carry remaining allowance across handoffs and retries.
 2. Implement and run development checks within settled scope.
 3. Pause source editing and give a fresh noneditor verifier the combined artifact, requirements and runnable checks.
-4. Preserve its findings and observations. Correct material defects and repeat affected verification on the current result.
+4. Preserve findings; distinguish product, harness, environment and unsettled-expectation failures, keeping unknown causes explicit. For each correction, name the failure, changed inputs and checks needed; retain earlier proof only with an explicit unaffected-input/outcome rationale. Include dependent integration checks when shared production inputs change.
 5. The owner inspects the work and evidence, resolves required decisions and owned resources, and presents it at the requested delivery boundary. Agent completion does not replace human review or authorise a commit.
+
+If a failure recurs after correction, pause reruns and reassess shared causes and related test assumptions. Retry only with new evidence or a materially different hypothesis and a check that distinguishes it. Once required outcomes have current passing proof and material findings are resolved, finish without unrelated checks. Otherwise, at the total limit stop verification and repairs; report incomplete scope, retained failures, consumed allowance and the prerequisite for resuming. Do not extend or reset the limit without human agreement. Update the brief with changes and evidence links rather than repeating settled context.
 
 ## Local execution
 
