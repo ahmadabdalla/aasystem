@@ -90,12 +90,13 @@ def validate():
 
     required = (
         "README.md", SYSTEM_MAP, "docs/ops/codex.md", "docs/ops/releasing.md", "LICENSE", "PSTACK_LICENSE.txt",
-        "MATT_POCOCK_LICENSE.txt", "skills/principles/INDEX.md", "skills/aapilot/SKILL.md",
-        "skills/aapilot/agents/openai.yaml",
+        "MATT_POCOCK_LICENSE.txt", "skills/principles/INDEX.md", "skills/pilot/SKILL.md",
+        "skills/pilot/agents/openai.yaml",
     )
     for path in required:
         check(Path(path).is_file(), f"Missing export file: {path}")
     check(not Path("skills/aasystem").exists(), "Former entry point must not remain")
+    check(not Path("skills/aapilot").exists(), "Former aapilot entry point must not remain")
 
     skills = sorted(path.as_posix() for path in Path("skills").glob("*/SKILL.md"))
     check(skills, "Skill tree is empty")

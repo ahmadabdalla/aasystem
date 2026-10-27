@@ -91,7 +91,7 @@ class ReleaseValidatorTests(unittest.TestCase):
                                  f"Manifest {key} values differ")
 
     def test_missing_required_exports(self):
-        for path in ("README.md", "LICENSE", "skills/aapilot/agents/openai.yaml",
+        for path in ("README.md", "LICENSE", "skills/pilot/agents/openai.yaml",
                      "docs/design/skill-system.md", "docs/ops/codex.md", "docs/ops/releasing.md"):
             with self.subTest(path=path):
                 target = self.repo / path
@@ -105,6 +105,10 @@ class ReleaseValidatorTests(unittest.TestCase):
     def test_former_entry_point_is_rejected(self):
         (self.repo / "skills/aasystem").mkdir()
         self.assert_invalid("Former entry point must not remain")
+
+    def test_former_aapilot_entry_point_is_rejected(self):
+        (self.repo / "skills/aapilot").mkdir()
+        self.assert_invalid("Former aapilot entry point must not remain")
 
     def test_inventory_drift_is_rejected(self):
         shutil.rmtree(self.repo / "skills/product")

@@ -16,7 +16,7 @@
       "interface": {
         "displayName": "Ahmad Abdalla's Pilot System",
         "shortDescription": "Plan, build, review, and verify engineering work",
-        "longDescription": "Coordinate engineering tasks with the aapilot skill, or invoke a specialist for product discovery, architecture, interaction design, investigation, and verification.",
+        "longDescription": "Coordinate engineering tasks with the pilot skill, or invoke a specialist for product discovery, architecture, interaction design, investigation, and verification.",
         "developerName": "Ahmad Abdalla",
         "category": "Productivity"
       }

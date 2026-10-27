@@ -6,13 +6,13 @@ disable-model-invocation: true
 
 # Interrogate
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Establish scope and intent, gather adversarial findings, synthesize them, and apply lead judgment. Challenge both the proposal and its framing.
 
 ## Prepare and challenge
 
-Identify the actual artifact or diff, surrounding system, intended outcome, constraints, and review criteria. Select the assignment mode and prepare inputs under the [shared review-context rule](../aapilot/references/execution.md#review-context). Reuse the caller's brief after applying the selected review mode's inclusion and exclusion rules; surface only consequential gaps or changed assumptions. Resolve missing intent that would materially change the review before proceeding; ask one question and wait when necessary.
+Identify the actual artifact or diff, surrounding system, intended outcome, constraints, and review criteria. Select the assignment mode and prepare inputs under the [shared review-context rule](../pilot/references/execution.md#review-context). Reuse the caller's brief after applying the selected review mode's inclusion and exclusion rules; surface only consequential gaps or changed assumptions. Resolve missing intent that would materially change the review before proceeding; ask one question and wait when necessary.
 
 When delegation is available and permitted, run isolated reviewers with the same evidence, artifact, and rubric without each other's findings. Use multiple actual model families when available; different personas do not supply that diversity. Disclose the reviewer setup, unavailable seats, and limitations. Without isolated reviewers, perform a single-agent adversarial review; repeated passes or role labels do not create independence. A required independent gate remains incomplete when only self-review was possible.
 

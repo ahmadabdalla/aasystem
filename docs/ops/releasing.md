@@ -27,7 +27,7 @@ python3 -m unittest discover -s tests
 
 1. Choose the version in `plugin.json`, then set the same version in `.claude-plugin/plugin.json`. Keep the name `aasystem`.
 2. Add a `## [X.Y.Z]` section to `CHANGELOG.md` describing the changes and any upgrade steps.
-3. Run the checks below and test installation plus a read-only `aapilot` invocation in each available host. Put results and any gaps in the PR.
+3. Run the checks below and test installation plus a read-only `pilot` invocation in each available host. Put results and any gaps in the PR.
 4. Open a PR titled exactly `release: vX.Y.Z`, targeting `main`. Review it and wait for the `validate` check to pass, then merge.
 
 ```bash
@@ -90,3 +90,38 @@ For Copilot CLI:
 copilot plugin marketplace update ahmadabdalla-plugins
 copilot plugin update aasystem@ahmadabdalla-plugins
 ```
+
+### Upgrade from aapilot to pilot
+
+The next release renames the entry skill from `aapilot` to `pilot` and moves its
+entire tree from `skills/aapilot/` to `skills/pilot/`. The plugin name remains
+`aasystem`. This is a breaking command/path change with no compatibility alias;
+publish it in a minor release under the pre-1.0 policy above.
+
+1. Update the plugin using the host steps above once the release is adopted by
+   the marketplace. For direct skill installs, replace the old entry tree with
+   `skills/pilot/` and update installation links; remove the obsolete entry so it
+   cannot remain discoverable. Keep supporting skills and shared references together.
+2. Replace saved commands with `$aasystem:pilot` in Codex, `$pilot` for direct
+   installs, or `/aasystem:pilot` in Claude Code. Refresh Copilot's `/skills` list.
+   Update project instructions, scripts and links that point into the old tree.
+3. If using optional Codex hooks, stop active helper writers before upgrading.
+   Follow the [adapter setup](../../skills/pilot/assets/codex/README.md#one-time-setup)
+   with the new `skills/pilot/scripts/orchestration.py` path and the **same existing
+   `--state-dir`**. Replace the old hook entries rather than append duplicate ones,
+   then review/trust the regenerated definitions. Hook/config filenames and state
+   directories containing the old name do not need renaming.
+4. Start a fresh host session and verify discovery and a read-only invocation.
+   For hooks, also verify callbacks in the actual host.
+
+The helper still reads version-2 records: intent IDs, bindings, captured requests
+and evidence references are preserved, including historical `aapilot` text. No
+state rewrite or automatic migration is needed. References to moved files in
+external project records or evidence need explicit maintenance; changed or missing
+hashed evidence must be reverified under the verification contract.
+
+The rename updates portable metadata, shared links and callers, plugin presentation,
+the graph, helper activation/messages and package tests. Workflow routes, ownership,
+proof rules, invocation policy and release identity remain the same. Published
+changelog entries keep their historical names. Local package/event tests do not
+establish host discovery, hook delivery or marketplace adoption.

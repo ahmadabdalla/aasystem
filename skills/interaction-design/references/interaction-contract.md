@@ -68,7 +68,7 @@ State the scope of each sketch or mock and intentional omissions. Distinguish be
 
 Use the caller's designated document or an existing canonical section. Create a project UX document only when its audience and future use warrant one under the shared retention rules. A read-only request returns proposed content. Link canonical requirements and decisions instead of copying their authority into a new system.
 
-For projects using OpenSpec, follow the [OpenSpec reference](../../aapilot/references/openspec.md) for document ownership, proposed/current records, reconciliation, and archive links. Other projects use their existing requirements and documentation conventions. Updating a mock does not accept a proposal or supersede a decision.
+For projects using OpenSpec, follow the [OpenSpec reference](../../pilot/references/openspec.md) for document ownership, proposed/current records, reconciliation, and archive links. Other projects use their existing requirements and documentation conventions. Updating a mock does not accept a proposal or supersede a decision.
 
 Give the technical owner the interaction model, reviewed visual reference and component/style sources when present, constraints, requirement links, consequential rationale, mock scope, and unresolved decisions. Give the verification owner affected scenarios, concrete user actions and expected observable outcomes, relevant states/scopes, supporting prototype evidence, and gaps. Link the existing verifier rather than starting implementation from a design-only assignment.
 

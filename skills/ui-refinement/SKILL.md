@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # UI refinement
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
 
 Own bounded UI/UX refinement and the reviewed-reference handoff. The caller retains the task and production delivery. Product owns business meaning, Interaction Design owns interaction/presentation decisions, and Prototype owns the rendered artifact. Standalone work ends at its requested design/review checkpoint.
 
@@ -20,6 +20,6 @@ Follow [the refinement loop](references/refinement-loop.md). Use [Interaction De
 
 ## Review and return
 
-Apply scoped [interaction review checks](../interaction-design/references/review-checks.md). Preserve actual human feedback and limits. Use the shared [human checkpoint handoff](../aapilot/references/execution.md#decision-authority).
+Apply scoped [interaction review checks](../interaction-design/references/review-checks.md). Preserve actual human feedback and limits. Use the shared [human checkpoint handoff](../pilot/references/execution.md#decision-authority).
 
 Return the artifact revision, useful rendered views, owning behavior/interaction records, component/style references, review scope and authority, gaps and next action. Follow the [interaction contract](../interaction-design/references/interaction-contract.md) for visual-reference contents and recording. Keep a resumable checkpoint in the current project record; no separate backlog or mandatory report is required. Do not restart the caller's workflow or begin production implementation.

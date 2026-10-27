@@ -19,8 +19,8 @@ persistent state directory outside maintained source. Permit coordinator writes
 and session reads there. Generate configuration:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state config > /local/aapilot-hooks.json
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state config > /local/pilot-hooks.json
 ```
 
 This prints JSON without installing hooks or creating task state. Review and
@@ -29,7 +29,11 @@ project's `.codex/hooks.json`. Review/trust the exact definitions through `/hook
 regenerate and review after path or definition changes. Shared plugin manifests
 do not register this adapter; portable skill installation does not activate it.
 
-Start with `$aasystem:aapilot <outcome>` or `$aapilot <outcome>` for direct installs.
+For an existing installation, follow the
+[Pilot migration steps](../../../../docs/ops/releasing.md#upgrade-from-aapilot-to-pilot):
+regenerate with the new helper path and retain the existing state directory.
+
+Start with `$aasystem:pilot <outcome>` or `$pilot <outcome>` for direct installs.
 Activation requires either spelling at the raw prompt's start after optional
 whitespace. Quoted examples and other invocation forms use portable instructions
 unless the host supplies that explicit prompt. Verify actual event delivery.
@@ -92,8 +96,8 @@ Use the hook-provided session, working directory and CLI prefix. `show` returns
 verbatim `inputs` (`text`, `turn_id`) and the agent-owned body:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state --session SESSION --cwd /project show
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state --session SESSION --cwd /project show
 ```
 
 Prepare an update with the latest `expected_revision` and full body. This research
@@ -141,8 +145,8 @@ example selects its own route and obligations:
 Send the JSON on stdin with the same prefix:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state --session SESSION --cwd /project \
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state --session SESSION --cwd /project \
   update --file -
 ```
 
@@ -153,8 +157,8 @@ malformed events are rejected before writing. Reread after revision conflicts.
 Generate references for nonempty regular nonsymlink evidence files:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state evidence /local/proof/findings.md
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state evidence /local/proof/findings.md
 ```
 
 References use `{"path": "/absolute/file", "sha256": "64 lowercase hex digits"}`.
@@ -167,8 +171,8 @@ independent review or semantic correctness; use the [tested identity procedure](
 Before advancing an increment, reread and check the current revision:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state --session SESSION --cwd /project \
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state --session SESSION --cwd /project \
   checkpoint --expected-revision 2
 ```
 
@@ -199,8 +203,8 @@ For a completed or truthfully paused intent:
    `evidence`, then run:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state --session SESSION --cwd /project \
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state --session SESSION --cwd /project \
   handoff --record /project/existing-task.md --expected-revision N \
   --expected-record-sha256 HASH --workers-stopped
 ```
@@ -215,8 +219,8 @@ the task file and proof remain unchanged.
 In the receiving session, resume with the record's ID and exact original request:
 
 ```sh
-python3 /installed/aasystem/skills/aapilot/scripts/orchestration.py \
-  --state-dir /local/aapilot-state --session NEW_SESSION --cwd /project \
+python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+  --state-dir /local/pilot-state --session NEW_SESSION --cwd /project \
   resume --record /project/existing-task.md --intent-id INTENT_ID \
   --original-request 'The exact original request'
 ```

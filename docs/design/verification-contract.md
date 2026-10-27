@@ -1,11 +1,11 @@
-# How Aapilot works
+# How Pilot works
 
-Aapilot helps turn an idea into an inspectable, agreed outcome, then carries authorised work through design, delivery and verification. One owner works directly or brings in domain specialists. You can stop at research, a design, local changes or a PR.
+Pilot helps turn an idea into an inspectable, agreed outcome, then carries authorised work through design, delivery and verification. One owner works directly or brings in domain specialists. You can stop at research, a design, local changes or a PR.
 
 ```text
 Human request + constraints + delivery boundary
                       |
-               Aapilot owns the task
+               Pilot owns the task
                       |
           Replay / investigate / clarify
                       |
@@ -25,15 +25,15 @@ Human request + constraints + delivery boundary
                          Human review
 ```
 
-An unresolved consequential decision or required visual review pauses the whole task for your answer. Agreement does not require a checkpoint for every routine step. The [execution contract](../../skills/aapilot/references/execution.md) owns that distinction, handoffs, delegation and completion.
+An unresolved consequential decision or required visual review pauses the whole task for your answer. Agreement does not require a checkpoint for every routine step. The [execution contract](../../skills/pilot/references/execution.md) owns that distinction, handoffs, delegation and completion.
 
 ## Expertise without mandatory agent chains
 
-The [effort rubric](../../skills/aapilot/references/effort.md) sets S/M/L execution conditions, carried through assignments under the shared [handoff rules](../../skills/aapilot/references/execution.md#ownership-and-handoffs).
+The [effort rubric](../../skills/pilot/references/effort.md) sets S/M/L execution conditions, carried through assignments under the shared [handoff rules](../../skills/pilot/references/execution.md#ownership-and-handoffs).
 
-The selected playbook provides the procedure. Product owns behaviour and acceptance scenarios; Interaction Design owns interactions; Solution compares approaches; Architect designs implementation boundaries; Implement makes bounded edits. Aapilot can apply these procedures itself or delegate for useful expertise, parallel work or context separation.
+The selected playbook provides the procedure. Product owns behaviour and acceptance scenarios; Interaction Design owns interactions; Solution compares approaches; Architect designs implementation boundaries; Implement makes bounded edits. Pilot can apply these procedures itself or delegate for useful expertise, parallel work or context separation.
 
-The [continuity loop](../../skills/aapilot/references/task-continuity.md) keeps one
+The [continuity loop](../../skills/pilot/references/task-continuity.md) keeps one
 retrievable brief: original intent, decisions, sizing, requirements and proof.
 The owner reloads it before stages and after context resets, selects needed work,
 checks results and resolves findings. Changed scope/proof needs trigger reassessment;
@@ -43,17 +43,17 @@ Specialists return bounded artifacts and observations to the existing owner. [Sw
 
 ## Verification and correction
 
-Retained implementation normally requires a fresh noneditor to inspect the combined diff and execute affected project checks under [Engineering Verification](../../skills/aapilot/references/engineering-verification.md). Development checks help find defects but do not establish independent verification. Review findings and runtime observations remain distinct; an API check does not prove an unexercised UI.
+Retained implementation normally requires a fresh noneditor to inspect the combined diff and execute affected project checks under [Engineering Verification](../../skills/pilot/references/engineering-verification.md). Development checks help find defects but do not establish independent verification. Review findings and runtime observations remain distinct; an API check does not prove an unexercised UI.
 
 The verifier receives requirements, constraints and runnable procedures. Independent discovery withholds prior conclusions until initial findings; a confirmation audit can check supplied claims with that exposure disclosed. Preserve original findings. The owner resolves material issues and obtains affected verification on the corrected work before declaring completion.
 
-The narrow [owner-presentation exception](../../skills/aapilot/references/execution.md#owner-presentation-eligibility) allows prescribed low-impact appearance edits with diff/preview checks. Label them owner-checked. Research and design retain sources, reasoning and limits rather than pretending to have executable product proof.
+The narrow [owner-presentation exception](../../skills/pilot/references/execution.md#owner-presentation-eligibility) allows prescribed low-impact appearance edits with diff/preview checks. Label them owner-checked. Research and design retain sources, reasoning and limits rather than pretending to have executable product proof.
 
 ## Persistent local work
 
 Use the current checkout for sequential work, or one task worktree for useful separation. Reuse it across correction rounds. Pause source editing during verification, identify required configuration and other runtime inputs, and check tested identity before/after verification and at delivery.
 
-The [input identity helper](../../skills/aapilot/scripts/input_identity.py) is a read-only fallback when project facilities are insufficient. It hashes selected working-tree inputs without copying them. It detects endpoint differences, not arbitrary concurrent or transient writes. Complete input scope, actual runtime identity and stopping other writers remain owner/verifier responsibilities.
+The [input identity helper](../../skills/pilot/scripts/input_identity.py) is a read-only fallback when project facilities are insufficient. It hashes selected working-tree inputs without copying them. It detects endpoint differences, not arbitrary concurrent or transient writes. Complete input scope, actual runtime identity and stopping other writers remain owner/verifier responsibilities.
 
 Separate worktrees do not isolate ports, databases or external services. Use owned fixtures or serial execution for those resources. Additional execution copies need a specific check requirement and known cost/ownership; full repository archives are not the default.
 

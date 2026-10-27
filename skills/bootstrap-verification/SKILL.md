@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Bootstrap verification
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Leave the project with a procedure another agent can run, evidence of which paths work, and explicit coverage gaps. Adopt existing verification facilities before creating new ones. Installing instructions alone does not establish readiness.
 
@@ -46,4 +46,4 @@ Record the sampled feature and entry point for a shared procedure. Unexercised f
 
 Connect ordinary project work using [the project instruction guidance](references/project-instructions.md). Reuse existing routing or add a narrow entry in the project's established instruction file; preserve other instructions. Point to the actual local verifier and feature map. Suitable executable checks may use existing CI conventions when that integration is in scope; prose routing alone is not mechanical enforcement.
 
-Return links to the discovery/map, local verifier, demonstrated readiness, and remaining gaps to the calling owner. Architect incorporates them into its design package; an aapilot playbook uses them for its reproduction, baseline, or acceptance checks. A setup run exposing a product defect supplies evidence to that owner and does not silently redefine the expected result. Use [maintain-verification](../maintain-verification/SKILL.md) for subsequent drift; no recurring schedule is implied.
+Return links to the discovery/map, local verifier, demonstrated readiness, and remaining gaps to the calling owner. Architect incorporates them into its design package; an pilot playbook uses them for its reproduction, baseline, or acceptance checks. A setup run exposing a product defect supplies evidence to that owner and does not silently redefine the expected result. Use [maintain-verification](../maintain-verification/SKILL.md) for subsequent drift; no recurring schedule is implied.

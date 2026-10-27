@@ -15,10 +15,10 @@ import stat
 import uuid
 
 
-INVOCATION = re.compile(r"^\s*\$(?:aasystem:)?aapilot(?:\s|$)")
+INVOCATION = re.compile(r"^\s*\$(?:aasystem:)?pilot(?:\s|$)")
 EVENTS = ("SessionStart", "UserPromptSubmit", "SubagentStart", "Stop")
 STATUSES = {"active", "waiting", "blocked", "complete", "cancelled"}
-CONTINUATION = "[aapilot checkpoint] "
+CONTINUATION = "[pilot checkpoint] "
 
 
 def require(condition, message):
@@ -334,7 +334,7 @@ def recovery_context(path, task, state_dir):
     if len(rendered) > 6500:
         rendered = rendered[:6500] + "… [summary truncated; read the full record]"
     guide = Path(__file__).resolve().parents[1] / "assets/codex/README.md"
-    return (f"Aapilot durable task: {path}\nRead the complete record before dependent work. "
+    return (f"Pilot durable task: {path}\nRead the complete record before dependent work. "
             "The root coordinator alone updates it; subagents return evidence to that owner. "
             "Restore original intent, decisions, sizing and selected procedures; honor research/design boundaries. "
             f"CLI: {command} show; update --file -; checkpoint --expected-revision N. "
@@ -349,7 +349,7 @@ def recovery_context(path, task, state_dir):
 def incomplete(message, event):
     reason = CONTINUATION + message + ". Reconcile the durable task and required evidence, or record a truthful waiting/blocked state with reason and next action."
     if event.get("stop_hook_active"):
-        return {"continue": False, "stopReason": "Aapilot remains incomplete", "systemMessage": reason}
+        return {"continue": False, "stopReason": "Pilot remains incomplete", "systemMessage": reason}
     return {"decision": "block", "reason": reason}
 
 
@@ -369,7 +369,7 @@ def handle_hook(state_dir, event):
         require(body is not None, "Task is not yet sized and recorded")
         require(body["acknowledged_inputs"] == len(task["inputs"]), "New user inputs remain unreconciled")
         if body["status"] in {"waiting", "blocked", "cancelled"}:
-            return {"systemMessage": f"Aapilot {body['status']} (not complete): {body['reason']}. Next: {body['next_action']}"}
+            return {"systemMessage": f"Pilot {body['status']} (not complete): {body['reason']}. Next: {body['next_action']}"}
         require(body["status"] == "complete", "Task is still active")
         check_checkpoint(task, final=True)
         return incomplete("Completed intent still has disposable state; write/read back the authorized canonical record, "
@@ -575,7 +575,7 @@ def main():
         if args.command != "hook":
             raise
         result = incomplete(str(error), event) if isinstance(event, dict) and event.get("hook_event_name") == "Stop" else {
-            "systemMessage": f"Aapilot hook failed: {error}. Task state is unverified."}
+            "systemMessage": f"Pilot hook failed: {error}. Task state is unverified."}
         print(json.dumps(result, ensure_ascii=False))
 
 
@@ -644,4 +644,4 @@ if __name__ == "__main__":
     try:
         main()
     except (OSError, ValueError, TypeError, KeyError) as error:
-        sys.exit(f"Aapilot: {error}")
+        sys.exit(f"Pilot: {error}")

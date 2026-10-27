@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Maintainability
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements, delegation procedure, and review-context rule.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements, delegation procedure, and review-context rule.
 
 Assess the supplied artifact against the intended change and project constraints. Return findings to the current owner; this assignment does not select a workflow, choose the design, or authorize edits.
 
@@ -25,6 +25,6 @@ Trace material concerns through concrete usage or a likely change. Compare the c
 
 For each material finding, return **location → causal reader or change burden → recommendation → tradeoff → verification needed**, with supporting evidence and its limits. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty assessment is valid; name the inspected scope, criteria, and limits rather than asserting absolute cleanliness.
 
-When supplying criteria or findings to the common [independent implementation verification](../aapilot/references/execution.md#independent-implementation-verification) gate, preserve its distinction between qualitative assessment and executable proof. A separate Maintainability invocation is unnecessary when that verifier can apply the relevant criteria itself.
+When supplying criteria or findings to the common [independent implementation verification](../pilot/references/execution.md#independent-implementation-verification) gate, preserve its distinction between qualitative assessment and executable proof. A separate Maintainability invocation is unnecessary when that verifier can apply the relevant criteria itself.
 
 Return in the caller's working record or conversation; follow the execution contract's retention rules rather than creating a report by default. The caller decides which findings change its design, review verdict, or implementation plan and owns final verification.
