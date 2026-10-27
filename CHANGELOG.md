@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.8.0]
+
 - Breaking entry-point rename: `aapilot` is now `pilot`, under `skills/pilot/`. Use `$aasystem:pilot` in Codex, `$pilot` for direct skill installs, or `/aasystem:pilot` in Claude Code. The plugin remains `aasystem`; no old-name alias is shipped.
 - Update shared references, system graph, package validation and optional Codex hooks together. Existing hook users must regenerate and trust configuration pointing to the new helper path, preserving their existing state directory. Version-2 task records and captured requests are unchanged. See the [migration steps](docs/ops/releasing.md#upgrade-from-aapilot-to-pilot).
 
