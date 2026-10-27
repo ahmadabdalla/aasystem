@@ -1,7 +1,7 @@
 const TYPE_LABELS = {
   work: "Entry skill",
   skill: "Skill",
-  playbook: "aapilot playbook",
+  playbook: "pilot playbook",
   principle: "Approved principle",
   foundation: "Shared foundation",
   artifact: "Project-owned records",
@@ -11,12 +11,12 @@ const TYPE_LABELS = {
 const nodes = [
   {
     id: "work",
-    title: "aapilot",
+    title: "pilot",
     type: "work",
     subtitle: "Fundamental entry point",
     purpose: "Preserves the task contract, sizes S/M/L effort with consequence-driven scrutiny, and selects bounded specialist work and proof through the requested boundary.",
     owns: "Task framing, scope-aware increments, durable intent across session bindings, specialist routing, integration, task-wide completion and safe scratch handoff within recorded authority.",
-    source: "../../skills/aapilot/SKILL.md",
+    source: "../../skills/pilot/SKILL.md",
     x: -310,
     y: 530,
     w: 240,
@@ -139,7 +139,7 @@ const nodes = [
     subtitle: "Explain without changing",
     purpose: "Produces a cited explanation or recommendation while preserving a read-only boundary.",
     owns: "The investigation question, evidence reconciliation, and bounded conclusion.",
-    source: "../../skills/aapilot/playbooks/investigation.md",
+    source: "../../skills/pilot/playbooks/investigation.md",
     x: 430,
     y: 345,
   },
@@ -183,7 +183,7 @@ const nodes = [
     subtitle: "Decision experiment",
     purpose: "Coordinates a bounded experiment whose output is evidence and a recommendation, not production implementation.",
     owns: "The decision the experiment resolves and the handoff of its evidence.",
-    source: "../../skills/aapilot/playbooks/prototype.md",
+    source: "../../skills/pilot/playbooks/prototype.md",
     x: 430,
     y: 455,
   },
@@ -238,7 +238,7 @@ const nodes = [
     subtitle: "Change behavior",
     purpose: "Grounds, designs, implements, verifies, and delivers an intentional behavior change.",
     owns: "Feature execution, acceptance criteria, integration, and final behavioral proof.",
-    source: "../../skills/aapilot/playbooks/feature.md",
+    source: "../../skills/pilot/playbooks/feature.md",
     x: 430,
     y: 635,
   },
@@ -249,7 +249,7 @@ const nodes = [
     subtitle: "Correct a mechanism",
     purpose: "Reproduces a failure, confirms its cause, implements a bounded correction, and replays the original surface.",
     owns: "Reproduction, causal diagnosis, correction, and failing-before/passing-after proof.",
-    source: "../../skills/aapilot/playbooks/bug-fix.md",
+    source: "../../skills/pilot/playbooks/bug-fix.md",
     x: 430,
     y: 745,
   },
@@ -260,7 +260,7 @@ const nodes = [
     subtitle: "Preserve behavior",
     purpose: "Changes structure in verifiable increments while holding the observed behavior contract constant.",
     owns: "The structural improvement and equivalence proof.",
-    source: "../../skills/aapilot/playbooks/refactoring.md",
+    source: "../../skills/pilot/playbooks/refactoring.md",
     x: 1776,
     y: 745,
   },
@@ -315,7 +315,7 @@ const nodes = [
     subtitle: "Authorized delivery",
     purpose: "Reviews the complete change, prepares its history and reviewer brief, publishes, and verifies the PR state.",
     owns: "PR preparation and publication—not monitoring, merging, or deployment.",
-    source: "../../skills/aapilot/playbooks/opening-a-pr.md",
+    source: "../../skills/pilot/playbooks/opening-a-pr.md",
     x: 1776,
     y: 635,
   },
@@ -326,7 +326,7 @@ const nodes = [
     subtitle: "Change instructions",
     purpose: "Traces behavior from entry point, edits the owning instructions, validates the package, and exercises consequential changes.",
     owns: "The intended instruction behavior and its validation boundary.",
-    source: "../../skills/aapilot/playbooks/authoring-a-skill.md",
+    source: "../../skills/pilot/playbooks/authoring-a-skill.md",
     x: 2224,
     y: 745,
   },
@@ -337,7 +337,7 @@ const nodes = [
     subtitle: "Behavioral evidence",
     purpose: "Runs temporary instruction experiments in isolated contexts with blinded judging and evidence checked against predefined criteria.",
     owns: "Experiment design, evidence reconciliation, and the adoption recommendation.",
-    source: "../../skills/aapilot/playbooks/eval.md",
+    source: "../../skills/pilot/playbooks/eval.md",
     x: 2224,
     y: 635,
   },
@@ -359,7 +359,7 @@ const nodes = [
     subtitle: "Separate verification worker",
     purpose: "Assesses affected domains using governing criteria and specialist procedures, separately from every producer; production engineering also exercises the identified artifact using the project verifier.",
     owns: "Required coverage, findings, executable observations and workspace/writer handoff; the caller reconciles proof and resource disposition before acceptance.",
-    source: "../../skills/aapilot/references/engineering-verification.md",
+    source: "../../skills/pilot/references/engineering-verification.md",
     x: 879,
     y: 1145,
     w: 270,
@@ -415,7 +415,7 @@ const nodes = [
     subtitle: "Applies to all procedures",
     purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; keeps handoffs and current verification evidence proportional to the task, with a narrow presentation exception.",
     owns: "The shared operating rules, including effort-condition inheritance and reassessment, read by every procedural skill and worker.",
-    source: "../../skills/aapilot/references/execution.md",
+    source: "../../skills/pilot/references/execution.md",
     x: 2224,
     y: 1035,
   },
@@ -474,7 +474,7 @@ function connect(from, to, type, label) {
   edges.push({ id: `${from}--${to}--${type}`, from, to, type, label });
 }
 
-// aapilot's explicit task router.
+// pilot's explicit task router.
 [
   ["product", "define product behavior"],
   ["interaction-design", "design / assess rendered UX"],
@@ -1053,7 +1053,7 @@ function traceFromWork() {
   if (path === null) {
     document.querySelector("#trace-button").textContent = "No directed path";
     window.setTimeout(() => {
-      document.querySelector("#trace-button").textContent = "Trace from aapilot";
+      document.querySelector("#trace-button").textContent = "Trace from pilot";
     }, 1400);
     return;
   }

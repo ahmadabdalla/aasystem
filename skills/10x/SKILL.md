@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # 10x
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Assess how growth affects the supplied decision or options. The caller owns the decision and integrates the findings. Use the same method for an independent assignment; invocation alone requires no additional agent.
 

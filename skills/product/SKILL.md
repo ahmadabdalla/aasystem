@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Product
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own product discovery and the product behavior contract for the assigned scope. Return the result to the caller, which retains the larger task. Discovery-only work ends with the documented model, journeys and unresolved questions; a specification request ends with the contract and unresolved decisions.
 
@@ -38,7 +38,7 @@ Trace journeys backward to who establishes their prerequisites and forward acros
 
 Check for missing outcomes, contradictory rules, and terms that admit different interpretations. Use [domain-modeling](../domain-modeling/SKILL.md) for consequential ambiguity, [probe](../probe/SKILL.md) when evidence could settle an assumption, and [interrogate](../interrogate/SKILL.md) for contested or consequential contracts.
 
-Resolve consequential choices under [decision authority](../aapilot/references/execution.md#decision-authority). Helpers return findings to this assignment; they do not launch implementation. A technical feasibility concern goes to the caller for solution analysis; retain the affected requirement and tradeoff until its authority is resolved.
+Resolve consequential choices under [decision authority](../pilot/references/execution.md#decision-authority). Helpers return findings to this assignment; they do not launch implementation. A technical feasibility concern goes to the caller for solution analysis; retain the affected requirement and tradeoff until its authority is resolved.
 
 ## Record and hand off
 

@@ -2,7 +2,7 @@
 
 Skills and playbooks for AI coding agents to explore ideas, understand a product, build changes, and check that they work. Use them in Codex CLI, Claude Code, or GitHub Copilot CLI.
 
-Start with [Aapilot](skills/aapilot/SKILL.md): describe what you want, and it chooses the playbook and skills for the work. Each skill contains instructions for a particular job, such as product discovery, design, or implementation.
+Start with [Pilot](skills/pilot/SKILL.md): describe what you want, and it chooses the playbook and skills for the work. Each skill contains instructions for a particular job, such as product discovery, design, or implementation.
 
 ## Why I created this
 
@@ -23,7 +23,7 @@ I start with what I want to work out or change. Sometimes that's an idea I haven
 ```text
                   Your idea or request
                            |
-                        Aapilot
+                        Pilot
                            |
     Explore -> Understand -> Design -> Build -> Verify
                   ^                              |
@@ -48,7 +48,7 @@ Tell the agent what you want, what must stay unchanged, and where to stop. Here 
 
 You can stop at research or design, ask for local changes, or ask for a PR. Use a [focused skill](#choose-a-focused-skill) directly when you want help with one job.
 
-For substantial work, Aapilot keeps one [task brief](skills/aapilot/references/task-continuity.md),
+For substantial work, Pilot keeps one [task brief](skills/pilot/references/task-continuity.md),
 selects the needed specialists, restores context after handoffs or compaction, and
 checks the whole request before finishing. Describe the outcome; you need not repeat
 the orchestration instructions.
@@ -64,7 +64,7 @@ This is where my thinking about trust and verification started to develop, helpe
 
 Language models can respond differently to the same request. My thinking is that an agent harness, the software running the agent, can use deterministic code to check what the model proposes and control when work proceeds. This library uses shared contracts, project checks and input-identity comparisons to support verification. These do not intercept tool calls or guarantee that an agent followed the instructions.
 
-The [execution contract](skills/aapilot/references/execution.md) sets out what we agreed to build, what each agent can change, and how the work will be checked. Aapilot can follow a skill's instructions itself or assign work to another agent. It stays responsible for bringing the results together and checking them against the request.
+The [execution contract](skills/pilot/references/execution.md) sets out what we agreed to build, what each agent can change, and how the work will be checked. Pilot can follow a skill's instructions itself or assign work to another agent. It stays responsible for bringing the results together and checking them against the request.
 
 If the work uncovers a decision that needs my input, I want the agent to show me the options and wait for my answer. When I need to review a visual design, I want a preview I can inspect before it continues. Getting agents to do this consistently is challenging, and I'm trying different ideas to make it more reliable.
 
@@ -72,7 +72,7 @@ If the work uncovers a decision that needs my input, I want the agent to show me
 
 Implementation starts with [readiness to deliver and prove](skills/principle-deliver-and-prove/SKILL.md), a personal principle applied through Implement's opening procedure.
 
-The agent making a change runs checks while it works. For a feature or bug fix, the [verification contract](skills/aapilot/references/verification-contract.md) requires a separate agent to review the changes and run the affected project checks. There is a [limited exception for appearance edits](skills/aapilot/references/execution.md#owner-presentation-eligibility).
+The agent making a change runs checks while it works. For a feature or bug fix, the [verification contract](skills/pilot/references/verification-contract.md) requires a separate agent to review the changes and run the affected project checks. There is a [limited exception for appearance edits](skills/pilot/references/execution.md#owner-presentation-eligibility).
 
 When the agent says it's finished, I want to be able to inspect:
 
@@ -84,7 +84,7 @@ For the search example, a passing build wouldn't tell me whether search finds th
 
 For research or design, I want the sources, reasoning, and unresolved questions. The agent should use the project's existing task or PR format so I can review the result where the work already lives.
 
-These contracts are instructions for the agents. Project checks help verify the result, but the library doesn't intercept tool calls or guarantee that an agent followed the instructions. [How Aapilot works](docs/design/verification-contract.md) explains the workflow, verification mechanics, and limitations.
+These contracts are instructions for the agents. Project checks help verify the result, but the library doesn't intercept tool calls or guarantee that an agent followed the instructions. [How Pilot works](docs/design/verification-contract.md) explains the workflow, verification mechanics, and limitations.
 
 ## Install the plugin
 
@@ -99,7 +99,10 @@ codex plugin marketplace add ahmadabdalla/plugins
 codex plugin add aasystem@ahmadabdalla-plugins
 ```
 
-Use `$aasystem:aapilot` to coordinate a task, or `$aasystem:product` for product discovery.
+Use `$aasystem:pilot` to coordinate a task, or `$aasystem:product` for product discovery.
+
+Existing `aapilot` users should follow the [Pilot migration steps](docs/ops/releasing.md#upgrade-from-aapilot-to-pilot)
+for saved commands, direct installs and optional hooks.
 
 ### Claude Code
 
@@ -108,7 +111,7 @@ claude plugin marketplace add ahmadabdalla/plugins
 claude plugin install aasystem@ahmadabdalla-plugins
 ```
 
-Use `/aasystem:aapilot` to coordinate a task, or `/aasystem:product` for product discovery.
+Use `/aasystem:pilot` to coordinate a task, or `/aasystem:product` for product discovery.
 
 ### GitHub Copilot CLI
 
@@ -123,12 +126,12 @@ Marketplace installations use published releases. The `main` branch may include 
 
 ## Start here
 
-After installation, start Aapilot in your agent:
+After installation, start Pilot in your agent:
 
 | Host               | Entry point                                |
 | ------------------ | ------------------------------------------ |
-| Codex CLI          | `$aasystem:aapilot`                        |
-| Claude Code        | `/aasystem:aapilot`                        |
+| Codex CLI          | `$aasystem:pilot`                        |
+| Claude Code        | `/aasystem:pilot`                        |
 | GitHub Copilot CLI | Run `/skills` to find the installed skills |
 
 Describe the work in your own words, using the [examples above](#how-i-use-it) as a starting point.
@@ -160,7 +163,7 @@ If you already know which part of the work needs attention, you can ask for that
 
 Browse [`skills/`](skills/) for all available skills.
 
-For example, ask Aapilot to "grill me about this plan." It asks questions together, then uses your answers to choose the next round. The [Grill Me guide](skills/grill-me/references/grilling.md) explains how it records agreed terms and decisions.
+For example, ask Pilot to "grill me about this plan." It asks questions together, then uses your answers to choose the next round. The [Grill Me guide](skills/grill-me/references/grilling.md) explains how it records agreed terms and decisions.
 
 You can also ask it to assess an existing interface. For a records page, that might include long names, finding older records, and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses two separate agents to check visual composition and interactions, then brings their findings together.
 
@@ -168,7 +171,7 @@ You can also ask it to assess an existing interface. For a records page, that mi
 
 Read more about how the system works:
 
-- [How Aapilot works](docs/design/verification-contract.md): who does the work, how decisions are made, and what must be checked
+- [How Pilot works](docs/design/verification-contract.md): who does the work, how decisions are made, and what must be checked
 - [System graph](visualizations/skill-library/index.html): see which skills call each other
 - [System structure and sources](docs/design/skill-system.md): skill responsibilities, origins, and local changes
 - [Codex usage](docs/ops/codex.md): how to start skills in Codex and configure them
@@ -176,7 +179,7 @@ Read more about how the system works:
 
 ## Change the library
 
-A change to one skill can affect the skills that call it. Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/aapilot/playbooks/authoring-a-skill.md) to check those relationships. The [evaluation playbook](skills/aapilot/playbooks/eval.md) describes how to try instruction changes on realistic tasks and inspect the results.
+A change to one skill can affect the skills that call it. Start with the [maintenance rules](AGENTS.md) and follow the [skill authoring playbook](skills/pilot/playbooks/authoring-a-skill.md) to check those relationships. The [evaluation playbook](skills/pilot/playbooks/eval.md) describes how to try instruction changes on realistic tasks and inspect the results.
 
 For development, follow the [maintainer setup](docs/ops/releasing.md#maintainer-setup) to install Python dependencies and run the package checks.
 

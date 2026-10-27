@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Solution
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own the solution decision and its explanation. Use returned findings in the decision record; do not restart the brief or concatenate reports. Surface changed assumptions, consequential findings, and decisions that need the user's input as work proceeds.
 
@@ -14,7 +14,7 @@ Own the solution decision and its explanation. Use returned findings in the deci
 
 Treat feature scope, production readiness, evaluation purpose and rollout scale as separate decisions; infer none from the label MVP alone.
 
-Before substantial work, state the intended outcome and unresolved choices. Reframe a proposed technology or either/or choice into the actual decision. Investigate observable unknowns and apply [decision authority](../aapilot/references/execution.md#decision-authority). Preserve proposals separately from agreements; reopen a settled brief only when new evidence changes it.
+Before substantial work, state the intended outcome and unresolved choices. Reframe a proposed technology or either/or choice into the actual decision. Investigate observable unknowns and apply [decision authority](../pilot/references/execution.md#decision-authority). Preserve proposals separately from agreements; reopen a settled brief only when new evidence changes it.
 
 ## Ground and research
 
@@ -42,4 +42,4 @@ For each viable option, identify what must be true, the strongest failure case, 
 
 Use the caller’s designated artifact for the solution rationale, preserving other contributors’ content and linking canonical decisions. Maintain one decision record containing the outcome, chosen approach and rationale, constraints, non-goals, decisive sources and their limits, accepted tradeoffs, rejected alternatives, unresolved assumptions, and conditions for reconsideration. Include observable success criteria where known. Preserve whether a claim is documented, observed, inferred, or a value judgment. Distinguish an initial version from a target state only with concrete transition triggers. If uncertainty changes the ranking, make the recommendation conditional and identify the discriminating evidence. Present the recommendation and what affects its acceptance; link to supporting detail when substantial. The record's contents need not become separate headings in every reply.
 
-When called by [aapilot](../aapilot/SKILL.md), return the decision record and its source artifacts to that owner, which selects the appropriate change playbook if implementation is authorized. For a standalone design request, pass the same record to [architect](../architect/SKILL.md). For an authorized build, transfer the continuation and same record to aapilot for the change playbook, preserving one owner and requested checkpoints; Architect remains design-only. A research-only request ends with the recommendation. Business value and preference may remain judgments. Research supports the recommendation; it does not prove a future implementation works.
+When called by [pilot](../pilot/SKILL.md), return the decision record and its source artifacts to that owner, which selects the appropriate change playbook if implementation is authorized. For a standalone design request, pass the same record to [architect](../architect/SKILL.md). For an authorized build, transfer the continuation and same record to pilot for the change playbook, preserving one owner and requested checkpoints; Architect remains design-only. A research-only request ends with the recommendation. Business value and preference may remain judgments. Research supports the recommendation; it does not prove a future implementation works.

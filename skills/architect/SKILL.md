@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # Architect
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Own implementation design, rationale, and revision. Compare code shapes and deliver a design with a verification plan. Integrate supporting artifacts into the package; report material changes and verification gaps. The caller owns implementation and acceptance.
 
-Every assignment is design-only. For a standalone design-and-build request, return the same package and authorized continuation to [aapilot](../aapilot/SKILL.md) for the change playbook, preserving one owner, settled grounding, requested checkpoints, and implementation scope. Reuse a settled package unless material changes or evidence gaps require revision.
+Every assignment is design-only. For a standalone design-and-build request, return the same package and authorized continuation to [pilot](../pilot/SKILL.md) for the change playbook, preserving one owner, settled grounding, requested checkpoints, and implementation scope. Reuse a settled package unless material changes or evidence gaps require revision.
 
 ## Design trigger
 
@@ -22,7 +22,7 @@ Read the agreed product contract and its requirement sources when present. Carry
 
 Read relevant project glossary entries and current ADRs, including for standalone work. Carry their constraints and evidence limits into the design. Use [domain-modeling](../domain-modeling/SKILL.md) for ambiguous concepts or qualifying implementation decisions within the authorized document scope; link its records from the design package. Explain changed evidence before reopening an accepted decision. Translate agreed meanings and decisions into observable expectations below.
 
-Read the [solution](../solution/SKILL.md) decision record and its supporting evidence when present; a standalone request can supply the same brief. Carry forward its constraints, evidence limits, unresolved assumptions, and conditions for reconsideration. Reuse the settled brief and state implementation-specific gaps that change the work. For a new brief, state the intended deliverable and unresolved choices; inspect observable facts. Apply [decision authority](../aapilot/references/execution.md#decision-authority) to unresolved consequential choices and preserve proposed versus agreed status in the design package.
+Read the [solution](../solution/SKILL.md) decision record and its supporting evidence when present; a standalone request can supply the same brief. Carry forward its constraints, evidence limits, unresolved assumptions, and conditions for reconsideration. Reuse the settled brief and state implementation-specific gaps that change the work. For a new brief, state the intended deliverable and unresolved choices; inspect observable facts. Apply [decision authority](../pilot/references/execution.md#decision-authority) to unresolved consequential choices and preserve proposed versus agreed status in the design package.
 
 Trace affected behavior with [how](../how/SKILL.md); use [why](../why/SKILL.md) when changing ownership or layering. For greenfield work, ground in real callers, dependencies, and integration constraints. Preserve the strategic decision; reopen it when contradictory evidence or changed requirements warrant it, and explain why.
 
@@ -48,6 +48,6 @@ Write the design package into the caller’s designated artifact when supplied, 
 
 ## Return and reconsider
 
-Return the package, source identity, settled constraints, risks, and implementation prerequisites to the owner for [Implement](../implement/SKILL.md) and [independent verification](../aapilot/references/execution.md#independent-implementation-verification).
+Return the package, source identity, settled constraints, risks, and implementation prerequisites to the owner for [Implement](../implement/SKILL.md) and [independent verification](../pilot/references/execution.md#independent-implementation-verification).
 
 Investigate repeated workarounds, special cases, type escapes, or callers learning internals reported by implementation or verification. Trace the mismatch; resketch or compare again when material. Update the package with the reason and affected proof; the caller assigns corrections and verification. A single edge case need not invalidate the design. Do not weaken acceptance criteria to fit the design.

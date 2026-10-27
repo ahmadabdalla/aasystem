@@ -10,12 +10,12 @@ import tempfile
 import unittest
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "skills/aapilot/scripts/orchestration.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "skills/pilot/scripts/orchestration.py"
 
 
 class OrchestrationTest(unittest.TestCase):
     def setUp(self):
-        self.fixture = tempfile.TemporaryDirectory(prefix="aapilot-orchestration-")
+        self.fixture = tempfile.TemporaryDirectory(prefix="pilot-orchestration-")
         self.addCleanup(self.fixture.cleanup)
         self.root = Path(self.fixture.name)
         self.cwd = self.root / "project"
@@ -35,7 +35,7 @@ class OrchestrationTest(unittest.TestCase):
         self.assertNotEqual(run.returncode, 0, run.stdout)
         return run
 
-    def hook(self, kind="UserPromptSubmit", prompt="$aapilot Explain today's import behavior; stop at findings.", **fields):
+    def hook(self, kind="UserPromptSubmit", prompt="$pilot Explain today's import behavior; stop at findings.", **fields):
         self.counter += 1
         event = {"hook_event_name": kind, "session_id": self.session, "cwd": str(self.cwd),
                  "turn_id": f"turn-{self.counter}", **fields}
@@ -81,15 +81,48 @@ class OrchestrationTest(unittest.TestCase):
         self.assertFalse(self.state.exists())
 
     def test_explicit_invocation_captures_verbatim_and_is_recoverable(self):
-        prompt = "$aasystem:aapilot Add search, preserve filters, and stop at local changes."
+        prompt = "$aasystem:pilot Add search, preserve filters, and stop at local changes."
         context = self.hook(prompt=prompt)["hookSpecificOutput"]["additionalContext"]
         self.assertIn("root coordinator alone", context)
         self.assertEqual(self.cli("show")["inputs"][0]["text"], prompt)
         self.assertIn(str(self.state_path()), context)
 
     def test_invocation_quoted_in_normal_prose_does_not_activate(self):
-        self.assertEqual(self.hook(prompt="Would `$aapilot change imports` work?"), {})
+        self.assertEqual(self.hook(prompt="Would `$pilot change imports` work?"), {})
         self.assertFalse(self.state.exists())
+
+    def test_explicit_invocation_accepts_direct_and_namespaced_forms(self):
+        for number, prompt in enumerate(("$pilot", "  $aasystem:pilot\nExplain imports.")):
+            with self.subTest(prompt=prompt):
+                self.session = f"invocation-{number}"
+                self.hook(prompt=prompt)
+                self.assertEqual(self.cli("show")["original_request"], prompt)
+
+    def test_former_and_near_matching_names_do_not_activate(self):
+        for prompt in ("$aapilot Explain imports.", "$aasystem:aapilot Explain imports.",
+                       "$pilotage Explain imports.", "$aasystem:pilot-extra Explain imports.",
+                       "$other:pilot Explain imports."):
+            with self.subTest(prompt=prompt):
+                self.assertEqual(self.hook(prompt=prompt), {})
+                self.assertFalse(self.state.exists())
+
+    def test_existing_v2_request_keeps_original_name_on_restore(self):
+        self.hook()
+        path = self.state_path()
+        task = json.loads(path.read_text())
+        original = "$aasystem:aapilot Explain imports; stop at findings."
+        task["original_request"] = original
+        task["inputs"][0]["text"] = original
+        path.write_text(json.dumps(task))
+        before = path.read_bytes()
+        self.hook(kind="SessionStart", source="resume")
+        self.assertEqual(path.read_bytes(), before)
+        self.hook(prompt="$aasystem:pilot Preserve empty imports too.")
+        restored = self.cli("show")
+        self.assertEqual(restored["version"], 2)
+        self.assertEqual(restored["intent_id"], task["intent_id"])
+        self.assertEqual(restored["original_request"], original)
+        self.assertEqual(restored["inputs"][0]["text"], original)
 
     def test_compaction_and_subagent_handoff_restore_same_contract_without_writing(self):
         self.hook()
@@ -146,13 +179,13 @@ class OrchestrationTest(unittest.TestCase):
 
     def test_repeated_explicit_invocation_keeps_prior_contract_for_reconciliation(self):
         self.hook()
-        self.hook(prompt="$aapilot Now implement a replacement importer.")
+        self.hook(prompt="$pilot Now implement a replacement importer.")
         task = self.cli("show")
         self.assertEqual(len(task["inputs"]), 2)
         self.assertIn("stop at findings", task["inputs"][0]["text"])
 
     def test_duplicate_prompt_event_is_idempotent(self):
-        prompt = "$aapilot Explain current imports; stop at findings."
+        prompt = "$pilot Explain current imports; stop at findings."
         self.hook(prompt=prompt, turn_id="stable-turn")
         before = self.cli("show")
         self.hook(prompt=prompt, turn_id="stable-turn")
@@ -182,7 +215,7 @@ class OrchestrationTest(unittest.TestCase):
     def test_user_correction_with_checkpoint_prefix_reopens_completed_task(self):
         self.hook()
         self.update(self.completed())
-        correction = "[aapilot checkpoint] Correction: preserve empty imports too."
+        correction = "[pilot checkpoint] Correction: preserve empty imports too."
         self.hook(prompt=correction)
         task = self.cli("show")
         self.assertEqual(task["inputs"][-1]["text"], correction)
@@ -199,7 +232,7 @@ class OrchestrationTest(unittest.TestCase):
                 self.assertEqual(self.state_path().read_bytes(), before)
                 self.assertEqual(len(self.cli("show")["inputs"]), 1)
         result = self.cli("hook", payload={"hook_event_name": "UserPromptSubmit", "session_id": "new-invalid",
-                                          "cwd": str(self.cwd), "turn_id": None, "prompt": "$aapilot Investigate"})
+                                          "cwd": str(self.cwd), "turn_id": None, "prompt": "$pilot Investigate"})
         self.assertIn("Invalid input turn id", result["systemMessage"])
         self.assertEqual(len(list(self.state.glob("*/task.json"))), 1)
 
@@ -274,7 +307,7 @@ class OrchestrationTest(unittest.TestCase):
         self.assertEqual(self.hook(kind="Stop")["decision"], "block")
         path.unlink()
         self.assertEqual(self.hook(kind="Stop")["decision"], "block")
-        self.hook(prompt="$aapilot Do not replace a missing original task")
+        self.hook(prompt="$pilot Do not replace a missing original task")
         self.assertFalse(path.exists())
 
     def test_stale_update_is_rejected_without_losing_captured_correction(self):
@@ -298,7 +331,7 @@ class OrchestrationTest(unittest.TestCase):
     def test_two_sessions_in_same_workspace_remain_isolated(self):
         def invoke(session):
             payload = {"hook_event_name": "UserPromptSubmit", "session_id": session, "cwd": str(self.cwd),
-                       "turn_id": "first", "prompt": f"$aapilot Explain {session}; no edits."}
+                       "turn_id": "first", "prompt": f"$pilot Explain {session}; no edits."}
             return self.cli("hook", payload=payload)
         with ThreadPoolExecutor(max_workers=2) as pool:
             list(pool.map(invoke, ["first-session", "second-session"]))
@@ -448,10 +481,10 @@ class OrchestrationTest(unittest.TestCase):
         self.update(self.completed())
         record = self.canonical()
         self.retire(record)
-        self.hook(prompt="$aapilot A distinct second task")
+        self.hook(prompt="$pilot A distinct second task")
         second = self.cli("show")
         self.assertNotEqual(first["intent_id"], second["intent_id"])
-        self.assertEqual(second["original_request"], "$aapilot A distinct second task")
+        self.assertEqual(second["original_request"], "$pilot A distinct second task")
         result = self.cli("resume", "--record", str(record), "--intent-id", first["intent_id"],
                           "--original-request", first["original_request"], session="resuming-session")
         resumed = self.cli("show", session="resuming-session")
@@ -556,7 +589,7 @@ module.main()
             run.stderr.close()
 
     def test_killed_first_capture_recovers_request_and_releases_kernel_lock(self):
-        prompt = "$aapilot Preserve the only original request through a crash"
+        prompt = "$pilot Preserve the only original request through a crash"
         self.crash_before_task_replace(prompt)
         self.assertEqual(len(list(self.state.glob("*/.task.pending"))), 1)
         # Deliberately truncate the interrupted first write: committed registration is authoritative.
@@ -799,7 +832,7 @@ module.main()
         for number in range(100):
             # Ten sessions include repeated same-session intents and fresh-session reuse.
             self.session = f"session-{number % 10}"
-            self.hook(prompt=f"$aapilot Logical intent {number}")
+            self.hook(prompt=f"$pilot Logical intent {number}")
             body = self.body(status="complete")
             body["obligations"][0].update(status="passed", evidence=[proof])
             body["reconciliation"] = "Completed the original intent with retained sources"

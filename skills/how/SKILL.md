@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # How
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Assess the scope, explore the system, reconcile findings, and explain the behavior. Build a working model from the actual code and configuration.
 

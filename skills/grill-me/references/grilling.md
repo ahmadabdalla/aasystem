@@ -8,7 +8,7 @@ Work in **rounds**. The **frontier** is every open decision whose prerequisites 
 
 Inspect relevant code, terminology, decisions and primary sources. Finding facts is your job; choices needing judgment belong to the user. Separate observations, assumptions and preferences.
 
-Use tools and fact-finding workers under the [delegation rules](../../aapilot/references/execution.md#delegation). Pending facts block only dependent questions. If a needed fact is inaccessible, state the gap and ask for the minimum missing input.
+Use tools and fact-finding workers under the [delegation rules](../../pilot/references/execution.md#delegation). Pending facts block only dependent questions. If a needed fact is inaccessible, state the gap and ask for the minimum missing input.
 
 ## Ask and update
 

@@ -6,16 +6,16 @@ It does not define maintenance steps or Codex invocation settings.
 
 - **Maintenance rules:** [`AGENTS.md`](../../AGENTS.md)
 - **Codex settings:** [`docs/ops/codex.md`](../ops/codex.md)
-- **Operating design:** [How Aapilot works](verification-contract.md)
+- **Operating design:** [How Pilot works](verification-contract.md)
 - **Visual map:** [Ahmad Abdalla's Pilot System Graph](../../visualizations/skill-library/index.html)
 
 ## System flow
 
 The default flow is:
 
-`aapilot -> playbook -> supporting skills -> project evidence`
+`pilot -> playbook -> supporting skills -> project evidence`
 
-1. [`aapilot`](../../skills/aapilot/SKILL.md) owns coordination and completion
+1. [`pilot`](../../skills/pilot/SKILL.md) owns coordination and completion
 2. A playbook defines the task sequence
 3. Supporting skills return bounded results to their caller
 4. The caller updates canonical project records
@@ -23,7 +23,7 @@ The default flow is:
 
 All procedural skills use:
 
-- The [execution contract](../../skills/aapilot/references/execution.md)
+- The [execution contract](../../skills/pilot/references/execution.md)
 - The [principle index](../../skills/principles/INDEX.md)
 - The current project instructions
 - The current task brief
@@ -32,7 +32,7 @@ All procedural skills use:
 
 Use these boundaries when skills interact:
 
-- **aapilot:** shared understanding, scope and proof assessment, routing, direct or delegated execution, and completion
+- **pilot:** shared understanding, scope and proof assessment, routing, direct or delegated execution, and completion
 - **Task continuity reference:** durable intent, scope-aware increments, recovery and task-wide reconciliation; existing rubric and procedures retain sizing, specialist responsibilities and proof requirements
 - **Optional Codex adapter:** session/cwd-bound local state, hook context restoration and recorded completion checks; it neither chooses the route nor authenticates semantic acceptance
 - **Product:** journeys, behavior, rules, and acceptance scenarios
@@ -74,7 +74,7 @@ Use `features/README.md` plus linked feature files.
 
 Preserve an equivalent existing layout.
 
-For OpenSpec projects, use the [integration reference](../../skills/aapilot/references/openspec.md).
+For OpenSpec projects, use the [integration reference](../../skills/pilot/references/openspec.md).
 
 ## Skill inventory
 
@@ -82,12 +82,12 @@ Each row names the skill’s role, source, and local adaptation.
 
 | Skill | Role | Source | Local adaptation |
 | --- | --- | --- | --- |
-| [`aapilot`](../../skills/aapilot/SKILL.md) | Coordinate and finish tasks | pstack [`poteto-mode`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md) | Uses host tools; needs no custom agent setup |
+| [`pilot`](../../skills/pilot/SKILL.md) | Coordinate and finish tasks | pstack [`poteto-mode`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md) | Uses host tools; needs no custom agent setup |
 | [`product`](../../skills/product/SKILL.md) | Define journeys and behavior | First-party split; [OpenSpec](https://github.com/Fission-AI/OpenSpec/blob/main/docs/concepts.md) | Owns discovery synthesis and separates facts, proposals, and agreements |
 | [`solution`](../../skills/solution/SKILL.md) | Choose the overall approach | pstack [`investigation`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/investigation.md); [selected engineering inputs](#selected-engineering-inputs) | Compares viable existing and simpler approaches, exposes consequential assumptions, and records demonstrated reversal costs and reconsideration conditions |
 | [`architect`](../../skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md); [selected engineering inputs](#selected-engineering-inputs) | Applies Maintainability criteria and justifies added structure against present callers, invariants, and change burden; returns a design package and proof plan while the caller retains implementation and acceptance |
 | [`10x`](../../skills/10x/SKILL.md) | Assess decisions under plausible growth | First-party; user-requested | Returns scenarios, first constraints, accommodate/defer tradeoffs, proof needs and reconsideration triggers to domain callers |
-| [`implement`](../../skills/implement/SKILL.md) | Execute bounded edits and development checks | First-party extraction from the library’s implementation workflows and [execution contract](../../skills/aapilot/references/execution.md); [selected engineering inputs](#selected-engineering-inputs) | Applies relevant Maintainability criteria and conditional refactoring moves within settled scope, returns edits and development evidence, and returns design contradictions to the caller; final acceptance remains with the owner |
+| [`implement`](../../skills/implement/SKILL.md) | Execute bounded edits and development checks | First-party extraction from the library’s implementation workflows and [execution contract](../../skills/pilot/references/execution.md); [selected engineering inputs](#selected-engineering-inputs) | Applies relevant Maintainability criteria and conditional refactoring moves within settled scope, returns edits and development evidence, and returns design contradictions to the caller; final acceptance remains with the owner |
 | [`maintainability`](../../skills/maintainability/SKILL.md) | Assess reader effort, local change, and ease of verification | pstack [`Minimize Reader Load`](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-minimize-reader-load/SKILL.md) and [`Architect red flags`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md); Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md) and [`code-review`](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md); [selected engineering inputs](#selected-engineering-inputs) | Owns reusable criteria in [`SKILL.md`](../../skills/maintainability/SKILL.md), [`local code`](../../skills/maintainability/references/local-code.md), and [`boundaries`](../../skills/maintainability/references/boundaries.md), consumed directly by design, implementation, and independent verification |
 | [`interaction-design`](../../skills/interaction-design/SKILL.md) | Design consequential interactions | pstack [`Experience First`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-experience-first/SKILL.md), [`Exhaust the Design Space`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-exhaust-the-design-space/SKILL.md), Matt Pocock [`wayfinder`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/wayfinder/SKILL.md) | Keeps product meaning and implementation architecture with their owners |
 | [`ui-refinement`](../../skills/ui-refinement/SKILL.md) | Refine a rendered experience | First-party founder requirement | Returns a reviewed reference; the caller retains delivery |
@@ -112,31 +112,43 @@ Each row names the skill’s role, source, and local adaptation.
 
 ## Orchestrator playbooks
 
-The aapilot skill selects one of these sequences:
+The pilot skill selects one of these sequences:
 
 | Playbook | Purpose |
 | --- | --- |
-| [`investigation`](../../skills/aapilot/playbooks/investigation.md) | Answer a question with evidence |
-| [`bug-fix`](../../skills/aapilot/playbooks/bug-fix.md) | Reproduce, diagnose, fix, and recheck |
-| [`feature`](../../skills/aapilot/playbooks/feature.md) | Design, build, and verify a feature |
-| [`refactoring`](../../skills/aapilot/playbooks/refactoring.md) | Change structure without changing behavior |
-| [`prototype`](../../skills/aapilot/playbooks/prototype.md) | Coordinate a bounded experiment |
-| [`authoring-a-skill`](../../skills/aapilot/playbooks/authoring-a-skill.md) | Create or update a skill |
-| [`eval`](../../skills/aapilot/playbooks/eval.md) | Run fresh candidates against separate criteria |
-| [`opening-a-pr`](../../skills/aapilot/playbooks/opening-a-pr.md) | Prepare, publish, and confirm a pull request |
+| [`investigation`](../../skills/pilot/playbooks/investigation.md) | Answer a question with evidence |
+| [`bug-fix`](../../skills/pilot/playbooks/bug-fix.md) | Reproduce, diagnose, fix, and recheck |
+| [`feature`](../../skills/pilot/playbooks/feature.md) | Design, build, and verify a feature |
+| [`refactoring`](../../skills/pilot/playbooks/refactoring.md) | Change structure without changing behavior |
+| [`prototype`](../../skills/pilot/playbooks/prototype.md) | Coordinate a bounded experiment |
+| [`authoring-a-skill`](../../skills/pilot/playbooks/authoring-a-skill.md) | Create or update a skill |
+| [`eval`](../../skills/pilot/playbooks/eval.md) | Run fresh candidates against separate criteria |
+| [`opening-a-pr`](../../skills/pilot/playbooks/opening-a-pr.md) | Prepare, publish, and confirm a pull request |
 
 The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins/tree/main/pstack/skills/poteto-mode/playbooks).
 
 ## Deliberate system adaptations
 
+### Entry-point rename
+
+The entry skill is now `pilot`, moved with its playbooks, shared contracts,
+scripts and optional adapter into `skills/pilot/`. Supporting callers, invocation
+examples, package requirements and graph source links use that tree. This is a
+name/path change: routing, ownership, proof requirements, explicit invocation
+policies and the `aasystem` plugin identity are preserved. No `aapilot` alias is
+exported. The Codex adapter activates `$aasystem:pilot` and `$pilot`; its version-2
+state format is unchanged and retains original request text. The
+[upgrade procedure](../ops/releasing.md#upgrade-from-aapilot-to-pilot) owns consumer
+migration, including separately configured hooks and external references.
+
 ### Coordination
 
-The first-party, user-requested [effort rubric](../../skills/aapilot/references/effort.md) owns S/M/L profiles and consequence-driven scrutiny. The [execution contract](../../skills/aapilot/references/execution.md#scope-and-proof) owns application by task owners and standalone specialists, with [inheritance and reassessment](../../skills/aapilot/references/execution.md#ownership-and-handoffs) across assignments.
+The first-party, user-requested [effort rubric](../../skills/pilot/references/effort.md) owns S/M/L profiles and consequence-driven scrutiny. The [execution contract](../../skills/pilot/references/execution.md#scope-and-proof) owns application by task owners and standalone specialists, with [inheritance and reassessment](../../skills/pilot/references/execution.md#ownership-and-handoffs) across assignments.
 
-The [execution contract](../../skills/aapilot/references/execution.md) adds:
+The [execution contract](../../skills/pilot/references/execution.md) adds:
 
 - Caller-owned phase transitions
-- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](../../skills/aapilot/references/execution.md#decision-authority), which owns the inspectable human checkpoint handoff and stop/wait rule
+- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](../../skills/pilot/references/execution.md#decision-authority), which owns the inspectable human checkpoint handoff and stop/wait rule
 - Non-overlapping canonical writes
 - Freshness checks after supporting work returns
 - No implied scheduler, runtime lock, or automatic approval
@@ -147,11 +159,11 @@ The [execution contract](../../skills/aapilot/references/execution.md) adds:
 
 Local styling cannot silently change a shared design system.
 
-Shared rules stay in the execution contract. Its [delegation procedure](../../skills/aapilot/references/execution.md#delegation) owns capability checks, direct or delegated execution and result acceptance; its [completion rules](../../skills/aapilot/references/execution.md#completion) own planned closing assignments and final reconciliation.
+Shared rules stay in the execution contract. Its [delegation procedure](../../skills/pilot/references/execution.md#delegation) owns capability checks, direct or delegated execution and result acceptance; its [completion rules](../../skills/pilot/references/execution.md#completion) own planned closing assignments and final reconciliation.
 
 Specialists keep only actionable scope reminders.
 
-The [skill authoring playbook](../../skills/aapilot/playbooks/authoring-a-skill.md) owns instruction specificity, deduplication, and criteria for splitting skills or using references.
+The [skill authoring playbook](../../skills/pilot/playbooks/authoring-a-skill.md) owns instruction specificity, deduplication, and criteria for splitting skills or using references.
 
 Worker selection follows a concrete parallelism, capability or context need. Comparison uses independent candidates when they can change an unresolved material choice; selected Arena comparisons retain isolation and separate judging. Bounded implementer continuity does not relax fresh independent verification.
 
@@ -159,7 +171,7 @@ The [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) o
 
 ### Grilling and documentation
 
-Aapilot and direct requests use the same [Grill Me entry](../../skills/grill-me/SKILL.md). The [grilling reference](../../skills/grill-me/references/grilling.md) owns the decision tree, question rounds, fact finding, recommendations and final confirmation. The execution contract supplies scope and authority. Pending facts block only dependent questions; each round waits for the user's answers.
+Pilot and direct requests use the same [Grill Me entry](../../skills/grill-me/SKILL.md). The [grilling reference](../../skills/grill-me/references/grilling.md) owns the decision tree, question rounds, fact finding, recommendations and final confirmation. The execution contract supplies scope and authority. Pending facts block only dependent questions; each round waits for the user's answers.
 
 Load Domain Modeling when terms or consequential decisions emerge. Record them as they settle, following its glossary and ADR formats, recording thresholds and edit scope. "With docs" uses this same path. Requirements stay in their brief; read-only work returns proposed text. [Product-discovery interviews](../../skills/grill-me/references/discovery-interview.md) keep their one-question procedure and return attributed evidence to Product for synthesis.
 
@@ -167,11 +179,11 @@ Load the selected interview reference and reuse shared instructions already in c
 
 ### Standard verification contract
 
-The [verification contract](../../skills/aapilot/references/verification-contract.md) connects agreed expectations to the tested artifact, independent observations, findings and delivery. Reuse project records. Research and design retain scoped sources and rationale.
+The [verification contract](../../skills/pilot/references/verification-contract.md) connects agreed expectations to the tested artifact, independent observations, findings and delivery. Reuse project records. Research and design retain scoped sources and rationale.
 
-The [execution contract](../../skills/aapilot/references/execution.md#owner-presentation-eligibility) owns the narrow owner-presentation exception. Feature and direct Implement expose it without extra coordinator or worker; it cannot waive independent review required by the user or project. Other retained implementation requires separate verification and applicable human checkpoints.
+The [execution contract](../../skills/pilot/references/execution.md#owner-presentation-eligibility) owns the narrow owner-presentation exception. Feature and direct Implement expose it without extra coordinator or worker; it cannot waive independent review required by the user or project. Other retained implementation requires separate verification and applicable human checkpoints.
 
-Local implementation and verification reuse the checkout or one task worktree. The optional [input_identity.py](../../skills/aapilot/scripts/input_identity.py) provides a Python 3.10+/Git read-only fingerprint and comparison when project facilities are insufficient. It streams selected inputs and creates no source copies. Project checks supply behavioural observations; owner/verifier judgment supplies semantic scope and acceptance. None of these mechanisms authenticates actors or controls all host tools.
+Local implementation and verification reuse the checkout or one task worktree. The optional [input_identity.py](../../skills/pilot/scripts/input_identity.py) provides a Python 3.10+/Git read-only fingerprint and comparison when project facilities are insufficient. It streams selected inputs and creates no source copies. Project checks supply behavioural observations; owner/verifier judgment supplies semantic scope and acceptance. None of these mechanisms authenticates actors or controls all host tools.
 
 ### Design, implementation, and independent verification
 
@@ -179,17 +191,17 @@ Local implementation and verification reuse the checkout or one task worktree. T
 
 [`implement`](../../skills/implement/SKILL.md) is shared bounded execution support for Feature, Bug Fix, Refactoring, and Figure It Out. Each caller supplies its settled design or contract, file ownership, constraints, and assigned checks; Implement returns edits and development evidence into that caller’s run. A direct eligible owner-presentation request can stay with Implement through acceptance.
 
-The [execution contract](../../skills/aapilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and [owner-presentation eligibility](../../skills/aapilot/references/execution.md#owner-presentation-eligibility). The first-party [engineering-verification reference](../../skills/aapilot/references/engineering-verification.md) defines that worker's combined assignment: bounded scope and structure assessment using Maintainability criteria, plus affected project-verifier checks. Its result distinguishes qualitative findings from executable observations. The verifier is an existing agent role, not another portable skill or review pool. The caller retains integration, material-finding dispositions, current proof, and explicit semantic acceptance. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
+The [execution contract](../../skills/pilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and [owner-presentation eligibility](../../skills/pilot/references/execution.md#owner-presentation-eligibility). The first-party [engineering-verification reference](../../skills/pilot/references/engineering-verification.md) defines that worker's combined assignment: bounded scope and structure assessment using Maintainability criteria, plus affected project-verifier checks. Its result distinguishes qualitative findings from executable observations. The verifier is an existing agent role, not another portable skill or review pool. The caller retains integration, material-finding dispositions, current proof, and explicit semantic acceptance. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
 
-[Feature](../../skills/aapilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
+[Feature](../../skills/pilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
 
 Architect's first-party [seed scenario reference](../../skills/architect/references/seed-scenarios.md) owns data purpose, minimal context, lifecycle and source/build/release/invocation decisions. Feature reads it when proof depends on state. The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#scenario-coverage) owns completion and automation criteria through existing Bootstrap/Maintain routes. Decisions and proof stay in current assignments and project records. A conditional reference avoids a separate skill and repeated lifecycle guidance.
 
 ### Growth assessment
 
-[`10x`](../../skills/10x/SKILL.md) owns one reusable assessment method. Solution, Architect and Interaction Design apply it before settling consequential designs, reusing current findings and extending only newly exposed constraints. Aapilot also routes standalone growth-assessment requests to it. Direct application and bounded independent assignments use the same contract; invocation creates no new coordinator or mandatory worker.
+[`10x`](../../skills/10x/SKILL.md) owns one reusable assessment method. Solution, Architect and Interaction Design apply it before settling consequential designs, reusing current findings and extending only newly exposed constraints. Pilot also routes standalone growth-assessment requests to it. Direct application and bounded independent assignments use the same contract; invocation creates no new coordinator or mandatory worker.
 
-The assessment states a baseline and growth scenario, first constraint, present/deferred tradeoff, proof need and reconsideration trigger. Assumptions, proposed targets and observed capacity remain distinct. Existing design handoffs carry required checks to [engineering verification](../../skills/aapilot/references/engineering-verification.md); deferred targets do not become release requirements. ADR formatting remains owned by [Domain Modeling](../../skills/domain-modeling/references/adr.md).
+The assessment states a baseline and growth scenario, first constraint, present/deferred tradeoff, proof need and reconsideration trigger. Assumptions, proposed targets and observed capacity remain distinct. Existing design handoffs carry required checks to [engineering verification](../../skills/pilot/references/engineering-verification.md); deferred targets do not become release requirements. ADR formatting remains owned by [Domain Modeling](../../skills/domain-modeling/references/adr.md).
 
 ### Maintainability
 
@@ -201,13 +213,13 @@ The boundaries reference also supplies dependency-design questions: caller oblig
 
 Implement conditionally reads [Refactoring moves](../../skills/implement/references/refactoring-moves.md) for assigned structural improvements. Architect conditionally reads [Business state and consistency](../../skills/architect/references/business-state.md) when identity, state ownership, invariants, or cross-context coordination change. Both return into existing design, implementation, and verification handoffs; Domain Modeling retains terminology and records. No new skill, verifier, or external installation is introduced. This PoC keeps each of these three references at no more than 80 physical lines, including headings and blanks.
 
-The [design package](../../skills/architect/references/design-package.md) carries applicable guarantees and required cases into implementation and independent verification. [Engineering Verification](../../skills/aapilot/references/engineering-verification.md) applies local-code criteria to production edits and boundary criteria when relevant, derives checks from the authorised contract and actual artifact as well as that handoff, and keeps qualitative findings separate from executable proof. It reads the business-state procedure only when interpreting or checking coverage requires it. Recipe gaps return through [Maintain Verification](../../skills/maintain-verification/SKILL.md) within the existing scope; unchanged recipes need no edit. One verifier can cover these concerns without another review pool or blanket source reading.
+The [design package](../../skills/architect/references/design-package.md) carries applicable guarantees and required cases into implementation and independent verification. [Engineering Verification](../../skills/pilot/references/engineering-verification.md) applies local-code criteria to production edits and boundary criteria when relevant, derives checks from the authorised contract and actual artifact as well as that handoff, and keeps qualitative findings separate from executable proof. It reads the business-state procedure only when interpreting or checking coverage requires it. Recipe gaps return through [Maintain Verification](../../skills/maintain-verification/SKILL.md) within the existing scope; unchanged recipes need no edit. One verifier can cover these concerns without another review pool or blanket source reading.
 
 ### Selected engineering inputs
 
 The user supplied local Clean Code and Pragmatic Programmer references as conceptual inputs. The local Clean Code skill's metadata identifies author `wondelai`, version `1.4.0`, and license `MIT`. The supplied Pragmatic Programmer file has no license declaration; no additional provenance or license is asserted here. These local inputs are not export dependencies.
 
-The library authors its own bounded adaptations rather than copying those manuals: names and flow that expose intent, meaningful failure contracts, preserved rationale, duplication judged as shared knowledge, explicit invariants, test independence, generated-source ownership, and evidence about coupling and reversal cost. Solution owns approach and commitment comparisons. Maintainability owns the criteria consumed by Architect for design, Implement for assigned edits, and the existing verifier for independent assessment. The [engineering-verification reference](../../skills/aapilot/references/engineering-verification.md) is a first-party procedure for that gate. Fixed cleanliness scores, size quotas, blanket extraction or error-handling policies, speculative abstractions, and unrelated cleanup are not adopted.
+The library authors its own bounded adaptations rather than copying those manuals: names and flow that expose intent, meaningful failure contracts, preserved rationale, duplication judged as shared knowledge, explicit invariants, test independence, generated-source ownership, and evidence about coupling and reversal cost. Solution owns approach and commitment comparisons. Maintainability owns the criteria consumed by Architect for design, Implement for assigned edits, and the existing verifier for independent assessment. The [engineering-verification reference](../../skills/pilot/references/engineering-verification.md) is a first-party procedure for that gate. Fixed cleanliness scores, size quotas, blanket extraction or error-handling policies, speculative abstractions, and unrelated cleanup are not adopted.
 
 The compact-reference PoC uses these additional conceptual inputs, pinned for review:
 
@@ -220,15 +232,15 @@ Selected behavior remains owned and verifiable through the following existing pa
 
 | Engineering input | Behavior retained and owning instructions | Verification connection |
 | --- | --- | --- |
-| Clean Code | [Local-code criteria](../../skills/maintainability/references/local-code.md): intent, focused responsibilities, visible effects, meaningful failures, rationale, and independent test expectations. [Refactoring moves](../../skills/implement/references/refactoring-moves.md): preserve ordering, compatibility, and effects during structural edits. | The same independent verifier assesses relevant changed code; [Refactoring](../../skills/aapilot/playbooks/refactoring.md) retains baseline/equivalence proof. |
-| Pragmatic Programmer | Local-code criteria distinguish shared knowledge from coincidental similarity; [boundary criteria](../../skills/maintainability/references/boundaries.md) retain change locality, generated-source ownership, invariants, and concrete reversal cost. [Solution](../../skills/solution/SKILL.md) owns commitments and exit conditions; [Feature](../../skills/aapilot/playbooks/feature.md) owns the first retained integration slice, while [Prototype](../../skills/aapilot/playbooks/prototype.md) owns throwaway experiments. | Check contract-derived outcomes and real integration at the affected surface; accepted rationale and a substitute's pass do not prove production behavior. |
+| Clean Code | [Local-code criteria](../../skills/maintainability/references/local-code.md): intent, focused responsibilities, visible effects, meaningful failures, rationale, and independent test expectations. [Refactoring moves](../../skills/implement/references/refactoring-moves.md): preserve ordering, compatibility, and effects during structural edits. | The same independent verifier assesses relevant changed code; [Refactoring](../../skills/pilot/playbooks/refactoring.md) retains baseline/equivalence proof. |
+| Pragmatic Programmer | Local-code criteria distinguish shared knowledge from coincidental similarity; [boundary criteria](../../skills/maintainability/references/boundaries.md) retain change locality, generated-source ownership, invariants, and concrete reversal cost. [Solution](../../skills/solution/SKILL.md) owns commitments and exit conditions; [Feature](../../skills/pilot/playbooks/feature.md) owns the first retained integration slice, while [Prototype](../../skills/pilot/playbooks/prototype.md) owns throwaway experiments. | Check contract-derived outcomes and real integration at the affected surface; accepted rationale and a substitute's pass do not prove production behavior. |
 | DDD | [Business-state design](../../skills/architect/references/business-state.md) covers identity/value meaning, context translations, invariant ownership, consistency, competing writers, and recovery. [Domain Modeling](../../skills/domain-modeling/SKILL.md) owns terminology and justified records. | Applicable guarantees and cases travel in the design package; the verifier checks the actual enforcement and affected outcomes, and Maintain Verification reconciles recipe drift. |
 
 These are selected conceptual inputs, not vendored upstream skill bodies or runtime dependencies. Upstream scores, fixed architecture shapes, adapter-count thresholds, and unconditional test deletion are not adopted. The PoC establishes inspectable content and caller wiring; comparative behavioral improvement and cross-host composition require separate evaluation.
 
 ### UI review
 
-[Independent rendered UX assessment](../../skills/interaction-design/references/rendered-ux-assessment.md) is a first-party reference under Interaction Design, added for [issue 33](https://github.com/ahmadabdalla/aasystem/issues/33) using the user-agreed two-domain model. It adds no portable skill. Aapilot routes the assessment to Interaction Design; UI Refinement can use it within an assigned refinement slice. Routine design and model reviews retain their existing flow.
+[Independent rendered UX assessment](../../skills/interaction-design/references/rendered-ux-assessment.md) is a first-party reference under Interaction Design, added for [issue 33](https://github.com/ahmadabdalla/aasystem/issues/33) using the user-agreed two-domain model. It adds no portable skill. Pilot routes the assessment to Interaction Design; UI Refinement can use it within an assigned refinement slice. Routine design and model reviews retain their existing flow.
 
 The reference owns setup and reconciliation for exactly two fresh nonproducer assessors working in parallel. [Visual composition](../../skills/interaction-design/references/visual-assessment.md) owns the static composition rubric; [Interaction and continuity](../../skills/interaction-design/references/interaction-assessment.md) owns the exercised interaction rubric. Each receives its own instructions, common grounded constraints and explicit domain boundaries, with separate sessions and isolated mutable fixtures. Initial reports remain separate until returned. The caller retains delivery, material decisions and existing human/production-verification gates. Missing required independence or access leaves the affected assessment incomplete.
 
@@ -324,21 +336,21 @@ Other sources inform bounded parts of the system:
 
 ### Durable orchestration
 
-Delivery-judgment refinements in the [execution contract](../../skills/aapilot/references/execution.md) and [engineering verification](../../skills/aapilot/references/engineering-verification.md) address [issue 51](https://github.com/ahmadabdalla/aasystem/issues/51).
+Delivery-judgment refinements in the [execution contract](../../skills/pilot/references/execution.md) and [engineering verification](../../skills/pilot/references/engineering-verification.md) address [issue 51](https://github.com/ahmadabdalla/aasystem/issues/51).
 
-The [verification working loop](../../skills/aapilot/references/verification-contract.md#working-loop) owns acceptance scope, cumulative limits, correction classification, evidence reuse and churn stopping rules, informed by [UpNow issue 16](https://github.com/ahmadabdalla/UpNow/issues/16). Engineering Verification consumes that loop and bounds discoverability and coverage assessment to the assigned change. These are instruction-level controls, not host-enforced budgets or measured delivery-speed improvements.
+The [verification working loop](../../skills/pilot/references/verification-contract.md#working-loop) owns acceptance scope, cumulative limits, correction classification, evidence reuse and churn stopping rules, informed by [UpNow issue 16](https://github.com/ahmadabdalla/UpNow/issues/16). Engineering Verification consumes that loop and bounds discoverability and coverage assessment to the assigned change. These are instruction-level controls, not host-enforced budgets or measured delivery-speed improvements.
 
-[Task continuity](../../skills/aapilot/references/task-continuity.md) is first-party guidance for [issue 49](https://github.com/ahmadabdalla/aasystem/issues/49), extended by the user's agreed requirements for context recovery, scope-aware specialist work and optional local Codex enforcement. It keeps `aapilot` as the entry point, reuses the effort rubric and playbooks, and adds no portable skill. [Preserve decision context](../../skills/principle-preserve-decision-context/SKILL.md) informs the retrievable brief and bounded assignments: a shorter handoff must retain the information the next owner needs.
+[Task continuity](../../skills/pilot/references/task-continuity.md) is first-party guidance for [issue 49](https://github.com/ahmadabdalla/aasystem/issues/49), extended by the user's agreed requirements for context recovery, scope-aware specialist work and optional local Codex enforcement. It keeps `pilot` as the entry point, reuses the effort rubric and playbooks, and adds no portable skill. [Preserve decision context](../../skills/principle-preserve-decision-context/SKILL.md) informs the retrievable brief and bounded assignments: a shorter handoff must retain the information the next owner needs.
 
-The optional [Codex adapter](../../skills/aapilot/assets/codex/README.md) is an explicit host integration using the official [hooks protocol](https://learn.chatgpt.com/docs/hooks). It adds no SDK controller, shared plugin-manifest hook registration, tool interception or managed execution runtime. One coordinator owns the compact session-bound state; hooks restore context and check recorded obligations at attempted completion. The coordinator still selects the appropriate procedures, calls stage checks and judges the results. Installing portable skills alone does not enable hook enforcement.
+The optional [Codex adapter](../../skills/pilot/assets/codex/README.md) is an explicit host integration using the official [hooks protocol](https://learn.chatgpt.com/docs/hooks). It adds no SDK controller, shared plugin-manifest hook registration, tool interception or managed execution runtime. One coordinator owns the compact session-bound state; hooks restore context and check recorded obligations at attempted completion. The coordinator still selects the appropriate procedures, calls stage checks and judges the results. Installing portable skills alone does not enable hook enforcement.
 
-The [harness adapter boundary](../../skills/aapilot/assets/README.md) reserves one folder per delivered integration, keeping host invocation, lifecycle, context, completion and configuration translation outside the portable procedure. Future integrations must be deliverable and verifiable in their actual target host before implementation; there are no Claude or Copilot adapter stubs or registrations. A second verified integration should share the existing state/check invariants through the smallest necessary extraction, rather than duplicate orchestration policy. The current Codex helper is not yet a dynamic adapter loader or a stable shared runtime API.
+The [harness adapter boundary](../../skills/pilot/assets/README.md) reserves one folder per delivered integration, keeping host invocation, lifecycle, context, completion and configuration translation outside the portable procedure. Future integrations must be deliverable and verifiable in their actual target host before implementation; there are no Claude or Copilot adapter stubs or registrations. A second verified integration should share the existing state/check invariants through the smallest necessary extraction, rather than duplicate orchestration policy. The current Codex helper is not yet a dynamic adapter loader or a stable shared runtime API.
 
-The same boundary owns [consumer data lifecycle checks](../../skills/aapilot/assets/README.md#consumer-data-lifecycle): avoid redundant logs and archives, measure repeated-intent growth and verify teardown and interrupted-write recovery. The consumer audit exposed indefinite version 1 prompt/session retention and stale locks. Version 2 keeps independent intent identity with temporary session bindings, a checked handoff to an existing local task record, and exact-owned retirement. A small index retains only active ownership and interrupted handoff receipts, rather than completed intent history. Kernel locking and next-use recovery address interrupted writes; the coordinator remains responsible for stopped scratch users, canonical meaning and invoking handoff. There is no daemon, hard storage cap or native session-close cleanup claim. Plugin-directed proof/output and native transcripts retain their explicitly separate lifetimes.
+The same boundary owns [consumer data lifecycle checks](../../skills/pilot/assets/README.md#consumer-data-lifecycle): avoid redundant logs and archives, measure repeated-intent growth and verify teardown and interrupted-write recovery. The consumer audit exposed indefinite version 1 prompt/session retention and stale locks. Version 2 keeps independent intent identity with temporary session bindings, a checked handoff to an existing local task record, and exact-owned retirement. A small index retains only active ownership and interrupted handoff receipts, rather than completed intent history. Kernel locking and next-use recovery address interrupted writes; the coordinator remains responsible for stopped scratch users, canonical meaning and invoking handoff. There is no daemon, hard storage cap or native session-close cleanup claim. Plugin-directed proof/output and native transcripts retain their explicitly separate lifetimes.
 
 Session/working-directory separation addresses independent concurrent tasks; optimistic state updates address stale coordinator writes. Multiwriter coordination, distributed execution and authenticated approvals are outside scope. Evidence hashes protect referenced files from undetected endpoint changes, while source-artifact identity remains under the verification contract. Runtime checks and behavioral evaluations establish only the exercised coverage; they do not establish uniform behavior across hosts or eliminate model judgment.
 
-The [evaluation playbook](../../skills/aapilot/playbooks/eval.md) adapts [pstack’s Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript inspection, and lead reconciliation. Local adaptations use the shared host and invocation rules and project evidence conventions; the playbook owns temporary experiments and the criterion for retaining reusable regression cases. The library does not ship an evaluation runner or a standing fixture collection.
+The [evaluation playbook](../../skills/pilot/playbooks/eval.md) adapts [pstack’s Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript inspection, and lead reconciliation. Local adaptations use the shared host and invocation rules and project evidence conventions; the playbook owns temporary experiments and the criterion for retaining reusable regression cases. The library does not ship an evaluation runner or a standing fixture collection.
 
 ## Export boundary
 
@@ -356,7 +368,7 @@ Export these files together:
 
 The portable root manifest and Claude compatibility manifest package the same skill tree as `aasystem`. The root manifest owns the portable identity, version and OpenAI presentation metadata. The [release validator](../../scripts/validate-release.py) checks the compatibility identity and version mechanically. Packaging preserves the library's invocation policies and specialist boundaries.
 
-The optional Codex hook helper and setup guide travel inside the exported `skills/aapilot/` tree. Neither shared manifest auto-registers them; opting into the host-specific configuration is separate from installing the portable library.
+The optional Codex hook helper and setup guide travel inside the exported `skills/pilot/` tree. Neither shared manifest auto-registers them; opting into the host-specific configuration is separate from installing the portable library.
 
 The [release process](../ops/releasing.md) adapts Azure Cost Calculator's tag/release and changelog helpers. Merging a reviewed, manually versioned release PR into `main` triggers validation and publication of its exact merged commit, with safe retries. Successful publication prepares a separate reviewed marketplace adoption PR. Release automation does not change skill routes or handoffs.
 

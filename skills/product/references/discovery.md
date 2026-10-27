@@ -1,6 +1,6 @@
 # Product discovery
 
-Product owns discovery and its synthesis. Follow Product's baseline and the [execution contract](../../aapilot/references/execution.md) for ownership, handoffs and retention. Use bounded supporting assignments where they help: [grill-me](../../grill-me/SKILL.md) conducts interviews; [how](../../how/SKILL.md) can investigate existing behavior. Return their evidence to Product and reuse the settled brief.
+Product owns discovery and its synthesis. Follow Product's baseline and the [execution contract](../../pilot/references/execution.md) for ownership, handoffs and retention. Use bounded supporting assignments where they help: [grill-me](../../grill-me/SKILL.md) conducts interviews; [how](../../how/SKILL.md) can investigate existing behavior. Return their evidence to Product and reuse the settled brief.
 
 ## Scope and starting knowledge
 
@@ -28,7 +28,7 @@ Use [domain-modeling](../../domain-modeling/SKILL.md) for canonical terminology 
 
 When requirements are in scope and the bounded workflow is sufficiently understood, apply [Product's Define, Challenge and Record phases](../SKILL.md#define). Link important candidate requirements to their source answer/example or accepted decision and affected journey. Preserve unresolved authority or behavior that could change the contract; unrelated open discovery questions need not block the scoped work.
 
-Keep one canonical behavioral contract in the project's specification authority, including the existing [OpenSpec convention](../../aapilot/references/openspec.md) when applicable. Discovery records link to that contract rather than maintaining a competing requirements ledger.
+Keep one canonical behavioral contract in the project's specification authority, including the existing [OpenSpec convention](../../pilot/references/openspec.md) when applicable. Discovery records link to that contract rather than maintaining a competing requirements ledger.
 
 ## Return at the requested boundary
 

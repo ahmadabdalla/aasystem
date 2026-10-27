@@ -10,7 +10,7 @@ import tracemalloc
 import unittest
 
 
-HELPER = Path(__file__).resolve().parents[1] / 'skills/aapilot/scripts/input_identity.py'
+HELPER = Path(__file__).resolve().parents[1] / 'skills/pilot/scripts/input_identity.py'
 
 
 class InputIdentityTests(unittest.TestCase):

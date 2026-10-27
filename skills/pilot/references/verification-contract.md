@@ -31,9 +31,9 @@ Record which inputs were checked, including relevant uncommitted/new files, veri
 Use a project identity check when adequate. Otherwise the read-only [input identity helper](../scripts/input_identity.py) needs Python 3.10+ and Git:
 
 ```sh
-python3 /installed/skills/aapilot/scripts/input_identity.py --root /project --required /project/local-config.json > /outside/project/before.json
+python3 /installed/skills/pilot/scripts/input_identity.py --root /project --required /project/local-config.json > /outside/project/before.json
 # Run verification with source editing paused.
-python3 /installed/skills/aapilot/scripts/input_identity.py --root /project --required /project/local-config.json --check /outside/project/before.json
+python3 /installed/skills/pilot/scripts/input_identity.py --root /project --required /project/local-config.json --check /outside/project/before.json
 ```
 
 It streams hashes of Git-tracked working-tree files and nonignored new files, plus explicitly required files; it creates no source copies. Keep its output outside selected inputs. Required directories, symlinks, submodules and special files need a project-specific identity procedure; the helper refuses them rather than silently omitting their contents.

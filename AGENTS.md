@@ -6,7 +6,7 @@ This file defines the rules for changing the repository.
 
 - **Project entry:** [`README.md`](README.md)
 - **System structure and sources:** [`docs/design/skill-system.md`](docs/design/skill-system.md)
-- **Skill authoring:** [`skills/aapilot/playbooks/authoring-a-skill.md`](skills/aapilot/playbooks/authoring-a-skill.md)
+- **Skill authoring:** [`skills/pilot/playbooks/authoring-a-skill.md`](skills/pilot/playbooks/authoring-a-skill.md)
 - **Codex invocation:** [`docs/ops/codex.md`](docs/ops/codex.md)
 
 ## Edit skills

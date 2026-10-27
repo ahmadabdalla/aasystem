@@ -1,10 +1,10 @@
 ---
-name: aapilot
+name: pilot
 description: Carry a requested outcome from product ideation through design, engineering delivery, and verification using the relevant procedures. Use for product discovery and definition, investigations, bug fixes, features, refactoring, prototypes, and skill work; supporting skills remain available directly.
 disable-model-invocation: true
 ---
 
-# aapilot
+# pilot
 
 Before starting, read the [shared execution contract](references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Grill me
 
-Read the [execution contract](../aapilot/references/execution.md) in full and the [principle index](../principles/INDEX.md), unless already in context. Follow the baseline rules.
+Read the [execution contract](../pilot/references/execution.md) in full and the [principle index](../principles/INDEX.md), unless already in context. Follow the baseline rules.
 
 Reuse the caller's scope, evidence, settled choices and checkpoint. For one missing detail, ask a focused question.
 

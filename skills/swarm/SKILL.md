@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Swarm
 
-Before starting, read the [shared execution contract](../aapilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
 
 Frame the work, run bounded workers, account for every required result, and return one report. Delegation requires actual host capability and authorization.
 
