@@ -93,7 +93,7 @@ copilot plugin update aasystem@ahmadabdalla-plugins
 
 ### Upgrade from aapilot to pilot
 
-The next release renames the entry skill from `aapilot` to `pilot` and moves its
+Version 0.8.0 renames the entry skill from `aapilot` to `pilot` and moves its
 entire tree from `skills/aapilot/` to `skills/pilot/`. The plugin name remains
 `aasystem`. This is a breaking command/path change with no compatibility alias;
 publish it in a minor release under the pre-1.0 policy above.
