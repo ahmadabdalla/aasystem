@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.7.1]
+
+- Bound acceptance verification with a cumulative time allowance across diagnosis, repairs, rechecks and handoffs. Reassess recurring failures before retrying and report incomplete work when the allowance is exhausted.
+- Classify correction failures and reuse earlier proof only when the affected inputs and outcomes remain valid. Preserve independent rechecks and integration coverage for shared production changes.
+- Keep engineering coverage and discoverability review within the assigned change, and reuse current brief and rule inputs across stages. These are instruction-level controls; host-enforced budgets and delivery-time improvements are not established.
+
 ## [0.7.0]
 
 - Keep Aapilot's original intent, scope assessment, decisions and acceptance requirements retrievable across increments, specialist handoffs and context recovery. Reuse the existing rubric and routes for research, product, UX, architecture and implementation rather than require a fixed agent chain.

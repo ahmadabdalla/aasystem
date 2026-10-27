@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "aasystem",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Coordinate engineering work through playbooks, specialist skills, and evidence of completion.",
   "author": {
     "name": "Ahmad Abdalla",
