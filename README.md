@@ -158,6 +158,7 @@ If you already know which part of the work needs attention, you can ask for that
 | Make assigned edits from an agreed plan                   | [`implement`](skills/implement/SKILL.md)                                         |
 | Find weaknesses in a plan, design, or implementation      | [`interrogate`](skills/interrogate/SKILL.md)                                     |
 | Review how hard code is to read and change                | [`maintainability`](skills/maintainability/SKILL.md)                             |
+| Review module design with behavior and change traces     | [`maintainability`](skills/maintainability/SKILL.md#select-the-assessment)       |
 | Create instructions and checks for verifying your project | [`bootstrap-verification`](skills/bootstrap-verification/SKILL.md)               |
 | Check and update your project's verification instructions | [`maintain-verification`](skills/maintain-verification/SKILL.md)                 |
 

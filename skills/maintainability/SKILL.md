@@ -1,6 +1,6 @@
 ---
 name: maintainability
-description: Assess the effort needed to understand, change, and verify supplied code or an implementation design. Use for bounded structural assessments, refactoring targets, and code review; the caller retains design choices and implementation.
+description: Assess the effort needed to understand, change, and verify supplied code or an implementation design. Use for module design reviews, bounded structural assessments, refactoring targets, and code review; the caller retains design choices and implementation.
 disable-model-invocation: true
 ---
 
@@ -9,6 +9,12 @@ disable-model-invocation: true
 Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements, delegation procedure, and review-context rule.
 
 Assess the supplied artifact against the intended change and project constraints. Return findings to the current owner; this assignment does not select a workflow, choose the design, or authorize edits.
+
+## Select the assessment
+
+For an explicit module design review or a standalone maintainability assessment of existing code, read [Module design review](references/module-design-review.md) in full. It owns scope selection, behavior and hypothetical-change traces, and the assessment report; numerical scores are optional when requested.
+
+For a supplied design, diff, or targeted supporting question, use the bounded assessment below. Reading shared criteria during design, implementation, or verification does not require the module review procedure.
 
 ## Establish and inspect
 
