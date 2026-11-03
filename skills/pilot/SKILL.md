@@ -60,7 +60,7 @@ For authorized unattended work in a supported active session, apply [bounded aut
 
 For retained implementation, follow the [verification contract](references/verification-contract.md): identify the work, obtain required independent checks, resolve findings and present the result. Research and design stop at their requested outputs.
 
-Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect supplies design, [Implement](../implement/SKILL.md) supplies production edits and development checks, and a separate worker supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
+Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect supplies design, [Implement](../implement/SKILL.md) supplies production edits and development checks, and a separate worker, briefed per [Engineering Verification](references/engineering-verification.md), supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
 
 Apply the [completion check](references/execution.md#completion), retaining decisions
 and evidence in existing records. Use [Show Me Your Work](../show-me-your-work/SKILL.md)

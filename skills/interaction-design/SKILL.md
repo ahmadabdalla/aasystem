@@ -26,6 +26,6 @@ Return proposed changes to business meaning, behavior, or scope to [product](../
 
 ## Review and return
 
-Read [review checks](references/review-checks.md) before handing off. Obtain an independent review for a consequential new or revised interaction model when delegation is available and permitted; disclose a lead-only review otherwise. Inspect findings against the artifacts and requirements, integrate supported changes, and recheck the result. Agent agreement cannot replace a required human decision.
+Read [review checks](references/review-checks.md) before handing off. Obtain an independent review for a new interaction model, or a revision that changes navigation, roles or a primary action, when delegation is available and permitted; disclose a lead-only review otherwise. Inspect findings against the artifacts and requirements, integrate supported changes, and recheck the result. Agent agreement cannot replace a required human decision.
 
 Return the interaction model or review findings, canonical decision references, covered and omitted behavior, unresolved choices, evidence and its limits, and the next responsible owner. Follow the contract's recording and verification handoff; do not create a parallel requirement or decision registry.

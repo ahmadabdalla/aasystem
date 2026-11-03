@@ -7,7 +7,7 @@ Use for [independent implementation verification](execution.md#independent-imple
 Give the verifier the authorised expectations, constraints, combined artifact and baseline/diff, tested input scope, relevant project recipes, owned fixture/resources, evidence destination and access limits. Give the absolute path of each criteria file the verifier must apply:
 
 - Apply [local-code criteria](../../maintainability/references/local-code.md) to changed production code.
-- Add [boundary criteria](../../maintainability/references/boundaries.md) when interfaces, dependencies, or invariant ownership are affected.
+- Add [boundary criteria](../../maintainability/references/boundaries.md) when interfaces, dependencies, or invariant ownership are affected, including new or changed parameters of a callable.
 - For business-state changes, include the accepted identity, ownership, consistency, and failure guarantees and required cases from the design handoff. Read [Business state and consistency](../../architect/references/business-state.md) when interpreting or checking that coverage needs its procedure.
 
 Reuse criteria already in context. These are inputs to the same verifier, not additional specialist assignments or a requirement to load upstream manuals.

@@ -28,7 +28,7 @@ Identify actors, their intended outcomes, main journeys, business rules, and inv
 
 Define each delivery increment by an observable user workflow and delivered prerequisites; it may span capabilities.
 
-Give important requirements a concrete scenario: preconditions, action or event, expected outcome, and consequential side effects. Cover the failure, retry, concurrency, or recovery cases that could break its rules. Keep implementation choices in the technical design. Record the source of agreed requirements; label proposed defaults, assumptions, and unresolved choices separately.
+Give each requirement with a rule, side effect or failure path a concrete scenario: preconditions, action or event, expected outcome, and consequential side effects. Cover the failure, retry, concurrency, or recovery cases that could break its rules. Keep implementation choices in the technical design. Record the source of agreed requirements; label proposed defaults, assumptions, and unresolved choices separately.
 
 When rewriting, preserve who bears each obligation, whether an action is permitted or required, and its qualifying conditions.
 
