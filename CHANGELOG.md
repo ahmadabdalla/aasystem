@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Engineering Verification now asks the owner to give the verifier the absolute path of each applicable criteria file, so a fresh verifier can load the Maintainability criteria from any working directory.
+
 ## [0.8.0]
 
 - Breaking entry-point rename: `aapilot` is now `pilot`, under `skills/pilot/`. Use `$aasystem:pilot` in Codex, `$pilot` for direct skill installs, or `/aasystem:pilot` in Claude Code. The plugin remains `aasystem`; no old-name alias is shipped.
