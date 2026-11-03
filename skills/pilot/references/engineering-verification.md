@@ -4,7 +4,7 @@ Use for [independent implementation verification](execution.md#independent-imple
 
 ## Assign
 
-Give the verifier the authorised expectations, constraints, combined artifact and baseline/diff, tested input scope, relevant project recipes, owned fixture/resources, evidence destination and access limits. Select criteria for the affected work:
+Give the verifier the authorised expectations, constraints, combined artifact and baseline/diff, tested input scope, relevant project recipes, owned fixture/resources, evidence destination and access limits. Give the absolute path of each criteria file the verifier must apply:
 
 - Apply [local-code criteria](../../maintainability/references/local-code.md) to changed production code.
 - Add [boundary criteria](../../maintainability/references/boundaries.md) when interfaces, dependencies, or invariant ownership are affected.
