@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.8.1]
+
 - Engineering Verification now asks the owner to give the verifier the absolute path of each applicable criteria file, so a fresh verifier can load the Maintainability criteria from any working directory.
 
 ## [0.8.0]
