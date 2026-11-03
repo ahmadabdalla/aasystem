@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.9.0]
+
 - Replace vague conditions that decide what a worker or later step receives with concrete cases, so hosts that read conditions loosely still pass the right inputs. Pilot links Engineering Verification directly where it assigns acceptance proof, and the owner reads it before briefing the verifier. Boundary criteria now apply to new or changed callable parameters.
 - Name concrete triggers for requirement and invariant coverage in Architect, Product and OpenSpec verification plans; settled-design retrieval in Implement; Architect handoff from prototypes; independent interaction-model review; scenario coverage; effect inspection; and adversarial review in Figure It Out and PR preparation. Routes, ownership and invocation policies are unchanged.
 
