@@ -18,7 +18,7 @@ Use Architect when a proposed change alters an interface between functions or re
 
 ## Ground and define proof
 
-Read the agreed product contract and its requirement sources when present. Carry its invariants and scenarios into the technical design: identify how important rules are enforced and exercised. Return a proposed behavior change or unresolved product rule to the caller, or use [product](../product/SKILL.md) within a standalone assignment’s scope. Preserve the requirement until its authority is resolved.
+Read the agreed product contract and its requirement sources when present. Carry its invariants and scenarios into the technical design: identify how each invariant the design relies on is enforced and exercised. Return a proposed behavior change or unresolved product rule to the caller, or use [product](../product/SKILL.md) within a standalone assignment’s scope. Preserve the requirement until its authority is resolved.
 
 Read relevant project glossary entries and current ADRs, including for standalone work. Carry their constraints and evidence limits into the design. Use [domain-modeling](../domain-modeling/SKILL.md) for ambiguous concepts or qualifying implementation decisions within the authorized document scope; link its records from the design package. Explain changed evidence before reopening an accepted decision. Translate agreed meanings and decisions into observable expectations below.
 
@@ -32,7 +32,7 @@ For seed/fixture design or representative state needed by the proof plan, read [
 
 When the design changes business identity, invariant enforcement, state ownership, or coordination across business contexts, read [Business state and consistency](references/business-state.md). Carry its ownership and consistency decisions and required checks into the design package.
 
-In the verification plan, map each important requirement to a concrete input or action, expected observable result, the real surface used to exercise it, and evidence to retain. Include failure, retry, concurrency, or migration cases when they carry the design risk. Derive expected results from the contract, independently of the implementation. Check that the project can actually support this proof; name missing access or infrastructure as a verification gap.
+In the verification plan, map each requirement the change adds or alters to a concrete input or action, expected observable result, the real surface used to exercise it, and evidence to retain. Include failure, retry, concurrency, or migration cases when they carry the design risk. Derive expected results from the contract, independently of the implementation. Check that the project can actually support this proof; name missing access or infrastructure as a verification gap.
 
 ## Sketch and compare
 

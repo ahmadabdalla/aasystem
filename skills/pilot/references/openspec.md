@@ -59,7 +59,7 @@ Before sync/archive, identify references whose targets or relative bases will mo
 
 ## Prove and complete
 
-Map important requirement scenarios to the project verifier and feature recipes. Keep actionable expected results in recipes with links to their requirement authority; keep dated observations in run evidence. Planned behavior stays unverified until exercised. Establish the first usable procedure when a new app can run.
+Map the scenarios of each added or altered requirement to the project verifier and feature recipes. Keep actionable expected results in recipes with links to their requirement authority; keep dated observations in run evidence. Planned behavior stays unverified until exercised. Establish the first usable procedure when a new app can run.
 
 Run supported document validation and review implementation against requirements and design. These checks supplement the execution contract's real-surface verification. Artifact status, task checkboxes, and an advisory review cannot establish that behavior passed. Retain pass, fail, and unverified results with the tested artifact identity.
 

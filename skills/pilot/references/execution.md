@@ -50,7 +50,7 @@ Preserve original findings before editing summaries or sharing other assessments
 
 Find the project verifier and affected feature recipes before changing behaviour. Use [Bootstrap Verification](../../bootstrap-verification/SKILL.md) for a missing usable path and [Maintain Verification](../../maintain-verification/SKILL.md) for recipe drift, within the authorised setup scope.
 
-Derive expected results from the request or contract. Exercise the relevant UI, API, CLI or library entry point and inspect consequential effects. Check instance identity, readiness and fixture reset before interpreting surprising results. Builds, mocks and worker summaries prove only the boundaries they exercise. Never change an expectation merely to hide a failure.
+Derive expected results from the request or contract. Exercise the relevant UI, API, CLI or library entry point and inspect its effects on stored state, external calls and output. Check instance identity, readiness and fixture reset before interpreting surprising results. Builds, mocks and worker summaries prove only the boundaries they exercise. Never change an expectation merely to hide a failure.
 
 Use the [local execution and evidence rules](verification-contract.md#local-execution) for working directories, tested identity and cleanup. Preserve failing-before evidence for bug fixes and baseline observations for refactoring. Update affected recipes; an unchanged run needs no permanent map edit.
 
@@ -62,7 +62,7 @@ State the eligibility basis, inspect the final diff and available preview, and r
 
 ## Independent implementation verification
 
-Other retained implementation requires a fresh verifier separate from every editor to assess the combined diff and execute affected checks. Read [Engineering Verification](engineering-verification.md) for the assignment and correction loop. Development checks do not replace this assessment. [Interrogate](../../interrogate/SKILL.md) supplies adversarial review, not executable proof.
+Other retained implementation requires a fresh verifier separate from every editor to assess the combined diff and execute affected checks. Before briefing the verifier, read [Engineering Verification](engineering-verification.md) for the assignment and correction loop. Development checks do not replace this assessment. [Interrogate](../../interrogate/SKILL.md) supplies adversarial review, not executable proof.
 
 ## Completion
 
