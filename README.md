@@ -149,6 +149,7 @@ If you already know which part of the work needs attention, you can ask for that
 | Build a throwaway experiment                              | [`prototype`](skills/prototype/SKILL.md)                                         |
 | Find out how something works today                        | [`how`](skills/how/SKILL.md)                                                     |
 | Find out why an earlier decision was made                 | [`why`](skills/why/SKILL.md)                                                     |
+| See a change, design, or finding as a plain-text diagram  | [`explain-visually`](skills/explain-visually/SKILL.md)                           |
 | Define who a product serves and how it should work        | [`product`](skills/product/SKILL.md)                                             |
 | Clarify terms or record a decision                        | [`domain-modeling`](skills/domain-modeling/SKILL.md)                             |
 | Design navigation, screens, and interactions              | [`interaction-design`](skills/interaction-design/SKILL.md)                       |
