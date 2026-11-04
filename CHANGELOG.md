@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.9.1]
+
 - Add Explain Visually, invoked directly or through Pilot's explanation route, to present a change, design or finding as an inline plain-text diagram in `before-after`, `flow` or `layers` mode. Pilot keeps one explanation route: Investigation grounds the facts and presents requested diagrams through Explain Visually, which draws only established evidence.
 - How no longer adds diagrams unasked; a standalone How question presents a requested diagram through Explain Visually.
 
