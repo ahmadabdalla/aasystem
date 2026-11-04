@@ -45,6 +45,7 @@ Use these boundaries when skills interact:
 - **10x:** shared growth assessment; domain callers retain decisions and carry required proof into delivery
 - **Implement:** bounded edits against a supplied design or contract, development checks, and evidence return
 - **Maintainability:** reusable criteria for reader effort, local change cost, and ease of verification; also returns bounded assessments to its caller
+- **Explain visually:** inline plain-text diagrams of established evidence; Investigation owns grounding; Investigation and standalone How route requested diagrams here
 - **Feature playbook:** authorized production delivery
 - **Project verifier:** the project-owned procedure and reusable checks
 - **Independent verification agent:** a worker separate from every producer of assessed work, using the affected domains' criteria and specialist procedures; production engineering combines Maintainability assessment with project-verifier execution and returns distinct findings and observations
@@ -94,6 +95,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`prototype`](../../skills/prototype/SKILL.md) | Build an inspectable experiment | Matt Pocock [`prototype`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/prototype/SKILL.md) | Uses isolated artifacts; excludes automatic production promotion |
 | [`how`](../../skills/how/SKILL.md) | Trace current behavior | pstack [`how`](https://github.com/cursor/plugins/blob/main/pstack/skills/how/SKILL.md) | Reports unavailable exploration paths |
 | [`why`](../../skills/why/SKILL.md) | Reconstruct prior rationale | pstack [`why`](https://github.com/cursor/plugins/blob/main/pstack/skills/why/SKILL.md) | Checks several evidence sources and reports access gaps |
+| [`explain-visually`](../../skills/explain-visually/SKILL.md) | Explain changes, designs, and findings as terminal-readable diagrams | First-party; [issue 62](https://github.com/ahmadabdalla/aasystem/issues/62) and agreed user scope | Owns diagram modes, compact source references, and layout fallbacks; Investigation owns grounding and any new observations |
 | [`probe`](../../skills/probe/SKILL.md) | Test an important assumption | pstack [`prototype`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/prototype.md) | Separates empirical questions from artifact prototyping |
 | [`arena`](../../skills/arena/SKILL.md) | Compare competing options | pstack [`arena`](https://github.com/cursor/plugins/blob/main/pstack/skills/arena/SKILL.md) | Uses an independent judge when available |
 | [`interrogate`](../../skills/interrogate/SKILL.md) | Find consequential weaknesses | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md) | Also challenges framing and selects review inputs through the shared context rule |

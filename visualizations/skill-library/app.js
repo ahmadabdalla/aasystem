@@ -188,6 +188,17 @@ const nodes = [
     y: 455,
   },
   {
+    id: "explain-visually",
+    title: "Explain visually",
+    type: "skill",
+    subtitle: "Plain-text explanation",
+    purpose: "Presents a change, design, or finding inline as a before/after, flow, or layers diagram of established evidence.",
+    owns: "Diagram presentation and source traceability; Investigation grounds missing facts, and existing verification supplies observed proof.",
+    source: "../../skills/explain-visually/SKILL.md",
+    x: 2224,
+    y: 345,
+  },
+  {
     id: "prototype",
     title: "Prototype artifact",
     type: "skill",
@@ -556,6 +567,9 @@ connect("investigation", "why", "support", "reconstructs rationale");
 connect("investigation", "solution", "handoff", "opens a solution decision");
 connect("investigation", "probe", "support", "tests an observable unknown");
 connect("how", "probe", "support", "checks unresolved runtime claim");
+connect("investigation", "explain-visually", "support", "presents a requested diagram");
+connect("explain-visually", "investigation", "support", "grounds missing facts");
+connect("how", "explain-visually", "support", "presents a requested diagram");
 connect("how", "why", "handoff", "separates mechanics from motive");
 connect("why", "how", "support", "anchors current mechanics");
 connect("why", "solution", "handoff", "supplies historical constraints");

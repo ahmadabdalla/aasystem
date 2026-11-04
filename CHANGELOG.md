@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add Explain Visually, invoked directly or through Pilot's explanation route, to present a change, design or finding as an inline plain-text diagram in `before-after`, `flow` or `layers` mode. Pilot keeps one explanation route: Investigation grounds the facts and presents requested diagrams through Explain Visually, which draws only established evidence.
+- How no longer adds diagrams unasked; a standalone How question presents a requested diagram through Explain Visually.
+
 ## [0.9.0]
 
 - Replace vague conditions that decide what a worker or later step receives with concrete cases, so hosts that read conditions loosely still pass the right inputs. Pilot links Engineering Verification directly where it assigns acceptance proof, and the owner reads it before briefing the verifier. Boundary criteria now apply to new or changed callable parameters.
