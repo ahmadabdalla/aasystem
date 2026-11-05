@@ -90,7 +90,7 @@ def validate():
 
     required = (
         "README.md", SYSTEM_MAP, "docs/ops/codex.md", "docs/ops/releasing.md", "LICENSE", "PSTACK_LICENSE.txt",
-        "MATT_POCOCK_LICENSE.txt", "skills/principles/INDEX.md", "skills/pilot/SKILL.md",
+        "MATT_POCOCK_LICENSE.txt", "WARP_LICENSE.txt", "skills/principles/INDEX.md", "skills/pilot/SKILL.md",
         "skills/pilot/agents/openai.yaml",
     )
     for path in required:

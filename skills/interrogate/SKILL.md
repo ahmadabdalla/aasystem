@@ -1,6 +1,6 @@
 ---
 name: interrogate
-description: Challenge a proposal, design, implementation, or recommendation with adversarial review and evidence. Use to find consequential failure modes, unsupported assumptions, and errors in the framing.
+description: Challenge a proposal, design, implementation, or recommendation with adversarial review and evidence. Use for PR merge-risk assessments, consequential failure modes, unsupported assumptions, and errors in the framing.
 disable-model-invocation: true
 ---
 
@@ -13,6 +13,10 @@ Establish scope and intent, gather adversarial findings, synthesize them, and ap
 ## Prepare and challenge
 
 Identify the actual artifact or diff, surrounding system, intended outcome, constraints, and review criteria. Select the assignment mode and prepare inputs under the [shared review-context rule](../pilot/references/execution.md#review-context). Reuse the caller's brief after applying the selected review mode's inclusion and exclusion rules; surface only consequential gaps or changed assumptions. Resolve missing intent that would materially change the review before proceeding; ask one question and wait when necessary.
+
+For a PR or diff assessment of merge readiness, read [Merge risk](references/merge-risk.md). Also use it within a broader change review when recovery constraints or production-failure detection could change the verdict. Keep other proposal and design reviews on the general procedure below.
+
+Apply Merge risk's category verdicts, output format, and internal weighted calculation as written. Include that assessment within the project's existing review format. Its risk label does not replace the [verification contract's required checks](../pilot/references/verification-contract.md#result-and-retention) or grant merge authority; keep findings and unresolved proof visible even when the calculated risk is low or medium.
 
 When delegation is available and permitted, run isolated reviewers with the same evidence, artifact, and rubric without each other's findings. Use multiple actual model families when available; different personas do not supply that diversity. Disclose the reviewer setup, unavailable seats, and limitations. Without isolated reviewers, perform a single-agent adversarial review; repeated passes or role labels do not create independence. A required independent gate remains incomplete when only self-review was possible.
 

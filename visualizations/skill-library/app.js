@@ -225,8 +225,8 @@ const nodes = [
     title: "Interrogate",
     type: "skill",
     subtitle: "Adversarial review",
-    purpose: "Reviews consequential work from several lenses, checks claims, and returns deduplicated weaknesses and risks.",
-    owns: "The assessment; the requesting owner decides and performs fixes.",
+    purpose: "Reviews consequential work, checks claims, and applies conditional merge-risk criteria for PR readiness, recovery constraints, and failure detection.",
+    owns: "Adversarial findings and merge-risk judgments; the requesting owner retains fixes and delivery, and verification retains executable proof.",
     source: "../../skills/interrogate/SKILL.md",
     x: 1776,
     y: 455,
@@ -624,7 +624,7 @@ connect("skill-authoring", "reflect", "support", "finds destination and evidence
 connect("skill-authoring", "evaluation", "support", "tests consequential behavior");
 connect("skill-authoring", "opening-pr", "handoff", "delivers when authorized");
 connect("reflect", "skill-authoring", "handoff", "sends accepted substantive edits");
-connect("opening-pr", "interrogate", "support", "reviews consequential change");
+connect("opening-pr", "interrogate", "support", "reviews consequential change and merge risk");
 connect("work", "show-work", "support", "records substantial work");
 
 // Shared implementation support; the caller retains all phase transitions.
