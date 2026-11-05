@@ -49,7 +49,7 @@ Use these boundaries when skills interact:
 - **Feature playbook:** authorized production delivery
 - **Project verifier:** the project-owned procedure and reusable checks
 - **Independent verification agent:** a worker separate from every producer of assessed work, using the affected domains' criteria and specialist procedures; production engineering combines Maintainability assessment with project-verifier execution and returns distinct findings and observations
-- **Interrogate:** adversarial review findings; review does not replace executable verification
+- **Interrogate:** adversarial review findings and conditional PR merge-risk judgments; review does not replace executable verification
 - **Caller:** phase transitions and canonical record updates
 
 Supporting skills do not gain production scope from an assignment.
@@ -98,7 +98,7 @@ Each row names the skill’s role, source, and local adaptation.
 | [`explain-visually`](../../skills/explain-visually/SKILL.md) | Explain changes, designs, and findings as terminal-readable diagrams | First-party; [issue 62](https://github.com/ahmadabdalla/aasystem/issues/62) and agreed user scope | Owns diagram modes, compact source references, and layout fallbacks; Investigation owns grounding and any new observations |
 | [`probe`](../../skills/probe/SKILL.md) | Test an important assumption | pstack [`prototype`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/prototype.md) | Separates empirical questions from artifact prototyping |
 | [`arena`](../../skills/arena/SKILL.md) | Compare competing options | pstack [`arena`](https://github.com/cursor/plugins/blob/main/pstack/skills/arena/SKILL.md) | Uses an independent judge when available |
-| [`interrogate`](../../skills/interrogate/SKILL.md) | Find consequential weaknesses | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md) | Also challenges framing and selects review inputs through the shared context rule |
+| [`interrogate`](../../skills/interrogate/SKILL.md) | Find consequential weaknesses and assess PR merge risk | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md); Warp [`merge-risk`](https://github.com/warpdotdev/common-skills/blob/8792394ff1b655e0af451b8fabb68ef0cfcbd208/.agents/skills/merge-risk/SKILL.md) | Challenges framing, selects review inputs through the shared context rule, and owns the conditional [merge-risk criteria](../../skills/interrogate/references/merge-risk.md) |
 | [`grill-me`](../../skills/grill-me/SKILL.md) | Interview in decision rounds or conduct product discovery | Matt Pocock [`grilling`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling/SKILL.md) and [`grill-with-docs`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs/SKILL.md) | Loads one interview reference; reuses Domain Modeling for scoped inline capture; Product retains discovery synthesis |
 | [`domain-modeling`](../../skills/domain-modeling/SKILL.md) | Define terms and record decisions | Matt Pocock [`domain-modeling`](https://github.com/mattpocock/skills/blob/b0618bc436ad893b3c5e84e55fba86586d34a404/skills/engineering/domain-modeling/SKILL.md) | Adds ownership, evidence, layout, and supersession rules |
 | [`tdd`](../../skills/tdd/SKILL.md) | Prove a regression before a fix | pstack [`tdd`](https://github.com/cursor/plugins/blob/main/pstack/skills/tdd/SKILL.md) | Adds practical test limits and repeats the original check |
@@ -198,6 +198,16 @@ The [execution contract](../../skills/pilot/references/execution.md#independent-
 [Feature](../../skills/pilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
 
 Architect's first-party [seed scenario reference](../../skills/architect/references/seed-scenarios.md) owns data purpose, minimal context, lifecycle and source/build/release/invocation decisions. Feature reads it when proof depends on state. The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#scenario-coverage) owns completion and automation criteria through existing Bootstrap/Maintain routes. Decisions and proof stay in current assignments and project records. A conditional reference avoids a separate skill and repeated lifecycle guidance.
+
+### Merge-risk review
+
+Interrogate's [Merge risk](../../skills/interrogate/references/merge-risk.md) reference preserves the instructional body of Warp's [`merge-risk`](https://github.com/warpdotdev/common-skills/blob/8792394ff1b655e0af451b8fabb68ef0cfcbd208/.agents/skills/merge-risk/SKILL.md) verbatim at commit `8792394ff1b655e0af451b8fabb68ef0cfcbd208`. Only standalone-skill frontmatter is omitted and a reference heading is added. Upstream credits Matt Pocock's PR skill; the existing Matt Pocock notice and [Warp MIT notice](../../WARP_LICENSE.txt), copyright Denver Technologies, Inc., travel with the export.
+
+The reference retains the five categories, per-category verdicts and emojis, output format, examples, UX screenshot/recording and performance-profiling requirements, before-and-after preference, and hidden weighted score with its original thresholds. Interrogate's wrapper owns integration with project review formats and shared verification/authority rules. A calculated low or medium rating does not close missing required checks or authorize merging; findings and proof gaps remain visible separately. The former local rewrite and qualitative scoring definitions are not retained.
+
+Direct Interrogate requests and its existing callers reach the reference for PR/diff merge-readiness assessments or when recovery or failure detection can change a change-review verdict. [Opening a PR](../../skills/pilot/playbooks/opening-a-pr.md) requests Interrogate for those consequential cases and carries its result into the project's reviewer brief. General design reviews retain their existing procedure. Pilot gains no merge-risk route, and no new portable skill, reviewer pool, executable-proof owner, or merge authority is introduced. Engineering Verification retains affected executable checks; the caller retains corrections and delivery. This follows the preserve-decision-context principle by carrying the proof limits and recovery constraints into the acceptance decision.
+
+Package validation establishes links, metadata and adapters. Behavioral evaluations and their limits belong in the change's evidence; neither this structure nor a risk verdict proves host discovery, production readiness, or comparative improvement.
 
 ### Growth assessment
 
@@ -366,6 +376,7 @@ Export these files together:
 - [`LICENSE`](../../LICENSE)
 - [`PSTACK_LICENSE.txt`](../../PSTACK_LICENSE.txt)
 - [`MATT_POCOCK_LICENSE.txt`](../../MATT_POCOCK_LICENSE.txt)
+- [`WARP_LICENSE.txt`](../../WARP_LICENSE.txt)
 - [`docs/design/skill-system.md`](skill-system.md)
 - [`README.md`](../../README.md)
 - [`docs/ops/codex.md`](../ops/codex.md)

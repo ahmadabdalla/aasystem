@@ -158,6 +158,7 @@ If you already know which part of the work needs attention, you can ask for that
 | Plan how code, interfaces, and data fit together          | [`architect`](skills/architect/SKILL.md)                                         |
 | Make assigned edits from an agreed plan                   | [`implement`](skills/implement/SKILL.md)                                         |
 | Find weaknesses in a plan, design, or implementation      | [`interrogate`](skills/interrogate/SKILL.md)                                     |
+| Assess the risk of merging a PR or diff                   | [`interrogate`](skills/interrogate/SKILL.md)                                     |
 | Review how hard code is to read and change                | [`maintainability`](skills/maintainability/SKILL.md)                             |
 | Review module design with behavior and change traces     | [`maintainability`](skills/maintainability/SKILL.md#select-the-assessment)       |
 | Create instructions and checks for verifying your project | [`bootstrap-verification`](skills/bootstrap-verification/SKILL.md)               |
@@ -196,5 +197,7 @@ Coding tools differ in how they discover and call skills. See the [release guide
 Original contributions are licensed under the [MIT License](LICENSE), copyright Ahmad Abdalla.
 
 This system is inspired by and adapts [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan and [Matt Pocock's skills](https://github.com/mattpocock/skills). Their original MIT notices are preserved in [PSTACK_LICENSE.txt](PSTACK_LICENSE.txt) and [MATT_POCOCK_LICENSE.txt](MATT_POCOCK_LICENSE.txt).
+
+Interrogate's merge-risk guidance adapts [Warp's common-skills](https://github.com/warpdotdev/common-skills). Its MIT notice is preserved in [WARP_LICENSE.txt](WARP_LICENSE.txt).
 
 The [source and adaptation inventory](docs/design/skill-system.md#skill-inventory) identifies the upstream sources and local changes for each skill.
