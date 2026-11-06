@@ -148,6 +148,7 @@ If you already know which part of the work needs attention, you can ask for that
 | Run a check to find out whether an assumption holds       | [`probe`](skills/probe/SKILL.md)                                                 |
 | Build a throwaway experiment                              | [`prototype`](skills/prototype/SKILL.md)                                         |
 | Find out how something works today                        | [`how`](skills/how/SKILL.md)                                                     |
+| Trace how failures or suspicious actions become visible   | [`how`](skills/how/SKILL.md)                                                     |
 | Find out why an earlier decision was made                 | [`why`](skills/why/SKILL.md)                                                     |
 | See a change, design, or finding as a plain-text diagram  | [`explain-visually`](skills/explain-visually/SKILL.md)                           |
 | Define who a product serves and how it should work        | [`product`](skills/product/SKILL.md)                                             |
@@ -158,6 +159,7 @@ If you already know which part of the work needs attention, you can ask for that
 | Plan how code, interfaces, and data fit together          | [`architect`](skills/architect/SKILL.md)                                         |
 | Make assigned edits from an agreed plan                   | [`implement`](skills/implement/SKILL.md)                                         |
 | Find weaknesses in a plan, design, or implementation      | [`interrogate`](skills/interrogate/SKILL.md)                                     |
+| Assess operational and security detection gaps            | [`interrogate`](skills/interrogate/SKILL.md)                                     |
 | Assess the risk of merging a PR or diff                   | [`interrogate`](skills/interrogate/SKILL.md)                                     |
 | Review how hard code is to read and change                | [`maintainability`](skills/maintainability/SKILL.md)                             |
 | Review module design with behavior and change traces     | [`maintainability`](skills/maintainability/SKILL.md#select-the-assessment)       |
@@ -167,6 +169,8 @@ If you already know which part of the work needs attention, you can ask for that
 Browse [`skills/`](skills/) for all available skills.
 
 For example, ask Pilot to "grill me about this plan." It asks questions together, then uses your answers to choose the next round. The [Grill Me guide](skills/grill-me/references/grilling.md) explains how it records agreed terms and decisions.
+
+Direct signal questions can start with `$aasystem:how Trace how exhausted retries become visible today`, `$aasystem:interrogate Assess detection gaps in these access controls`, or `$aasystem:architect Design this retry change and its failure detection`.
 
 You can also ask it to assess an existing interface. For a records page, that might include long names, finding older records, and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses two separate agents to check visual composition and interactions, then brings their findings together.
 

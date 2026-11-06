@@ -20,6 +20,8 @@ Inspect the actual diff for authorised scope, concrete defects and maintainabili
 
 Derive affected checks from the authorised contract and actual changes as well as the design handoff. Exercise rejection, competing writes, replay, partial failure, or recovery where they threaten those guarantees; passing existing tests does not cover a missing case. Keep structural findings separate from observed contract failures.
 
+Check affected [signal expectations](execution.md#signal-effects); distinguish observations from inference and report missing required proof.
+
 Assess concrete gaps in changed-behaviour coverage; use targeted mutation checks or specialist review only for a named risk. Confirm the supplied owner, rules and checks are reachable from the project's normal entry point; report unrelated gaps separately without starting a wider audit.
 
 For decisions assessed with [10x](../../10x/SKILL.md), exercise the required growth checks from the design handoff and report the actual volumes, rates or concurrency tested. Keep deferred targets separate from acceptance requirements; missing required proof remains a gap.

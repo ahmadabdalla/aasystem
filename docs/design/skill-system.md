@@ -199,6 +199,12 @@ The [execution contract](../../skills/pilot/references/execution.md#independent-
 
 Architect's first-party [seed scenario reference](../../skills/architect/references/seed-scenarios.md) owns data purpose, minimal context, lifecycle and source/build/release/invocation decisions. Feature reads it when proof depends on state. The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#scenario-coverage) owns completion and automation criteria through existing Bootstrap/Maintain routes. Decisions and proof stay in current assignments and project records. A conditional reference avoids a separate skill and repeated lifecycle guidance.
 
+### Signal effects
+
+The [execution contract](../../skills/pilot/references/execution.md#signal-effects) owns the change-scoped signal account across delivery and direct skill use. Architect plans relevant checks, Implement reconciles the diff, and Engineering Verification checks affected expectations. Bootstrap and Maintain consume the [project contract](../../skills/bootstrap-verification/references/project-contract.md), linking project-owned detection guidance rather than copying it.
+
+Interrogate's [signal assessment](../../skills/interrogate/references/signal-assessment.md) traces detection for an existing system, proposed design, or change. How traces current signal paths. These direct entrances add no portable skill or Pilot route; existing review-context, proof and authority rules still apply. This is first-party guidance for [issue 66](https://github.com/ahmadabdalla/aasystem/issues/66), following the user's preference for concise instructions with explicit evidence limits.
+
 ### Merge-risk review
 
 Interrogate's [Merge risk](../../skills/interrogate/references/merge-risk.md) reference preserves the instructional body of Warp's [`merge-risk`](https://github.com/warpdotdev/common-skills/blob/8792394ff1b655e0af451b8fabb68ef0cfcbd208/.agents/skills/merge-risk/SKILL.md) verbatim at commit `8792394ff1b655e0af451b8fabb68ef0cfcbd208`. Only standalone-skill frontmatter is omitted and a reference heading is added. Upstream credits Matt Pocock's PR skill; the existing Matt Pocock notice and [Warp MIT notice](../../WARP_LICENSE.txt), copyright Denver Technologies, Inc., travel with the export.

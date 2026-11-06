@@ -1,6 +1,6 @@
 ---
 name: how
-description: Trace how an existing subsystem behaves and where responsibilities live. Use for runtime flow, code walkthroughs, ownership, and placement questions; use why for historical rationale.
+description: Trace how an existing subsystem behaves and where responsibilities live. Use for runtime flow, operational and security signal paths, code walkthroughs, ownership, and placement questions; use why for historical rationale.
 disable-model-invocation: true
 ---
 

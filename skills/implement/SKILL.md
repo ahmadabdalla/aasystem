@@ -28,4 +28,6 @@ Apply the caller’s decomposition: [swarm](../swarm/SKILL.md) for independent s
 
 Run assigned checks after meaningful units, including the refactoring baseline or failing reproduction for corrections. Follow [project verification and evidence rules](../pilot/references/execution.md#verification-through-the-project) for observations, source identity, failure classification, and unchanged expectations.
 
+Reconcile [signal effects](../pilot/references/execution.md#signal-effects) against the actual diff; return changed expectations or detection gaps to the owner.
+
 Return the changed artifact and final source identity, change rationale, executed checks and evidence paths, failures, unverified boundaries, and design concerns. Development passes do not satisfy a required independent gate.
