@@ -170,14 +170,6 @@ Browse [`skills/`](skills/) for all available skills.
 
 For example, ask Pilot to "grill me about this plan." It asks questions together, then uses your answers to choose the next round. The [Grill Me guide](skills/grill-me/references/grilling.md) explains how it records agreed terms and decisions.
 
-For direct signal questions, use a command followed by its prompt:
-
-| Codex CLI | Claude Code | Prompt |
-| --- | --- | --- |
-| `$aasystem:how` | `/aasystem:how` | Trace how exhausted retries become visible today |
-| `$aasystem:interrogate` | `/aasystem:interrogate` | Assess detection gaps in these access controls |
-| `$aasystem:architect` | `/aasystem:architect` | Design this retry change and its failure detection |
-
 You can also ask it to assess an existing interface. For a records page, that might include long names, finding older records, and narrow layouts. The [rendered UX assessment](skills/interaction-design/references/rendered-ux-assessment.md) uses two separate agents to check visual composition and interactions, then brings their findings together.
 
 ## Explore the system
