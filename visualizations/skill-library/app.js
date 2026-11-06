@@ -1168,7 +1168,7 @@ function handleSearch() {
   let matchCount = 0;
   document.querySelectorAll(".node").forEach((element) => {
     const node = nodeById.get(element.dataset.nodeId);
-    const haystack = `${node.title} ${node.subtitle} ${node.purpose}`.toLowerCase();
+    const haystack = `${node.title} ${node.subtitle} ${node.purpose} ${node.owns}`.toLowerCase();
     const matches = query && haystack.includes(query);
     if (matches) matchCount += 1;
     element.classList.toggle("is-match", matches);
@@ -1201,7 +1201,7 @@ searchInput.addEventListener("input", handleSearch);
 searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     const match = nodes.find((node) => {
-      const haystack = `${node.title} ${node.subtitle} ${node.purpose}`.toLowerCase();
+      const haystack = `${node.title} ${node.subtitle} ${node.purpose} ${node.owns}`.toLowerCase();
       return haystack.includes(searchInput.value.trim().toLowerCase());
     });
     if (match) selectNode(match.id, true);
