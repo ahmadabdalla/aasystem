@@ -225,8 +225,8 @@ const nodes = [
     title: "Interrogate",
     type: "skill",
     subtitle: "Adversarial review",
-    purpose: "Reviews consequential work, checks claims, and applies conditional merge-risk criteria for PR readiness, recovery constraints, and failure detection.",
-    owns: "Adversarial findings and merge-risk judgments; the requesting owner retains fixes and delivery, and verification retains executable proof.",
+    purpose: "Reviews consequential work, assesses operational and security detection gaps, and applies conditional merge-risk criteria for PR readiness.",
+    owns: "Adversarial findings, signal assessments and merge-risk judgments; the requesting owner retains fixes and delivery, and verification retains executable proof.",
     source: "../../skills/interrogate/SKILL.md",
     x: 1776,
     y: 455,
@@ -425,7 +425,7 @@ const nodes = [
     type: "foundation",
     subtitle: "Applies to all procedures",
     purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; keeps handoffs and current verification evidence proportional to the task, with a narrow presentation exception.",
-    owns: "The shared operating rules, including effort-condition inheritance and reassessment, read by every procedural skill and worker.",
+    owns: "The shared operating rules, including effort-condition inheritance, reassessment and change-scoped signal effects, read by every procedural skill and worker.",
     source: "../../skills/pilot/references/execution.md",
     x: 2224,
     y: 1035,
@@ -1168,7 +1168,7 @@ function handleSearch() {
   let matchCount = 0;
   document.querySelectorAll(".node").forEach((element) => {
     const node = nodeById.get(element.dataset.nodeId);
-    const haystack = `${node.title} ${node.subtitle} ${node.purpose}`.toLowerCase();
+    const haystack = `${node.title} ${node.subtitle} ${node.purpose} ${node.owns}`.toLowerCase();
     const matches = query && haystack.includes(query);
     if (matches) matchCount += 1;
     element.classList.toggle("is-match", matches);
@@ -1201,7 +1201,7 @@ searchInput.addEventListener("input", handleSearch);
 searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     const match = nodes.find((node) => {
-      const haystack = `${node.title} ${node.subtitle} ${node.purpose}`.toLowerCase();
+      const haystack = `${node.title} ${node.subtitle} ${node.purpose} ${node.owns}`.toLowerCase();
       return haystack.includes(searchInput.value.trim().toLowerCase());
     });
     if (match) selectNode(match.id, true);

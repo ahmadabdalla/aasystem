@@ -24,6 +24,12 @@ Inspect observable unknowns before depending on them. Reuse project requirements
 
 Match proof to the task. Research needs sources and limits; design needs rationale and an inspectable proposal; implementation needs observed behaviour. An unavailable prerequisite leaves the affected result unverified. Use the [verification contract](verification-contract.md) for retained implementation.
 
+### Signal effects
+
+For each proposed or implemented change, record its effect on operational and security signals: visibility added, visibility lost, and consequential failure or misuse still undetected. Keep the account scoped to affected behaviour and dependencies. "No change to signals" is sufficient when supported by inspection.
+
+Record it once in the existing task record. Carry relevant expectations into verification and reconcile the final result. Link deferred detection to its owning work; deferral does not satisfy a current requirement. Use Interrogate's [signal assessment](../../interrogate/references/signal-assessment.md) for a focused examination of detection gaps.
+
 ## Decision authority
 
 Routine details within settled scope proceed. An unresolved choice changing product meaning, architecture, trust boundaries, permissions, external effects or required visual review returns to the human before dependent work. Check existing authority first; do not repeatedly ask for settled permission.

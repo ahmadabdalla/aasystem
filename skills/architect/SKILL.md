@@ -34,6 +34,8 @@ When the design changes business identity, invariant enforcement, state ownershi
 
 In the verification plan, map each requirement the change adds or alters to a concrete input or action, expected observable result, the real surface used to exercise it, and evidence to retain. Include failure, retry, concurrency, or migration cases when they carry the design risk. Derive expected results from the contract, independently of the implementation. Check that the project can actually support this proof; name missing access or infrastructure as a verification gap.
 
+Map relevant [signal expectations](../pilot/references/execution.md#signal-effects) to triggers, expected signals, observation points, and checks.
+
 ## Sketch and compare
 
 For user-facing scope, consume the project's interaction model when present, using the [interaction contract](../interaction-design/references/interaction-contract.md) to check the handoff, including decision authority and mock omissions. If a consequential interaction is unsettled, return it to the caller or use [interaction-design](../interaction-design/SKILL.md) within a standalone assignment. Reconcile proposed technical changes with the interaction owner; changing business behavior still returns to Product.

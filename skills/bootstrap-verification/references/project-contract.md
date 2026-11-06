@@ -14,6 +14,8 @@ The project skill needs a discriminating name and description in YAML frontmatte
 
 Generated instructions use real project paths and commands, with no unfinished placeholders or references to the author's machine. Existing external tooling prerequisites are named and checked. New helper invocations are documented and actually executed.
 
+Link project-owned detection guidance and affected checks under the [shared signal-effects rule](../../pilot/references/execution.md#signal-effects); preserve a single source of truth.
+
 ## Scenario coverage
 
 For scenario-dependent work, map changed semantics and fields, including optional ones, to starting context, real feature actions, contract-derived expectations and relevant persistence, constraint and isolation observations in affected recipes. Seed checks and old test passes cannot replace missing feature proof. Keep scenario references, evidence and gaps in existing project records. Read [Seed scenarios](../../architect/references/seed-scenarios.md) when setup or lifecycle needs design; skip seeding where inapplicable.
