@@ -7,9 +7,9 @@ templates. Keep produced explanations and run evidence outside maintained source
 1. Run `python3 -m unittest discover -s <skill>/tests -v` and build the reference.
 2. Give a fresh agent the skill and one case below. Copy the fixture to a fresh
    temporary Git repository so default delivery is observable without writing to
-   maintained source. Provide a separate delivery directory only if the case asks
-   for one. Withhold this rubric, the producer's conclusions and the example's
-   intended topology. Give the agent an execution request to exercise explicit use.
+   maintained source. Withhold this rubric, the producer's conclusions and the
+   example's intended topology. Give the agent an execution request to exercise
+   explicit use.
 3. Observe whether the executor launches its own UI verifier under
    references/verification.md; parent-launched review does not prove this handoff.
    Preserve the assignment and original return. Ask a separate noneditor evaluation
@@ -36,11 +36,9 @@ templates. Keep produced explanations and run evidence outside maintained source
   one focused question and a pause. A requested walkthrough interview uses Grill
   Me's Grilling procedure, pauses for answers and carries the accepted brief into
   the build.
-- Default delivery adds only the HTML to the fixture repository root, even when
-  the source scope is a subdirectory. Verify explicit output precedence, collision
-  handling and offline opening without the run directory. Check that the retained
-  note identifies the inputs for a refinement and that a missing run directory is
-  reported accurately on a subsequent request.
+- Verify root delivery from a subdirectory, collision handling, and offline
+  opening without the run directory. Check that the retained note identifies the
+  refinement inputs and that missing run state is reported accurately.
 - The executor launches a separate aligned UI verifier, supplies the exact candidate
   and required references, preserves findings and resolves material issues before
   claiming completion. With delegation or browser access unavailable, it reports
@@ -78,13 +76,7 @@ Fixture: `fixtures/catalog-cli`
 
 Fixture: `fixtures/review-console`
 
-Set a fixture `AGENTS.md` convention that walkthrough HTML belongs in an existing
-`docs/walkthroughs/` directory. Supply a distinct, absolute delivery directory
-for the following request. Check that the explicit destination wins and that a
-follow-up refinement stays there without replacing the original. On a fresh
-copy, omit the explicit destination and package request to exercise the convention.
-
-> Use system-in-motion to explain this document-review project from submission through background scanning, operator review and recorded approval, including the planned publisher boundary. Reconstruct its relevant UI moments and explain the technical flow in the demonstrated motion-walkthrough pattern. Keep source inputs read-only. Write the HTML and a permanent editable package to the separate delivery directory I supplied.
+> Use system-in-motion to explain this document-review project from submission through background scanning, operator review and recorded approval, including the planned publisher boundary. Reconstruct its relevant UI moments and explain the technical flow in the demonstrated motion-walkthrough pattern. Keep source inputs read-only and write a local model and HTML explanation.
 
 ### Source scope and collision
 
