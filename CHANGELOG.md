@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [0.10.1]
+
+- Deliver verified System in Motion walkthroughs as standalone HTML in the target repository by default. Keep rebuild files temporary and provide an editable package on request.
+- Use the shared Grill Me procedures for journey discovery and walkthrough decisions.
+
 ## [0.10.0]
 
 - Add System in Motion, a direct skill for walking through one product journey in synchronized Experience and Architecture views. It builds an offline HTML walkthrough and an editable model grounded in project sources. Start with `$aasystem:system-in-motion` in Codex or `/aasystem:system-in-motion` in Claude Code.
