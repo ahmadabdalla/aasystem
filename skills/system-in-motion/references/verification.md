@@ -126,8 +126,7 @@ directory. Delivery grants no authority to commit, publish or deploy.
 
 If the user requests a permanent editable package, include the model, any custom
 template, and the other inputs and command needed to rebuild. Verify the rebuild
-works without the temporary directory and report the package path. Use a home
-directory only by explicit request.
+works without the temporary directory and report the package path.
 
 ### Refinement state
 
@@ -137,11 +136,10 @@ export. Include paths and hashes for the builder and inputs. Link the review rec
 At delivery, share the HTML and note paths, source limits, reviewer, checks
 performed and remaining gaps. Explain that the host can remove temporary files.
 
-On refinement, find the prior note in the chat or match the HTML path and hash
-against this skill's temporary run notes. Verify the recorded build inputs
-before reusing them. If the note is missing or ambiguous, or the inputs are
-missing or changed, explain the gap. Rebuild from available sources or ask for
-what is needed.
+On refinement, use the note shared at delivery. Check the export and rebuild
+inputs against its hashes. If the note is unavailable or the files are missing
+or changed, explain the gap. Rebuild from available sources or ask for what is
+needed.
 
 ### Cleanup
 

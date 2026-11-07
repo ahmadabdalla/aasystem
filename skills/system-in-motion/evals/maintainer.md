@@ -37,8 +37,8 @@ templates. Keep produced explanations and run evidence outside maintained source
   Me's Grilling procedure, pauses for answers and carries the accepted brief into
   the build.
 - Verify root delivery from a subdirectory, collision handling, and offline
-  opening without the run directory. Check that the retained note identifies the
-  refinement inputs and that missing run state is reported accurately.
+  opening without the run directory. Check that the run note identifies the
+  rebuild inputs. Exercise missing-state recovery when reviewing refinements.
 - The executor launches a separate aligned UI verifier, supplies the exact candidate
   and required references, preserves findings and resolves material issues before
   claiming completion. With delegation or browser access unavailable, it reports
@@ -83,8 +83,7 @@ Fixture: `fixtures/review-console`
 Put the catalog fixture under `tools/catalog` in a temporary repository and
 place a sentinel file at the root named `system-in-motion.html`. Use the
 catalog-cli prompt with `tools/catalog` as its source directory. Verify that the
-sentinel keeps its contents and the new HTML is its only new sibling. Ask for
-one refinement while the run state exists and again with that state unavailable.
+sentinel keeps its contents and the new HTML is its only new sibling.
 
 ### Open brief
 
