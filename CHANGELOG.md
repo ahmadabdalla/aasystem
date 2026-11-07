@@ -2,7 +2,12 @@
 
 ## [Unreleased]
 
-- Account for operational and security signal effects across change routes, including direct skill use. Interrogate adds a focused signal assessment for systems, designs, and changes; existing design and verification paths carry relevant checks. No new skill or invocation policy is added.
+## [0.10.0]
+
+- Add System in Motion, a direct skill for walking through one product journey in synchronized Experience and Architecture views. It builds an offline HTML walkthrough and an editable model grounded in project sources. Start with `$aasystem:system-in-motion` in Codex or `/aasystem:system-in-motion` in Claude Code.
+- Give Pilot and System in Motion dedicated sections in the README, highlight the core skills, and consolidate CLI installation instructions.
+- Add an Interrogate assessment for operational and security detection gaps. Design, implementation, and verification carry the relevant checks across change routes.
+- Add merge-risk guidance to Interrogate for PR readiness and consequential recovery or failure-detection concerns.
 
 ## [0.9.1]
 
