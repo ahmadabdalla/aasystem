@@ -24,32 +24,26 @@ even when they request the walkthrough through Pilot or another coordinator.
 
 ## Ground and prepare
 
-Read [grounding](references/grounding.md) to select and evidence the journey,
-reuse settled answers and proceed with disclosed safe defaults. Reserve a bounded
-`$aasystem:grill-me` handoff for unresolved consequential choices. Read
+Read [grounding](references/grounding.md) to establish the source scope, choose
+the journey and settle the brief under the shared decision rules. Read
 [verification](references/verification.md) early to establish agent/browser access:
 the executor must launch a separate noneditor UI verifier before delivery.
 Self-review and automated checks do not replace that gate; missing capability
 leaves a draft with independent verification incomplete.
 
-Resolve `<skill>` to this installed directory. Create a unique working directory
-using the host's temporary-directory facility, such as Python's
-`tempfile.mkdtemp(prefix="system-in-motion-")`; do not hard-code `/tmp`.
+Resolve `<skill>` to this installed directory and `<work>` to a unique run
+directory from the host's temporary-directory facility, such as Python's
+`tempfile.mkdtemp(prefix="system-in-motion-")`. Keep candidates, rebuild inputs
+and review evidence there. Give subagents bounded write ownership in that directory.
 
-Resolve `<output>` to that directory. Put generated references, candidate files,
-screenshots, review evidence and helper scripts there. Give subagents the same
-run directory and bounded write ownership.
-
-Announce the working location and intended delivery location before building.
-Default delivery to a unique folder under `~/system-in-motion/`, outside the
-repository, unless the user chooses another location. Do not add repository
-folders, ignore rules or configuration as a side effect.
+Resolve and announce the [HTML destination](references/verification.md#delivery-and-cleanup)
+before building. For a refinement, [check the previous run](references/verification.md#refinement-state) first.
 
 Build the synthetic reference in the working directory, then open both views
 before authoring:
 
 ```sh
-python3 <skill>/scripts/build.py <skill>/examples/service-request.json --output <output>/reference.html
+python3 <skill>/scripts/build.py <skill>/examples/service-request.json --output <work>/reference.html
 ```
 
 The [fictional source](examples/reference-project.md) grounds this reference only.
@@ -66,12 +60,12 @@ causal/observation boundaries; do not invent a dashboard for an API or CLI.
 
 ```sh
 python3 <skill>/scripts/build.py MODEL.json --validate-only
-python3 <skill>/scripts/build.py MODEL.json --output <output>/walkthrough.html
+python3 <skill>/scripts/build.py MODEL.json --output <work>/walkthrough.html
 ```
 
 The builder uses Python's standard library; the HTML needs no server or network.
 When the supplied renderer cannot communicate the journey clearly, copy
-`assets/viewer.html` into the output workspace and adapt it using `--template
+`assets/viewer.html` into the working directory and adapt it using `--template
 CUSTOM.html`. Preserve the model, presentation and shared-clock contracts. Correct
 the output's layout/template, not the installed skill, during ordinary execution.
 
@@ -85,10 +79,8 @@ an already installed Playwright:
 node <skill>/scripts/check-browser.cjs OUTPUT.html --screenshots SCREENSHOT_DIR
 ```
 
-Deliver the HTML, editable model and any custom template needed to rebuild it.
-Follow [delivery and cleanup](references/verification.md#delivery-and-cleanup)
-to preserve the finished package and offer removal of temporary working files.
-Name the journey, evidence/uncertainty, reviewer, checked states, corrections and
-remaining gaps. Local builds and agent review do not establish host discovery,
-production health or human acceptance. Other design/browser skills are optional;
-this package requires no proprietary plugin.
+Deliver the verified standalone HTML. Follow
+[delivery and cleanup](references/verification.md#delivery-and-cleanup) for
+temporary refinement state, optional durable files and the delivery summary.
+Other design/browser skills are optional; this package requires no proprietary
+plugin.

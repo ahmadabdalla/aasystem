@@ -101,49 +101,53 @@ of actual node and relationship captions under the diagram reference's measureme
 
 ## Delivery and cleanup
 
-After verification, copy the finished package to the announced delivery folder:
+Choose the first applicable HTML destination.
 
-- Standalone walkthrough HTML.
-- Editable model.
-- Custom template and any other local files required to rebuild.
-- Concise report linking the deliverables and source evidence, with uncertainty,
-  tested identity, reviewer and isolation limits, actual checked states, material
-  findings/corrections and remaining gaps. Distinguish automated checks from visual
-  observations; do not infer general reliability, host discovery, production health
-  or human acceptance.
+1. The user's explicit output path.
+2. The previous delivery directory and base filename for a refinement.
+3. The project's walkthrough output convention.
+4. The repository root containing the source scope, even when the request names
+   a subdirectory.
 
-Use a new destination; do not overwrite existing files. Confirm the delivered
-HTML opens, matches the reviewed artifact, and the retained sources can rebuild
-it. Do not change reviewed content during packaging. Working-directory paths must
-not be required to open or rebuild the delivered result.
+For a directory without a filename, use `system-in-motion.html` or the next free
+numbered sibling. When refining at the previous destination, use a numbered
+sibling unless replacement is authorized. If an exact path is occupied and the
+user has yet to authorize replacement, ask whether to replace it or use another
+path. Confirm the existing file's identity before any authorized replacement.
 
-Show the delivery location and offer cleanup through the host's question tool.
-If unavailable, ask in the conversation:
+If a required destination is unavailable, report the blocker and the verified
+candidate's path. If the default repository root is read-only or there is no
+repository, deliver from the run directory and state that the file is temporary.
 
-"The walkthrough is ready at [location]. What would you like to keep?"
+Deliver only the verified HTML by default. Create a new file without overwriting
+an existing path unless replacement was authorized. Compare the delivered bytes
+with the reviewed candidate and confirm it opens offline without the run
+directory. Delivery grants no authority to commit, publish or deploy.
 
-- Editable package — recommended: keep the finished package and remove temporary
-  working files.
-- Everything: keep the finished package and preserve the working files and
-  detailed evidence in a clearly named supporting folder at the delivery location.
-  Verify the copies, then remove the run-owned temporary originals; include this
-  removal in the offered choice. Preserve unresolved evidence as required below.
-- HTML only: keep the standalone HTML and concise report; remove separate editing
-  sources and temporary working files. Explain that those sources will no longer
-  be available for straightforward revision.
+If the user requests a permanent editable package, include the model, any custom
+template, and the other inputs and command needed to rebuild. Verify the rebuild
+works without the temporary directory and report the package path.
 
-Identify the exact folders and file categories affected before requesting the
-choice. No answer means no deletion; disclose that files left in temporary storage
-may be removed by the host.
+### Refinement state
 
-Cleanup requires the user's choice or an applicable earlier explicit instruction.
-Remove only files owned by this run. Never delete the installed skill, project
-files, unrelated temporary files or evidence for unresolved findings.
+In the run directory's `run.md`, record the delivered HTML path and hash, the
+source scope and revision or snapshot, and the command that built the reviewed
+export. Include paths and hashes for the builder and inputs. Link the review record.
+At delivery, share the HTML and note paths, source limits, reviewer, checks
+performed and remaining gaps. Explain that the host can remove temporary files.
 
-If detailed evidence is discarded, preserve the report and record that removal
-was at the user's request. Moving evidence to verified durable copies is not discarding it.
+On refinement, use the note shared at delivery. Check the export and rebuild
+inputs against its hashes. If the note is unavailable or the files are missing
+or changed, explain the gap. Rebuild from available sources or ask for what is
+needed.
 
-Verify the retained deliverables after cleanup and report their final location.
+### Cleanup
+
+Clean up on request. Identify the affected paths and remove only run-owned files
+covered by the request. Preserve active work and evidence for unresolved findings.
+Verify any durable copy before removing the temporary original. If discarding
+detailed evidence at the user's request, record the removal in the verification
+summary. Verify the delivered HTML after cleanup.
 
 Package maintainers use [evaluation](../evals/maintainer.md) and `tests/test_build.py`;
 ordinary explanation requests do not need the maintenance rubric.
