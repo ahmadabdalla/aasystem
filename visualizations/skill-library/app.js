@@ -23,6 +23,19 @@ const nodes = [
     h: 122,
   },
   {
+    id: "system-in-motion",
+    title: "System in Motion",
+    type: "work",
+    subtitle: "Flagship walkthrough · Direct only",
+    purpose: "Follows one source-grounded product journey in synchronized Experience and Architecture views.",
+    owns: "The offline animated walkthrough, editable model, source evidence, and independent UI review of the export.",
+    source: "../../skills/system-in-motion/SKILL.md",
+    x: -310,
+    y: 322,
+    w: 255,
+    h: 122,
+  },
+  {
     id: "product",
     title: "Product",
     type: "skill",
@@ -516,6 +529,7 @@ connect("product", "domain-modeling", "support", "clarifies ambiguous terms");
 connect("product", "probe", "support", "settles testable assumptions");
 connect("product", "interrogate", "support", "challenges the contract");
 connect("product", "grill-me", "support", "collects interview evidence");
+connect("system-in-motion", "grill-me", "support", "optionally clarifies the walkthrough brief");
 connect("grill-me", "domain-modeling", "support", "captures agreed terms / decisions");
 connect("product", "interaction-design", "handoff", "returns behavior contract");
 

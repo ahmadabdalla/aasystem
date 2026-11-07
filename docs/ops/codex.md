@@ -1,10 +1,12 @@
 # Codex usage
 
-See the [README](../../README.md#codex-cli) for installation.
+See the [README](../../README.md#install-the-plugin) for installation.
 
 ## Invoke a skill
 
 Start with `$aasystem:pilot`, or select a focused skill such as `$aasystem:product` or `$aasystem:how`. Direct skill installations omit the plugin prefix. Keep the complete [export tree](../design/skill-system.md#export-boundary), including references, adapters and license notices.
+
+Start [System in Motion](../../skills/system-in-motion/SKILL.md) with the direct invocation `$aasystem:system-in-motion`.
 
 Upgrading from `aapilot` requires new commands and helper paths; follow the
 [rename migration](releasing.md#upgrade-from-aapilot-to-pilot), including existing

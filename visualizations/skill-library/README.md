@@ -1,6 +1,6 @@
 # Ahmad Abdalla's Pilot System Graph
 
-The [system map](index.html) shows which skills Pilot calls, how they support each other, and where results return for review. Open `index.html` directly, or serve this directory with a static HTTP server.
+The [system map](index.html) shows direct entry points, which skills Pilot calls, how they support each other, and where results return for review. Open `index.html` directly, or serve this directory with a static HTTP server.
 
 For why I built the plugin and how to use it, start with the [main README](../../README.md). [How Pilot works](../../docs/design/verification-contract.md) explains the workflow behind the map.
 
@@ -44,6 +44,7 @@ See [System structure and sources](../../docs/design/skill-system.md) for the fu
 - Maintainability supplies shared criteria for design, implementation, and verification. Reading those criteria doesn't start another worker. The [engineering adaptations](../../docs/design/skill-system.md#maintainability) describe the related boundary, refactoring, and business-state references and how their checks reach the verifier.
 - Pilot routes module-design and existing-code maintainability assessments directly to Maintainability. Its [module design review](../../skills/maintainability/references/module-design-review.md) traces selected behavior and a hypothetical change; scores are optional when requested. The caller retains design and implementation decisions.
 - Investigation and standalone How present requested diagrams through [Explain Visually](../../skills/explain-visually/SKILL.md), which owns only the diagram. When invoked directly with a material fact missing, Explain Visually grounds it through Investigation. Pilot keeps one explanation route, and neither connection requires separate agents or new verification runs.
+- [System in Motion](../../skills/system-in-motion/SKILL.md) is a direct entry point for an animated product walkthrough. Its optional Grill Me connection supports clarification after the user starts the skill.
 - 10x supports growth assessments during design and can be called directly through Pilot. The [growth assessment design](../../docs/design/skill-system.md#growth-assessment) explains how callers use its findings.
 - Grill Me uses Domain Modeling to record agreed terms and qualifying decisions when edits are authorized. The [Grilling procedure](../../skills/grill-me/references/grilling.md) explains the question rounds and records.
 
@@ -54,6 +55,6 @@ Update the graph when routes, handoffs, or responsibilities change:
 - Edit node titles, descriptions, source links, and positions in the `nodes` array in `app.js`.
 - Keep the five main columns about 449 SVG units apart. If the outer columns move, update `lanes` and `fullView` together so the overview retains its margins.
 - Add or remove a relationship with `connect(from, to, type, label)`. Use `route`, `support`, `handoff`, or `governance`.
-- Keep nodes inside the four `lanes`; widen or move a lane only when the overview no longer fits cleanly.
+- Keep workflow nodes inside the four `lanes` and direct entry points in the left margin.
 - Do not hand-tune individual arrow curves. Connections are assigned ordered ports on each card so dense routes separate consistently.
 - After structural changes, inspect the full overview, a dense selected node such as Feature, and a traced path from pilot.
