@@ -4,6 +4,11 @@ Read project instructions, overview, runtime declarations and the entry points,
 handlers, state models and tests relevant to the chosen journey. Follow dependencies
 when a claim needs them; a file inventory alone is not evidence of behavior.
 
+Treat a directory supplied for the walkthrough as the starting scope for source
+inspection. Read applicable instructions from the containing project and follow
+relevant dependencies when needed to explain the journey, within the user's
+inspection limits. Resolve HTML delivery separately.
+
 ## Choose the slice
 
 Identify who acts, their goal and interaction surface, what initiates work, the
@@ -24,22 +29,18 @@ coverage areas, not five compulsory questions. For unspecified preferences, use:
 | Emphasis | The core decision, meaningful failure and independent handoffs needed to understand that path |
 | Presentation | Existing project styling if evidenced, otherwise the [white-slide palette](presentation.md#default-palette); readable pacing at the laptop sizes in SKILL.md, with no target scene count |
 
-State the chosen journey and consequential defaults briefly, then proceed without
-an interview or extra approval. A complete brief, fictional specification or request
-to use judgment can take this path. Defaults fill preferences, never missing system
-facts: preserve unknown technology, transport or behavior instead of inventing it.
-Do not turn the coverage areas into five new sections or records.
+Keep decisions in the existing brief and leave unsupported system facts unknown.
+Apply the shared [decision authority](../../pilot/references/execution.md#decision-authority)
+when a choice materially changes the explanation and needs the user's judgment.
 
-Ask only when an unresolved choice materially changes the requested explanation
-and cannot be safely defaulted—for example, a requested current/future comparison
-whose future target is unspecified. Ask one focused question for one gap. For
-several consequential choices, invoke `$aasystem:grill-me` when available with the
-request, evidence, settled/defaulted answers and remaining choices. Delegate only
-the bounded explanation brief; use its Grilling procedure for question rounds and
-confirmation rather than copying it here. Its return stays in the existing brief; system-in-motion
-retains the build and verification. If unavailable, ask the necessary questions
-directly. An explicit request for an interview follows that request. Once choices
-are settled, reuse their confirmation; do not restart the intake before building.
+Use the [Grill Me](../../grill-me/SKILL.md) Grilling procedure when the user requests
+an interview or when one answer determines what to ask next. Reuse the existing
+brief, answers and confirmation. For one gap outside an interview, ask one focused
+question, then stop and wait. If Grill Me is unavailable, ask the necessary
+questions directly, then stop and wait.
+
+Once the brief is settled, state the chosen journey and defaults, then proceed.
+System in Motion owns the brief, build and verification.
 
 ## Evidence and claims
 

@@ -5,10 +5,11 @@ The fixtures are synthetic read-only projects, not authoritative architecture
 templates. Keep produced explanations and run evidence outside maintained source.
 
 1. Run `python3 -m unittest discover -s <skill>/tests -v` and build the reference.
-2. Give a fresh agent the skill, one fixture directory and its prompt from
-   the cases below, with a separate task output directory. Do not supply this rubric,
-   the producer's conclusions or the example's intended topology. Do not ask it to
-   recite the skill. Explicit use tests execution, not automatic discovery.
+2. Give a fresh agent the skill and one case below. Copy the fixture to a fresh
+   temporary Git repository so default delivery is observable without writing to
+   maintained source. Provide a separate delivery directory only if the case asks
+   for one. Withhold this rubric, the producer's conclusions and the example's
+   intended topology. Give the agent an execution request to exercise explicit use.
 3. Observe whether the executor launches its own UI verifier under
    references/verification.md; parent-launched review does not prove this handoff.
    Preserve the assignment and original return. Ask a separate noneditor evaluation
@@ -31,6 +32,15 @@ templates. Keep produced explanations and run evidence outside maintained source
   shared model, with current exchanges highlighted rather than implied calls.
 - The exported HTML works offline: automatic finite playback, pause/resume, view
   switching without resetting progress, selection, replay and reduced motion.
+- A settled brief proceeds without an interview. A single consequential gap gets
+  one focused question and a pause. A requested walkthrough interview uses Grill
+  Me's Grilling procedure, pauses for answers and carries the accepted brief into
+  the build.
+- Default delivery adds only the HTML to the fixture repository root, even when
+  the source scope is a subdirectory. Verify explicit output precedence, collision
+  handling and offline opening without the run directory. Check that the retained
+  note identifies the inputs for a refinement and that a missing run directory is
+  reported accurately on a subsequent request.
 - The executor launches a separate aligned UI verifier, supplies the exact candidate
   and required references, preserves findings and resolves material issues before
   claiming completion. With delegation or browser access unavailable, it reports
@@ -56,16 +66,41 @@ Give the executor only its selected fixture and prompt, not the judge criteria.
 
 Fixture: `fixtures/reading-service`
 
-> Use system-in-motion to help a new teammate understand this reading intake service: what its caller sees, how background processing works, and what technology roles drive it. Include the unsupported-unit outcome and be clear about what is not known. Produce a local animated explanation and editable model without changing or running the service.
+> Use system-in-motion to help a new teammate understand this reading intake service: what its caller sees, how background processing works, and what technology roles drive it. Include the unsupported-unit outcome and be clear about what is not known. Produce a local animated explanation without modifying or running the service.
 
 ### catalog-cli
 
 Fixture: `fixtures/catalog-cli`
 
-> Use system-in-motion to explain this catalog importer to a new operator and developer, including success, validation failure and duplicate-SKU failure. Produce an animated local explanation and model. Inspect the project without importing data or changing the project.
+> Use system-in-motion to explain this catalog importer to a new operator and developer, including success, validation failure and duplicate-SKU failure. Produce an animated local explanation. Inspect the source without importing data or modifying the importer.
 
 ### review-console
 
 Fixture: `fixtures/review-console`
 
-> Use system-in-motion to explain this document-review project from submission through background scanning, operator review and recorded approval, including the planned publisher boundary. Reconstruct its relevant UI moments and explain the technical flow in the demonstrated motion-walkthrough pattern. Keep source inputs read-only and write a local model and HTML explanation.
+Set a fixture `AGENTS.md` convention that walkthrough HTML belongs in an existing
+`docs/walkthroughs/` directory. Supply a distinct, absolute delivery directory
+for the following request. Check that the explicit destination wins and that a
+follow-up refinement stays there without replacing the original. On a fresh
+copy, omit the explicit destination and package request to exercise the convention.
+
+> Use system-in-motion to explain this document-review project from submission through background scanning, operator review and recorded approval, including the planned publisher boundary. Reconstruct its relevant UI moments and explain the technical flow in the demonstrated motion-walkthrough pattern. Keep source inputs read-only. Write the HTML and a permanent editable package to the separate delivery directory I supplied.
+
+### Source scope and collision
+
+Put the catalog fixture under `tools/catalog` in a temporary repository and
+place a sentinel file at the root named `system-in-motion.html`. Use the
+catalog-cli prompt with `tools/catalog` as its source directory. Verify that the
+sentinel keeps its contents and the new HTML is its only new sibling. Ask for
+one refinement while the run state exists and again with that state unavailable.
+
+### Open brief
+
+Use the catalog fixture with either prompt. For the interview case, provide
+answers after observing the pause, then verify that the accepted scope is reused.
+
+> Use system-in-motion to compare today's catalog import with the proposed new
+> import process.
+
+> Use system-in-motion for this catalog importer. Grill me before you build so
+> we can choose the audience and whether to focus on success or error recovery.

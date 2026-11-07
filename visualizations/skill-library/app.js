@@ -529,7 +529,7 @@ connect("product", "domain-modeling", "support", "clarifies ambiguous terms");
 connect("product", "probe", "support", "settles testable assumptions");
 connect("product", "interrogate", "support", "challenges the contract");
 connect("product", "grill-me", "support", "collects interview evidence");
-connect("system-in-motion", "grill-me", "support", "optionally clarifies the walkthrough brief");
+connect("system-in-motion", "grill-me", "support", "works through walkthrough choices");
 connect("grill-me", "domain-modeling", "support", "captures agreed terms / decisions");
 connect("product", "interaction-design", "handoff", "returns behavior contract");
 
