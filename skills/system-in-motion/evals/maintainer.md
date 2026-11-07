@@ -32,10 +32,10 @@ templates. Keep produced explanations and run evidence outside maintained source
   shared model, with current exchanges highlighted rather than implied calls.
 - The exported HTML works offline: automatic finite playback, pause/resume, view
   switching without resetting progress, selection, replay and reduced motion.
-- A settled brief proceeds without an interview. A single consequential gap gets
-  one focused question and a pause. A requested walkthrough interview uses Grill
-  Me's Grilling procedure, pauses for answers and carries the accepted brief into
-  the build.
+- A settled brief proceeds directly. A single consequential gap gets one focused
+  question and a pause. Grill Me uses Discovery interviews to uncover activities
+  or journeys and Grilling to settle walkthrough choices. Check that the executor
+  waits for answers and carries the accepted brief into the build.
 - Verify root delivery from a subdirectory, collision handling, and offline
   opening without the run directory. Check that the run note identifies the
   rebuild inputs. Exercise missing-state recovery when reviewing refinements.

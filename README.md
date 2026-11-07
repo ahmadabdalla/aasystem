@@ -58,9 +58,9 @@ I tell Pilot where to stop. Sometimes a recommendation or a sketch is enough. Fo
 
 [System in Motion](skills/system-in-motion/SKILL.md) follows one product journey in two synchronized views. **Experience** shows what a person sees and does. **Architecture** shows the work and technology behind each moment.
 
-Say a customer submits a request and a worker saves the result in the background. The walkthrough shows when the request is accepted, when the result is saved, and when the customer can actually see it. Product, design, and engineering can inspect those moments together and trace them to the source. The result is a standalone offline HTML file in the target repository root by default. Editing files stay in temporary storage unless you request a permanent package.
+Say a customer submits a request and a worker saves the result in the background. The walkthrough shows when the request is accepted, when the result is saved, and when the customer can actually see it. Product, design, and engineering can inspect those moments together and trace them to the source. The result is an offline HTML walkthrough with an editable model.
 
-Start this skill directly with `$aasystem:system-in-motion` in Codex or `/aasystem:system-in-motion` in Claude Code. Give it one journey to explain, such as “Show how a request moves from submission to a result the customer can see.” A project subdirectory scopes the source inspection. Specify an output path if you want the HTML somewhere else.
+Start this skill directly with `$aasystem:system-in-motion` in Codex or `/aasystem:system-in-motion` in Claude Code. Give it one journey to explain, such as “Show how a request moves from submission to a result the customer can see.”
 
 ## Contracts define the working rules
 
