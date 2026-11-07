@@ -21,7 +21,9 @@ The default flow is:
 4. The caller updates canonical project records
 5. Project verification supplies observed results
 
-All procedural skills use:
+[System in Motion](../../skills/system-in-motion/SKILL.md) is a separate, direct entry point. It owns its source-grounding, presentation, and verification contracts. It can use Grill Me for bounded clarification of the walkthrough brief.
+
+Pilot and its supporting procedures use:
 
 - The [execution contract](../../skills/pilot/references/execution.md)
 - The [principle index](../../skills/principles/INDEX.md)
@@ -84,6 +86,7 @@ Each row names the skill’s role, source, and local adaptation.
 | Skill | Role | Source | Local adaptation |
 | --- | --- | --- | --- |
 | [`pilot`](../../skills/pilot/SKILL.md) | Coordinate and finish tasks | pstack [`poteto-mode`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md) | Uses host tools; needs no custom agent setup |
+| [`system-in-motion`](../../skills/system-in-motion/SKILL.md) | Flagship walkthrough of a source-grounded product journey | First-party skill developed in isolation | Direct entry with synchronized Experience and Architecture, an editable model, an offline HTML viewer, and an independent UI review gate |
 | [`product`](../../skills/product/SKILL.md) | Define journeys and behavior | First-party split; [OpenSpec](https://github.com/Fission-AI/OpenSpec/blob/main/docs/concepts.md) | Owns discovery synthesis and separates facts, proposals, and agreements |
 | [`solution`](../../skills/solution/SKILL.md) | Choose the overall approach | pstack [`investigation`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/investigation.md); [selected engineering inputs](#selected-engineering-inputs) | Compares viable existing and simpler approaches, exposes consequential assumptions, and records demonstrated reversal costs and reconsideration conditions |
 | [`architect`](../../skills/architect/SKILL.md) | Shape implementation boundaries | pstack [`architect`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/SKILL.md); [selected engineering inputs](#selected-engineering-inputs) | Applies Maintainability criteria and justifies added structure against present callers, invariants, and change burden; returns a design package and proof plan while the caller retains implementation and acceptance |

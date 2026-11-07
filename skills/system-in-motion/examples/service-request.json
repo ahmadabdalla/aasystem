@@ -1,0 +1,835 @@
+{
+  "version": 1,
+  "title": "From request to confirmed service",
+  "summary": "A synthetic equipment request, from arrival through background checks and human review to planned delivery evidence.",
+  "basis": "synthetic",
+  "sources": [
+    {
+      "id": "intake",
+      "label": "Reference: request intake",
+      "location": "examples/reference-project.md#request-intake"
+    },
+    {
+      "id": "background",
+      "label": "Reference: background availability",
+      "location": "examples/reference-project.md#background-availability"
+    },
+    {
+      "id": "review",
+      "label": "Reference: human review",
+      "location": "examples/reference-project.md#human-review"
+    },
+    {
+      "id": "notify",
+      "label": "Reference: planned notification",
+      "location": "examples/reference-project.md#planned-notification"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "people",
+      "label": "Request and human decisions",
+      "initiator": "A visitor submits; a coordinator later opens and approves"
+    },
+    {
+      "id": "background",
+      "label": "Background availability",
+      "initiator": "A queued task triggers a separate consumer"
+    },
+    {
+      "id": "shared",
+      "label": "Shared state and communication",
+      "initiator": "Accessed by the relevant caller; writes do not initiate browser traffic"
+    }
+  ],
+  "components": [
+    {
+      "id": "visitor",
+      "label": "Request equipment",
+      "technology": "Visitor / browser",
+      "responsibility": "Submit the equipment need",
+      "kind": "person",
+      "lane": "people",
+      "row": 1,
+      "column": 1,
+      "status": "implemented",
+      "evidence": [
+        "intake"
+      ],
+      "placement": "outside",
+      "step": 1,
+      "icon": "person"
+    },
+    {
+      "id": "portal",
+      "label": "Follow the request",
+      "technology": "Web application",
+      "responsibility": "Show pending state and review results",
+      "kind": "interface",
+      "lane": "people",
+      "row": 1,
+      "column": 2,
+      "status": "implemented",
+      "evidence": [
+        "intake",
+        "review"
+      ],
+      "placement": "inside",
+      "icon": "browser"
+    },
+    {
+      "id": "api",
+      "label": "Accept and update",
+      "technology": "HTTP service",
+      "responsibility": "Validate input, read requests and record decisions",
+      "kind": "service",
+      "lane": "people",
+      "row": 1,
+      "column": 4,
+      "status": "implemented",
+      "evidence": [
+        "intake",
+        "review"
+      ],
+      "placement": "inside",
+      "step": 5,
+      "icon": "service"
+    },
+    {
+      "id": "coordinator",
+      "label": "Review and approve",
+      "technology": "Operations user",
+      "responsibility": "Make the explicit approval decision",
+      "kind": "person",
+      "lane": "people",
+      "row": 2,
+      "column": 1,
+      "status": "implemented",
+      "evidence": [
+        "review"
+      ],
+      "placement": "outside",
+      "step": 4,
+      "icon": "person"
+    },
+    {
+      "id": "queue",
+      "label": "Hand off availability",
+      "technology": "Task queue",
+      "responsibility": "Carry work independently of browser requests",
+      "kind": "queue",
+      "lane": "background",
+      "row": 1,
+      "column": 3,
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ],
+      "placement": "inside",
+      "step": 2,
+      "icon": "queue"
+    },
+    {
+      "id": "consumer",
+      "label": "Check availability",
+      "technology": "Background consumer",
+      "responsibility": "Read inventory and record availability",
+      "kind": "process",
+      "lane": "background",
+      "row": 1,
+      "column": 4,
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ],
+      "placement": "inside",
+      "step": 3,
+      "icon": "process"
+    },
+    {
+      "id": "inventory",
+      "label": "Find equipment",
+      "technology": "Inventory adapter",
+      "responsibility": "Provide the current equipment availability",
+      "kind": "external",
+      "lane": "background",
+      "row": 2,
+      "column": 1,
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ],
+      "placement": "outside",
+      "icon": "external"
+    },
+    {
+      "id": "store",
+      "label": "Keep request history",
+      "technology": "Relational store",
+      "responsibility": "Save request state, availability and decisions",
+      "kind": "store",
+      "lane": "shared",
+      "row": 1,
+      "column": 6,
+      "status": "implemented",
+      "evidence": [
+        "intake",
+        "background",
+        "review"
+      ],
+      "placement": "inside",
+      "step": 7,
+      "icon": "store"
+    },
+    {
+      "id": "messaging",
+      "label": "Notify the requester",
+      "technology": "Messaging provider",
+      "responsibility": "Submit confirmation and emit delivery events",
+      "kind": "external",
+      "lane": "shared",
+      "row": 1,
+      "column": 1,
+      "status": "planned",
+      "evidence": [
+        "notify"
+      ],
+      "placement": "outside",
+      "step": 6,
+      "icon": "message"
+    }
+  ],
+  "edges": [
+    {
+      "id": "submit",
+      "from": "visitor",
+      "to": "portal",
+      "label": "Submit equipment need",
+      "kind": "request",
+      "status": "implemented",
+      "evidence": [
+        "intake"
+      ]
+    },
+    {
+      "id": "http",
+      "from": "portal",
+      "to": "api",
+      "label": "Submit or retrieve request",
+      "kind": "request",
+      "status": "implemented",
+      "evidence": [
+        "intake"
+      ]
+    },
+    {
+      "id": "state",
+      "from": "api",
+      "to": "store",
+      "label": "Read or update request state",
+      "kind": "request",
+      "status": "implemented",
+      "evidence": [
+        "review"
+      ]
+    },
+    {
+      "id": "enqueue",
+      "from": "api",
+      "to": "queue",
+      "label": "Publish availability task",
+      "kind": "event",
+      "status": "implemented",
+      "evidence": [
+        "intake"
+      ]
+    },
+    {
+      "id": "consume",
+      "from": "queue",
+      "to": "consumer",
+      "label": "Deliver queued task",
+      "kind": "event",
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ]
+    },
+    {
+      "id": "lookup",
+      "from": "consumer",
+      "to": "inventory",
+      "label": "Read availability",
+      "kind": "read",
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ]
+    },
+    {
+      "id": "availability",
+      "from": "consumer",
+      "to": "store",
+      "label": "Save availability result",
+      "kind": "write",
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ]
+    },
+    {
+      "id": "open-review",
+      "from": "coordinator",
+      "to": "portal",
+      "label": "Open review deliberately",
+      "kind": "request",
+      "status": "implemented",
+      "evidence": [
+        "review"
+      ]
+    },
+    {
+      "id": "send",
+      "from": "api",
+      "to": "messaging",
+      "label": "Submit approved confirmation",
+      "kind": "request",
+      "status": "planned",
+      "evidence": [
+        "notify"
+      ]
+    },
+    {
+      "id": "delivery",
+      "from": "messaging",
+      "to": "api",
+      "label": "Emit later delivery evidence",
+      "kind": "event",
+      "status": "planned",
+      "evidence": [
+        "notify"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "arrive",
+      "title": "A request arrives",
+      "description": "The visitor submits a need; the service records a pending request.",
+      "trigger": "Visitor submits the request form",
+      "duration": 7,
+      "status": "implemented",
+      "evidence": [
+        "intake"
+      ],
+      "activeComponents": [
+        "visitor",
+        "portal",
+        "api",
+        "store"
+      ],
+      "activeEdges": [
+        "submit",
+        "http",
+        "state"
+      ],
+      "experience": {
+        "actor": "Visitor",
+        "surface": "Incoming equipment request",
+        "layout": "message",
+        "state": "Pending",
+        "title": "New equipment request",
+        "body": "Please arrange a portable projector for the next available afternoon. The submitted request is Pending.",
+        "fields": [
+          {
+            "label": "From",
+            "value": "Visitor / request form"
+          },
+          {
+            "label": "Request",
+            "value": "R-1042 / Portable projector"
+          },
+          {
+            "label": "Period",
+            "value": "Next available afternoon"
+          }
+        ],
+        "actions": [],
+        "mode": "observed",
+        "nav": "Intake"
+      },
+      "behind": [
+        {
+          "component": "api",
+          "action": "Validate the supplied need and create a pending request"
+        },
+        {
+          "component": "store",
+          "action": "Keep the request identity and initial state"
+        }
+      ],
+      "short": "Request"
+    },
+    {
+      "id": "handoff",
+      "title": "Availability becomes background work",
+      "description": "The API publishes a task; it does not wait for the availability consumer.",
+      "trigger": "Accepted request publishes a task",
+      "duration": 7,
+      "status": "implemented",
+      "evidence": [
+        "intake"
+      ],
+      "activeComponents": [
+        "api",
+        "queue"
+      ],
+      "activeEdges": [
+        "enqueue"
+      ],
+      "experience": {
+        "actor": "System explanation",
+        "surface": "Request intake / processing explanation",
+        "layout": "pipeline",
+        "state": "Background handoff",
+        "title": "Hand off the availability check",
+        "body": "The API publishes a task independently of the visitor screen.",
+        "fields": [
+          {
+            "label": "Visitor screen",
+            "value": "Still Pending"
+          },
+          {
+            "label": "Background work",
+            "value": "Queued for the consumer"
+          }
+        ],
+        "actions": [],
+        "mode": "explanation",
+        "nav": "Intake",
+        "stages": [
+          {
+            "label": "Accepted",
+            "detail": "HTTP service"
+          },
+          {
+            "label": "Publish task",
+            "detail": "Availability request"
+          },
+          {
+            "label": "Queued",
+            "detail": "Task queue"
+          }
+        ],
+        "packet": "REQUEST"
+      },
+      "behind": [
+        {
+          "component": "api",
+          "action": "Publish the availability task"
+        },
+        {
+          "component": "queue",
+          "action": "Retain the task for the separate consumer"
+        }
+      ],
+      "short": "Handoff"
+    },
+    {
+      "id": "check",
+      "title": "The worker saves a result",
+      "description": "The background worker receives the task, checks inventory and saves the result. The visitor still sees Pending.",
+      "trigger": "Background consumer receives the queued task",
+      "duration": 7,
+      "status": "implemented",
+      "evidence": [
+        "background"
+      ],
+      "activeComponents": [
+        "queue",
+        "consumer",
+        "inventory",
+        "store"
+      ],
+      "activeEdges": [
+        "consume",
+        "lookup",
+        "availability"
+      ],
+      "experience": {
+        "actor": "System explanation",
+        "surface": "Availability / processing explanation",
+        "layout": "pipeline",
+        "state": "Availability recorded",
+        "title": "Check equipment and retain the result",
+        "body": "The worker saves the availability result. The visitor still sees Pending.",
+        "fields": [
+          {
+            "label": "Availability",
+            "value": "Available in this synthetic example"
+          },
+          {
+            "label": "Visitor screen",
+            "value": "Still the original Pending response"
+          }
+        ],
+        "actions": [],
+        "mode": "explanation",
+        "nav": "Intake",
+        "stages": [
+          {
+            "label": "Receive task",
+            "detail": "Background consumer"
+          },
+          {
+            "label": "Read inventory",
+            "detail": "Equipment adapter"
+          },
+          {
+            "label": "Store result",
+            "detail": "Request history"
+          }
+        ],
+        "packet": "RESULT"
+      },
+      "behind": [
+        {
+          "component": "consumer",
+          "action": "Read inventory and apply the availability rule"
+        },
+        {
+          "component": "store",
+          "action": "Save the availability result; the visitor still sees Pending"
+        }
+      ],
+      "short": "Check"
+    },
+    {
+      "id": "review",
+      "title": "A person opens the result",
+      "description": "The coordinator opens the operations view and sees the saved availability result.",
+      "trigger": "Coordinator opens the operations view",
+      "duration": 7,
+      "status": "implemented",
+      "evidence": [
+        "review"
+      ],
+      "activeComponents": [
+        "coordinator",
+        "portal",
+        "api",
+        "store"
+      ],
+      "activeEdges": [
+        "open-review",
+        "http",
+        "state"
+      ],
+      "experience": {
+        "actor": "Coordinator",
+        "surface": "ServiceFlow / Requests",
+        "layout": "workbench",
+        "state": "Needs decision",
+        "title": "One request is ready for review",
+        "body": "Opening this view retrieves the saved result.",
+        "fields": [
+          {
+            "label": "Equipment",
+            "value": "Portable projector"
+          },
+          {
+            "label": "Availability",
+            "value": "Available"
+          },
+          {
+            "label": "Decision",
+            "value": "Awaiting approval"
+          }
+        ],
+        "actions": [
+          "Review request"
+        ],
+        "mode": "observed",
+        "nav": "Requests",
+        "items": [
+          {
+            "title": "R-1042 / Portable projector",
+            "detail": "Visitor / next available afternoon",
+            "state": "Needs review"
+          }
+        ]
+      },
+      "behind": [
+        {
+          "component": "api",
+          "action": "Retrieve the stored request and availability for this operator request"
+        }
+      ],
+      "short": "Inbox"
+    },
+    {
+      "id": "approve",
+      "title": "Approval is explicit",
+      "description": "A coordinator approves the request and the HTTP service records that decision.",
+      "trigger": "Coordinator chooses Approve",
+      "duration": 7,
+      "status": "implemented",
+      "evidence": [
+        "review"
+      ],
+      "activeComponents": [
+        "coordinator",
+        "portal",
+        "api",
+        "store"
+      ],
+      "activeEdges": [
+        "http",
+        "state"
+      ],
+      "experience": {
+        "actor": "Coordinator",
+        "surface": "ServiceFlow / Request R-1042",
+        "layout": "review",
+        "state": "Approved",
+        "title": "Review and approve the request",
+        "body": "Approval recorded. This is the last response received by the coordinator until a separate read or push.",
+        "fields": [
+          {
+            "label": "Decision",
+            "value": "Approved"
+          },
+          {
+            "label": "Equipment",
+            "value": "Portable projector"
+          }
+        ],
+        "actions": [
+          "Simulated coordinator approval"
+        ],
+        "mode": "observed",
+        "nav": "Review",
+        "items": [
+          {
+            "title": "Availability checked",
+            "detail": "The stored result was retrieved",
+            "state": "Complete"
+          },
+          {
+            "title": "Equipment and period reviewed",
+            "detail": "A coordinator makes this decision",
+            "state": "Complete"
+          },
+          {
+            "title": "Approval recorded",
+            "detail": "Before any confirmation is submitted",
+            "state": "Approved"
+          }
+        ],
+        "columns": [
+          "Equipment",
+          "Availability",
+          "Decision"
+        ],
+        "rows": [
+          [
+            "Portable projector",
+            "Available",
+            "Approved"
+          ]
+        ]
+      },
+      "behind": [
+        {
+          "component": "api",
+          "action": "Record the explicit approval decision"
+        },
+        {
+          "component": "store",
+          "action": "Keep the decision as request history"
+        }
+      ],
+      "short": "Review"
+    },
+    {
+      "id": "notify",
+      "title": "Planned: submit the confirmation",
+      "description": "Future notification would submit a message and retain Pending delivery until evidence arrives.",
+      "trigger": "Approved request initiates planned notification",
+      "duration": 7,
+      "status": "planned",
+      "evidence": [
+        "notify"
+      ],
+      "activeComponents": [
+        "api",
+        "messaging",
+        "store"
+      ],
+      "activeEdges": [
+        "send",
+        "state"
+      ],
+      "experience": {
+        "actor": "System explanation",
+        "surface": "Planned confirmation / processing explanation",
+        "layout": "dispatch",
+        "state": "Pending delivery",
+        "title": "Submit the approved confirmation",
+        "body": "Confirmation for request R-1042: portable projector, next available afternoon. Submission does not establish delivery.",
+        "fields": [
+          {
+            "label": "To",
+            "value": "Requester"
+          },
+          {
+            "label": "Package",
+            "value": "Approved equipment confirmation R-1042"
+          }
+        ],
+        "actions": [
+          "Planned submission simulation"
+        ],
+        "mode": "explanation",
+        "nav": "Review",
+        "items": [
+          {
+            "title": "Approved request",
+            "detail": "Equipment and period bound to the decision",
+            "state": "Ready"
+          },
+          {
+            "title": "Provider submission",
+            "detail": "Future messaging integration",
+            "state": "Planned"
+          }
+        ],
+        "stages": [
+          {
+            "label": "Approved",
+            "detail": "Recorded decision"
+          },
+          {
+            "label": "Submit",
+            "detail": "Messaging provider"
+          },
+          {
+            "label": "Wait for evidence",
+            "detail": "Pending delivery"
+          }
+        ],
+        "packet": "CONFIRMATION"
+      },
+      "behind": [
+        {
+          "component": "api",
+          "action": "Submit the confirmation and record Pending delivery"
+        }
+      ],
+      "short": "Send"
+    },
+    {
+      "id": "evidence",
+      "title": "Planned: evidence completes the history",
+      "description": "A later provider event would cause the service to record delivery evidence.",
+      "trigger": "Messaging provider emits a delivery event",
+      "duration": 7,
+      "status": "planned",
+      "evidence": [
+        "notify"
+      ],
+      "activeComponents": [
+        "messaging",
+        "api",
+        "store"
+      ],
+      "activeEdges": [
+        "delivery",
+        "state"
+      ],
+      "experience": {
+        "actor": "System explanation",
+        "surface": "Planned stored history / processing explanation",
+        "layout": "register",
+        "state": "Evidence recorded",
+        "title": "Request history / R-1042",
+        "body": "A processing view of the stored record. The coordinator still has the last Approved response until a separate read or push.",
+        "fields": [
+          {
+            "label": "Record",
+            "value": "R-1042"
+          },
+          {
+            "label": "Coordinator view",
+            "value": "Last response remains Approved"
+          }
+        ],
+        "actions": [
+          "Approve"
+        ],
+        "mode": "explanation",
+        "nav": "History",
+        "columns": [
+          "Request / equipment",
+          "Decision",
+          "Delivery"
+        ],
+        "rows": [
+          [
+            "R-1042 / Portable projector",
+            "Approved",
+            "Evidence recorded"
+          ]
+        ],
+        "audit": [
+          {
+            "label": "Request received",
+            "detail": "Pending request stored"
+          },
+          {
+            "label": "Availability recorded",
+            "detail": "Independent consumer result"
+          },
+          {
+            "label": "Coordinator approved",
+            "detail": "Explicit decision recorded"
+          },
+          {
+            "label": "Confirmation submitted",
+            "detail": "Planned / Pending delivery"
+          },
+          {
+            "label": "Provider event received",
+            "detail": "Planned / evidence persisted"
+          }
+        ]
+      },
+      "behind": [
+        {
+          "component": "api",
+          "action": "Handle the provider event and persist its evidence"
+        },
+        {
+          "component": "store",
+          "action": "Retain the evidence-backed history"
+        }
+      ],
+      "short": "History"
+    }
+  ],
+  "presentation": {
+    "name": "ServiceFlow",
+    "mark": "SF",
+    "navigation": [
+      "Intake",
+      "Requests",
+      "Review",
+      "History"
+    ],
+    "boundary": {
+      "label": "Application boundary",
+      "detail": "Logical components / synthetic reference"
+    },
+    "accent": "#1d4ed8"
+  }
+}
