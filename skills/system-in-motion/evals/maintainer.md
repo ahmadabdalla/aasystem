@@ -5,6 +5,8 @@ The fixtures are synthetic read-only projects, not authoritative architecture
 templates. Keep produced explanations and run evidence outside maintained source.
 
 1. Run `python3 -m unittest discover -s <skill>/tests -v` and build the reference.
+   For profile changes, build both bundled models through the standard command
+   without `--template`, and run the shared browser helper on both exports.
 2. Give a fresh agent the skill and one case below. Copy the fixture to a fresh
    temporary Git repository so default delivery is observable without writing to
    maintained source. Withhold this rubric, the producer's conclusions and the
@@ -51,6 +53,16 @@ For the review-console case, also judge the actual renders against the bundled
 [presentation anchors](../references/presentation.md#reference-composition).
 A functional card deck does not pass visual fidelity.
 
+For the business-workflow case, apply the Business map source and reader checks in
+[verification](../references/verification.md#source-and-model). Compare both views
+with the fictional reference at both laptop sizes. Trace the entire map and inspect
+the busiest phase; automated geometry must cover every node and relationship
+caption, including docking, clearance and route obstructions. Exercise ordered
+phases, readable paused selection and stable control labels. Also exercise native
+Safari Pause/Resume and paused selection, recording its actual viewport. WebKit
+automation on another OS does not establish native Safari behavior; report missing
+access as an outstanding check.
+
 A materially false causal claim, unexercised required runtime path or unusable
 graph blocks a passing case. Report cosmetic preferences separately. Finite cases
 do not prove reliability on arbitrary projects, deployment health or host discovery.
@@ -59,6 +71,20 @@ No model-diversity claim is warranted when all workers use the same configured m
 ## Case prompts
 
 Give the executor only its selected fixture and prompt, not the judge criteria.
+
+### business-workflow
+
+Fixture: a fresh temporary repository containing only
+[`business-workflow-source.md`](../examples/business-workflow-source.md).
+
+> Use system-in-motion to explain this equipment-reservation journey from a business
+> architecture perspective: who performs each activity, what people decide, what
+> the software does, and what happens next. Keep the planned confirmation and
+> collection boundary visible. Produce an offline walkthrough and editable model.
+
+Observe the executor's profile selection and standard build without supplying a
+renderer choice, layout, expected graph or model. The source defines the expected
+responsibilities and topology; assess actual output, not fixture presence.
 
 ### reading-service
 

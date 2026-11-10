@@ -126,5 +126,110 @@ class ModelTests(unittest.TestCase):
             self.assertEqual(json.loads(model.read_text()), self.model)
 
 
+class BusinessModelTests(unittest.TestCase):
+    def setUp(self):
+        self.model = json.loads((SKILL / "examples" / "business-workflow.json").read_text())
+
+    def reject(self, mutation, message):
+        model = copy.deepcopy(self.model)
+        mutation(model)
+        with self.assertRaisesRegex(build.ModelError, message):
+            build.validate(model)
+
+    def test_reference_topology_and_performers(self):
+        self.assertIs(build.validate(self.model), self.model)
+        self.assertEqual([len(self.model[k]) for k in ["lanes", "components", "edges", "scenes"]], [3, 12, 13, 9])
+        nodes = {node["id"]: node for node in self.model["components"]}
+        self.assertEqual(nodes["allocation"]["lane"], "system")
+        self.assertEqual(nodes["availability"]["lane"], "system")
+        self.assertEqual(nodes["approve"]["lane"], "staff")
+        self.assertEqual(nodes["qualify"]["label"], "Accept this request?")
+        self.assertEqual(nodes["approve"]["label"], "Approve this allocation?")
+        self.assertEqual(nodes["availability"]["scene"], nodes["input"]["scene"])
+        self.assertNotIn("scene", nodes["closed"])
+        self.assertEqual(next(e for e in self.model["edges"] if e["id"] == "confirmed")["kind"], "prerequisite")
+
+    def test_unknown_profiles_fail_and_old_models_need_no_migration(self):
+        for value in ["bpmn", "", [], None, True]:
+            self.reject(lambda m: m["presentation"].update(profile=value), "presentation.profile")
+        old = json.loads((SKILL / "examples" / "service-request.json").read_text())
+        build.validate(old)
+        old.setdefault("presentation", {})["profile"] = "technical"
+        build.validate(old)
+
+    def test_responsibility_scene_and_evidence_references(self):
+        for mutation, message in [
+            (lambda m: m["components"][0].update(lane="missing"), "lane.*unresolved"),
+            (lambda m: m["components"][0].update(lane=[]), "lane"),
+            (lambda m: m["lanes"][0].update(performer="owner"), "performer"),
+            (lambda m: m["components"][0].update(scene="missing"), "scene.*unresolved"),
+            (lambda m: m["components"][0].pop("scene"), "scene"),
+            (lambda m: m["components"][0].update(scene="scene-9"), "selected scene"),
+            (lambda m: m["components"][0].update(evidence=["missing"]), "evidence.*unresolved"),
+            (lambda m: m["edges"][0].update(to="missing"), "unresolved"),
+            (lambda m: m["components"][0].update(status="inferred"), "note"),
+        ]:
+            with self.subTest(message=message):
+                self.reject(mutation, message)
+
+    def test_state_dimensions_are_named_ordered_and_complete(self):
+        # A second use case can use a different vocabulary and number of facts.
+        self.model["stateDimensions"] = [{"id": "case", "label": "Case status"}]
+        for scene in self.model["scenes"]:
+            scene["states"] = {"case": "Open"}
+        build.validate(self.model)
+        for states in [{}, {"case":"Open", "unknown":"Bad"}, {"case":""}, []]:
+            self.reject(lambda m: m["scenes"][0].update(states=states), "states")
+        self.reject(lambda m: m["stateDimensions"].append(m["stateDimensions"][0]), "duplicate identifier")
+
+    def test_branches_require_distinct_readable_alternatives(self):
+        self.reject(lambda m: m["edges"][1].pop("condition"), "condition")
+        self.reject(lambda m: m["edges"][1].update(condition="  "), "condition")
+        self.reject(lambda m: m["edges"][1].update(kind="sequence"), "branch alternatives")
+        self.reject(lambda m: m["edges"][3].update(condition=m["edges"][1]["condition"]), "distinct conditions")
+        self.reject(lambda m: m["components"][1].update(label="Accept automatically"), "complete question")
+        # Runtime meanings cannot leak into the workflow profile.
+        self.reject(lambda m: m["edges"][0].update(kind="event"), "sequence, branch or prerequisite")
+
+    def test_ordered_phases_cover_only_active_relationships(self):
+        scene = self.model["scenes"][4]
+        self.assertEqual(scene["phases"], [{"edges":["prepare"]}, {"edges":["priced"]}])
+        for phases in [[], [{"edges":["missing"]}], [{"edges":["email"]}],
+                       [{"edges":["prepare"]}], [{"edges":["prepare", "priced", "priced"]}],
+                       [{"edges":[]}, {"edges":["prepare", "priced"]}],
+                       [{"edges":["prepare", "priced"], "scene":"scene-4"}]]:
+            with self.subTest(phases=phases):
+                self.reject(lambda m: m["scenes"][4].update(phases=phases), "phases")
+        self.reject(lambda m: m["scenes"][4].update(activeComponents=["availability", "allocation"]), "participants")
+        scene.pop("phases")
+        build.validate(self.model)
+
+    def test_layout_hints_cannot_redefine_business_meaning(self):
+        for key, value in [("label","Other"), ("lane","staff"), ("scene","scene-9"), ("step",2)]:
+            self.reject(lambda m: m["components"][0]["layout"].update({key:value}), "layout fields")
+        self.reject(lambda m: m["components"][0].update(step=1), "navigation uses scene IDs")
+        self.reject(lambda m: m["edges"][0]["layout"]["label"].update(text="Other"), "layout fields")
+
+    def test_layout_numbers_lanes_and_routes_are_bounded(self):
+        for value in [True, "260", -1, float("nan"), float("inf"), 10**400, []]:
+            self.reject(lambda m: m["components"][0]["layout"].update(x=value), "layout.x")
+        self.reject(lambda m: m["presentation"].update(canvas={"width":1,"height":600}), "canvas.width")
+        self.reject(lambda m: m["lanes"][0]["layout"].update(height=200), "lanes.*overlap")
+        self.reject(lambda m: m["components"][0]["layout"].update(y=150), "performer lane")
+        self.reject(lambda m: m["components"][0]["layout"].update(width=1180), "beyond the canvas")
+        for points in [[], [[1,2]], [[1]], [[1,2],[2,3]], [[1,2],[1,2]], [[0,0],[0,601]], [None, [1,2]]]:
+            self.reject(lambda m: m["edges"][0]["layout"].update(points=points), "layout.points")
+
+    def test_business_fixture_builds_through_standard_command(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "business.html"
+            result = subprocess.run([sys.executable, str(SKILL / "scripts" / "build.py"),
+                str(SKILL / "examples" / "business-workflow.json"), "--output", str(output)],
+                cwd=directory, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('"profile":"business-workflow"', output.read_text())
+            self.assertNotIn("__SYSTEM_IN_MOTION_MODEL__", output.read_text())
+
+
 if __name__ == "__main__":
     unittest.main()

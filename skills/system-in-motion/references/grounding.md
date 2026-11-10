@@ -61,6 +61,14 @@ a matching noun. Resolve material contradictions or preserve them explicitly.
 
 ## Initiation and observation
 
+For a business workflow, establish responsibility before layout. For each activity
+record its trigger, performer, inputs, result, human decision if any, and evidence
+in the model and scene explanation. Split human input, software calculation and
+human approval when different parties perform them. A person's button click does
+not make the subsequent software calculation human work. Do not invent automation.
+Use sequence, branch and prerequisite for business relationships; a prerequisite
+permits later work but does not initiate a call or the next person's action.
+
 Trace each exchange's initiator, recipient, payload/outcome and trigger. Timer,
 operator, queue delivery and external callback are distinct initiators. A worker
 can change storage without updating a browser; inspect the actual read/response/push

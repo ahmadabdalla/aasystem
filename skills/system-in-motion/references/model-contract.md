@@ -143,3 +143,66 @@ and must be unique within their collection. Self-edges are unsupported; show wor
 inside a component through `scene.behind`. Every lane, endpoint, active
 element, backstage component and evidence ID must resolve. Preserve unknowns rather
 than manufacturing relationships to make a more complete-looking picture.
+
+## Business-workflow profile
+
+Set `presentation.profile` to `"business-workflow"`. Omitted or `"technical"`
+preserves the contract above, existing models and default Experience view. Unknown
+profiles fail validation. Business map uses the same `components`, `edges`, `scenes`,
+source ledger, experience forms and provenance rules; it does not add a second
+renderer-owned meaning model. See the complete valid
+[business model](../examples/business-workflow.json) and its
+[fictional source](../examples/business-workflow-source.md).
+
+| Field | Business contract |
+| --- | --- |
+| `lanes[]` | `id`, `label`, `initiator` (responsibility caption), `performer`: `human`, `software` or `external`; `layout: {y, height}` |
+| `components[]` | `id`, `label`, `kind`: `activity`, `decision` or `outcome`, exactly one `lane`, `status`, `evidence`, optional plain `detail`; uncertainty also needs `note` |
+| Node navigation | `scene` references one scene ID and is required except on outcomes. The referenced scene highlights the node. Multiple nodes may share a scene; badges derive from scene order. No parallel `step`, `row`, `column` or `placement` |
+| Node geometry | `layout: {x, y, width, height}` places the complete shape inside its canonical lane; it cannot override label, performer, status or scene |
+| `edges[]` | Existing identity/endpoints/label/evidence, with `kind`: `sequence`, `branch` or `prerequisite`. Branches also require a readable `condition`; `label` is the visible concise caption. A decision label is a complete question ending in `?` with at least two distinctly conditioned branches |
+| Relationship geometry | `layout: {points: [[x,y], ...], label: {x,y}}`; ordered orthogonal points include source and target ports; the label coordinates locate the canonical caption |
+| `stateDimensions` | Nonempty ordered declarations `[{id, label}]`; each scene's `states` supplies a nonempty string for every declared ID, with no undeclared IDs |
+| Scene timing | Optional `phases: [{edges: [edgeId, ...]}, ...]` declares ordered groups; every `activeEdges` member appears exactly once and all endpoints are in `activeComponents`. Omission gives one phase. Multiple phases must be nonempty. Prerequisites can highlight but never animate a traveling object |
+
+Business nodes do not require technical `technology` or `responsibility` fields.
+Scene `trigger`, `behind`, active participants and Experience retain their existing
+requirements. Explain the actual human/external trigger even when a prerequisite
+permits an activity. A sequence shows business progression, not a network event.
+
+The bundled map requires `presentation.canvas: {width, height}` and the layout
+objects above. Width is 400–10000 and height 200–10000 map units. Lanes are at
+least 60 units high and cannot overlap; nodes are at least 40×30 units. All
+coordinates are finite numbers (not booleans), within the canvas and, for nodes,
+their lane. Routes have 2–100 distinct consecutive orthogonal points. Layout
+objects accept only their documented keys. These bounds establish model validity;
+rendered text fit, docking, label clearance and unobstructed routes still need
+browser checks. Layout cannot silently change canonical responsibility/navigation.
+
+For example, a scene can include staff saving input followed by a software check:
+
+```json
+{
+  "activeComponents": ["complete-request", "check-stock", "plan-allocation"],
+  "activeEdges": ["save-details", "calculate"],
+  "phases": [{"edges": ["save-details"]}, {"edges": ["calculate"]}],
+  "states": {"request": "Details checked", "plan": "Draft", "reservation": "Not submitted", "collection": "Unrecorded"}
+}
+```
+
+This is a scene fragment within a model declaring those IDs and dimensions, not
+a standalone model. Invalid variants fail with a field-specific error:
+
+| Invalid edit to the valid fixture | Reason |
+| --- | --- |
+| `presentation.profile: "business"` | Unknown profile |
+| Node `lane: "missing"`, `scene: "missing"` or `evidence: ["missing"]` | Unresolved reference |
+| Add node `step: 4` or `layout.scene: "approve"` | Duplicate navigation or semantic layout override |
+| Remove a scene state or add `states.invoice` | Missing/undeclared dimension |
+| Remove a branch condition or leave a decision with one alternative | Incomplete decision |
+| Put a non-active relationship in `phases`, repeat one or omit an active one | Inconsistent ordered activity |
+| Put a node outside its lane or use a non-finite/diagonal route | Invalid layout |
+
+Validation cannot decide whether an activity mixes performers or whether a label
+answers a reader's question. Follow the source and map-only reader review in
+[verification](verification.md#source-and-model).

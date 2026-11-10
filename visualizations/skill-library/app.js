@@ -27,7 +27,7 @@ const nodes = [
     title: "System in Motion",
     type: "work",
     subtitle: "Flagship walkthrough · Direct only",
-    purpose: "Follows one source-grounded product journey in synchronized Experience and Architecture views.",
+    purpose: "Routes one source-grounded journey to Experience with Architecture or a business responsibility map.",
     owns: "The offline animated walkthrough, editable model, source evidence, and independent UI review of the export.",
     source: "../../skills/system-in-motion/SKILL.md",
     x: -310,

@@ -37,7 +37,7 @@ real requests or suggest that the explanation is a live control panel.
 Build and open the reference using SKILL.md. Preserve these anchors while changing
 project content, styling and evidenced topology:
 
-- Compact masthead, one upper-right Architecture/Experience switch, and current
+- Compact masthead, one upper-right view switch, and current
   scene heading, narrative and counter above the visual.
 - Wide application window with header/persona, local navigation and stage body;
   a narrow open backstage rail beside it, rather than a second equal-sized card.
@@ -60,6 +60,26 @@ Group architecture components by meaningful responsibility, initiator or evidenc
 boundary, not a provider's reference topology. A lane caption explains what starts
 work or what the group shares; placement alone does not imply calls between nodes.
 Preserve causal reading order across the supported laptop layouts.
+
+### Business map
+
+The business profile replaces Architecture with horizontal responsibility lanes,
+not a third view. Lane headers show an outline performer icon, role and short
+caption. Rounded activities, diamond decisions and pill outcomes remain connected
+throughout playback, including branches, exits and rework. Lane membership identifies
+the performer. Derive scene badges and selection from node scene IDs; unlinked
+outcomes have no badge. Show the model's labeled state dimensions directly below
+the scene description. Use orthogonal directed routes with labeled alternatives
+and distinct incoming ports. Keep planned nodes and paths dashed and explicitly
+labeled during focus; explain inferred/unknown work. The nearby legend distinguishes
+focus, progression, planned work and prerequisites. A prerequisite is not a call.
+
+Experience keeps the wide scene surface and narrow responsibility rail, choosing
+the existing forms by scene meaning. Vertical scrolling is acceptable; the bundled
+business reference fits both laptop widths without horizontal page scrolling.
+For larger journeys, label an intentionally scrollable canvas and retain readable
+labels rather than shrinking the map to fit. The fictional source defines reference
+topology, not limits on lane, node or scene counts.
 
 No domain, cloud or palette is intrinsic to this pattern. Use the requested or
 evidenced design system; keep copy focused on actions and outcomes, with source

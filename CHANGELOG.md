@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add the System in Motion business-workflow profile: responsibility lanes, decisions and outcomes in a bundled offline map, with validated states and ordered playback shared with Experience.
+
 ## [0.10.1]
 
 - Deliver verified System in Motion walkthroughs as standalone HTML in the target repository by default. Keep rebuild files temporary and provide an editable package on request.

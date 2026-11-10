@@ -52,6 +52,15 @@ screenshots: every newly visible fact needs a response/read/push. Otherwise reta
 the last observed state and show backstage facts in a labeled explanation scene.
 An API/CLI retains its real surface. Rebuild and inspect after model changes.
 
+For Business map, trace every node against its lane performer and source: trigger,
+input, action, result and any human choice. Check every alternative, non-success
+exit and rework path, including planned work and independent confirmation boundaries.
+Review the map alone as a reader unfamiliar with the source: can each visible node
+answer who acts, on what object, and what changes or choice follows? A decision
+must ask a complete question (for example, “Accept this request?”). For each unclear
+label record the unanswered who/what question and replacement wording, then recheck
+the final map. Tooltips and narration cannot repair an ambiguous visible label.
+
 ## Actual playback and controls
 
 Open the exported HTML locally. The optional `scripts/check-browser.cjs` uses an
