@@ -44,6 +44,7 @@
         cursor: default;
         opacity: 0.42;
       }
+      #system-in-motion [role='button']:focus-visible,
       #system-in-motion button:focus-visible {
         outline: 3px solid var(--em-accent);
         outline-offset: 3px;
@@ -1364,6 +1365,40 @@
           padding: 14px;
         }
       }
+      /* Business composition shares the shell, experience surfaces and clock. */
+      #system-in-motion[data-profile='business-workflow'] .em-top { padding: 0 0 10px; }
+      #system-in-motion[data-profile='business-workflow'] .em-heading { padding: 10px 0 14px; }
+      #system-in-motion[data-profile='business-workflow'] .em-heading p { max-width: 1050px; }
+      #system-in-motion[data-profile='business-workflow'] .em-flow-current { margin: 8px 0; }
+      #scope-badge { color: var(--em-good); font-size: 11px; font-weight: 650; letter-spacing: .8px; }
+      #scope-badge[data-status='planned'] { color: #864508; }
+      #state-strip { display: grid; grid-template-columns: repeat(var(--dimension-count), minmax(0, 1fr)); gap: 20px; padding: 9px 14px; margin-bottom: 12px; background: var(--em-soft); border-left: 3px solid var(--em-accent); }
+      #state-strip span { display: block; font-size: 11px; color: var(--em-muted); }
+      #state-strip strong { font-size: 13px; }
+      #system-in-motion .business-scroll { display: block; padding: 0; overflow: auto; background: white; }
+      #system-in-motion .business-scroll:focus-visible { outline: 3px solid var(--em-accent); }
+      #system-in-motion .business-grid { display: block; width: 100%; height: auto; }
+      .business-grid .lane-title { fill: var(--em-ink); font-size: 14px; font-weight: 650; }
+      .business-grid .lane-detail { fill: var(--em-muted); font-size: 10px; }
+      .business-grid .node-shape { fill: white; stroke: var(--em-wire); stroke-width: 1.3; }
+      .business-grid .node-number { fill: var(--em-soft); }
+      .business-grid .node-step { fill: var(--em-muted); font-size: 10px; font-weight: 650; }
+      .business-grid .business-node-label { fill: var(--em-ink); font-size: 13px; font-weight: 600; }
+      .business-grid .business-node-detail { fill: var(--em-muted); font-size: 10.5px; }
+      .business-node[role='button'] { cursor: pointer; outline: none; }
+      .business-node[role='button']:focus-visible .node-shape { stroke: var(--em-accent); stroke-width: 3.5; }
+      .business-node[data-state='active'] .node-shape { fill: var(--em-accent-soft); stroke: var(--em-accent); stroke-width: 2.3; }
+      .business-node[data-state='active'] .business-node-label { fill: var(--em-accent); }
+      .business-node[data-state='active'] .node-number { fill: var(--em-accent); }
+      .business-node[data-state='active'] .node-step { fill: white; }
+      .business-node[data-kind='decision'][data-state='active'] .node-step { fill: var(--em-muted); }
+      .business-node:not([data-status='implemented']) .node-shape { stroke-dasharray: 5 3; }
+      #system-in-motion .business-grid path.edge { fill: none; stroke: var(--em-wire); stroke-width: 1.5; stroke-linejoin: round; }
+      #system-in-motion .business-grid .business-edge[data-state='active'] path.edge { stroke: var(--em-accent); stroke-width: 2.4; }
+      #system-in-motion .business-grid .business-edge:not([data-status='implemented']) path.edge { stroke-dasharray: 5 4; }
+      .business-grid .business-edge-label { fill: var(--em-muted); font-size: 11px; }
+      .business-edge[data-state='active'] .business-edge-label { fill: var(--em-accent); font-weight: 600; }
+      #system-in-motion .business-grid .packet { fill: var(--em-accent); stroke: white; stroke-width: 1.5; }
     </style>
   </head>
   <body>
@@ -1385,6 +1420,7 @@
           </button>
         </div>
       </header>
+      <div id="scope-badge" hidden></div>
       <div class="em-heading">
         <div>
           <h2 id="scene-title" aria-live="polite"></h2>
@@ -1392,6 +1428,7 @@
         </div>
         <span id="scene-number" class="em-count"></span>
       </div>
+      <div id="state-strip" hidden aria-label="Journey state dimensions"></div>
       <div id="experience" class="em-layout">
         <section id="surface" class="em-window" aria-label="Illustrative experience">
           <div class="em-windowbar">
@@ -1478,12 +1515,14 @@
           sources = new Map(model.sources.map((s) => [s.id, s]));
         const presentation = model.presentation || {},
           reduced = matchMedia('(prefers-reduced-motion:reduce)'),
+          business = presentation.profile === 'business-workflow',
           total = model.scenes.reduce((n, s) => n + s.duration, 0);
         let index = 0,
           elapsed = 0,
           playing = true,
           complete = false,
-          view = 'experience',
+          view = business ? 'architecture' : 'experience',
+          revealAll = false,
           previousTime = performance.now(),
           routes = [],
           routeErrors = [],
@@ -1493,10 +1532,31 @@
           edgeElements = new Map();
         $('brand').textContent = presentation.name || 'Project journey';
         $('mark').textContent = presentation.mark || 'PJ';
-        $('basis').textContent =
-          model.basis === 'synthetic'
-            ? 'Automatic workflow / fictional example'
-            : 'Automatic workflow / source based';
+        $('system-in-motion').dataset.profile = business ? 'business-workflow' : 'technical';
+        $('basis').textContent = (business ? 'Business workflow' : 'Automatic workflow') +
+          (model.basis === 'synthetic' ? ' / fictional example' : ' / source based');
+        if (business) {
+          $('architecture').hidden = false;
+          $('experience').hidden = true;
+          $('architecture-tab').id = 'experience-tab';
+          $('experience-tab').textContent = 'Experience';
+          $('experience-tab').setAttribute('aria-controls', 'experience');
+          $('architecture').setAttribute('aria-label', 'Business workflow and responsibilities');
+          $('backstage').setAttribute('aria-label', 'Responsibility and trigger');
+          $('backstage').querySelector('.em-engine-title').textContent = 'Who does what';
+          $('evidence').querySelector('summary').textContent = 'Sources and limits';
+          $('scope-badge').hidden = false;
+          $('state-strip').hidden = false;
+          $('state-strip').style.setProperty('--dimension-count', model.stateDimensions.length);
+          const legend = $('architecture').querySelector('.em-map-legend');
+          legend.replaceChildren();
+          for (const [kind, text] of [['', 'Current focus'], ['visited', 'Arrows show progression'], ['planned', 'Dashed: planned / uncertain work']]) {
+            const entry = create('span');
+            entry.append(create('i', kind), document.createTextNode(text));
+            legend.append(entry);
+          }
+          legend.append(create('span', '', 'Prerequisite: permits later work; the scene names its trigger.'));
+        }
         document.title = model.title;
         if (/^#[0-9a-f]{6}$/i.test(presentation.accent || ''))
           $('system-in-motion').style.setProperty('--em-accent', presentation.accent);
@@ -1563,7 +1623,8 @@
               create(
                 'p',
                 'em-processing-label',
-                'System processing view / explanatory, not a newly received screen',
+                business ? 'Workflow explanation / illustrative example' :
+                  'System processing view / explanatory, not a newly received screen',
               ),
             );
           const copy = create('p', 'em-muted em-small', exp.body);
@@ -1585,7 +1646,7 @@
               ? exp.stages
               : scene.behind.map((work) => ({
                   label: components.get(work.component).label,
-                  detail: components.get(work.component).technology,
+                  detail: business ? model.lanes.find((lane) => lane.id === components.get(work.component).lane).label : components.get(work.component).technology,
                 }));
             stages.forEach((item, i) => {
               const n = create('div', 'em-path-node');
@@ -1733,8 +1794,135 @@
           external:
             'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20M2 12h20M12 2c-6 5-6 15 0 20M12 2c6 5 6 15 0 20',
         };
+        function buildBusinessMap() {
+          const canvas = presentation.canvas, diagram = $('diagram');
+          diagram.className = 'business-scroll';
+          diagram.setAttribute('tabindex', '0');
+          diagram.setAttribute('aria-label', 'Scrollable business workflow map. Numbered activities select scenes.');
+          const grid = svgElement('svg', {
+            id: 'connectors', class: 'business-grid', role: 'group',
+            viewBox: `0 0 ${canvas.width} ${canvas.height}`,
+            'aria-label': 'Workflow by responsibility',
+          });
+          grid.style.minWidth = canvas.width + 'px';
+          diagram.replaceChildren(grid);
+          const defs = svgElement('defs');
+          for (const [id, color] of [['arrow', 'var(--em-wire)'], ['arrow-active', 'var(--em-accent)']]) {
+            const marker = svgElement('marker', {id, viewBox: '0 0 10 10', refX: 9, refY: 5,
+              markerWidth: 8, markerHeight: 8, orient: 'auto', markerUnits: 'userSpaceOnUse'});
+            marker.append(svgElement('path', {d: 'M0 0 L10 5 L0 10 Z', fill: color}));
+            defs.append(marker);
+          }
+          grid.append(defs);
+          // Wrapping uses measured local text, never a renderer-specific second label.
+          const measure = document.createElement('canvas').getContext('2d');
+          function lines(text, width, size, weight = 400) {
+            measure.font = `${weight} ${size}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+            const result = [], words = text.split(/\s+/);
+            let line = '';
+            for (const word of words) {
+              const candidate = line ? line + ' ' + word : word;
+              if (line && measure.measureText(candidate).width > width) { result.push(line); line = word; }
+              else line = candidate;
+            }
+            if (line) result.push(line);
+            return result;
+          }
+          function textBlock(parent, text, x, y, width, cls, size, lineHeight, anchor = 'middle', weight = 400) {
+            const element = svgElement('text', {x, y, class: cls, 'text-anchor': anchor});
+            lines(text, width, size, weight).forEach((line, i) => {
+              element.append(svgElement('tspan', {x, dy: i ? lineHeight : 0}, line));
+            });
+            parent.append(element);
+            return element;
+          }
+          for (const [i, lane] of model.lanes.entries()) {
+            const {y, height} = lane.layout, group = svgElement('g', {class: 'business-lane', 'data-lane': lane.id});
+            group.append(svgElement('rect', {x: 8, y, width: canvas.width - 16, height,
+              fill: i % 2 ? 'var(--em-soft)' : 'white', stroke: 'var(--em-line)'}));
+            group.append(svgElement('line', {x1: 154, y1: y, x2: 154, y2: y + height, stroke: 'var(--em-line)'}));
+            const icon = svgElement('g', {transform: `translate(25 ${y + 22})`, fill: 'none',
+              stroke: 'var(--em-muted)', 'stroke-width': 1.5, 'aria-hidden': 'true'});
+            icon.append(svgElement('path', {d: iconPaths[lane.performer === 'human' ? 'person' : lane.performer === 'external' ? 'external' : 'process']}));
+            group.append(icon);
+            const title = textBlock(group, lane.label, 25, y + 61, 120, 'lane-title', 14, 17, 'start', 650);
+            const titleLines = title.children.length;
+            textBlock(group, lane.initiator, 25, y + 82 + (titleLines - 1) * 17, 120, 'lane-detail', 10, 16, 'start');
+            grid.append(group);
+          }
+          const edgeLayer = svgElement('g'), nodeLayer = svgElement('g');
+          grid.append(edgeLayer, nodeLayer);
+          for (const edge of model.edges) {
+            const group = svgElement('g', {class: 'business-edge', 'data-edge': edge.id,
+              'data-kind': edge.kind, 'data-status': edge.status});
+            const points = edge.layout.points.map(([x, y]) => ({x, y}));
+            const path = svgElement('path', {class: 'edge',
+              d: points.map((p, i) => `${i ? 'L' : 'M'} ${p.x} ${p.y}`).join(' '),
+              'data-edge': edge.id, 'data-kind': edge.kind, 'data-status': edge.status,
+              'marker-end': 'url(#arrow)'});
+            const packet = svgElement('circle', {class: 'packet', r: 4, 'data-packet-edge': edge.id, 'data-edge': edge.id, 'aria-hidden': 'true'});
+            group.append(svgElement('title', {}, edge.label + ' / ' + edge.kind +
+              (edge.note ? ' / ' + edge.note : '')), path, packet);
+            const label = svgElement('text', {x: edge.layout.label.x, y: edge.layout.label.y,
+              class: 'business-edge-label', 'data-edge-label': edge.id, 'text-anchor': 'middle'});
+            label.textContent = edge.label;
+            group.append(label);
+            edgeLayer.append(group);
+            edgeElements.set(edge.id, group);
+            routes.push({edge, path, packet, points});
+          }
+          for (const item of model.components) {
+            const b = item.layout, cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+            const node = svgElement('g', {class: 'business-node', 'data-component': item.id,
+              'data-status': item.status, 'data-kind': item.kind, 'data-lane': item.lane});
+            const step = item.scene ? model.scenes.findIndex((s) => s.id === item.scene) + 1 : null;
+            if (step) {
+              node.setAttribute('tabindex', '0'); node.setAttribute('role', 'button');
+              node.setAttribute('aria-label', 'Scene ' + step + ': ' + item.label);
+              node.addEventListener('click', () => go(step - 1));
+              node.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); go(step - 1); }
+              });
+            }
+            const shape = item.kind === 'decision'
+              ? svgElement('polygon', {points: `${cx},${b.y} ${b.x+b.width},${cy} ${cx},${b.y+b.height} ${b.x},${cy}`, class: 'node-shape', 'data-node-shape': item.id})
+              : svgElement('rect', {x: b.x, y: b.y, width: b.width, height: b.height,
+                rx: item.kind === 'outcome' ? b.height / 2 : 8, class: 'node-shape', 'data-node-shape': item.id});
+            node.append(shape);
+            const caption = svgElement('g', {class: 'business-node-caption'});
+            if (item.kind === 'decision') {
+              if (step) caption.append(svgElement('text', {x: cx, y: cy - 27, class: 'node-step',
+                'data-step': step, 'text-anchor': 'middle'}, String(step).padStart(2, '0')));
+              textBlock(caption, item.label, cx, cy - 5, b.width * .72, 'business-node-label', 13, 17, 'middle', 600);
+              if (item.status !== 'implemented') caption.append(svgElement('text', {x: cx, y: cy + 30,
+                class: 'business-node-detail', 'text-anchor': 'middle'}, item.status));
+            } else {
+              if (step) {
+                node.append(svgElement('circle', {cx: b.x + 18, cy: b.y + 18, r: 11, class: 'node-number'}));
+                caption.append(svgElement('text', {x: b.x + 18, y: b.y + 22, class: 'node-step',
+                  'data-step': step, 'text-anchor': 'middle'}, String(step).padStart(2, '0')));
+              }
+              textBlock(caption, item.label, step ? b.x + 36 : cx, b.y + 24,
+                b.width - (step ? 42 : 20), 'business-node-label', 13, 17, step ? 'start' : 'middle', 600);
+              const detail = [item.detail, item.status === 'planned' ? 'planned' :
+                item.status !== 'implemented' ? item.status : ''].filter(Boolean).join(' / ');
+              if (detail) textBlock(caption, detail, cx, b.y + b.height - 19, b.width - 18,
+                'business-node-detail', 10.5, 13);
+            }
+            node.append(caption);
+            nodeLayer.append(node);
+            nodeElements.set(item.id, node);
+          }
+          const uncertain = [...model.components, ...model.edges].filter((item) => ['inferred', 'unknown'].includes(item.status));
+          if (uncertain.length) {
+            const notes = create('div', 'em-map-trace');
+            notes.setAttribute('aria-label', 'Uncertainty explanations');
+            for (const item of uncertain) notes.append(create('p', '', item.label + ' / ' + item.status + ': ' + item.note));
+            diagram.after(notes);
+          }
+        }
         let rowOffset = 1;
-        for (const lane of model.lanes) {
+        if (!business) for (const lane of model.lanes) {
           const heading = create('div', 'em-flow-title lane-heading');
           heading.style.setProperty('--row', rowOffset);
           heading.append(create('strong', '', lane.label), create('small', '', lane.initiator));
@@ -1760,6 +1948,13 @@
             icon.append(path);
             symbol.append(icon);
             if (item.step) {
+              node.setAttribute('role', 'button');
+              node.setAttribute('tabindex', '0');
+              node.setAttribute('aria-label', 'Scene ' + item.step + ': ' + item.label);
+              node.addEventListener('click', () => go(item.step - 1));
+              node.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); go(item.step - 1); }
+              });
               const step = create('span', 'em-step-badge', item.step);
               step.dataset.step = item.step;
               symbol.append(step);
@@ -1777,6 +1972,7 @@
           }
           rowOffset += Math.max(1, ...members.map((c) => c.row)) + 2;
         }
+        if (business) buildBusinessMap();
         const claims = [
           ...model.scenes.map((c) => ({ item: c, label: 'Scene: ' + c.title })),
           ...model.components.map((c) => ({ item: c, label: 'Component: ' + c.label })),
@@ -1811,6 +2007,15 @@
             exp = scene.experience;
           $('scene-title').textContent = scene.title;
           $('scene-description').textContent = scene.description;
+          if (business) {
+            $('scope-badge').textContent = scene.status === 'implemented' ? 'CURRENT EXAMPLE' : scene.status.toUpperCase() + ' EXAMPLE';
+            $('scope-badge').dataset.status = scene.status;
+            $('state-strip').replaceChildren(...model.stateDimensions.map((dimension) => {
+              const part = create('div');
+              part.append(create('span', '', dimension.label), create('strong', '', scene.states[dimension.id]));
+              return part;
+            }));
+          }
           $('scene-number').textContent =
             String(index + 1).padStart(2, '0') +
             ' / ' +
@@ -1841,7 +2046,9 @@
               row = create('div', 'em-service active');
             row.append(
               create('div', 'em-service-name', component.label),
-              create('div', 'em-service-detail', component.technology + ' / ' + work.action),
+              create('div', 'em-service-detail', business
+                ? model.lanes.find((lane) => lane.id === component.lane).label + ' / ' + work.action
+                : component.technology + ' / ' + work.action),
             );
             $('behind').append(row);
           }
@@ -1893,6 +2100,9 @@
           updateClock();
           updatePackets();
         }
+        function setText(id, value) {
+          if ($(id).textContent !== value) $(id).textContent = value;
+        }
         function updateClock() {
           const spent = model.scenes.slice(0, index).reduce((n, s) => n + s.duration, 0) + elapsed;
           $('progress').style.width = (spent / total) * 100 + '%';
@@ -1900,20 +2110,21 @@
             'aria-valuenow',
             Math.round((spent / total) * 100),
           );
-          $('clock').textContent = complete
+          setText('clock', complete
             ? 'Journey complete / Replay to watch again'
             : playing
               ? 'Automatic demo / time compressed'
-              : 'Paused / motion and playback held';
-          $('autostatus').textContent = complete
+              : 'Paused / motion and playback held');
+          setText('autostatus', complete
             ? 'Complete'
             : playing
               ? 'Automatic demo'
-              : 'Paused';
-          $('play').textContent = playing ? 'Pause' : complete ? 'Complete' : 'Resume';
+              : 'Paused');
+          setText('play', playing ? 'Pause' : complete ? 'Complete' : 'Resume');
           $('play').disabled = complete;
           $('back').disabled = index === 0;
           $('next').disabled = index === model.scenes.length - 1;
+          $('system-in-motion').dataset.paused = String(!playing);
           document.body.dataset.scene = index;
           document.body.dataset.elapsed = elapsed;
           document.body.dataset.playing = playing;
@@ -1923,13 +2134,16 @@
           index = Math.max(0, Math.min(model.scenes.length - 1, next));
           elapsed = 0;
           complete = false;
+          revealAll = !playing;
           previousTime = performance.now();
           renderScene();
         }
         $('play').onclick = () => {
           playing = !playing;
+          if (!playing) revealAll = true;
           previousTime = performance.now();
           updateClock();
+          updatePackets();
         };
         $('back').onclick = () => go(index - 1);
         $('next').onclick = () => go(index + 1);
@@ -1937,13 +2151,13 @@
           playing = true;
           go(0);
         };
-        let toggle = $('architecture-tab');
+        let toggle = $(business ? 'experience-tab' : 'architecture-tab');
         toggle.onclick = () => {
           view = view === 'experience' ? 'architecture' : 'experience';
           $('experience').hidden = view !== 'experience';
           $('architecture').hidden = view !== 'architecture';
           toggle.id = view === 'experience' ? 'architecture-tab' : 'experience-tab';
-          toggle.textContent = view === 'experience' ? 'Architecture' : 'Experience';
+          toggle.textContent = view === 'experience' ? (business ? 'Business map' : 'Architecture') : 'Experience';
           toggle.setAttribute(
             'aria-controls',
             view === 'architecture' ? 'experience' : 'architecture',
@@ -2137,14 +2351,21 @@
           }
           return simplified;
         }
-        const svgElement = (name, attrs) => {
+        function svgElement(name, attrs = {}, text) {
           const element = document.createElementNS('http://www.w3.org/2000/svg', name);
           for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
+          if (text !== undefined) element.textContent = text;
           return element;
-        };
+        }
         function draw() {
           redrawPending = false;
           if (view !== 'architecture') return;
+          if (business) {
+            $('diagram').dataset.geometryReady = 'true';
+            $('diagram').dataset.routeCount = routes.length;
+            $('diagram').dataset.routeErrors = '0';
+            return;
+          }
           const diagram = $('diagram'),
             base = diagram.getBoundingClientRect();
           if (!base.width) return;
@@ -2272,9 +2493,14 @@
             requestAnimationFrame(draw);
           }
         }
+        function currentPhase() {
+          const scene = model.scenes[index];
+          return Math.min((scene.phases?.length || 1) - 1,
+            Math.floor(elapsed / (scene.duration / (scene.phases?.length || 1))));
+        }
         function updatePackets() {
           for (const { element, type, order } of motion) {
-            const t = reduced.matches
+            const t = reduced.matches || revealAll || !playing
               ? 1
               : Math.max(0, Math.min(1, (elapsed - order * 0.3) / 0.65));
             element.style.opacity = type === 'travel' ? '1' : String(0.2 + 0.8 * t);
@@ -2289,21 +2515,25 @@
             else if (type === 'document') element.style.transform = `translateY(${(1 - t) * 18}px)`;
             else element.style.transform = `translateX(${(1 - t) * 13}px)`;
           }
-          const scene = model.scenes[index];
+          const scene = model.scenes[index], phase = currentPhase();
           for (const route of routes) {
             const active = scene.activeEdges.includes(route.edge.id);
+            const inPhase = !scene.phases || scene.phases[phase].edges.includes(route.edge.id);
+            const travels = active && inPhase && !complete && !reduced.matches &&
+              !['observe', 'prerequisite'].includes(route.edge.kind);
+            route.packet.dataset.phaseActive = String(inPhase);
             route.path.setAttribute(
               'marker-end',
               route.edge.kind === 'observe' ? 'none' : `url(#${active ? 'arrow-active' : 'arrow'})`,
             );
             route.packet.style.display =
-              active && !complete && !reduced.matches && route.edge.kind !== 'observe'
-                ? ''
-                : 'none';
-            if (active && !complete && !reduced.matches && route.edge.kind !== 'observe') {
-              const p = route.path.getPointAtLength(
-                route.path.getTotalLength() * ((elapsed / 2.8) % 1),
-              );
+              travels ? '' : 'none';
+            if (travels) {
+              const phaseDuration = scene.duration / (scene.phases?.length || 1);
+              const fraction = scene.phases
+                ? Math.min(1, Math.max(0, (elapsed - phase * phaseDuration) / phaseDuration))
+                : (elapsed / 2.8) % 1;
+              const p = route.path.getPointAtLength(route.path.getTotalLength() * fraction);
               route.packet.setAttribute('cx', p.x);
               route.packet.setAttribute('cy', p.y);
             }
@@ -2344,11 +2574,13 @@
             complete,
             view,
             total,
+            activePhase: currentPhase(),
             routeErrors: [...routeErrors],
           }),
           getModel: () => JSON.parse(JSON.stringify(model)),
         });
         renderScene();
+        if (business) scheduleDraw();
         requestAnimationFrame(tick);
       })();
     </script>

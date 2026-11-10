@@ -7,6 +7,7 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
+const verifyBusinessGeometry = require('./business-geometry.cjs');
 
 const args = process.argv.slice(2);
 if (!args[0] || (args.length > 1 && (args[1] !== '--screenshots' || !args[2])) || args.length > 3) {
@@ -30,7 +31,7 @@ async function settleGeometry(page) {
   );
   await page.evaluate(() => document.fonts.ready);
 }
-async function verifyGeometry(page) {
+async function verifyTechnicalGeometry(page) {
   return page.evaluate(() => {
     const model = window.systemInMotion.getModel(),
       diagram = document.getElementById('diagram');
@@ -71,8 +72,13 @@ async function verifyGeometry(page) {
       paths = [...document.querySelectorAll('path.edge')];
     if (window.systemInMotion.getState().routeErrors.length)
       issues.push(`Unrouted exchanges: ${window.systemInMotion.getState().routeErrors.join(', ')}`);
+    if (!nodes.size || nodes.size !== model.components.length)
+      issues.push(`Expected ${model.components.length} node captions; found ${nodes.size}`);
     if (paths.length !== model.edges.length)
       issues.push(`Expected ${model.edges.length} paths; found ${paths.length}`);
+    const annotations = paths.filter((p) => p.querySelector('title')?.textContent.trim());
+    if (annotations.length !== model.edges.length)
+      issues.push(`Expected ${model.edges.length} exchange title annotations; found ${annotations.length}`);
     const docked = (p, r) =>
       Math.min(
         ...[
@@ -163,18 +169,6 @@ async function verifyGeometry(page) {
             issues.push(`${edge.id}: outside diagram`);
       }
     }
-    for (const label of document.querySelectorAll('.edge-number')) {
-      const r = label.getBBox(),
-        box = { left: r.x, top: r.y, right: r.x + r.width, bottom: r.y + r.height };
-      for (const obstacle of [...nodes.values()].flatMap((g) => Object.values(g)).concat(headings))
-        if (
-          box.left < obstacle.right &&
-          box.right > obstacle.left &&
-          box.top < obstacle.bottom &&
-          box.bottom > obstacle.top
-        )
-          issues.push('Exchange number overlaps card or lane heading');
-    }
     const svg = document.getElementById('connectors');
     if (Math.abs(svg.viewBox.baseVal.width - svg.getBoundingClientRect().width) > 1)
       issues.push('Diagram was scaled instead of reflowed');
@@ -189,13 +183,14 @@ async function verifyGeometry(page) {
       if (element.scrollWidth > element.clientWidth + 1)
         issues.push(`Block content overflow: ${element.className}`);
     }
-    return { issues: [...new Set(issues)], edgeCount: paths.length };
+    return { issues: [...new Set(issues)], nodeCount: nodes.size, edgeCount: paths.length, annotationCount: annotations.length };
   });
 }
 
 (async () => {
   const browser = await chromium.launch(
-    process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {},
+    { ...(process.env.PLAYWRIGHT_CHANNEL ? {channel:process.env.PLAYWRIGHT_CHANNEL} : {}),
+      ...(process.env.BROWSER_EXECUTABLE_PATH ? {executablePath:process.env.BROWSER_EXECUTABLE_PATH} : {}) },
   );
   const context = await browser.newContext({
     viewport: { width: 1280, height: 800 },
@@ -218,22 +213,23 @@ async function verifyGeometry(page) {
     await page.click('#replay');
     await page.clock.runFor(600);
     assert((await state(page)).elapsed > 0.4, 'Autoplay did not advance');
-    const toArchitecture = page.getByRole('button', { name: 'Architecture', exact: true });
-    assert.equal(
-      await toArchitecture.getAttribute('aria-pressed'),
-      null,
-      'Architecture button exposed a pressed state',
-    );
-    await toArchitecture.click();
-    const toExperience = page.getByRole('button', { name: 'Experience', exact: true });
-    assert.equal(
-      await toExperience.getAttribute('aria-pressed'),
-      null,
-      'Experience button exposed a pressed state',
-    );
+    const business = model.presentation?.profile === 'business-workflow';
+    assert.equal((await state(page)).view, business ? 'architecture' : 'experience', 'Incorrect profile opening view');
+    const verifyGeometry = business ? verifyBusinessGeometry : verifyTechnicalGeometry;
+    const showMap = async () => {
+      if ((await state(page)).view !== 'architecture') {
+        const toggle = page.getByRole('button', { name: business ? 'Business map' : 'Architecture', exact: true });
+        assert.equal(await toggle.getAttribute('aria-pressed'), null, 'View toggle exposed a pressed state');
+        await toggle.click();
+      }
+    };
+    const showExperience = async () => {
+      if ((await state(page)).view !== 'experience') await page.getByRole('button', {name:'Experience',exact:true}).click();
+    };
+    await showMap();
     await settleGeometry(page);
     const beforeView = await state(page);
-    await toExperience.click();
+    await showExperience();
     close((await state(page)).elapsed, beforeView.elapsed, 'Switching views reset scene time');
     const beforeGap = await state(page);
     await page.clock.fastForward(Math.ceil((beforeGap.total + 1) * 1000));
@@ -244,7 +240,7 @@ async function verifyGeometry(page) {
       afterGap.elapsed <= beforeGap.elapsed + 0.25,
       'Long frame gap advanced playback by more than 250 ms',
     );
-    await page.click('#architecture-tab');
+    await showMap();
     await settleGeometry(page);
     await page.click('#play');
     const paused = await state(page);
@@ -309,7 +305,7 @@ async function verifyGeometry(page) {
     );
     if (processingIndex >= 0) {
       await page.click(`.em-step[data-scene="${processingIndex}"]`);
-      await page.click('#experience-tab');
+      await showExperience();
       await page.click('#play');
       await page.clock.runFor(900);
       await page.click('#play');
@@ -319,9 +315,9 @@ async function verifyGeometry(page) {
           .locator('#stage .em-envelope')
           .evaluate((e) => ({ x: e.getBoundingClientRect().x, transform: e.style.transform }));
       const beforeRoundtrip = await objectPosition();
-      await page.click('#architecture-tab');
+      await showMap();
       await settleGeometry(page);
-      await page.click('#experience-tab');
+      await showExperience();
       const afterRoundtrip = await objectPosition();
       close(
         afterRoundtrip.x,
@@ -332,8 +328,63 @@ async function verifyGeometry(page) {
       close((await state(page)).elapsed, held.elapsed, 'View roundtrip changed paused time', 0.001);
       assert.equal((await state(page)).index, held.index, 'View roundtrip changed scene');
       assert(!(await state(page)).playing, 'View roundtrip resumed playback');
-      await page.click('#architecture-tab');
+      await showMap();
       await settleGeometry(page);
+    }
+
+    // Label updates are observable DOM changes; a stable value should not be
+    // replaced on every animation frame (particularly disruptive to VoiceOver).
+    await page.click('#replay');
+    await page.evaluate(() => {
+      window.controlLabelMutations = 0;
+      window.controlLabelObserver = new MutationObserver((records) => { window.controlLabelMutations += records.length; });
+      for (const id of ['play','clock','autostatus'])
+        window.controlLabelObserver.observe(document.getElementById(id), {subtree:true,childList:true,characterData:true});
+    });
+    await page.clock.runFor(500);
+    assert.equal(await page.evaluate(() => window.controlLabelMutations), 0, 'Unchanged control labels were replaced during playback');
+    await page.evaluate(() => window.controlLabelObserver.disconnect());
+    await page.click('#play');
+    await page.click('.em-step[data-scene="0"]');
+    assert(await page.locator('#back').isDisabled(), 'Back should be disabled at the first scene');
+    if (model.scenes.length > 1) {
+      await page.click('#next');
+      assert.equal((await state(page)).index, 1, 'Next did not advance');
+      await page.click('#back');
+      assert.equal((await state(page)).index, 0, 'Back did not return');
+    }
+    if (business) {
+      await showMap();
+      for (const item of model.components.filter((node) => node.scene)) {
+        const sceneIndex = model.scenes.findIndex((scene) => scene.id === item.scene);
+        const node = page.locator(`.business-node[data-component="${item.id}"]`);
+        for (const key of ['Enter','Space']) {
+          await node.focus();
+          await page.keyboard.press(key);
+          assert.equal((await state(page)).index, sceneIndex, `${key} did not select ${item.id}`);
+          assert(!(await state(page)).playing, 'Keyboard selection resumed paused playback');
+          assert.equal(await node.evaluate((element) => document.activeElement === element), true, 'Node lost keyboard focus');
+          assert(await node.locator('.node-shape').evaluate((shape) => parseFloat(getComputedStyle(shape).strokeWidth) >= 3), 'Node focus has no visible outline');
+        }
+        await node.click();
+        assert.equal((await state(page)).index, sceneIndex, 'Node click did not select its canonical scene');
+      }
+      const phasedIndex = model.scenes.findIndex((scene) => scene.phases?.length > 1);
+      if (phasedIndex >= 0) {
+        const phased = model.scenes[phasedIndex], phaseMs = phased.duration * 1000 / phased.phases.length;
+        await page.click(`.em-step[data-scene="${phasedIndex}"]`);
+        await page.click('#play');
+        for(let phase=0;phase<phased.phases.length;phase++) {
+          await page.clock.runFor(phase ? phaseMs : phaseMs / 2);
+          assert.equal((await state(page)).activePhase, phase, 'Narrative phase order changed');
+          const visible = await page.locator('.packet').evaluateAll((items) => items
+            .filter((packet) => getComputedStyle(packet).display !== 'none')
+            .map((packet) => packet.dataset.packetEdge));
+          const expected = phased.phases[phase].edges.filter((id) => model.edges.find((edge) => edge.id === id).kind !== 'prerequisite');
+          assert.deepEqual(visible.sort(), expected.sort(), 'Only the active phase may travel');
+        }
+        await page.click('#play');
+      }
     }
 
     let count = 0;
@@ -355,7 +406,21 @@ async function verifyGeometry(page) {
             `${theme}/${width}/scene ${i + 1}: ${geometry.issues.join('; ')}`,
           );
           assert.equal(await page.locator('#scene-title').textContent(), model.scenes[i].title);
-          await page.click('#experience-tab');
+          assert.equal(await page.locator('#next').isDisabled(), i === model.scenes.length - 1, 'Next disabled state disagrees with scene');
+          if (business) {
+            const dimensions = await page.locator('#state-strip').textContent();
+            for (const dimension of model.stateDimensions) {
+              assert(dimensions.includes(dimension.label), 'Missing model state dimension label');
+              assert(dimensions.includes(model.scenes[i].states[dimension.id]), 'Missing scene state dimension value');
+            }
+            const movingPrerequisites = await page.locator('.packet').evaluateAll((packets) => {
+              const edges = window.systemInMotion.getModel().edges;
+              return packets.filter((packet) => edges.find((edge) => edge.id === packet.dataset.packetEdge)?.kind === 'prerequisite' &&
+                getComputedStyle(packet).display !== 'none').length;
+            });
+            assert.equal(movingPrerequisites, 0, 'A prerequisite animated as an initiating call');
+          }
+          await showExperience();
           const surface = await page.evaluate(() => ({
             overflow: document.documentElement.scrollWidth > innerWidth + 1,
             title: document.querySelector('#stage h3').textContent,
@@ -366,6 +431,12 @@ async function verifyGeometry(page) {
           assert.equal(surface.title, model.scenes[i].experience.title);
           assert.equal(surface.buttons, 0, 'Illustrative surface has live buttons');
           assert.equal(surface.layout, model.scenes[i].experience.layout);
+          assert(!(await state(page)).playing, 'Paused scene selection resumed the clock');
+          close((await state(page)).elapsed, 0, 'Reading paused content advanced simulation time', 0.001);
+          const unreadable = await page.locator('#stage .em-move').evaluateAll((items) => items
+            .filter((element) => parseFloat(getComputedStyle(element).opacity) < 0.99)
+            .map((element) => element.textContent));
+          assert.deepEqual(unreadable, [], 'Paused selection left explanatory content faded');
           const anchors = await page.evaluate(() => {
             const r = (s) => document.querySelector(s).getBoundingClientRect();
             return {
@@ -389,7 +460,11 @@ async function verifyGeometry(page) {
             'Presentation anchors moved out of order',
           );
           close(anchors.rail, 242, 'Backstage rail width', 1);
+          assert.equal(await page.locator('body').evaluate((element) => getComputedStyle(element).backgroundColor), 'rgb(255, 255, 255)', 'OS dark preference changed the light palette');
           await page.click('#play');
+          // Selecting while playing starts the scene's motion. A prior paused
+          // selection deliberately revealed text and must not fade it on resume.
+          await page.click(`.em-step[data-scene="${i}"]`);
           await page.clock.runFor(250);
           const movement = () =>
             page
@@ -428,7 +503,7 @@ async function verifyGeometry(page) {
           assert.deepEqual(await movement(), heldMotion, 'Paused scene motion changed');
           if (model.scenes[i].experience.mode === 'explanation')
             assert(
-              (await page.locator('#stage').textContent()).includes('System processing view'),
+              (await page.locator('#stage').textContent()).includes(business ? 'Workflow explanation' : 'System processing view'),
               'Explanatory processing is unlabeled',
             );
           if (screenshotDir)
@@ -436,7 +511,7 @@ async function verifyGeometry(page) {
               path: path.join(screenshotDir, `${theme}-${width}-experience-${i + 1}.png`),
               fullPage: true,
             });
-          await page.click('#architecture-tab');
+          await showMap();
           await settleGeometry(page);
           if (screenshotDir)
             await page.screenshot({
@@ -461,34 +536,42 @@ async function verifyGeometry(page) {
       'Evidence must be plain text',
     );
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.click('#replay');
-    await page.clock.runFor(300);
-    assert((await state(page)).elapsed > 0.2, 'Reduced motion disabled progression');
-    assert.equal(
-      await page
-        .locator('.packet')
-        .evaluateAll((items) => items.filter((e) => getComputedStyle(e).display !== 'none').length),
-      0,
-      'Reduced motion retained travel animation',
-    );
-    await page.clock.runFor(
-      model.scenes.reduce((sum, scene) => sum + scene.duration * 1000, 0) + 200,
-    );
-    const ended = await state(page);
-    assert(ended.complete && !ended.playing, 'Journey did not finish cleanly');
-    await page.clock.runFor(3000);
-    assert.deepEqual(await state(page), ended, 'Completed journey continued changing');
-    await page.click('#replay');
-    assert(
-      (await state(page)).playing && !(await state(page)).complete,
-      'Replay did not restart completed journey',
-    );
-    await page.clock.runFor(150);
-    assert((await state(page)).elapsed > 0.1, 'Restarted journey did not advance');
+    for (const view of ['architecture','experience']) {
+      if (view === 'architecture') await showMap();
+      else await showExperience();
+      await page.click('#replay');
+      const transitionIndex = model.scenes.length > 1 ? 1 : 0;
+      const transitionMs = transitionIndex ? model.scenes[0].duration * 1000 + 200 : 300;
+      await page.clock.runFor(transitionMs);
+      assert.equal((await state(page)).index, transitionIndex, 'Automatic playback did not select expected scene');
+      assert((await state(page)).elapsed > 0.1, 'Reduced motion disabled progression');
+      assert.equal(await page.locator('#scene-title').textContent(), model.scenes[transitionIndex].title);
+      if (view === 'experience')
+        assert.equal(await page.locator('#stage h3').textContent(), model.scenes[transitionIndex].experience.title);
+      assert.equal(
+        await page.locator('.packet').evaluateAll((items) =>
+          items.filter((element) => getComputedStyle(element).display !== 'none').length),
+        0,
+        'Reduced motion retained travel animation',
+      );
+      await page.clock.runFor(model.scenes.reduce((sum, scene) => sum + scene.duration * 1000, 0) + 200);
+      const ended = await state(page);
+      assert(ended.complete && !ended.playing, `${view}: journey did not finish cleanly`);
+      assert(await page.locator('#play').isDisabled(), 'Completed playback button remained enabled');
+      assert(await page.locator('#next').isDisabled(), 'Next remained enabled after completion');
+      await page.clock.runFor(3000);
+      assert.deepEqual(await state(page), ended, 'Completed journey continued changing');
+      await page.locator('#replay').focus();
+      await page.keyboard.press('Space');
+      assert((await state(page)).playing && !(await state(page)).complete, 'Keyboard Replay did not restart');
+      assert.equal((await state(page)).index, 0, 'Replay did not select first scene');
+      await page.clock.runFor(150);
+      assert((await state(page)).elapsed > 0.1, 'Restarted journey did not advance');
+    }
     assert.deepEqual(errors, [], 'Browser runtime errors');
     assert.deepEqual(remote, [], 'Offline document attempted remote requests');
     console.log(
-      `PASS: ${count} scene/theme/laptop-viewport cases (1280x800, 1440x900); measured endpoint docking, orthogonal routing, icon/caption/heading clearance and presentation anchors, laptop layout bounds, clock/view/pause/replay/completion, reduced motion, evidence text, and offline requests.`,
+      `PASS: ${count} scene/theme/laptop-viewport cases (1280x800, 1440x900); ${business ? 'all business node/relationship caption coverage and clearance' : 'technical node caption coverage and exchange title annotations (no visible exchange captions)'}, measured endpoint docking, orthogonal routing, shape/caption/heading clearance and presentation anchors, laptop layout bounds, clock/view/pause/replay/completion, reduced motion, evidence text, and offline requests.`,
     );
     console.log(
       'This check verifies rendered geometry and playback; source truth, causal semantics, visual quality, and human acceptance still require review.',

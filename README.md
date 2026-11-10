@@ -56,7 +56,7 @@ I tell Pilot where to stop. Sometimes a recommendation or a sketch is enough. Fo
 
 ## System in Motion
 
-[System in Motion](skills/system-in-motion/SKILL.md) follows one product journey in two synchronized views. **Experience** shows what a person sees and does. **Architecture** shows the work and technology behind each moment.
+[System in Motion](skills/system-in-motion/SKILL.md) follows one product journey in two synchronized views. **Experience** shows what a person sees and does. **Architecture** shows the work and technology behind each moment. Ask for a business workflow to use **Business map** instead, with responsibility lanes, decisions and next steps.
 
 Say a customer submits a request and a worker saves the result in the background. The walkthrough shows when the request is accepted, when the result is saved, and when the customer can actually see it. Product, design, and engineering can inspect those moments together and trace them to the source. The result is an offline HTML walkthrough with an editable model.
 

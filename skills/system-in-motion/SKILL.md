@@ -1,14 +1,14 @@
 ---
 name: system-in-motion
-description: Build a source-grounded animated walkthrough of a software project, connecting business purpose, user experience, backstage work and technology. Invoke this skill directly to get synchronized Experience and Architecture views.
+description: Build a source-grounded animated walkthrough of one project journey. Invoke directly for synchronized Experience and Architecture views, or a business workflow with responsibility lanes.
 disable-model-invocation: true
 ---
 
 # System in Motion
 
 Turn a bounded project journey into a standalone offline HTML explanation.
-Experience and Architecture share one scene clock, showing the actor's experience,
-backstage work and the technology responsible. This is a simulation, not a live app.
+Experience shares one scene clock with Architecture or Business map, showing the
+actor's experience and the work responsible. This is a simulation, not a live app.
 
 Target normal laptop browsers: check 1280×800 and 1440×900 CSS viewports at normal
 zoom unless the user supplies different laptop dimensions. Phone/tablet layouts
@@ -23,6 +23,19 @@ Standalone installations omit the plugin prefix. Leave invocation to the user
 even when they request the walkthrough through Pilot or another coordinator.
 
 ## Ground and prepare
+
+Route a directly invoked request by its intended explanation, reusing any settled
+journey and endpoint. State the chosen viewpoint; do not ask the user to choose a renderer.
+
+| Request | Profile and opening view | Reference model |
+| --- | --- | --- |
+| User experience, software behavior, technology or runtime exchanges | Omit `presentation.profile` (technical); Experience opens, Architecture is the toggle | `examples/service-request.json` |
+| Business workflow, process or responsibility: who acts, decides and hands work on | `presentation.profile: "business-workflow"`; Business map opens, Experience is the toggle | `examples/business-workflow.json` |
+
+“Business architecture” alone does not expand a bounded journey into enterprise
+capability or organization mapping. Use the business profile when the ask concerns
+that journey's activities and responsibilities. Preserve software exchanges in the
+technical profile and business progression in the business profile.
 
 Read [grounding](references/grounding.md) to establish the source scope, choose
 the journey and settle the brief under the shared decision rules. Read
@@ -39,14 +52,16 @@ and review evidence there. Give subagents bounded write ownership in that direct
 Resolve and announce the [HTML destination](references/verification.md#delivery-and-cleanup)
 before building. For a refinement, [check the previous run](references/verification.md#refinement-state) first.
 
-Build the synthetic reference in the working directory, then open both views
+Build the selected synthetic reference in the working directory, then open both views
 before authoring:
 
 ```sh
 python3 <skill>/scripts/build.py <skill>/examples/service-request.json --output <work>/reference.html
+# For the business profile, use examples/business-workflow.json instead.
 ```
 
-The [fictional source](examples/reference-project.md) grounds this reference only.
+The [technical source](examples/reference-project.md) and
+[business source](examples/business-workflow-source.md) ground their references only.
 Preserve the [presentation contract](references/presentation.md), while adapting
 content, theme and topology to the project. The reference demonstrates composition;
 it does not certify its wiring or supply facts about another system.
@@ -64,7 +79,9 @@ python3 <skill>/scripts/build.py MODEL.json --output <work>/walkthrough.html
 ```
 
 The builder uses Python's standard library; the HTML needs no server or network.
-When the supplied renderer cannot communicate the journey clearly, copy
+The standard command selects the bundled renderer from the model's profile;
+business requests need no custom template. Only when the supplied renderer cannot
+communicate the journey clearly, copy
 `assets/viewer.html` into the working directory and adapt it using `--template
 CUSTOM.html`. Preserve the model, presentation and shared-clock contracts. Correct
 the output's layout/template, not the installed skill, during ordinary execution.

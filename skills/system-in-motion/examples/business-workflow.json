@@ -1,0 +1,1307 @@
+{
+  "version": 1,
+  "title": "EquipmentFlow | Request to collection",
+  "basis": "synthetic",
+  "summary": "Fictional equipment-reservation workflow illustrating human and software responsibilities.",
+  "sources": [
+    {
+      "id": "fixture",
+      "label": "Fictional EquipmentFlow rules",
+      "location": "business-workflow-source.md: Roles, Assumed current behavior, Planned behavior and Expected graph"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "requester",
+      "label": "Requester",
+      "initiator": "Requests equipment",
+      "performer": "human",
+      "layout": {
+        "y": 8,
+        "height": 108
+      }
+    },
+    {
+      "id": "system",
+      "label": "EquipmentFlow",
+      "initiator": "Checks and calculations after requests or staff changes",
+      "performer": "software",
+      "layout": {
+        "y": 116,
+        "height": 172
+      }
+    },
+    {
+      "id": "staff",
+      "label": "Service team",
+      "initiator": "Supplies details, resolves exceptions and approves",
+      "performer": "human",
+      "layout": {
+        "y": 288,
+        "height": 304
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "request",
+      "label": "Request equipment",
+      "kind": "activity",
+      "lane": "requester",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 170,
+        "y": 30,
+        "width": 180,
+        "height": 64
+      },
+      "detail": "Dates and quantity",
+      "scene": "scene-1"
+    },
+    {
+      "id": "qualify",
+      "label": "Accept this request?",
+      "kind": "decision",
+      "lane": "system",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 185,
+        "y": 155,
+        "width": 150,
+        "height": 100
+      },
+      "scene": "scene-2"
+    },
+    {
+      "id": "review",
+      "label": "Review request",
+      "kind": "activity",
+      "lane": "staff",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 180,
+        "y": 315,
+        "width": 160,
+        "height": 64
+      },
+      "detail": "Accept or close",
+      "scene": "scene-3"
+    },
+    {
+      "id": "closed",
+      "label": "Request closed",
+      "kind": "outcome",
+      "lane": "staff",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 180,
+        "y": 442,
+        "width": 160,
+        "height": 56
+      },
+      "detail": "No reservation prepared"
+    },
+    {
+      "id": "input",
+      "label": "Complete request",
+      "kind": "activity",
+      "lane": "staff",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 435,
+        "y": 315,
+        "width": 160,
+        "height": 64
+      },
+      "detail": "Dates, items and quantities",
+      "scene": "scene-4"
+    },
+    {
+      "id": "availability",
+      "label": "Check stock",
+      "kind": "activity",
+      "lane": "system",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 435,
+        "y": 173,
+        "width": 160,
+        "height": 64
+      },
+      "detail": "Availability / missing inputs",
+      "scene": "scene-4"
+    },
+    {
+      "id": "allocation",
+      "label": "Plan allocation",
+      "kind": "activity",
+      "lane": "system",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 675,
+        "y": 173,
+        "width": 160,
+        "height": 64
+      },
+      "detail": "Apply stock rules",
+      "scene": "scene-5"
+    },
+    {
+      "id": "approve",
+      "label": "Approve this allocation?",
+      "kind": "decision",
+      "lane": "staff",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 680,
+        "y": 420,
+        "width": 150,
+        "height": 100
+      },
+      "scene": "scene-6"
+    },
+    {
+      "id": "cancelled",
+      "label": "Plan cancelled",
+      "kind": "outcome",
+      "lane": "staff",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 470,
+        "y": 442,
+        "width": 140,
+        "height": 56
+      },
+      "detail": "Keep request history"
+    },
+    {
+      "id": "reserve",
+      "label": "Reserve equipment",
+      "kind": "activity",
+      "lane": "staff",
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 940,
+        "y": 438,
+        "width": 190,
+        "height": 64
+      },
+      "detail": "Staff action",
+      "scene": "scene-7"
+    },
+    {
+      "id": "confirm",
+      "label": "Confirm reservation",
+      "kind": "activity",
+      "lane": "system",
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 940,
+        "y": 173,
+        "width": 190,
+        "height": 64
+      },
+      "detail": "Check receipt",
+      "scene": "scene-8"
+    },
+    {
+      "id": "outcome",
+      "label": "Record collection",
+      "kind": "activity",
+      "lane": "staff",
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "x": 950,
+        "y": 315,
+        "width": 170,
+        "height": 64
+      },
+      "detail": "Collected / not collected",
+      "scene": "scene-9"
+    }
+  ],
+  "edges": [
+    {
+      "id": "email",
+      "from": "request",
+      "to": "qualify",
+      "label": "Request arrives",
+      "kind": "sequence",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            260,
+            94
+          ],
+          [
+            260,
+            155
+          ]
+        ],
+        "label": {
+          "x": 310,
+          "y": 127
+        }
+      }
+    },
+    {
+      "id": "held",
+      "from": "qualify",
+      "to": "review",
+      "label": "Needs review",
+      "kind": "branch",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            260,
+            255
+          ],
+          [
+            260,
+            315
+          ]
+        ],
+        "label": {
+          "x": 309,
+          "y": 286
+        }
+      },
+      "condition": "Needs review"
+    },
+    {
+      "id": "close",
+      "from": "review",
+      "to": "closed",
+      "label": "Close",
+      "kind": "branch",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            260,
+            379
+          ],
+          [
+            260,
+            442
+          ]
+        ],
+        "label": {
+          "x": 291,
+          "y": 413
+        }
+      },
+      "condition": "Close"
+    },
+    {
+      "id": "auto-number",
+      "from": "qualify",
+      "to": "input",
+      "label": "Checks pass",
+      "kind": "branch",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            335,
+            205
+          ],
+          [
+            390,
+            205
+          ],
+          [
+            390,
+            330
+          ],
+          [
+            435,
+            330
+          ]
+        ],
+        "label": {
+          "x": 365,
+          "y": 189
+        }
+      },
+      "condition": "Checks pass"
+    },
+    {
+      "id": "accept",
+      "from": "review",
+      "to": "input",
+      "label": "Accept",
+      "kind": "branch",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            340,
+            347
+          ],
+          [
+            435,
+            347
+          ]
+        ],
+        "label": {
+          "x": 365,
+          "y": 332
+        }
+      },
+      "condition": "Accept"
+    },
+    {
+      "id": "prepare",
+      "from": "availability",
+      "to": "allocation",
+      "label": "Calculate",
+      "kind": "sequence",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            595,
+            205
+          ],
+          [
+            675,
+            205
+          ]
+        ],
+        "label": {
+          "x": 635,
+          "y": 189
+        }
+      }
+    },
+    {
+      "id": "priced",
+      "from": "allocation",
+      "to": "approve",
+      "label": "Review plan",
+      "kind": "sequence",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            755,
+            237
+          ],
+          [
+            755,
+            420
+          ]
+        ],
+        "label": {
+          "x": 808,
+          "y": 330
+        }
+      }
+    },
+    {
+      "id": "reject",
+      "from": "approve",
+      "to": "cancelled",
+      "label": "Reject",
+      "kind": "branch",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            680,
+            470
+          ],
+          [
+            610,
+            470
+          ]
+        ],
+        "label": {
+          "x": 645,
+          "y": 453
+        }
+      },
+      "condition": "Reject"
+    },
+    {
+      "id": "revise",
+      "from": "approve",
+      "to": "input",
+      "label": "Details changed: review and approve again",
+      "kind": "branch",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            755,
+            520
+          ],
+          [
+            755,
+            570
+          ],
+          [
+            390,
+            570
+          ],
+          [
+            390,
+            364
+          ],
+          [
+            435,
+            364
+          ]
+        ],
+        "label": {
+          "x": 573,
+          "y": 554
+        }
+      },
+      "condition": "Details changed: review and approve again"
+    },
+    {
+      "id": "approved",
+      "from": "approve",
+      "to": "reserve",
+      "label": "Approve",
+      "kind": "branch",
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            830,
+            470
+          ],
+          [
+            940,
+            470
+          ]
+        ],
+        "label": {
+          "x": 890,
+          "y": 454
+        }
+      },
+      "condition": "Approve"
+    },
+    {
+      "id": "submitted",
+      "from": "reserve",
+      "to": "confirm",
+      "label": "Request submitted",
+      "kind": "sequence",
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            1035,
+            438
+          ],
+          [
+            1035,
+            412
+          ],
+          [
+            895,
+            412
+          ],
+          [
+            895,
+            205
+          ],
+          [
+            940,
+            205
+          ]
+        ],
+        "label": {
+          "x": 960,
+          "y": 396
+        }
+      }
+    },
+    {
+      "id": "confirmed",
+      "from": "confirm",
+      "to": "outcome",
+      "label": "After confirmation",
+      "kind": "prerequisite",
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            1035,
+            237
+          ],
+          [
+            1035,
+            315
+          ]
+        ],
+        "label": {
+          "x": 1100,
+          "y": 278
+        }
+      }
+    },
+    {
+      "id": "save-details",
+      "from": "input",
+      "to": "availability",
+      "label": "Save details",
+      "kind": "sequence",
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "layout": {
+        "points": [
+          [
+            515,
+            315
+          ],
+          [
+            515,
+            237
+          ]
+        ],
+        "label": {
+          "x": 558,
+          "y": 280
+        }
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene-1",
+      "short": "Request",
+      "title": "A requester asks for equipment",
+      "description": "The requester supplies equipment, dates and quantity. The original request stays available throughout the process.",
+      "trigger": "Requester submits a request",
+      "duration": 12,
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "request",
+        "qualify"
+      ],
+      "activeEdges": [
+        "email"
+      ],
+      "experience": {
+        "actor": "Requester",
+        "surface": "Incoming request",
+        "layout": "message",
+        "mode": "explanation",
+        "nav": "Requests",
+        "state": "Received",
+        "title": "A requester asks for equipment",
+        "body": "The requester supplies equipment, dates and quantity. The original request stays available throughout the process.",
+        "fields": [
+          {
+            "label": "Requester",
+            "value": "Example team"
+          },
+          {
+            "label": "Equipment",
+            "value": "Two portable displays"
+          },
+          {
+            "label": "Period",
+            "value": "One afternoon"
+          }
+        ],
+        "items": [],
+        "stages": [],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "qualify",
+          "action": "Keep the original request so staff can check the requested equipment and dates."
+        }
+      ],
+      "states": {
+        "request": "Received",
+        "plan": "Not started",
+        "reservation": "Not submitted",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-2",
+      "short": "Check",
+      "title": "EquipmentFlow checks the request",
+      "description": "EquipmentFlow checks eligibility and required request details. Uncertain requests wait for staff review.",
+      "trigger": "Software examines the request",
+      "duration": 12,
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "qualify",
+        "review"
+      ],
+      "activeEdges": [
+        "held"
+      ],
+      "experience": {
+        "actor": "EquipmentFlow",
+        "surface": "Request checks",
+        "layout": "pipeline",
+        "mode": "explanation",
+        "nav": "Requests",
+        "state": "Needs review",
+        "title": "EquipmentFlow checks the request",
+        "body": "EquipmentFlow checks eligibility and required request details. Uncertain requests wait for staff review.",
+        "fields": [],
+        "items": [],
+        "stages": [
+          {
+            "label": "Check eligibility",
+            "detail": "Apply configured rules"
+          },
+          {
+            "label": "Check details",
+            "detail": "Equipment, dates and quantity"
+          },
+          {
+            "label": "Hold uncertainty",
+            "detail": "Ask staff to review"
+          }
+        ],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "qualify",
+          "action": "EquipmentFlow applies eligibility rules; uncertain requests wait for staff review."
+        }
+      ],
+      "states": {
+        "request": "Needs review",
+        "plan": "Not started",
+        "reservation": "Not submitted",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-3",
+      "short": "Accept",
+      "title": "Staff accept the request",
+      "description": "Staff accept a held request or close it. Acceptance starts preparation; it does not approve a reservation.",
+      "trigger": "Staff choose Accept",
+      "duration": 12,
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "review",
+        "input"
+      ],
+      "activeEdges": [
+        "accept"
+      ],
+      "experience": {
+        "actor": "Service team",
+        "surface": "Requests",
+        "layout": "workbench",
+        "mode": "explanation",
+        "nav": "Requests",
+        "state": "Accepted",
+        "title": "Staff accept the request",
+        "body": "Staff accept a held request or close it. Acceptance starts preparation; it does not approve a reservation.",
+        "fields": [
+          {
+            "label": "Decision",
+            "value": "Accept request"
+          },
+          {
+            "label": "Request",
+            "value": "ER-1042"
+          }
+        ],
+        "items": [
+          {
+            "title": "Held request",
+            "detail": "Inspect supplied information",
+            "state": "Needs review"
+          },
+          {
+            "title": "Accepted request",
+            "detail": "Continue to preparation",
+            "state": "Accepted"
+          }
+        ],
+        "stages": [],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "review",
+          "action": "Staff accept the held request or close it without preparing a reservation."
+        }
+      ],
+      "states": {
+        "request": "Accepted",
+        "plan": "Not started",
+        "reservation": "Not submitted",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-4",
+      "short": "Details",
+      "title": "EquipmentFlow checks availability",
+      "description": "Staff supply or correct dates and quantity. EquipmentFlow checks stock and flags details it cannot resolve.",
+      "trigger": "Staff save details",
+      "duration": 12,
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "input",
+        "availability"
+      ],
+      "activeEdges": [
+        "save-details"
+      ],
+      "experience": {
+        "actor": "Service team + EquipmentFlow",
+        "surface": "Equipment details",
+        "layout": "review",
+        "mode": "explanation",
+        "nav": "Details",
+        "state": "Needs input",
+        "title": "EquipmentFlow checks availability",
+        "body": "Staff supply or correct dates and quantity. EquipmentFlow checks stock and flags details it cannot resolve.",
+        "fields": [
+          {
+            "label": "Staff supply",
+            "value": "Dates, quantity and equipment needs"
+          },
+          {
+            "label": "Software checks",
+            "value": "Availability and missing details"
+          }
+        ],
+        "items": [
+          {
+            "title": "Stock lookup",
+            "detail": "Use configured inventory",
+            "state": "Automatic"
+          },
+          {
+            "title": "Unresolved details",
+            "detail": "Return to staff for input",
+            "state": "Needs attention"
+          }
+        ],
+        "stages": [],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "availability",
+          "action": "Software checks run after staff save. Staff supply missing information or resolve availability exceptions."
+        }
+      ],
+      "states": {
+        "request": "Checking details",
+        "plan": "Needs input",
+        "reservation": "Not submitted",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-5",
+      "short": "Allocate",
+      "title": "EquipmentFlow plans the allocation",
+      "description": "EquipmentFlow calculates the allocation using available stock and configured rules. Staff review exceptions.",
+      "trigger": "Saved details trigger calculation",
+      "duration": 12,
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "availability",
+        "allocation",
+        "approve"
+      ],
+      "activeEdges": [
+        "prepare",
+        "priced"
+      ],
+      "experience": {
+        "actor": "EquipmentFlow",
+        "surface": "Allocation",
+        "layout": "review",
+        "mode": "explanation",
+        "nav": "Allocation",
+        "state": "Draft",
+        "title": "EquipmentFlow plans the allocation",
+        "body": "EquipmentFlow calculates the allocation using available stock and configured rules. Staff review exceptions.",
+        "fields": [
+          {
+            "label": "Software calculates",
+            "value": "Equipment allocation"
+          },
+          {
+            "label": "Staff review",
+            "value": "Exceptions and suitability"
+          }
+        ],
+        "items": [
+          {
+            "title": "Stock rules",
+            "detail": "Allocate available equipment",
+            "state": "Automatic"
+          },
+          {
+            "title": "Unresolved shortage",
+            "detail": "Staff choose how to proceed",
+            "state": "Review"
+          }
+        ],
+        "stages": [],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "allocation",
+          "action": "EquipmentFlow calculates the allocation from configured stock rules. Staff do not perform the routine calculation."
+        }
+      ],
+      "states": {
+        "request": "Details checked",
+        "plan": "Draft",
+        "reservation": "Not submitted",
+        "collection": "Unrecorded"
+      },
+      "phases": [
+        {
+          "edges": [
+            "prepare"
+          ]
+        },
+        {
+          "edges": [
+            "priced"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scene-6",
+      "short": "Approve",
+      "title": "Staff review and approve the plan",
+      "description": "EquipmentFlow checks completeness before allowing approval. Staff make the final decision and can reject the plan.",
+      "trigger": "Staff choose Approve or Reject",
+      "duration": 12,
+      "status": "implemented",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "availability",
+        "approve"
+      ],
+      "activeEdges": [],
+      "experience": {
+        "actor": "Service team",
+        "surface": "Approval",
+        "layout": "review",
+        "mode": "explanation",
+        "nav": "Allocation",
+        "state": "Approved",
+        "title": "Staff review and approve the plan",
+        "body": "EquipmentFlow checks completeness before allowing approval. Staff make the final decision and can reject the plan.",
+        "fields": [
+          {
+            "label": "Software enforces",
+            "value": "Complete details and valid allocation"
+          },
+          {
+            "label": "Staff decide",
+            "value": "Approve or reject"
+          }
+        ],
+        "items": [
+          {
+            "title": "Approval recorded",
+            "detail": "Person and plan version",
+            "state": "Approved"
+          },
+          {
+            "title": "Important details change",
+            "detail": "Review and approve again",
+            "state": "Rework"
+          }
+        ],
+        "stages": [],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "availability",
+          "action": "EquipmentFlow enforces completeness and records the approving person and plan version."
+        },
+        {
+          "component": "approve",
+          "action": "Staff approve or reject the calculated plan. Changed details require preparation and approval again."
+        }
+      ],
+      "states": {
+        "request": "Details checked",
+        "plan": "Approved",
+        "reservation": "Not submitted",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-7",
+      "short": "Reserve *",
+      "title": "Staff submit the reservation",
+      "description": "Planned example: staff explicitly submit the approved plan. The reservation remains Pending confirmation.",
+      "trigger": "Staff choose Reserve",
+      "duration": 12,
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "approve",
+        "reserve"
+      ],
+      "activeEdges": [
+        "approved"
+      ],
+      "experience": {
+        "actor": "Service team",
+        "surface": "Reservation submission",
+        "layout": "dispatch",
+        "mode": "explanation",
+        "nav": "Allocation",
+        "state": "Pending confirmation",
+        "title": "Staff submit the reservation",
+        "body": "Planned example: staff explicitly submit the approved plan. The reservation remains Pending confirmation.",
+        "fields": [
+          {
+            "label": "Request",
+            "value": "ER-1042"
+          },
+          {
+            "label": "Reservation status",
+            "value": "Pending confirmation"
+          }
+        ],
+        "items": [
+          {
+            "title": "Approved allocation",
+            "detail": "Submitted only after staff choose to proceed",
+            "state": "Planned"
+          }
+        ],
+        "stages": [],
+        "audit": [],
+        "columns": [],
+        "rows": [],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "reserve",
+          "action": "Submitting a reservation is separate from confirming it. This example never contacts a real service."
+        }
+      ],
+      "states": {
+        "request": "Details checked",
+        "plan": "Approved",
+        "reservation": "Pending confirmation",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-8",
+      "short": "Confirm *",
+      "title": "EquipmentFlow confirms the reservation",
+      "description": "Planned example: a matching reservation receipt changes the status to Confirmed. Elapsed time alone proves nothing.",
+      "trigger": "Independent matching receipt arrives",
+      "duration": 12,
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "reserve",
+        "confirm"
+      ],
+      "activeEdges": [
+        "submitted"
+      ],
+      "experience": {
+        "actor": "EquipmentFlow",
+        "surface": "Reservation history",
+        "layout": "register",
+        "mode": "explanation",
+        "nav": "History",
+        "state": "Confirmed",
+        "title": "EquipmentFlow confirms the reservation",
+        "body": "Planned example: a matching reservation receipt changes the status to Confirmed. Elapsed time alone proves nothing.",
+        "fields": [],
+        "items": [],
+        "stages": [],
+        "audit": [
+          {
+            "label": "Staff submit",
+            "detail": "Pending confirmation"
+          },
+          {
+            "label": "Matching receipt arrives",
+            "detail": "Confirmed"
+          }
+        ],
+        "columns": [
+          "Request",
+          "Reservation",
+          "Collection"
+        ],
+        "rows": [
+          [
+            "ER-1042",
+            "Confirmed",
+            "Unrecorded"
+          ]
+        ],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "confirm",
+          "action": "Without a matching reservation receipt, the status stays Pending confirmation."
+        }
+      ],
+      "states": {
+        "request": "Details checked",
+        "plan": "Approved",
+        "reservation": "Confirmed",
+        "collection": "Unrecorded"
+      }
+    },
+    {
+      "id": "scene-9",
+      "short": "Collection *",
+      "title": "Staff record the collection result",
+      "description": "Planned example: after confirmation, staff may record Collected or Not collected. The result can remain unrecorded.",
+      "trigger": "Staff observe and record collection",
+      "duration": 12,
+      "status": "planned",
+      "evidence": [
+        "fixture"
+      ],
+      "activeComponents": [
+        "confirm",
+        "outcome"
+      ],
+      "activeEdges": [
+        "confirmed"
+      ],
+      "experience": {
+        "actor": "Service team",
+        "surface": "Collection history",
+        "layout": "register",
+        "mode": "explanation",
+        "nav": "History",
+        "state": "Collection result",
+        "title": "Staff record the collection result",
+        "body": "Planned example: after confirmation, staff may record Collected or Not collected. The result can remain unrecorded.",
+        "fields": [],
+        "items": [],
+        "stages": [],
+        "audit": [
+          {
+            "label": "Collection recorded",
+            "detail": "Optional after confirmation"
+          }
+        ],
+        "columns": [
+          "Observed result",
+          "Record as",
+          "Reservation"
+        ],
+        "rows": [
+          [
+            "Equipment collected",
+            "Collected",
+            "Confirmed"
+          ],
+          [
+            "Equipment not collected",
+            "Not collected",
+            "Confirmed"
+          ],
+          [
+            "No result entered",
+            "Unrecorded",
+            "Confirmed"
+          ]
+        ],
+        "actions": []
+      },
+      "behind": [
+        {
+          "component": "outcome",
+          "action": "Recording collection is optional and separate from reservation confirmation."
+        }
+      ],
+      "states": {
+        "request": "Details checked",
+        "plan": "Approved",
+        "reservation": "Confirmed",
+        "collection": "Collected / not collected / unrecorded"
+      },
+      "phases": [
+        {
+          "edges": [
+            "confirmed"
+          ]
+        }
+      ]
+    }
+  ],
+  "presentation": {
+    "name": "EquipmentFlow",
+    "mark": "EF",
+    "navigation": [
+      "Requests",
+      "Details",
+      "Allocation",
+      "History"
+    ],
+    "accent": "#1d4ed8",
+    "profile": "business-workflow",
+    "canvas": {
+      "width": 1180,
+      "height": 600
+    }
+  },
+  "stateDimensions": [
+    {
+      "id": "request",
+      "label": "Request"
+    },
+    {
+      "id": "plan",
+      "label": "Plan"
+    },
+    {
+      "id": "reservation",
+      "label": "Reservation"
+    },
+    {
+      "id": "collection",
+      "label": "Collection"
+    }
+  ]
+}

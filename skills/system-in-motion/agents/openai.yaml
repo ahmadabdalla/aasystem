@@ -1,6 +1,6 @@
 interface:
   display_name: "System in Motion"
   short_description: "Explain a project through synchronized motion"
-  default_prompt: "Use $system-in-motion to build a source-grounded animated walkthrough of this project's user journey and architecture."
+  default_prompt: "Use $system-in-motion to build a source-grounded animated walkthrough of one project journey, choosing the technical or business-workflow viewpoint from my request."
 policy:
   allow_implicit_invocation: false
