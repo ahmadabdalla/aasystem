@@ -293,6 +293,28 @@ async function verifyTechnicalGeometry(page) {
         'Resumed exchange tokens did not move',
       );
     }
+    if (model.scenes.length > 1) {
+      await showExperience();
+      await page.click('#replay');
+      await page.click('#play');
+      const entryOpacity = () => page
+        .locator('#stage .em-move:not([data-motion="travel"])')
+        .evaluateAll((items) => items.map((element) => Number(getComputedStyle(element).opacity)));
+      assert((await entryOpacity()).every((opacity) => opacity === 1), 'Pause left current scene text faded');
+      await page.click('#play');
+      await page.clock.runFor(80);
+      assert((await entryOpacity()).every((opacity) => opacity === 1), 'Resume hid already revealed current content');
+      const resumed = await state(page);
+      await page.clock.runFor(Math.ceil((model.scenes[0].duration - resumed.elapsed) * 1000) + 40);
+      assert.equal((await state(page)).index, 1, 'Resume did not reach the next scene automatically');
+      const entering = await entryOpacity();
+      if (entering.length) {
+        assert(entering.some((opacity) => opacity < 0.95), 'Automatic scene entry stayed fully revealed after Pause/Resume');
+        await page.clock.runFor(1600);
+        assert.equal((await state(page)).index, 1, 'Entry check skipped the new scene');
+        assert.equal((await entryOpacity())[0], 1, 'New scene entry never became fully readable');
+      }
+    }
     await page.click('#replay');
     close((await state(page)).elapsed, 0, 'Replay did not reset', 0.001);
     assert.equal((await state(page)).index, 0, 'Replay did not return to first scene');
