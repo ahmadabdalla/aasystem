@@ -10,7 +10,7 @@ Read the [shared execution contract](../pilot/references/execution.md) in full a
 
 If the request and conversation give no subject, ask “What would you like me to explain visually?” and wait for the answer. Do not invent a topic or example, or investigate without a subject. Use existing context when the subject is clear; missing audience or layout alone need not block work.
 
-Answer the reader's question with one compact diagram inline in a fenced `text` block. Add a second only if one would be crowded or leave another requested question unanswered. No rendering tool is needed. Save a file only when asked, using the project's format.
+Answer the reader's question with compact diagrams inline in fenced `text` blocks. Use the requested number; otherwise start with one and add more only to avoid crowding or answer another requested question. No rendering tool is needed. Save a file only when asked, using the project's format.
 
 ## Use known facts
 
@@ -24,7 +24,7 @@ Use the requested mode, or choose by the question:
 - **Who owns what, or how do parts relate? — `layers`:** group parts and show their relationships. Do not imply a sequence where none exists.
 - **What changed? — `before-after`:** align the same parts and example across two states. Label unimplemented behavior **PROPOSED**.
 
-Do not invent a before-state. If a requested comparison has none, show the current or proposed state and say why. Stack comparisons if columns would wrap. Keep diagrams within 80–100 columns where possible, never over 120; shorter is fine. Shorten labels and put source details below the diagram.
+Do not invent a before-state. For alternatives, align both and label them by name. If a requested before-and-after has no before, show the current or proposed state and say why. Stack comparisons if columns would wrap. Keep diagrams within 80–100 columns where possible, never over 120; shorter is fine. Shorten labels and put source details below the diagram.
 
 Use boxes for useful groups or boundaries, and arrows for direction, access, or relationships. Use Unicode or ASCII as the terminal supports; honor requests for ASCII. Pair `✓` / `✗` with words such as “allowed” / “denied.”
 
