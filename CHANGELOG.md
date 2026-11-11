@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
+## [0.11.0]
+
 - Add the System in Motion business-workflow profile: responsibility lanes, decisions and outcomes in a bundled offline map, with validated states and ordered playback shared with Experience.
+
+- Choose Explain Visually layouts from the reader’s question, clarify missing subjects, and support comparisons between alternatives while preserving sources and limits.
 
 ## [0.10.1]
 
