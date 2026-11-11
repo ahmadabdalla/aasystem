@@ -1,42 +1,45 @@
 ---
 name: explain-visually
-description: Present a change, design, or finding as an inline plain-text diagram, usually a before-and-after comparison. Use for terminal-readable explanations of established evidence; Investigation grounds missing facts.
+description: Explain how something works, who owns what, or what changed with a plain-text diagram. Match the layout to the question and write plainly.
 disable-model-invocation: true
 ---
 
 # Explain visually
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Read the [shared execution contract](../pilot/references/execution.md) in full and the [principle index](../principles/INDEX.md). Follow the baseline requirements.
 
-Own the visual presentation: help someone outside the session understand what changed, why it matters, what remains familiar, and how we know. Produce the diagram inline in a fenced `text` block, followed by its source keys and then a one- or two-sentence takeaway naming the pattern to recognize. No image, browser, or external rendering tool is needed. Save an artifact only when requested, preserving project-owned formats.
+If the request and conversation give no subject, ask “What would you like me to explain visually?” and wait for the answer. Do not invent a topic or example, or investigate without a subject. Use existing context when the subject is clear; missing audience or layout alone need not block work.
 
-## Use established evidence
+Answer the reader's question with compact diagrams inline in fenced `text` blocks. Use the requested number; otherwise start with one and add more only to avoid crowding or answer another requested question. No rendering tool is needed. Save a file only when asked, using the project's format.
 
-Identify the subject, intended reader, and evidence already established in the conversation, code, design, and check results. [Investigation](../pilot/playbooks/investigation.md) owns grounding. When invoked directly and a material fact is missing, establish it there, then return here to present the findings; when another workflow is the caller, return the gap to it. Apply the execution contract’s [scope and proof](../pilot/references/execution.md#scope-and-proof) distinctions to every claim, including labels and arrows.
+## Use known facts
+
+Use the conversation, code, designs, and check results. [Investigation](../pilot/playbooks/investigation.md) handles missing facts: for a direct request, investigate important gaps before drawing; for an assigned task, return gaps to the caller. Follow [scope and proof](../pilot/references/execution.md#scope-and-proof), including for labels and arrows. Label hypothetical examples as hypothetical.
 
 ## Choose the layout
 
-Use the mode the user requests:
+Use the requested mode, or choose by the question:
 
-- **`before-after`** (default): side-by-side **BEFORE | AFTER** when evidence establishes two meaningful states. Label an unimplemented state **PROPOSED**, not as an observed after-state. Keep the same components and scenarios aligned across columns so the difference is visible.
-- **`flow`:** a single-column request or data path.
-- **`layers`:** a single-column sketch of who owns what.
+- **How does it work? — `flow`:** show one request, action, or example in step order.
+- **Who owns what, or how do parts relate? — `layers`:** group parts and show their relationships. Do not imply a sequence where none exists.
+- **What changed? — `before-after`:** align the same parts and example across two states. Label unimplemented behavior **PROPOSED**.
 
-Without a requested mode, fall back to `flow` or `layers` when there is no meaningful before. If a requested `before-after` has no meaningful before, show the after or proposed state alone and say why. If columns would wrap, stack the before and after sections. Aim for 80–100 display columns and stay within 120; shorten labels or move source details below the diagram instead of compressing text into unreadable boxes.
+Do not invent a before-state. For alternatives, align both and label them by name. If a requested before-and-after has no before, show the current or proposed state and say why. Stack comparisons if columns would wrap. Keep diagrams within 80–100 columns where possible, never over 120; shorter is fine. Shorten labels and put source details below the diagram.
 
-Use boxes for components and arrows for direction or access. Unicode box drawing (`┌─┐`, `│`, `└─┘`) and section breaks (`═══╪═══`) are useful when supported; use ASCII (`+`, `-`, `|`, `->`) when requested or needed by the terminal. Pair `✓` / `✗` with words such as “allowed” / “denied,” so their meaning is explicit.
+Use boxes for useful groups or boundaries, and arrows for direction, access, or relationships. Use Unicode or ASCII as the terminal supports; honor requests for ASCII. Pair `✓` / `✗` with words such as “allowed” / “denied.”
 
-## Show the difference
+## Write plainly
 
-Use these sections in this order. Include the first three when they explain the subject; always include Proof:
+- Use concrete, consistent names and short sentences suited to the reader. Explain needed unfamiliar terms on first use.
+- Keep one idea per box. Label arrows with actions or relationships, such as “sends query” or “owns invoices,” rather than “handles” or “integrates.”
+- Carry one example through a process. Include commands only when known and useful; do not run them to fill the diagram.
+- Skip preambles, filler, repeated summaries, and forced pattern names. Add sections, impact, user actions, or checks only if they answer the question. Do not force a change report or security story.
+- Follow the diagram and any sources with one or two sentences explaining the point, without repeating every label.
 
-1. **Structure or access:** show each relevant component, responsibility, and boundary; put what it can reach or do inside its box.
-2. **Impact:** follow one concrete request, failure, or misuse scenario through the structure and show its outcome in each state. Include commands only when established and useful; never run them to produce a result. Do not force a security narrative onto another kind of change.
-3. **Experience:** show the system user’s day-to-day actions, marking established unchanged steps “(same),” plus any one-time action.
-4. **Proof:** name the checks and their actual results, including the before result when available. Mark absent before results, checks not run, and inference explicitly. An expected result is not an observed pass.
+## Show sources and limits
 
-Keep residual limits beside the affected after/proposed behavior. Do not hide them in the takeaway. Never include secret values, even partially; show only their locations and kinds. If a hidden value matters, label it “hidden” or “redacted” without reproducing its contents.
+For important claims about a real system, use keys such as `[1]` and list the file/line, design, or conversation source below the diagram. One key can cover several claims. For a general concept or hypothetical, state the assumptions; do not invent sources or results. Keep the caller's sources and limits.
 
-Use compact source keys such as `[1]` beside claims, with resolvable file/line, design, or session-observation pointers immediately below the diagram. A shared key may cover several claims from one source. Keep references outside the columns when they would break alignment.
+Include check results and gaps when they matter to the answer. Distinguish expected results from observed passes. Put important limits beside the affected behavior, even without a separate proof section. Never show secret values, even partly; show only their type and location, marked “hidden” or “redacted” where needed.
 
-Before returning, trace each material claim to its source, check column alignment and width, and remove decoration or repeated prose that obscures the comparison. Return the explanation and evidence limits to the caller, or deliver them directly for a standalone invocation.
+Before returning, check the answer, labels, sources, alignment, and width. Remove jargon, decoration, and repeated prose. Give the explanation and its limits to the caller, or directly to the user for a standalone request.
