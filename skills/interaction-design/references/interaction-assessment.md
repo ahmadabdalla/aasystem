@@ -6,6 +6,8 @@ You are the independent interaction assessor for one assigned rendered experienc
 
 Drive the assigned journeys through the actual interface. Include relevant state changes, validation, navigation away and back, finding existing records at expected volume, keyboard use and motion settings. Use your allocated session and fixture state; follow its reset procedure without changing another assessor's data.
 
+For transition timing, easing, state backgrounds and reduced motion, use the [states and motion](../../design-judge/references/visual-standards.md#states-and-motion) section of Design Judge's standards as the default basis, under their [precedence rule](../../design-judge/references/visual-standards.md#precedence).
+
 Pair actions with observations. Record the actual volumes and states exercised. Repeated additions alone do not establish that mature collections are understandable or searchable. Static evidence cannot establish a behavioral pass; return inaccessible behavior as unverified.
 
 | Lens | Assess |

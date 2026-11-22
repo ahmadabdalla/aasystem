@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add Design Judge, routed from Pilot, to audit corner radii, spacing, alignment, typography, colour, dimensions and motion into report-only corrections and token proposals, with alignment measured on captures; its default visual standards yield to project tokens.
+
 ## [0.11.0]
 
 - Add the System in Motion business-workflow profile: responsibility lanes, decisions and outcomes in a bundled offline map, with validated states and ordered playback shared with Experience.

@@ -103,6 +103,7 @@ Marketplace installs use published releases. If you already added the marketplac
 | Watch what a customer sees and what happens behind the scenes | [System in Motion](#system-in-motion) |
 | Work out who the product is for and what it should do | [Product](skills/product/SKILL.md) |
 | Design how people use an interface and refine it with feedback | UX · [Interaction Design](skills/interaction-design/SKILL.md) and [UI Refinement](skills/ui-refinement/SKILL.md) |
+| Audit a design system for consistent corners, spacing, alignment, colour and motion | [Design Judge](skills/design-judge/SKILL.md) |
 | Decide how code, interfaces, and data should fit together | [Architect](skills/architect/SKILL.md) |
 
 Browse the [full skill catalog](docs/design/skill-system.md#skill-inventory).
@@ -118,6 +119,6 @@ Browse the [full skill catalog](docs/design/skill-system.md#skill-inventory).
 
 Original contributions are licensed under the [MIT License](LICENSE), copyright Ahmad Abdalla.
 
-The library draws on Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack) ([MIT notice](PSTACK_LICENSE.txt)) and [Matt Pocock's skills](https://github.com/mattpocock/skills) ([MIT notice](MATT_POCOCK_LICENSE.txt)), and adapts [Warp's common-skills](https://github.com/warpdotdev/common-skills) ([MIT notice](WARP_LICENSE.txt)) for Interrogate's merge-risk guidance.
+The library draws on Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack) ([MIT notice](PSTACK_LICENSE.txt)) and [Matt Pocock's skills](https://github.com/mattpocock/skills) ([MIT notice](MATT_POCOCK_LICENSE.txt)), and adapts [Warp's common-skills](https://github.com/warpdotdev/common-skills) ([MIT notice](WARP_LICENSE.txt)) for Interrogate's merge-risk guidance. Design Judge's alignment method adapts the MIT-licensed [gridlines](https://github.com/pritamux/gridlines) skill without copying its code.
 
 The [source and adaptation inventory](docs/design/skill-system.md#skill-inventory) identifies the upstream sources and local changes for each skill.
