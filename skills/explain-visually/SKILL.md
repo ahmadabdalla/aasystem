@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Explain visually
 
-Read the [shared execution contract](../pilot/references/execution.md) in full and the [principle index](../principles/INDEX.md). Follow the baseline requirements.
+Read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the baseline requirements.
 
 If the request and conversation give no subject, ask “What would you like me to explain visually?” and wait for the answer. Do not invent a topic or example, or investigate without a subject. Use existing context when the subject is clear; missing audience or layout alone need not block work.
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Figure it out
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Produce the workflow before executing it. Scale rigor through concrete checks and artifacts, then retain the evidence for the owner's final judgment.
 

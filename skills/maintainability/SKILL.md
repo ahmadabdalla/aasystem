@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Maintainability
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements, delegation procedure, and review-context rule.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract's baseline requirements, delegation procedure, and review-context rule.
 
 Assess the supplied artifact against the intended change and project constraints. Return findings to the current owner; this assignment does not select a workflow, choose the design, or authorize edits.
 

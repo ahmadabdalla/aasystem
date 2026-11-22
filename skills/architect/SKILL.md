@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Architect
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Own implementation design, rationale, and revision. Compare code shapes and deliver a design with a verification plan. Integrate supporting artifacts into the package; report material changes and verification gaps. The caller owns implementation and acceptance.
 

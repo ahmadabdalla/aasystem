@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Implement
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Own assigned edits and development evidence; the caller owns integration, acceptance, and [independent verification](../pilot/references/execution.md#independent-implementation-verification). Return into the caller’s task without starting another coordinator.
 
@@ -22,7 +22,7 @@ When the assignment changes UI presentation, read the relevant sections of Desig
 
 For an assigned structural improvement, read [Refactoring moves](references/refactoring-moves.md) and use the relevant move within the settled target. Return its compatibility impact and development evidence to the caller.
 
-For a direct invocation meeting [owner-presentation eligibility](../pilot/references/execution.md#owner-presentation-eligibility), own the request, execute it directly and return the actual diff/preview checks and limitations under the [verification contract](../pilot/references/verification-contract.md); no coordinator wrapper or worker is required. For other direct invocations without an execution assignment, the invoking lead remains the sole coordinator: select the change playbook through [pilot](../pilot/SKILL.md), execute or assign Implement under the shared delegation rule, then arrange verification and acceptance. An assigned worker executes and returns to its owner; it starts neither another workflow nor another Implement wrapper. Follow the contract’s [delegation and invocation rules](../pilot/references/execution.md#delegation).
+For a direct invocation meeting [owner-presentation eligibility](../pilot/references/execution.md#owner-presentation-eligibility), own the request, execute it directly and return the actual diff/preview checks and limitations under the [verification contract](../pilot/references/verification-contract.md); no coordinator wrapper or worker is required. For other direct invocations without an execution assignment, the invoking lead remains the sole coordinator: select the change playbook through [pilot](../pilot/SKILL.md), execute or assign Implement under the shared delegation rule, then arrange verification and acceptance. An assigned worker executes and returns to its owner; it starts neither another workflow nor another Implement wrapper. Follow the contract’s [delegation](../pilot/references/execution.md#delegation) and [invocation restrictions](../pilot/references/execution.md#invocation-restrictions).
 
 ## Execute and return
 

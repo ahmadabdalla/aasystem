@@ -388,6 +388,17 @@ const nodes = [
     y: 855,
   },
   {
+    id: "prune-tests",
+    title: "Prune Tests",
+    type: "skill",
+    subtitle: "Tests that guard behavior",
+    purpose: "Removes or rewrites tests that guard no intended behavior and proves each deletion lost no needed coverage.",
+    owns: "Each test's decision, the pruning edits and the coverage proof; Maintainability defines a needed test.",
+    source: "../../skills/prune-tests/SKILL.md",
+    x: 2224,
+    y: 855,
+  },
+  {
     id: "independent-verification",
     title: "Independent verification",
     type: "role",
@@ -518,7 +529,9 @@ function connect(from, to, type, label) {
   ["investigation", "explain or research"],
   ["maintainability", "assess module design / maintainability"],
   ["solution", "choose direction"],
+  ["architect", "design implementation"],
   ["10x", "assess plausible growth"],
+  ["interrogate", "challenge adversarially"],
   ["bug-fix", "correct a defect"],
   ["feature", "change behavior"],
   ["refactoring", "change structure"],
@@ -638,6 +651,9 @@ connect("refactoring", "maintainability", "support", "assesses structural improv
 connect("refactoring", "feature", "handoff", "separates behavior changes");
 connect("refactoring", "bug-fix", "handoff", "separates discovered defects");
 connect("refactoring", "opening-pr", "handoff", "delivers when authorized");
+connect("refactoring", "prune-tests", "support", "assigns test pruning");
+connect("prune-tests", "maintainability", "support", "applies needed-test criteria");
+connect("prune-tests", "implement", "support", "makes pruning edits");
 
 connect("figure-it-out", "probe", "support", "reduces empirical uncertainty");
 connect("figure-it-out", "architect", "support", "settles consequential shape");

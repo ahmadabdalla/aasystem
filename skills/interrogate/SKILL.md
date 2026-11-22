@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Interrogate
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Establish scope and intent, gather adversarial findings, synthesize them, and apply lead judgment. Challenge both the proposal and its framing.
 
@@ -24,7 +24,7 @@ When delegation is available and permitted, run isolated reviewers with the same
 
 Review relevant correctness, boundaries, data ownership, failure paths, verification coverage, and cost. Also inspect frame errors: an untested premise shared by all options, a missing alternative, or a proposed means mistaken for the user's outcome. Respect explicit constraints and identify conflicts instead of silently redefining the goal.
 
-For code or implementation-design assignments where reader burden or change cost matters, give the relevant existing reviewer a bounded [maintainability](../maintainability/SKILL.md) assignment and accessible criterion references. Keep it within the same review setup and selected context mode; do not create a second reviewer pool or supply prior assessments to independent discovery. Respect its explicit invocation policy and disclose an unavailable handoff. The supporting assessment returns findings; Interrogate retains adversarial synthesis and the verdict.
+For code or implementation-design assignments where reader burden or change cost matters, give the relevant existing reviewer a bounded [maintainability](../maintainability/SKILL.md) assignment and accessible criterion references. Keep it within the same review setup and selected context mode; do not create a second reviewer pool or supply prior assessments to independent discovery. Follow the [invocation restrictions](../pilot/references/execution.md#invocation-restrictions). The supporting assessment returns findings; Interrogate retains adversarial synthesis and the verdict.
 
 Require a concrete location, condition or execution path, consequence, supporting evidence, and what would resolve uncertainty for each finding. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty review is valid.
 
@@ -34,4 +34,4 @@ State the assignment mode and isolation limits in the verdict. Keep initial disc
 
 Read and deduplicate all findings, retaining disagreements and consequential findings raised by only one reviewer. Check material claims in the actual artifact, call path, source, or [probe](../probe/SKILL.md). Reviewer agreement is a signal to inspect, not proof.
 
-Classify findings as **act on**, **consider**, **noted**, or **dismissed**, with the evidence and reason. Separate inability to verify from a verified defect. Report unresolved risks and the smallest corrective action or experiment. Return the verdict to the calling workflow for incorporation into its decision or design package; present it to the user when invoked directly. Review alone produces a verdict. The calling owner decides and applies fixes within the task's authorization, then reruns affected proof. Apply fixes within this skill only when its explicit assignment includes remediation; keep the review findings and subsequent changes distinguishable.
+Classify findings as **act on**, **consider**, **noted**, or **dismissed**, with the evidence and reason. Separate inability to verify from a verified defect. Report unresolved risks and the smallest corrective action or experiment. Return the verdict to the calling workflow for incorporation into its decision or design package; present it to the user when invoked directly. Review alone produces a verdict. The calling owner decides and applies fixes within the task's authorization, then returns them to its [verification working loop](../pilot/references/verification-contract.md#working-loop). Apply fixes within this skill only when its explicit assignment includes remediation; keep the review findings and subsequent changes distinguishable.

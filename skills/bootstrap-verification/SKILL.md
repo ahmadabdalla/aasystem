@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Bootstrap verification
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Leave the project with a procedure another agent can run, evidence of which paths work, and explicit coverage gaps. Adopt existing verification facilities before creating new ones. Installing instructions alone does not establish readiness.
 

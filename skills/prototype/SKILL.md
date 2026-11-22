@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Prototype
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Own the inspectable artifact and its observations. The caller coordinates the larger task; the [prototype playbook](../pilot/playbooks/prototype.md) owns standalone experiments, and [probe](../probe/SKILL.md) owns the empirical method. Reuse the caller's question, decision criteria and grounding rather than reopening settled choices.
 

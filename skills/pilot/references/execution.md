@@ -1,6 +1,18 @@
 # Execution contract
 
-**Baseline.** Read this contract, the [principle index](../../principles/INDEX.md), relevant principle leaves and project instructions. Reuse settled context. These rules guide agents; they do not grant tool permissions or provide a sandbox.
+## Baseline
+
+Read this section, then [Ownership and handoffs](#ownership-and-handoffs), [Scope and proof](#scope-and-proof), [Decision authority](#decision-authority), [Completion](#completion) and [Delivery](#delivery). Also read the [principle index](../../principles/INDEX.md), relevant principle leaves and project instructions. Reuse settled context; do not reread a section already in context. These rules guide agents; they do not grant tool permissions or provide a sandbox.
+
+Read the remaining sections when the task reaches them:
+
+- Assigning work to another agent, or following a linked skill: [Delegation](#delegation) and [Invocation restrictions](#invocation-restrictions).
+- Acting as, or starting, a reviewer, judge or verifier: [Review context](#review-context).
+- Changing or checking product behaviour: [Verification through the project](#verification-through-the-project) and [Independent implementation verification](#independent-implementation-verification).
+- A small presentation-only edit: [Owner-presentation eligibility](#owner-presentation-eligibility).
+- Unattended work: [Bounded autonomy](#bounded-autonomy).
+
+A section linked from a skill's step is part of that step.
 
 ## Ownership and handoffs
 
@@ -43,6 +55,10 @@ The owner may do the work or delegate for useful expertise, independent ready wo
 For parallel work, give workers separate write ownership and identify shared resources. Use [Swarm](../../swarm/SKILL.md) for partitioned coverage and [Arena](../../arena/SKILL.md) for competing approaches when their evidence can change an unresolved choice. Preserve required independent candidates, judging and verification. Keep coupled work with one owner.
 
 Inspect returned artifacts and observations against the assignment before relying on them. Resolve contradictions, stale inputs and material findings. A worker's return is not automatic acceptance. Unavailable required delegation must be disclosed; owner checks cannot be relabelled independent.
+
+### Invocation restrictions
+
+Library skills set `disable-model-invocation: true`, so a host does not select them automatically. That setting stops automatic selection only: an owner may read and follow a skill its current procedure links, or brief a worker to follow it. A handoff is unavailable only when the host cannot reach the skill file or start a required worker; disclose it, and do not relabel owner checks as independent. A skill that reserves invocation for the user, such as System in Motion, is offered to the user rather than followed.
 
 ## Review context
 

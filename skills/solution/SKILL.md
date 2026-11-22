@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Solution
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Own the solution decision and its explanation. Use returned findings in the decision record; do not restart the brief or concatenate reports. Surface changed assumptions, consequential findings, and decisions that need the user's input as work proceeds.
 

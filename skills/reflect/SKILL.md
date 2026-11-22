@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Reflect
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract's baseline requirements.
 
 Mine the current conversation for durable learnings, then route them into skill edits.
 

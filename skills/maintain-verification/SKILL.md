@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Maintain verification
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Keep the project's map and operating procedure usable while preserving the intended behavior they check. Use [the project contract](../bootstrap-verification/references/project-contract.md) to identify missing meaning, preserving equivalent existing layouts.
 

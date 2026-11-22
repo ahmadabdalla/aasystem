@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Design Judge
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract's baseline requirements.
 
 Own the [visual standards](references/visual-standards.md) and audits against them. Do not edit files, start remediation or redesign interactions. Interaction Design owns navigation, interaction models and rendered UX assessment.
 

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # pilot
 
-Before starting, read the [shared execution contract](references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Own framing through verification: select procedures, coordinate contributors,
 inspect results and deliver under the execution contract.
@@ -34,12 +34,14 @@ Apply relevant [principle leaves](../principles/INDEX.md); carry their scope and
 | Work through a plan with the user and record agreed terms and decisions when authorized                               | [Grill me](../grill-me/SKILL.md)                                                                                           |
 | Clarify project terminology or record a consequential product, design or software decision                            | [Domain modeling](../domain-modeling/SKILL.md)                                                                             |
 | Explain a behavior, change or finding, or investigate a question, without changing the product; prose or diagram      | [Investigation](playbooks/investigation.md)                                                                                |
-| Assess module design or the maintainability of existing code                                                          | [Maintainability](../maintainability/SKILL.md#select-the-assessment)                                                         |
+| Assess module design or the maintainability of existing code, including which tests guard no behavior | [Maintainability](../maintainability/SKILL.md#select-the-assessment)                                                         |
 | Decide what solution should exist while direction, ownership, or constraints remain open                              | [Solution](../solution/SKILL.md)                                                                                           |
+| Design implementation boundaries, interfaces and state ownership without building | [Architect](../architect/SKILL.md) |
 | Assess how a decision or design holds up under plausible growth                                                       | [10x](../10x/SKILL.md)                                                                                                     |
+| Challenge a proposal, design or change adversarially, including PR merge risk and detection gaps | [Interrogate](../interrogate/SKILL.md) |
 | Correct a reported defect                                                                                             | [Bug fix](playbooks/bug-fix.md)                                                                                            |
 | Add or intentionally change behavior                                                                                  | [Feature](playbooks/feature.md)                                                                                            |
-| Change structure while preserving behavior                                                                            | [Refactoring](playbooks/refactoring.md)                                                                                    |
+| Change structure while preserving behavior, including pruning tests that guard no behavior | [Refactoring](playbooks/refactoring.md)                                                                                    |
 | Refine an inspectable UI/UX with human feedback and preserve a reviewed visual reference                              | [UI refinement](../ui-refinement/SKILL.md)                                                                                 |
 | Resolve a decision through a throwaway experiment                                                                     | [Prototype](playbooks/prototype.md)                                                                                        |
 | Create or change a skill                                                                                              | [Skill authoring](playbooks/authoring-a-skill.md)                                                                          |
@@ -61,7 +63,7 @@ For authorized unattended work in a supported active session, apply [bounded aut
 
 For retained implementation, follow the [verification contract](references/verification-contract.md): identify the work, obtain required independent checks, resolve findings and present the result. Research and design stop at their requested outputs.
 
-Follow the [delegation procedure](references/execution.md#delegation), including invocation restrictions and unavailable handoffs. The selected playbook owns the task: Architect supplies design, [Implement](../implement/SKILL.md) supplies production edits and development checks, and a separate worker, briefed per [Engineering Verification](references/engineering-verification.md), supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
+Follow the [delegation procedure](references/execution.md#delegation), including [invocation restrictions](references/execution.md#invocation-restrictions) and unavailable handoffs. The selected playbook owns the task: Architect supplies design, [Implement](../implement/SKILL.md) supplies production edits and development checks, and a separate worker, briefed per [Engineering Verification](references/engineering-verification.md), supplies [acceptance proof](references/execution.md#independent-implementation-verification) when required. Standalone specialist continuations join this same task with settled inputs and requested checkpoints.
 
 Apply the [completion check](references/execution.md#completion), retaining decisions
 and evidence in existing records. Use [Show Me Your Work](../show-me-your-work/SKILL.md)

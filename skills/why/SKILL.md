@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Why
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
 
 Anchor the question in an artifact, investigate its history, and calibrate conclusions to the evidence.
 

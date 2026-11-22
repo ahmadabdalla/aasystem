@@ -32,7 +32,7 @@ Name the knowledge hidden, the obligation exposed, and the reason to separate it
   control point. Adapter count alone does not establish value or needless complexity.
 - Ask what removing a wrapper would do: eliminate work or redistribute it among
   callers? Forwarding can earn its place through policy, adaptation, or stability.
-- Keep internal test controls private unless production callers need them.
+- Keep internal test controls private unless production callers need them; remove one when the last test using it is removed.
   Substitutes prove their exercised contract; real integration needs its own checks.
 - Moving code does not automatically move permissions, transaction scope, process
   isolation, or cleanup responsibility. Preserve those obligations explicitly.
