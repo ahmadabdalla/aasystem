@@ -377,6 +377,17 @@ const nodes = [
     y: 855,
   },
   {
+    id: "design-judge",
+    title: "Design Judge",
+    type: "skill",
+    subtitle: "Visual standards & audit",
+    purpose: "Owns default visual standards for nested radii, spacing, alignment, typography, colour, consistency and motion, and audits design systems into located, report-only corrections.",
+    owns: "Default criteria and audit findings; project tokens take precedence and Feature owns authorized remediation.",
+    source: "../../skills/design-judge/SKILL.md",
+    x: 1776,
+    y: 855,
+  },
+  {
     id: "independent-verification",
     title: "Independent verification",
     type: "role",
@@ -512,6 +523,7 @@ function connect(from, to, type, label) {
   ["feature", "change behavior"],
   ["refactoring", "change structure"],
   ["ui-refinement", "refine with feedback"],
+  ["design-judge", "audit visual consistency"],
   ["prototype-playbook", "resolve by experiment"],
   ["skill-authoring", "change a skill"],
   ["evaluation", "evaluate instructions"],
@@ -656,6 +668,14 @@ connect("independent-verification", "bootstrap-verification", "handoff", "return
 connect("independent-verification", "maintain-verification", "handoff", "returns recipe drift via caller");
 connect("independent-verification", "implement", "handoff", "returns correction need via caller");
 connect("execution-contract", "independent-verification", "governance", "owns independent dispatch and exceptions");
+
+// Visual standards are read as criteria; reading them does not start an audit.
+connect("visual-assessor", "design-judge", "support", "applies composition standards");
+connect("interaction-assessor", "design-judge", "support", "applies motion standards");
+connect("implement", "design-judge", "support", "applies standards to UI edits");
+connect("ui-refinement", "design-judge", "support", "applies standards to candidates");
+connect("design-judge", "feature", "handoff", "hands authorized remediation to Feature");
+connect("design-judge", "interaction-design", "support", "merges rendered assessment for app-wide audits");
 
 // Verification lifecycle.
 connect("bootstrap-verification", "how", "support", "traces relevant paths");
