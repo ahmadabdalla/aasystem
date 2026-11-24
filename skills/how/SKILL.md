@@ -1,19 +1,19 @@
 ---
 name: how
-description: Trace how an existing subsystem behaves and where responsibilities live. Use for runtime flow, operational and security signal paths, code walkthroughs, ownership, and placement questions; use why for historical rationale.
+description: Trace how an existing subsystem works and where each responsibility lives. Use for runtime flows, signal paths, code walkthroughs, ownership and placement questions; use why for history.
 disable-model-invocation: true
 ---
 
 # How
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Assess the scope, explore the system, reconcile findings, and explain the behavior. Build a working model from the actual code and configuration.
+1. **Name the target.** Say in one line what you'll trace and where it starts, such as "How does a reset email get sent? Starting at `POST /reset`." If the question has two readings, pick one, say which, and go on.
+2. **Trace it.** Start at the trigger: a command, route, event or scheduled job. Follow the calls through state changes to the effect a person or another system sees. Read the code, not the names. At each boundary that matters, read both sides. Check the callers, the config and the tests. If the question touches failures or concurrency, trace those paths too. Done when each step from trigger to effect has a file and line, or is named as a gap.
+3. **Split only broad questions.** If the question spans separate flows, give each flow to an explorer under the [delegation rule](../pilot/references/delegation.md). Ask each for file locations, the flow, owners and gaps. If explorers disagree, settle it against the source yourself.
+4. **Probe what reading can't settle.** If a runtime claim matters and the code doesn't settle it, run a focused [probe](../probe/SKILL.md). Mark each runtime claim as traced or run.
+5. **Explain.** Give the flow in order, who owns each step, and the constraints a reader would miss. Go only as deep as the caller needs. Keep each step's file and line, and each gap, in the answer.
 
-State the target and any consequential scope assumption. Investigate and explain a narrow question directly. For broad systems, use bounded explorers for distinct flows or boundaries when separate coverage or context separation provides a concrete benefit under the shared delegation rule. Synthesize in the current context unless a separate explainer provides a concrete benefit. Require source locations, flow, responsibilities and gaps. Use actual configured models and read-only access where it retains the tools needed. Reconcile conflicting findings against the source; disclose independence limits when claiming independent corroboration.
+If a workflow called you, return the explanation to it. If the user wants a diagram, use [Explain Visually](../explain-visually/SKILL.md).
 
-Trace from the trigger or public entry point through calls, data transformations, state changes, and externally visible effects. Follow both sides of important boundaries. Inspect callers, configuration, representative tests, and failure or concurrency behavior where relevant. Read the implementation rather than guessing from names. Use a focused [probe](../probe/SKILL.md) when an unresolved runtime claim matters; a read-only explanation does not require executing every path.
-
-Explain the core flow, key concepts, responsibility map, and non-obvious constraints at the level needed for the user's decision. Cite exact files, symbols, and lines for material claims. Distinguish behavior traced in code from behavior actually exercised. If a connection cannot be traced, identify that gap. Return the explanation to the calling workflow for integration, or present it directly for a standalone question, using [Explain Visually](../explain-visually/SKILL.md) when the user asks for a diagram; preserve the explainer's evidence and uncertainty when editing it.
-
-Use [why](../why/SKILL.md) to investigate motivation. Current mechanics alone cannot establish historical intent.
+If the question asks why it was built this way, give that part to [why](../why/SKILL.md). Code shows what happens, not why.

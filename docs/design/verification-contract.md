@@ -25,49 +25,26 @@ Human request + constraints + delivery boundary
                          Human review
 ```
 
-An unresolved consequential decision or required visual review pauses the whole task for your answer. Agreement does not require a checkpoint for every routine step. The [execution contract](../../skills/pilot/references/execution.md) owns that distinction, handoffs, delegation and completion.
+An unresolved consequential decision or required visual review pauses the whole task for your answer. Agreement does not require a checkpoint for every routine step. The [execution contract](../../skills/pilot/references/execution.md) owns that distinction, handoffs and completion; [Delegation](../../skills/pilot/references/delegation.md) owns delegation and review context.
 
 ## Expertise without mandatory agent chains
 
-The [effort rubric](../../skills/pilot/references/effort.md) sets S/M/L execution conditions, carried through assignments under the shared [handoff rules](../../skills/pilot/references/execution.md#ownership-and-handoffs).
+The selected playbook sets the procedure and the [effort rubric](../../skills/pilot/references/effort.md) sizes the work. Product owns behaviour, Interaction Design interactions, Solution the approach, Architect the implementation design and Implement the edits. Pilot applies these itself or delegates when it needs expertise, parallel work or a clean context. Specialists return their results to the task's owner.
 
-The selected playbook provides the procedure. Product owns behaviour and acceptance scenarios; Interaction Design owns interactions; Solution compares approaches; Architect designs implementation boundaries; Implement makes bounded edits. Pilot can apply these procedures itself or delegate for useful expertise, parallel work or context separation.
-
-The [continuity loop](../../skills/pilot/references/task-continuity.md) keeps one
-retrievable brief: original intent, decisions, sizing, requirements and proof.
-The owner reloads it before stages and after context resets, selects needed work,
-checks results and resolves findings. Changed scope/proof needs trigger reassessment;
-research, design and implementation retain their own routes and stopping boundaries.
-
-Specialists return bounded artifacts and observations to the existing owner. [Swarm](../../skills/swarm/SKILL.md) partitions independent work; [Arena](../../skills/arena/SKILL.md) compares alternatives with separate judging. Neither is mandatory for ordinary delivery. The [system map](skill-system.md) records the complete ownership and source inventory.
+The [continuity brief](../../skills/pilot/references/task-continuity.md) holds the original intent, decisions, sizing, requirements and proof, so the owner can reload it after a context reset. [Swarm](../../skills/swarm/SKILL.md) and [Arena](../../skills/arena/SKILL.md) are there for parallel work and comparisons; ordinary delivery needs neither. The [system map](skill-system.md) records every owner and source.
 
 ## Verification and correction
 
-Retained implementation normally requires a fresh noneditor to inspect the combined diff and execute affected project checks under [Engineering Verification](../../skills/pilot/references/engineering-verification.md). Development checks help find defects but do not establish independent verification. Review findings and runtime observations remain distinct; an API check does not prove an unexercised UI.
+Retained implementation needs a fresh agent that didn't edit it to inspect the combined diff and run the affected project checks, under [Engineering Verification](../../skills/pilot/references/engineering-verification.md). Development checks find defects but don't count as that verification. Review findings and runtime observations stay separate: an API check doesn't prove an unexercised UI. The owner fixes material issues and gets the corrected work verified again before calling it done.
 
-The verifier receives requirements, constraints and runnable procedures. Independent discovery withholds prior conclusions until initial findings; a confirmation audit can check supplied claims with that exposure disclosed. Preserve original findings. The owner resolves material issues and obtains affected verification on the corrected work before declaring completion.
+The narrow [owner-presentation exception](../../skills/pilot/references/verification-contract.md#owner-presentation-eligibility) lets the owner check prescribed low-impact appearance edits itself, labelled owner-checked. Research and design keep their sources, reasoning and limits instead of claiming executable proof.
 
-The narrow [owner-presentation exception](../../skills/pilot/references/execution.md#owner-presentation-eligibility) allows prescribed low-impact appearance edits with diff/preview checks. Label them owner-checked. Research and design retain sources, reasoning and limits rather than pretending to have executable product proof.
+## Local work
 
-## Persistent local work
-
-Use the current checkout for sequential work, or one task worktree for useful separation. Reuse it across correction rounds. Pause source editing during verification, identify required configuration and other runtime inputs, and check tested identity before/after verification and at delivery.
-
-The [input identity helper](../../skills/pilot/scripts/input_identity.py) is a read-only fallback when project facilities are insufficient. It hashes selected working-tree inputs without copying them. It detects endpoint differences, not arbitrary concurrent or transient writes. Complete input scope, actual runtime identity and stopping other writers remain owner/verifier responsibilities.
-
-Separate worktrees do not isolate ports, databases or external services. Use owned fixtures or serial execution for those resources. Additional execution copies need a specific check requirement and known cost/ownership; full repository archives are not the default.
+Work happens in the current checkout, or in one task worktree reused across correction rounds. Worktrees don't isolate ports, databases or external services. [Local execution](../../skills/pilot/references/local-execution.md) owns workspaces, cleanup and checking that the tested artifact is the delivered one.
 
 ## Evidence and human review
 
-Reuse project task/PR records for the request, agreed expectations, tested identity, actual verifier, observed checks, findings and limitations. Deterministic project checks and identity comparisons support the process; this library does not authenticate people, sandbox processes, intercept tools or provide host-enforced acceptance.
+Evidence goes in the project's existing task and PR records: the request, agreed expectations, what was tested, who verified it, what was observed and the limits. The [project evidence contract](../../skills/bootstrap-verification/references/project-contract.md#evidence-and-retention) owns how long it's kept. This library doesn't authenticate people, sandbox processes, intercept tools or enforce acceptance. The optional [Codex adapter](../ops/codex.md#durable-orchestration-hooks) adds recovery and recorded completion checks once you set it up; other hosts rely on the instructions alone.
 
-The optional [local Codex adapter](../ops/codex.md#durable-orchestration-hooks)
-adds recovery and recorded completion checks after explicit setup/trust. Checked
-handoff preserves the task before retiring scratch; resume retains intent identity
-and requires owner reconstruction. These checks do not establish semantic
-fulfillment or reviewer independence. Other hosts and ordinary invocation remain
-instruction-driven. Completion reconciles the original request and all later steering.
-
-Clean up only owned processes and disposable output. Preserve pending changes and useful evidence through review or investigation. After the review boundary, retire unneeded artifacts without breaking durable evidence references. The [project evidence contract](../../skills/bootstrap-verification/references/project-contract.md#evidence-and-retention) owns lifetime rules.
-
-Agent completion is a delivery assessment, not your approval to commit, merge or release. The final report gives the result, evidence and remaining limitations at your requested boundary.
+Completion reconciles the original request and every later correction. It's a delivery assessment, not your approval to commit, merge or release. The final report gives the result, evidence and remaining limits at the boundary you asked for.

@@ -1,55 +1,48 @@
 ---
 name: architect
-description: Design caller usage, types, signatures, module boundaries, and a verification plan; revise the design when evidence contradicts it. Use for changes to interfaces, state ownership, or responsibilities between functions, or when a playbook requests design; use solution for overall direction.
+description: Design caller usage, types, module boundaries and a verification plan without building. Use solution first if the direction is still open.
 disable-model-invocation: true
 ---
 
 # Architect
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Own implementation design, rationale, and revision. Compare code shapes and deliver a design with a verification plan. Integrate supporting artifacts into the package; report material changes and verification gaps. The caller owns implementation and acceptance.
+You design and revise; you never build. The caller owns implementation and acceptance. Every package follows [design-package.md](references/design-package.md); read it before you start. If the user asked for design and build, hand the package to [Pilot](../pilot/SKILL.md) for the change playbook.
 
-Every assignment is design-only. For a standalone design-and-build request, return the same package and authorized continuation to [pilot](../pilot/SKILL.md) for the change playbook, preserving one owner, settled grounding, requested checkpoints, and implementation scope. Reuse a settled package unless material changes or evidence gaps require revision.
+You're done when the package has caller usage, shape, a rationale against the simplest viable option, and a verification plan that maps every changed requirement to an independent expected result and a real surface.
 
 ## Design trigger
 
-Use Architect when a proposed change alters an interface between functions or reallocates state ownership or responsibilities between them. Editing multiple function bodies alone does not require this route. An explicit task or calling playbook may also request design.
+Use Architect when a change alters an interface between functions, or moves state ownership or responsibilities between them. Editing several function bodies doesn't count on its own.
 
-## Ground and define proof
+## Ground the design
 
-Read the agreed product contract and its requirement sources when present. Carry its invariants and scenarios into the technical design: identify how each invariant the design relies on is enforced and exercised. Return a proposed behavior change or unresolved product rule to the caller, or use [product](../product/SKILL.md) within a standalone assignment’s scope. Preserve the requirement until its authority is resolved.
+- Read the agreed product contract. If the design needs a behaviour change or a product rule is unsettled, return it to the caller; in a standalone assignment, use [Product](../product/SKILL.md). Design against the requirement as written until its owner settles it.
+- Read the relevant glossary entries, current ADRs and any [Solution](../solution/SKILL.md) record. If a concept is ambiguous or a decision qualifies for a record, use [Domain Modeling](../domain-modeling/SKILL.md) and link its records from the package.
+- Trace affected behaviour with [How](../how/SKILL.md). If ownership or layering changes, also use [Why](../why/SKILL.md). For greenfield work, read the docs and limits of the dependencies and integrations the design will call.
+- If the project has a verifier or feature map, use it to find the affected outcomes, alternate entry points and dependent callers, and carry its documented coverage gaps into the verification plan.
+- Reopen a settled package, accepted decision, ADR or solution only if new evidence or changed requirements justify it, and say why.
+- If the proof needs seed or fixture state, read [Seed scenarios](references/seed-scenarios.md).
+- If the design changes business identity, invariant enforcement, state ownership or coordination across business contexts, read [Business state and consistency](references/business-state.md).
 
-Read relevant project glossary entries and current ADRs, including for standalone work. Carry their constraints and evidence limits into the design. Use [domain-modeling](../domain-modeling/SKILL.md) for ambiguous concepts or qualifying implementation decisions within the authorized document scope; link its records from the design package. Explain changed evidence before reopening an accepted decision. Translate agreed meanings and decisions into observable expectations below.
+## Plan the proof
 
-Read the [solution](../solution/SKILL.md) decision record and its supporting evidence when present; a standalone request can supply the same brief. Carry forward its constraints, evidence limits, unresolved assumptions, and conditions for reconsideration. Reuse the settled brief and state implementation-specific gaps that change the work. For a new brief, state the intended deliverable and unresolved choices; inspect observable facts. Apply [decision authority](../pilot/references/execution.md#decision-authority) to unresolved consequential choices and preserve proposed versus agreed status in the design package.
-
-Trace affected behavior with [how](../how/SKILL.md); use [why](../why/SKILL.md) when changing ownership or layering. For greenfield work, ground in real callers, dependencies, and integration constraints. Preserve the strategic decision; reopen it when contradictory evidence or changed requirements warrant it, and explain why.
-
-Read the project verifier and feature map when present. Identify affected outcomes, alternate entry points, and dependent callers; preserve documented coverage gaps. Record missing verification capability in the plan and return the prerequisite to the caller; designing a proof does not establish observed implementation behavior.
-
-For seed/fixture design or representative state needed by the proof plan, read [Seed scenarios](references/seed-scenarios.md).
-
-When the design changes business identity, invariant enforcement, state ownership, or coordination across business contexts, read [Business state and consistency](references/business-state.md). Carry its ownership and consistency decisions and required checks into the design package.
-
-In the verification plan, map each requirement the change adds or alters to a concrete input or action, expected observable result, the real surface used to exercise it, and evidence to retain. Include failure, retry, concurrency, or migration cases when they carry the design risk. Derive expected results from the contract, independently of the implementation. Check that the project can actually support this proof; name missing access or infrastructure as a verification gap.
-
-Map relevant [signal expectations](../pilot/references/execution.md#signal-effects) to triggers, expected signals, observation points, and checks.
+Map each requirement the change adds or alters to an input or action, the expected result, the real surface that exercises it and the evidence to keep. Take expected results from the contract, not from how the code will work. Add failure, retry, concurrency or migration cases where they carry the risk, and the [signal effects](../pilot/references/execution.md#signal-effects) you'll check. If the project can't support a check, record the gap and return the prerequisite to the caller.
 
 ## Sketch and compare
 
-For user-facing scope, consume the project's interaction model when present, using the [interaction contract](../interaction-design/references/interaction-contract.md) to check the handoff, including decision authority and mock omissions. If a consequential interaction is unsettled, return it to the caller or use [interaction-design](../interaction-design/SKILL.md) within a standalone assignment. Reconcile proposed technical changes with the interaction owner; changing business behavior still returns to Product.
-
-Write realistic caller usage before types. Sketch data shapes, signatures, ownership, invariants, and the main flow. Compare structurally different sketches when an unresolved choice could materially change ownership, boundaries, data shape or proof. Use [arena](../arena/SKILL.md) when independent candidates could supply evidence that changes the choice under the shared delegation rule. For Arena, supply the same brief, grounding artifacts, proof criteria, and [design-package.md](references/design-package.md) as the candidate and synthesis contract. Alternatives explore implementation shapes within the chosen solution; reopen the solution only when evidence warrants it. Preserve arena's disclosure when independent candidates or judging are unavailable.
-
-Read Maintainability's [boundary criteria](../maintainability/references/boundaries.md) when evaluating these sketches and supply that reference to Arena candidates; add its [local-code criteria](../maintainability/references/local-code.md) only when local structure matters to the choice. Apply the criteria in the comparison, including the simplest viable shape; justify each new boundary against present callers, enforced invariants, and concrete change cost. Reading criteria does not require a separate specialist. When Arena is used, check its synthesized design package and selection rationale against the contract and adopt it unless a material gap requires revision. Use a bounded [maintainability](../maintainability/SKILL.md) assessment when unresolved reader burden, ownership, or change cost could change the choice; reuse a settled assessment when its artifact and evidence remain current. Use [interrogate](../interrogate/SKILL.md) on a contested design before delivery. Incorporate supported findings and retain unresolved risks in the package.
-
-Before settling a consequential implementation design, use [10x](../10x/SKILL.md); carry its findings into the rationale and verification plan.
-
-Write the design package into the caller’s designated artifact when supplied, preserving solution rationale and links to canonical decisions. Deliver usage, sketch, rationale, alternatives, and the verification plan; clearly state that implementation is unverified.
+- If the change is user-facing, check the interaction handoff with the [interaction contract](../interaction-design/references/interaction-contract.md). If a consequential interaction is unsettled, return it to the caller; in a standalone assignment, use [Interaction Design](../interaction-design/SKILL.md). Agree any technical change to it with its owner.
+- Write realistic caller usage before types. Then sketch data shapes, signatures, ownership, invariants and the main flow.
+- If an open choice could materially change ownership, boundaries, data shape or proof, compare structurally different sketches, including the simplest viable one.
+- Judge sketches with Maintainability's [boundary criteria](../maintainability/references/boundaries.md), and its [local-code criteria](../maintainability/references/local-code.md) only if local structure matters. Apply them yourself.
+- If independent candidates could change the choice, use [Arena](../arena/SKILL.md). Give every candidate the inputs [design-package.md](references/design-package.md) lists, plus the boundary criteria. Check Arena's package and rationale against the contract, and adopt it unless a material gap needs revision.
+- If the boundary criteria don't separate your sketches, ask [Maintainability](../maintainability/SKILL.md) for a bounded assessment of those sketches.
+- Before settling a consequential design, use [10x](../10x/SKILL.md), and carry its findings into the rationale and the verification plan.
+- If the user or a reviewer disputes the design, use [Interrogate](../interrogate/SKILL.md) before delivering it, and fold in supported findings.
 
 ## Return and reconsider
 
-Return the package, source identity, settled constraints, risks, and implementation prerequisites to the owner for [Implement](../implement/SKILL.md) and [independent verification](../pilot/references/execution.md#independent-implementation-verification).
+Write the package into the caller's artifact if they named one. Return the package and the revision it was designed against to the owner for [Implement](../implement/SKILL.md) and [independent verification](../pilot/references/verification-contract.md#independent-implementation-verification).
 
-Investigate repeated workarounds, special cases, type escapes, or callers learning internals reported by implementation or verification. Trace the mismatch; resketch or compare again when material. Update the package with the reason and affected proof; the caller assigns corrections and verification. A single edge case need not invalidate the design. Do not weaken acceptance criteria to fit the design.
+If implementation or verification reports repeated workarounds, special cases, type escapes or callers learning internals, trace the mismatch. If it's material, resketch or compare again, and update the package with the reason and the affected proof. One edge case doesn't have to invalidate the design. Never weaken acceptance criteria to fit the design.

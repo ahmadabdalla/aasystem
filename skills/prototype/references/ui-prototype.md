@@ -1,33 +1,34 @@
 # UI prototype
 
-Render one contextual candidate when refining specified presentation, or contextual alternatives when a consequential navigation, information hierarchy or interaction choice needs to be inspected. Use [logic prototype](logic-prototype.md) when the uncertainty is the business-state model itself.
+Render the UI inside the real app so a human can judge it in context. If the question is about business rules, use [logic-prototype.md](logic-prototype.md).
 
-## Establish a comparable context
+- If the brief fixes the presentation, build **one candidate**.
+- If a choice about navigation, layout, information hierarchy or primary action is open, build **variants**.
 
-Carry the page's purpose, actors and scopes, authoritative requirements, existing interaction decisions, and the unresolved question into each variant. Identify what observations distinguish the alternatives. A presentation alternative must not quietly change required business behavior or add product scope; mark those differences as proposals and return them to their owner.
+## 1. Set up the context
 
-Inspect the surrounding application: navigation, component vocabulary, realistic content density, and the routes or journeys entering and leaving the surface. Prefer mounting alternatives in a copy of the relevant page or application shell inside an isolated checkout. For a new surface, use the intended surrounding shell or explain which context is unavailable. A blank standalone page can hide navigation and density problems.
+Mount the prototype in a copy of the real page or app shell, with real navigation, components and content density, inside your isolated checkout. If the surface is new, put it in the shell it will live in. If you can't, say what context is missing. A blank page hides navigation and density problems.
 
-Use representative fixtures with the same data, actor, scope and starting state across variants. Stub mutations and isolate data access; reproducing the application's appearance does not authorize its live connections. For a permitted read-only dependency, document its identity and variability. Do not count mock results as evidence of backend behavior.
+Give every variant the same fixtures: the same data, user, role and starting state. Cut live connections unless the brief permits a read-only source, and record which one you used; copying the app's look doesn't license calling its backend. Results from mocks aren't evidence of backend behaviour.
 
-## Render and refine a specified candidate
+## 2a. One candidate
 
-When the assignment is to make requirements and explicit visual instructions inspectable, use one candidate unless alternatives answer a real question. Preserve the caller's presentation constraints and relevant component definitions. Show the actual rendered result, including states and viewports needed for the review. Use the [interaction contract's visual-reference guidance](../../interaction-design/references/interaction-contract.md#preserve-an-inspectable-visual-reference-when-needed) for handoff contents. Preserve an identifiable source revision and useful rendered views after refinements; a changing local URL alone cannot identify what was reviewed.
+Follow the brief's visual instructions and the components it names. Render the states and viewports the review needs. Record what the [interaction contract's visual-reference rules](../../interaction-design/references/interaction-contract.md#preserve-an-inspectable-visual-reference-when-needed) ask for. After each round of changes, keep the source revision and screenshots; a local URL that keeps changing doesn't identify what was reviewed.
 
-## Construct distinct alternatives
+## 2b. Variants
 
-Choose enough alternatives to discriminate the actual question. Two materially different structures can be sufficient; do not manufacture variants for routine visual adjustments. Preserve established constraints and component conventions while varying the consequential structure: grouping, placement, primary action, navigation or disclosure. Color and copy changes alone do not explore those decisions.
+Build as many as the question needs; two can be enough. Variants differ in structure: grouping, placement, primary action, navigation or disclosure. If they differ only in colour or copy, they don't answer the question. Keep the project's components and constraints.
 
-For a consequential unsettled interaction where independent candidates would help, use [arena](../../arena/SKILL.md) for candidate generation and synthesis. Keep its bounded question and comparable fixtures intact. Delegate variant files with nonoverlapping ownership; reserve shared wiring for one owner. Human preference remains a human decision even when agents agree.
+If independent candidates could change the choice, use [Arena](../../arena/SKILL.md) to generate and combine them, with the same question and fixtures. Give each worker its own variant files, and keep the shared wiring with one owner.
 
-Make the alternatives easy to inspect together. A local route with a stable `?variant=` key or an equivalent selector can preserve the current choice across reloads and give each variant a reproducible address. Label each alternative by its structure and keep the prototype controls visually separate from the proposed interface. Avoid obscuring the content being compared. If keyboard switching is useful, preserve input editing and normal focus behavior.
+Switch variants with a stable `?variant=` key, or the framework's equivalent, so each one has a reloadable address. Label each by its structure, for example `B (sidebar nav)`. Keep the switcher visibly separate from the design, and don't let it cover what's being compared. If arrow keys switch variants, don't intercept them while an input has focus. Switching restores the same fixture state, so no variant looks more complete than another.
 
-Keep scenario reset available. Switching variants should restore equivalent fixture state or explicitly preserve comparable state, rather than inadvertently making one variant appear more complete. Wire the interactions needed to answer the question; clearly label unimplemented behavior and intentional omissions. Cosmetic click handlers must not masquerade as working flows.
+Wire the interactions the question needs. Label anything you didn't wire; a button that does nothing must not pass for a working flow.
 
-## Inspect and hand back
+## 3. Exercise it
 
-Drive the same representative journey through each variant, including consequential failure or empty states and relevant viewports. Inspect navigation, action discoverability, information visibility and the result of the interaction. Check the selector and reset themselves before comparing. Capture useful views alongside interaction observations and record intentional coverage omissions.
+Check the switcher and reset first. Then drive the same journey through every variant, including empty and failure states and the relevant viewports. Keep screenshots with notes on what you did, and note what you didn't cover.
 
-Distinguish observed operation, an agent's design assessment and actual participant feedback. Do not claim usability acceptance from screenshots, a self-authored score or model consensus. When authorized feedback selects a base and combines elements, recheck the resulting composition; the original variants' observations do not automatically validate it.
+If a human picks a base and borrows from others ("the header from B with the sidebar from C"), build the combination and check it again; the original variants' results don't carry over.
 
-Return the variant addresses or artifact paths, launch/reset instructions, comparison evidence, rationale, actual feedback and unresolved decisions under the [skill's handoff contract](../SKILL.md#observe-and-return). Keep the artifact out of production delivery; even a preferred variant requires the normal implementation and verification workflow.
+Then follow [Observe and return](../SKILL.md#observe-and-return).

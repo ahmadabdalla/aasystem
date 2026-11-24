@@ -1,24 +1,33 @@
 # Feature
 
-Own the design and acceptance criteria. Use the shared [verification contract](../references/verification-contract.md) for retained production changes.
+You own the acceptance criteria; specialists give you the design.
 
-Before entering the phases below, check [owner-presentation eligibility](../references/execution.md#owner-presentation-eligibility). For an eligible request, record the basis, make the prescribed edit directly, inspect the actual diff and available rendered surface, then report the result as owner-checked with evidence and limits. Reuse settled grounding and project evidence; do not create architecture, delegation or six-phase completion work for this path. If eligibility fails before or after editing, follow the shared escalation rule and use the applicable phases below.
+If the change is a presentation edit that [qualifies](../references/verification-contract.md#owner-presentation-eligibility), do it as that section says and skip these steps. If it stops qualifying, before or after the edit, come back to them.
 
-For other work, execute or assign bounded implementation under the shared delegation rule, inspect it, and prove the integrated feature.
+1. **Ground the change.**
+   - If behaviour, business rules or acceptance scenarios that matter are missing or unsettled, or this is a new app, use [Product](../../product/SKILL.md).
+   - If you'll touch existing systems, read them with [How](../../how/SKILL.md) first.
+   - If the approach is unsettled, use [Solution](../../solution/SKILL.md).
 
-1. **Ground the change.** Reuse the agreed product contract and solution record. Use [product](../../product/SKILL.md) for missing or unsettled material behavior, business rules or acceptance scenarios. For new apps, select a first usable journey, retaining shared constraints and proposed behavior's planned status. Use [how](../../how/SKILL.md) over existing affected systems and [solution](../../solution/SKILL.md) for unsettled approaches before implementation. When proof depends on state, use [Seed scenarios](../../architect/references/seed-scenarios.md) for starting context and needed changes. Carry the contract and unresolved decisions into design.
-2. **Design and establish proof.** Follow the [execution contract](../references/execution.md). Reuse settled interaction and implementation design. For missing or unsettled inputs:
-   - For requested prototype-first refinement or materially unsettled presentation, use [UI refinement](../../ui-refinement/SKILL.md) bounded design/review scope; resume here with its inputs and completed grounding.
-   - Otherwise, use [Interaction Design](../../interaction-design/SKILL.md) for affected interactions, reusing an adequate existing model.
-   - Carry interaction decisions, unresolved choices and mock omissions into [architect](../../architect/SKILL.md) for caller usage, data shape, boundaries, alternatives and a verification plan.
+   Done when the behaviour, rules and acceptance scenarios are settled or listed as open.
 
-   Return changed business meaning to Product and changed interaction choices to their owner. Feature retains execution; neither design assignment starts another implementation.
-3. **Choose the work structure.** For nontrivial work, record blocking prerequisites, independent workstreams, shared mutable state, and the smallest safe decomposition. Complete blockers first. Use [swarm](../../swarm/SKILL.md) for genuinely independent slices. Keep a coupled change with one owner.
+2. **Design.** If design is missing or unsettled:
+   - If the user asked to refine a prototype first, or how it looks is still open, use [UI Refinement](../../ui-refinement/SKILL.md) for design and review only. Come back here with what it settled.
+   - If not, use [Interaction Design](../../interaction-design/SKILL.md) for the interactions that change.
+   - If the change meets the [Architect design trigger](../../architect/SKILL.md#design-trigger), give Architect the interaction decisions, open choices and anything the design leaves out.
+   - If design alternatives would change the result, compare them with [Arena](../../arena/SKILL.md).
+   - If the design is contested, run [Interrogate](../../interrogate/SKILL.md) and act on the findings that hold up.
 
-   When an unresolved integration assumption could invalidate the design, implement the smallest retained slice under step 4 that tests it before expanding dependent work. In the existing verification plan, name the assumption, entry point, input, expected output and side effects. Run that slice through the actual components whose integration is in question; replacing one with a stub leaves that connection unverified. Record the command or action, tested revision and observed results. A failed or inconclusive result blocks work that depends on the assumption; return design contradictions to Architect. Preserve the slice's required invariants and failure behavior.
+   Send changed business meaning back to Product, and changed interaction choices back to their owner. Done when you have a settled design and a verification plan. If proof depends on state, the plan uses [Seed scenarios](../../architect/references/seed-scenarios.md) for the starting data and the changes the proof needs.
 
-4. **Implement against the chosen design.** Supply file ownership, named data structures, invariants, accepted decisions and success criteria, including any reviewed visual reference and explicit constraints. Select [arena](../../arena/SKILL.md) for remaining implementation alternatives under the shared comparison rule, retaining its independent judging when selected; do not repeat settled architecture competitions. Record prescribed shapes; execute or assign edits and development checks using [Implement](../../implement/SKILL.md) under [Delegation](../references/execution.md#delegation). Re-ground exposed design errors and update every affected consumer of shared primitives. Update affected feature recipes with the edits so step 5 exercises them.
-5. **Verify and review.** Apply the [independent verification procedure](../references/execution.md#independent-implementation-verification) to affected user paths and side effects on the final combined artifact. Compare rendered output with any reviewed reference through [interaction review checks](../../interaction-design/references/review-checks.md); behavioral passes do not prove visual fidelity. State failures and coverage gaps. Use [interrogate](../../interrogate/SKILL.md) before delivery for contested designs; the lead acts on supported findings, and edits return to the [working loop](../references/verification-contract.md#working-loop) for an independent recheck.
-6. **Deliver verifiable units.** Order changes so each meaningful unit has evidence. Follow the execution contract's delivery boundary, including [Opening a PR](opening-a-pr.md) when authorized.
+3. **Plan the work.** If the work has several parts, note the blockers, independent workstreams and shared state, then pick the smallest safe split, using [Swarm](../../swarm/SKILL.md) for independent slices.
 
-Report the behavior delivered, significant design choices and tradeoffs, work decomposition where material, verification, and unresolved decisions.
+4. **Build.**
+   - Build with [Implement](../../implement/SKILL.md).
+   - If an unresolved integration assumption could break the design, build the smallest kept slice that tests it first, before anything depends on it. Name the assumption, entry point, input, expected output and side effects in the verification plan, and run it through the real components, not stubs. If it fails or is inconclusive, stop the dependent work and take the contradiction to Architect.
+   - If the build exposes a design error, go back to design.
+   - If you change something shared, update everything that uses it.
+
+5. **Verify.** Get [independent verification](../references/verification-contract.md#independent-implementation-verification) of the final combined change, covering the affected user paths and side effects. If there's a reviewed visual reference, compare the rendered result using the [interaction review checks](../../interaction-design/references/review-checks.md).
+
+6. **Deliver.** If you split the work, report how.

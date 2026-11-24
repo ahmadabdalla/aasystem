@@ -1,11 +1,15 @@
 ---
 name: principle-ui-meaning-through-structure
-description: Prefer structural UI meaning when designing or simplifying an interface whose prose repeats what its layout and controls already convey.
+description: Let layout, grouping and labelled controls carry meaning instead of prose. Use when designing or simplifying layout, controls or explanatory copy.
 disable-model-invocation: true
 ---
 
 # Convey UI meaning through structure
 
-Prefer layout, grouping and labelled controls to prose that repeats what the interface already conveys. Let placement and relationships make the available actions and their purpose clear, reducing the reading needed to use the interface.
+If prose repeats what the layout, grouping or a control's label already shows, prefer the structure and cut the prose.
 
-Keep text that prevents errors, explains restrictions or supports a decision. Retain labels and useful help where the visual structure alone leaves meaning unclear. This preference does not call for icon-only controls or removing information users need to act confidently.
+Keep text that prevents an error, explains a restriction or supports a decision. If structure alone leaves meaning unclear, keep the label or help text.
+
+Why: users should need to read less to use the interface.
+
+Where it stops: this doesn't call for icon-only controls, or removing information users need to act.

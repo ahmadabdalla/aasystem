@@ -6,13 +6,15 @@ disable-model-invocation: true
 
 # Probe
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Resolve a consequential unknown with evidence proportionate to the claim.
+A probe answers **one question** that blocks a decision. A "no" is a useful answer.
 
-1. State one falsifiable question, the decision it affects, and the assumptions in the method. Establish what observation would support or refute the claim before running it. If the question is a preference, identify the human decision rather than disguising it as an experiment.
-2. Choose the cheapest credible source or experiment. For a capability claim, inspect current primary documentation and its conditions. For actual runtime, permission, throughput, or persistence behavior, use a representative environment. A simulation or mock establishes only what its model represents. In an advisory research task, report the evidence and limitations without expanding into implementation.
-3. Run within the existing authorization and cost bounds. Isolate throwaway work when needed. Record inputs, versions, environment, method, and observed results. For comparisons, use comparable conditions and enough repetitions to distinguish noise when variability matters. Check that the observation measured the claimed thing.
-4. Return supported, refuted, or inconclusive, with evidence, confidence and limits, and the implication for the decision. Keep documented capability, observed behavior, and inference distinct. Stop when further work would not change the choice; otherwise name the next discriminating observation.
+1. **Write the question.** One line that could prove false, and the decision it changes, such as "Does the webhook retry after a 500? If yes, we drop our retry queue." Write what you'd see if yes and if no. If part of the question is a preference, name that decision and who owns it, and probe only the facts.
+2. **Pick the cheapest source that can answer it.**
+   - **What a tool says it supports:** read its current official docs and their conditions.
+   - **What it actually does** (runtime, permissions, speed, persistence): run it somewhere like the real environment. A mock or an existing test shows only the path it runs, so check that it runs the real one.
+3. **Run it.** If the run would touch production, shared data or a paid service, ask first. Keep throwaway work in a scratch directory or worktree. Record inputs, versions, environment, method and what you saw. If you compare options, run each under the same conditions. If results vary, repeat and report the spread. Check that you measured what the question asks.
+4. **Return the answer.** Say **supported**, **refuted** or **inconclusive**, with evidence, confidence, limits and what it means for the decision. Label each claim as documented, observed or inferred. Stop when more work wouldn't change the decision. If the answer is inconclusive, name the next observation that would settle it.
 
-A probe's success is a useful answer, including a negative one. Do not promote a scratch prototype into the implementation or claim that one successful observation proves all operating conditions.
+One run proves only the conditions it ran under. Leave scratch code in scratch; whoever asked decides what to build.

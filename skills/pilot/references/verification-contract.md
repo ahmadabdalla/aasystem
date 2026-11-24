@@ -1,51 +1,45 @@
 # Verification contract
 
-For retained implementation, connect the request and agreed expectations to the actual artifact, observed checks, findings and delivery status. Reuse the project's task, PR or evidence format. Research and design retain their own sources and rationale.
+How to prove code you keep.
 
-The [execution contract](execution.md) owns authority, delegation, human checkpoints and verification exceptions. [Engineering Verification](engineering-verification.md) owns independent assessment. These instructions and local checks do not authenticate agents or humans, intercept tool use or establish host-enforced acceptance.
+## Verification through the project
+
+Before changing behaviour, find how the project verifies it: its verifier and the recipes for the feature you're touching. No usable way to verify? Use [Bootstrap Verification](../../bootstrap-verification/SKILL.md). Recipes out of date, or a verifier reports them missing or stale? Fix them with [Maintain Verification](../../maintain-verification/SKILL.md), then rerun the affected check.
+
+Take expected results from the request or contract, not from the code. Test through the real entry point (UI, API, CLI or library call) and check what it actually did: stored data, outgoing calls and output. If a result surprises you, first check you're testing the right instance, that it's ready and that fixtures were reset. Never change an expected result to make a check pass.
+
+For a bug fix, keep the failing run from before the fix. For a refactor, keep the baseline run. Update the recipes the change affects.
+
+## Owner-presentation eligibility
+
+The owner can make and check a small, exactly specified wording, styling or layout change alone. It qualifies only when meaning, behaviour, data, contracts, permissions, dependencies and deployment all stay the same and nothing is left to decide. Billing or consent wording doesn't qualify just because it's short. If a test's expected value has to change, it's behaviour, not presentation. It never overrides independent review the user or project asks for.
+
+Say why it qualifies, check the final diff and any preview, and report it as **owner-checked**. If wider effects turn up, get independent verification or report the gap.
+
+## Independent implementation verification
+
+Every other change you keep needs a **fresh verifier**: an agent that edited none of it, checking the combined diff and running the affected checks. Read [Engineering Verification](engineering-verification.md) before briefing it. Your own development checks don't count. [Interrogate](../../interrogate/SKILL.md) gives adversarial review, not proof that the code works.
 
 ## Working loop
 
-1. Establish expected results and the project checks before editing. In the existing brief, map required outcomes to checks and set a total acceptance-verification time limit, including diagnosis, repairs and rechecks. The owner chooses it within user limits; carry remaining allowance across handoffs and retries.
-2. Implement and run development checks within settled scope.
-3. Pause source editing and give a fresh noneditor verifier the combined artifact, requirements and runnable checks.
-4. Preserve findings; distinguish product, harness, environment and unsettled-expectation failures, keeping unknown causes explicit. For each correction, name the failure, changed inputs and checks needed; retain earlier proof only with an explicit unaffected-input/outcome rationale. Include dependent integration checks when shared production inputs change. Any source edit after an independent pass, including fixes from Interrogate or PR review and removed experimental edits, returns to step 3 for an independent recheck of the changed inputs. A targeted confirmation may reuse the original verifier under [Engineering Verification](engineering-verification.md#correct-and-deliver).
-5. The owner inspects the work and evidence, resolves required decisions and owned resources, and presents it at the requested delivery boundary. Agent completion does not replace human review or authorise a commit.
+1. Before editing, map each required outcome to a check in the brief. Set one time limit for acceptance verification, covering diagnosis, repairs and rechecks, within the user's limits. Carry what's left across handoffs and retries.
+2. Implement and run development checks.
+3. Pause source edits and brief a fresh verifier as [Engineering Verification](engineering-verification.md#assign) describes.
+4. Label each failure: product (fix the code), harness or environment (bounded repair; blocked observations stay unverified), unsettled expectation (ask the human) or unknown (diagnose before fixing). For each fix, name the failure, the inputs it changes and the checks it needs. Reuse earlier proof only if you can say why the fix doesn't affect it; if the fix touches shared code, config or schema, rerun the integration checks that depend on it. Any source edit after an independent pass goes back to step 3, including Interrogate or PR-review fixes and removed experiments.
+5. Deliver as the execution contract's [finish check](execution.md#finish) describes.
 
-If a failure recurs after correction, pause reruns and reassess shared causes and related test assumptions. Retry only with new evidence or a materially different hypothesis and a check that distinguishes it. Once required outcomes have current passing proof and material findings are resolved, finish without unrelated checks. Otherwise, at the total limit stop verification and repairs; report incomplete scope, retained failures, consumed allowance and the prerequisite for resuming. Do not extend or reset the limit without human agreement. Update the brief with changes and evidence links rather than repeating settled context.
+If a failure comes back after a fix, stop rerunning and look for a shared cause or a wrong test assumption. Retry only with new evidence or a materially different hypothesis, and a check that tells them apart. If you hit the time limit, stop and report what's incomplete, the failures, the time used and what's needed to resume. Extend or reset the limit only if the human agrees.
 
 ## Local execution
 
-Use the current checkout for sequential work. Use one task worktree when concurrent edits or separation require it; reuse it through correction rounds. Git worktrees share repository storage but have separate checked-out files. A new worktree does not include another checkout's uncommitted or ignored files; provide required inputs deliberately. Neither a worktree nor a copied directory is a process sandbox.
-
-Implementer and verifier take turns in a shared working directory. Identify and stop other source writers before verification; unknown activity leaves the result inconclusive. Separate directories do not isolate shared databases, ports or external services: allocate owned fixtures or run those checks serially.
-
-Additional execution copies require a concrete check that cannot use the working directory. Before creating them, identify complete required inputs, storage cost and cleanup ownership. Do not default to full archives, changed-files-only proof or copying dependencies just because they exist. Reuse project-native isolation facilities where available.
-
-Keep test data and disposable output separate from source and retained evidence. Stop only owned processes. Delete only resources whose ownership and boundary are established; uncertainty means leave them and report it. Never use recursive checkout deletion or forced worktree removal as routine cleanup. A worktree containing pending review changes remains a deliverable.
+The implementer and verifier take turns in one directory. Before verifying, stop every other source writer. If you can't tell whether something else is writing, the result is inconclusive. If you use a worktree or a copy, share databases, ports or services, or clean up after a run, read [local execution](local-execution.md) first.
 
 ## Tested identity
 
-Record which inputs were checked, including relevant uncommitted/new files, verifier/configuration and required ignored or external inputs. A branch name or HEAD commit alone is insufficient for dirty work. The owner and verifier remain responsible for complete semantic input selection and the actual runtime instance.
-
-Use a project identity check when adequate. Otherwise the read-only [input identity helper](../scripts/input_identity.py) needs Python 3.10+ and Git:
-
-```sh
-python3 /installed/skills/pilot/scripts/input_identity.py --root /project --required /project/local-config.json > /outside/project/before.json
-# Run verification with source editing paused.
-python3 /installed/skills/pilot/scripts/input_identity.py --root /project --required /project/local-config.json --check /outside/project/before.json
-```
-
-It streams hashes of Git-tracked working-tree files and nonignored new files, plus explicitly required files; it creates no source copies. Keep its output outside selected inputs. Required directories, symlinks, submodules and special files need a project-specific identity procedure; the helper refuses them rather than silently omitting their contents.
-
-Check identity before and after verification and again at delivery. Relevant changes invalidate affected results; reverify instead of selecting an older pass. Fingerprints detect endpoint differences, not transient writes or malicious interference. Tests that intentionally generate source need an explicit preparation/reset procedure before the checked interval.
-
-A fingerprint identifies content but cannot reconstruct it. Preserve a Git reference and necessary patch/fixtures only when replay is required; do not archive the repository merely to keep an identity.
+Record the inputs you checked: uncommitted and new files, the verifier and its configuration, and any ignored or external inputs it needs. For uncommitted work, a branch or HEAD commit isn't enough. Check identity before and after verification, and again at delivery. If relevant inputs changed, reverify; don't fall back to an older pass. `A matching hash shows only that the inputs you picked didn't change, not that the running instance uses them; check that too. If the project has no identity check, use the read-only [input identity helper](../scripts/input_identity.py); `--help` gives usage. Keep its output outside the checked inputs. If tests generate source, reset it before the first fingerprint.`
 
 ## Result and retention
 
-Keep the request/authority, expected outcomes, tested identity and environment, actual verifier, commands/observations, pass/fail/unverified results, material findings/dispositions and limitations in the existing result record. Link original evidence rather than duplicating it. No fixed report headings or metadata envelope are required.
+Keep these in the project's existing result record (task, PR or evidence file): the request and its authority, expected outcomes, tested identity and environment, who verified, commands and results (pass, fail, unverified), material findings and what you did about each, and limits.
 
-Required missing or failing checks leave the work incomplete. An owner disposition cannot turn a failed observation into a pass; expose any accepted limitation with its actual authority. Scope review and runtime observations are distinct: review completion is not proof that every behaviour works.
-
-Retain original findings and useful evidence through human review or investigation. Follow the [project evidence lifecycle](../../bootstrap-verification/references/project-contract.md#evidence-and-retention) for disposal and durable references. Keep only artifacts with a stated future purpose beyond that boundary.
+A missing, failing or inconclusive required check leaves the work incomplete. An owner's decision can't turn a failure into a pass. Show any accepted limitation and who accepted it. Keep findings and evidence through human review or investigation.

@@ -6,26 +6,23 @@ disable-model-invocation: true
 
 # Why
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Anchor the question in an artifact, investigate its history, and calibrate conclusions to the evidence.
+1. **Name the target.** Say in one line which file, symbol, value or decision you're explaining, such as "Why is the retry limit 3? `src/queue.ts:42`." If you don't know how it works today, trace it with [how](../how/SKILL.md) first. If the user offers a reason, treat it as a guess to check.
+2. **Find the origin.** Run `git log --follow` (or `git log -L` for a line) to find the commit that introduced the target, across renames. A recent edit that touches the line is rarely the reason. Done when you have the introducing commit, or you've said where the trail ends.
+3. **Read the records.** Read the project's ADRs for this area, and the reviews, issues and incidents the history points to. An accepted record from the time can state the reason. A proposal or a later write-up is weaker. If a record was superseded, read what replaced it. For a defensive check or an odd number, look for the incident behind it.
+4. **Account for every source.** Go through source control, the issue tracker, design docs, team discussions, infrastructure, error records and product data. Mark each one: found something, searched and found nothing, can't access, or can't answer this question (say why). Before marking a source as can't access, try the tools you have. A source you can't access is a gap, not proof there was no reason.
+5. **Check the constraints.** For each constraint the records give, check whether it still holds today, and cite what shows it. If the recorded reason no longer matches the code, say so.
+6. **Label each claim.** Cite each claim and check the source says what you claim.
+   - **Direct:** a record from the time states the reason.
+   - **Supported:** several independent clues agree.
+   - **Inferred:** a plausible reading, with your reasoning.
+   - **Speculative:** weak evidence, or rivals just as likely.
+   - **Unknown:** the sources you searched can't answer it.
 
-Anchor the question in a concrete artifact, symbols or decisions, and the relevant change history. Use [how](../how/SKILL.md) if the current behavior is unclear. Treat a hypothesis in the user's question as a candidate to investigate.
+   Today's code shows what it does, not why.
+7. **Answer.** Give a short timeline, every claim with its bold label and citation, any conflicting records or rival explanations, which constraints still hold, and the source list from step 4.
 
-Read relevant project ADRs and their successors early. An accepted contemporary record can directly establish rationale; a proposal or later reconstruction has different authority. Check whether the recorded constraints still hold and preserve disagreements with current behavior.
+If the sources are too many for one context, split them under the [delegation rule](../pilot/references/delegation.md). Give each worker the same target, question and labels. Check their citations yourself.
 
-Follow history through renames, substantive commits, reviews, and linked records as available. Discover authorized sources through the actual tools and repository, then account for all seven evidence categories: source control, issue trackers, design documents, team discussions, infrastructure observations, error records, and product data. For each, record searched with findings, searched with no findings, unavailable, or omitted with a concrete reason it cannot inform this question. A promising recent commit alone does not justify skipping other relevant evidence. Keep searches scoped to the target; unavailable history does not prove no rationale exists.
-
-Investigate the relevant sources directly, or partition them when separate coverage or context separation provides a concrete benefit under the shared delegation rule. Give investigators the same code anchor, question and confidence framework below. Reconcile findings and spot-check citations in the current context unless separate synthesis provides a concrete benefit or a required independent assessment. Preserve the seven-category source accounting above; coverage does not require one worker per category. Defensive logic warrants particular attention to incidents, error records and runtime constraints. Use actual configured models and tool access; connector access does not authorize external writes.
-
-Separate claims by the strength of their evidence:
-
-- **Direct:** a contemporary record explicitly gives the reason.
-- **Supported:** multiple independent pieces of indirect evidence converge.
-- **Inferred:** a plausible interpretation with its reasoning stated.
-- **Speculative:** a hypothesis with weak evidence or equally plausible rivals.
-- **Unknown:** the searched record cannot answer the question.
-
-Build a short chronology. Surface contradictory records and competing explanations. Cite each material factual or causal claim; check that the source actually supports it. Reading present code establishes mechanics, not the author's intent. Recent edits do not automatically explain the original choice.
-
-Explain which historical constraints still apply. If this investigation precedes a change, translate the findings into what to preserve, change, avoid, and treat as risk, each with its evidence or uncertainty. This supplies constraints to [solution](../solution/SKILL.md) or [architect](../architect/SKILL.md).
+If a change follows, list what to preserve, change, avoid and treat as risk, each with its evidence or uncertainty. Hand that to [solution](../solution/SKILL.md) or [architect](../architect/SKILL.md).

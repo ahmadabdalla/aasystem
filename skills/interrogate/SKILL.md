@@ -1,37 +1,30 @@
 ---
 name: interrogate
-description: Challenge a system, proposal, design, implementation, or recommendation with adversarial review and evidence. Use for operational and security detection gaps, PR merge-risk assessments, consequential failure modes, unsupported assumptions, and errors in the framing.
+description: Challenge a proposal, design, change or recommendation. Use to find weak assumptions, failure modes and framing errors, to assess a PR's merge risk, or to find operational and security detection gaps.
 disable-model-invocation: true
 ---
 
 # Interrogate
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Establish scope and intent, gather adversarial findings, synthesize them, and apply lead judgment. Challenge both the proposal and its framing.
+Find what's wrong with the work, and with the question it answers.
 
-## Prepare and challenge
+## Steps
 
-Identify the actual artifact or diff, surrounding system, intended outcome, constraints, and review criteria. Select the assignment mode and prepare inputs under the [shared review-context rule](../pilot/references/execution.md#review-context). Reuse the caller's brief after applying the selected review mode's inclusion and exclusion rules; surface only consequential gaps or changed assumptions. Resolve missing intent that would materially change the review before proceeding; ask one question and wait when necessary.
+1. **Brief.** Reuse the caller's brief, or write one as [Reviews](../pilot/references/delegation.md#reviews) says.
+2. **Review.** Start three reviewers in parallel on the same brief. Only if your host has no subagent tool, review it yourself and say it wasn't independent. Each reviewer checks:
+   - correctness, boundaries, data ownership, failure paths, verification coverage and cost
+   - **the frame:** a premise every option shares that nobody tested, a missing alternative, a means mistaken for the user's goal, a constraint that conflicts with the goal
+   - if the question is detection gaps, each scenario in [Signal assessment](references/signal-assessment.md)
+   - if reader burden or change cost could change the verdict, the [Maintainability](../maintainability/SKILL.md) criteria
+3. **Check.** Merge duplicates. Keep disagreements and findings only one reviewer raised. Check each finding that could change the verdict in the code or source, or with [Probe](../probe/SKILL.md).
+4. **Report.** Lead with the verdict, then one line on whether the review was independent and what the reviewers were given. Mark each finding **act on**, **consider**, **noted** or **dismissed**:
 
-For operational or security detection assessments of a system, design, or change, use [Signal assessment](references/signal-assessment.md). Standalone assessments need no PR or merge-risk score.
+   ```text
+   <location> [demonstrated | risk | preference]: <condition> → <consequence>. Evidence: <what you saw>. Fix: <smallest change or experiment>.
+   ```
 
-For a PR or diff assessment of merge readiness, read [Merge risk](references/merge-risk.md). Also use it within a broader change review when recovery constraints or production-failure detection could change the verdict. Keep other proposal and design reviews on the general procedure below.
+   Defects outside the question go under **noted**, one line each. For each thing you couldn't verify, say what would settle it.
 
-When selected, apply Merge risk's category verdicts, output format, and internal weighted calculation as written. Include that assessment within the project's existing review format. Its risk label does not replace the [verification contract's required checks](../pilot/references/verification-contract.md#result-and-retention) or grant merge authority; keep findings and unresolved proof visible even when the calculated risk is low or medium.
-
-When delegation is available and permitted, run isolated reviewers with the same evidence, artifact, and rubric without each other's findings. Use multiple actual model families when available; different personas do not supply that diversity. Disclose the reviewer setup, unavailable seats, and limitations. Without isolated reviewers, perform a single-agent adversarial review; repeated passes or role labels do not create independence. A required independent gate remains incomplete when only self-review was possible.
-
-Review relevant correctness, boundaries, data ownership, failure paths, verification coverage, and cost. Also inspect frame errors: an untested premise shared by all options, a missing alternative, or a proposed means mistaken for the user's outcome. Respect explicit constraints and identify conflicts instead of silently redefining the goal.
-
-For code or implementation-design assignments where reader burden or change cost matters, give the relevant existing reviewer a bounded [maintainability](../maintainability/SKILL.md) assignment and accessible criterion references. Keep it within the same review setup and selected context mode; do not create a second reviewer pool or supply prior assessments to independent discovery. Follow the [invocation restrictions](../pilot/references/execution.md#invocation-restrictions). The supporting assessment returns findings; Interrogate retains adversarial synthesis and the verdict.
-
-Require a concrete location, condition or execution path, consequence, supporting evidence, and what would resolve uncertainty for each finding. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty review is valid.
-
-## Apply lead judgment
-
-State the assignment mode and isolation limits in the verdict. Keep initial discovery findings distinguishable from subsequent checks of supplied claims.
-
-Read and deduplicate all findings, retaining disagreements and consequential findings raised by only one reviewer. Check material claims in the actual artifact, call path, source, or [probe](../probe/SKILL.md). Reviewer agreement is a signal to inspect, not proof.
-
-Classify findings as **act on**, **consider**, **noted**, or **dismissed**, with the evidence and reason. Separate inability to verify from a verified defect. Report unresolved risks and the smallest corrective action or experiment. Return the verdict to the calling workflow for incorporation into its decision or design package; present it to the user when invoked directly. Review alone produces a verdict. The calling owner decides and applies fixes within the task's authorization, then returns them to its [verification working loop](../pilot/references/verification-contract.md#working-loop). Apply fixes within this skill only when its explicit assignment includes remediation; keep the review findings and subsequent changes distinguishable.
+   If it's a PR or diff, report in [Merge risk](references/merge-risk.md)'s format exactly as written, with every finding under its category and no other findings section. If you used Signal assessment, its blocks are the report. Don't rate proposals or designs with Merge risk.

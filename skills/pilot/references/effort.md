@@ -1,27 +1,19 @@
 # Effort
 
-Briefly inspect the ask, affected behavior, existing evidence and checks before sizing it. Reuse sufficient discovery.
+Size the work S, M or L before you plan it. The size sets how much planning and coordination the work gets. It never skips a required procedure, check or human decision.
 
-Resolve observable unknowns through investigation. Ask one focused question for a consequential human choice; use [Grill Me](../../grill-me/SKILL.md) for a discovery interview or several interdependent choices needing the user's judgment. Follow the execution contract's [decision authority](execution.md#decision-authority).
+Look at the ask, the code it touches and the checks that already exist, just long enough to pick a size. Size by uncertainty and coupling, not file count. If missing evidence could change the size, call it provisional and resize when you know more. An unclear scope isn't automatically L.
 
-## Size the work
-
-| Size | Fits when | Execution conditions |
+| Size | When | Then |
 | --- | --- | --- |
-| S | One localized outcome with understood requirements, mechanism and proof. | Work directly where practical; reuse design and checks; keep planning brief. |
-| M | One bounded outcome spans components or needs dependency and design decisions. | Establish contracts and proof; sequence dependencies; test consequential integration assumptions early. |
-| L | Coupled outcomes or unresolved choices require staged discovery, design or delivery. | Define stages, shared contracts and verifiable increments; maintain one integrated plan. |
+| S | One local change. You know what to build, how, and how to prove it. | Work directly, with no stages. Reuse the existing design and checks. Keep the plan to a few lines. |
+| M | One outcome that crosses components, or needs design or dependency decisions. | Settle the interfaces and the proof before you build. Order the dependencies. Test risky integration assumptions early. |
+| L | Several coupled outcomes, or open choices that need discovery before design or delivery. | Split into stages, each with an owner, a stop point and a result you can verify. Keep one plan across them. |
 
-Size reflects uncertainty and coupling, not file count alone. Use a provisional size when missing evidence could change it; an undefined scope does not automatically mean L or require an interview.
+## Consequence
 
-## Account for consequence
+Consequence is separate from size. If the work could cause unauthorised access, a privacy leak, a financial error, data loss or an outage, name the invariant that must hold and the check that proves it. A small permission fix is still S and still needs strong security checks. If protecting the invariant turns up more work, resize.
 
-Separately identify consequences such as unauthorized access, privacy exposure, financial error, data loss or service disruption. Name the affected invariants and required scrutiny and proof, using relevant project or specialist criteria.
+## Record it
 
-An S permission fix can require strong security checks. Increase size when addressing the consequence exposes broader work. Size scales planning and coordination; it never waives required procedures, verification or human decisions.
-
-## Carry the approach forward
-
-State the size, reason, scope and execution conditions in the existing brief or scope replay. Include consequence-driven checks and resource needs; create no separate sizing report or routine approval step. Follow [ownership and handoffs](execution.md#ownership-and-handoffs) for inheritance and reassessment.
-
-Follow the existing [local execution rules](verification-contract.md#local-execution) for workspace and resource decisions.
+Write the size, a one-line reason and any consequence checks into the brief. Don't write a separate sizing report.

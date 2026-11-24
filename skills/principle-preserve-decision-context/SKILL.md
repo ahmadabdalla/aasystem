@@ -1,11 +1,17 @@
 ---
 name: principle-preserve-decision-context
-description: Preserve the information needed for decisions when simplifying a workflow or changing a handoff between skills, agents, or teams. Use when removing repetition or replacing supplied context with references.
+description: Keep what the next stage needs to decide. Use when simplifying a workflow or handoff, removing repetition or replacing context with a link.
 disable-model-invocation: true
 ---
 
 # Preserve decision context at handoffs
 
-When simplifying a workflow that crosses skills, people, or agent contexts, judge the change by whether the receiving stage can still make the intended decision. Trace the path before deleting repeated guidance. Keep the constraints, evidence limits, and acceptance criteria that the next stage needs. A reference is sufficient only if that stage can retrieve and use it.
+If you simplify a workflow that crosses skills, agents or people, check the receiving stage can still make its decision. Before deleting repeated guidance, trace where that stage gets it. Keep the constraints, evidence limits and acceptance criteria it needs.
 
-The tradeoff is local brevity versus reliable decisions across the whole workflow. Within a shared context where the information is already available, remove redundant restatement. This does not justify copying an entire transcript into every task.
+If you replace content with a link, check the receiver can open and use it. Otherwise keep the content.
+
+If the receiver already has the information in its context, cut the repeat.
+
+Why: reliable decisions across the whole workflow matter more than brevity in one place.
+
+Where it stops: give the receiver what its decision needs, not the whole transcript.

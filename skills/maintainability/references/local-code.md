@@ -1,13 +1,15 @@
 # Local code
 
-Evaluate the effort needed to follow the actual code and make the intended change. Tie each concern to a reader task, change, or observable consequence.
+Use when writing or reviewing code. Tie every finding to a reader task, a likely change or a consequence someone can observe. Length, nesting, comment count or exception use alone is not a finding.
 
-- **Intent:** Do names and data shapes reveal domain meaning, units, and effects, or must a reader reconstruct them from usage? Prefer existing project terminology; a new abstraction name needs a meaning beyond its mechanics.
-- **Responsibilities and flow:** Can a reader follow the main operation, decisions, and failure paths without tracking unrelated work? Extraction helps when it names a meaningful operation or isolates a responsibility; moving a few lines behind another name can add a hop without removing mental work.
-- **Failure meaning:** Can callers distinguish expected absence, invalid input, dependency failure, and a broken invariant where the contract requires it? Check that handling preserves useful context, exposes partial effects, and does not turn a failure into apparent success. Follow the language and project error conventions; exceptions, result values, and optional values each need a concrete contract.
-- **Effects and state:** Are writes, dependency calls, and order-sensitive behavior visible where they matter? Trace mutation and lifetime across helpers; use the [boundary criteria](boundaries.md) when ownership or invariant enforcement is at issue.
-- **Duplication:** Does repeated code represent one rule that must change together, or independent cases that happen to look alike? Compare synchronization cost with the coupling and branching introduced by sharing it.
-- **Explanations:** Do comments and adjacent documentation preserve rationale, contracts, or constraints a reader cannot recover from the code? Flag a misleading or stale explanation with its consequence; deleting a comment or extracting a helper is useful only when the needed meaning survives.
-- **Verification clarity:** Can a test name and its inputs explain the behavior, with an expectation derived from the contract? Check whether assertions observe useful results or mirror private steps, and whether a failure helps locate the broken rule. Can each relevant check run from its declared setup without unintended dependence on another test? Are time, randomness, and shared state controlled where they affect the result? A needed test fails when its behavior regresses, and only then. It does not exercise only framework or type guarantees, assert a mock it configured, repeat another test through the same entry point, or assert an absence no current contract requires.
-
-Use the project's constraints to resolve competing concerns. Function length, nesting, comments, or exception use alone do not establish a defect. Prefer a recommendation whose reduction in reader effort or change risk can be explained concretely.
+- **Names:** Do names and data shapes say the domain meaning, units and effects? Use the project's terms. A new abstraction's name says what it means, not how it works.
+- **Flow:** Can a reader follow the main path, its decisions and its failure paths without tracking unrelated work? Extract a helper only when it names a real operation. A helper that just moves lines adds a hop.
+- **Failures:** Where the contract needs it, can callers tell expected absence, invalid input, dependency failure and a broken invariant apart? Handling keeps context, exposes partial effects and never turns a failure into success. Follow the project's error style.
+- **Effects:** Are writes, dependency calls and order-sensitive steps visible where they happen? If ownership or invariant enforcement is in question, use [boundaries](boundaries.md).
+- **Duplication:** Share code only when the copies are one rule that must change together. Code that looks alike but changes for different reasons stays separate.
+- **Comments:** Comments keep the reasons, contracts and constraints the code can't show. Flag a stale or misleading comment with what it would mislead a reader into doing.
+- **Verification clarity:** A needed test fails when its behaviour regresses, and only then. It doesn't exercise only framework or type guarantees, assert a mock it configured, repeat another test through the same entry point, or assert an absence no current contract requires. A needed test can still need a rewrite. Check:
+  - The name and inputs say which behaviour it guards.
+  - The expected value comes from the contract, not recomputed the way the code computes it.
+  - Assertions check results callers see, not private steps.
+  - It runs alone from its own setup, with time, randomness and shared state controlled.

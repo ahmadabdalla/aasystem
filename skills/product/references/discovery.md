@@ -1,35 +1,9 @@
 # Product discovery
 
-Product owns discovery and its synthesis. Follow Product's baseline and the [execution contract](../../pilot/references/execution.md) for ownership, handoffs and retention. Use bounded supporting assignments where they help: [grill-me](../../grill-me/SKILL.md) conducts interviews; [how](../../how/SKILL.md) can investigate existing behavior. Return their evidence to Product and reuse the settled brief.
+1. **Ground.** Read the existing product records, specs, glossary, decisions and journeys. Agreed behaviour is the baseline: keep proposals apart from it, and report code that breaks it as a defect, not behaviour to keep.
+2. **Interview** with [Grill Me](../../grill-me/SKILL.md): give it the scope, what you already know and where to stop. Use [How](../../how/SKILL.md) for how the current product works. Cover the areas the task needs, such as who uses it and what each may decide, who can access what, how work is organised, handoffs between people, manual work and the first release.
+3. **Record** in the project's product folder, or the one the user picks, using the [interview record](../../grill-me/references/discovery-interview.md).
+4. **Map each journey:** actor and what they may decide, trigger, outcome, prerequisites, steps, handoffs, how it ends, and what happens when it fails or stops halfway. Mark each part observed, intended, proposed or open, and link its sources. If the product is being replaced, say what each journey would lose and how people would do that work. Use [Domain Modeling](../../domain-modeling/SKILL.md) for terms.
+5. **Requirements** only if the caller asked for them: follow [Product's steps](../SKILL.md#steps) and link each to the answer or decision behind it. Keep them in the one spec (the [OpenSpec convention](../../pilot/references/openspec.md) if the project uses it); discovery notes link to it.
 
-## Scope and starting knowledge
-
-Establish the exploration boundary, intended outcome and requested checkpoint. Inspect existing product records, glossary, decisions, journeys and contracts. Product/platform structure and behavior discovery need not include customer-value research. Preserve the standing of accepted behavior when rethinking a product; keep proposals distinct from that baseline.
-
-## Discover by area
-
-Explore the areas relevant to the task: product/platform responsibilities, tenants and capability access, organization and work structure, personas and authority, capability behavior, cross-person journeys, and MVP boundaries. These are prompts, not a fixed sequence. Explore journeys alongside each area's concrete activities, including manual work and cross-person handoffs.
-
-Assign discovery interviews to [grill-me](../../grill-me/SKILL.md) with the scope, starting knowledge, selected records and checkpoint. Its findings return to Product; the assignment remains discovery until requirements are in scope.
-
-## Document the evidence
-
-Use the project's established product location and any user-selected discovery folder. Persist attributable interview records when requested or justified by the execution contract's retention rules. Use the adaptable [interview record](../../grill-me/references/discovery-interview.md), rather than a second template. Maintain a concise area index and status only when multiple retained interviews warrant one.
-
-Keep unanswered questions pending. Preserve participant attribution and distinguish answers from assistant interpretations, proposals and observations. Founder intent establishes attributed intent, not observed end-user work or usability evidence.
-
-## Synthesize the product model and journeys
-
-Maintain the scoped model and journeys in their owning product records. Each relevant journey identifies actor and authority, trigger/context, intended outcome, prerequisites, activity sequence, important handoffs, completion, and unfinished/failure/recovery paths. Link source interviews and existing contracts. Distinguish current/observed work, intended behavior, assistant proposals and open questions; leave unsupported details unresolved.
-
-Use [domain-modeling](../../domain-modeling/SKILL.md) for canonical terminology and consequential decisions, preserving their authority and rationale.
-
-## Gather requirements from supported outcomes
-
-When requirements are in scope and the bounded workflow is sufficiently understood, apply [Product's Define, Challenge and Record phases](../SKILL.md#define). Link important candidate requirements to their source answer/example or accepted decision and affected journey. Preserve unresolved authority or behavior that could change the contract; unrelated open discovery questions need not block the scoped work.
-
-Keep one canonical behavioral contract in the project's specification authority, including the existing [OpenSpec convention](../../pilot/references/openspec.md) when applicable. Discovery records link to that contract rather than maintaining a competing requirements ledger.
-
-## Return at the requested boundary
-
-Return to Product's caller with the scoped model, retrievable evidence, documented journeys, candidate/confirmed requirement standing when applicable, consequential uncertainties and next owner. Discovery-only work stops at its requested checkpoint. The caller owns any subsequent assignment; these records establish neither implementation, usability nor hosted readiness.
+Return the journeys, open questions and who acts next.

@@ -1,20 +1,24 @@
-# Notes feature map — authoring example
+# Notes feature map
 
-This example illustrates the index and one feature file for a small Python CLI. It does not ship an application. Adapt the structure to the discovered project; supply actual project links to its verifier, requirements and reusable source findings. Keep dated results with the task's review evidence.
+Read this index before driving Notes, then use the matching feature file as the recipe.
 
-The example's product contract requires non-empty trimmed titles, stable increasing integer IDs, and persistence across processes. Batch import is an alternate creation path and must validate every title before writing. These expectations illustrate where a real map cites its authoritative contract.
+## Baseline
 
-## Baseline and driving conventions
+- Run from the project root containing `notes.py`, using Python 3.
+- Give each run its own temp directory, with fixtures and evidence in subdirectories:
 
-- Work from the example project's root containing `notes.py`, using Python 3.
-- The verifier allocates one unique OS temporary run root through Python's temporary-directory API. Child recipes use isolated fixture subdirectories recorded as `NOTES_VERIFY_DATA`, each starting without `notes.json`; evidence occupies a sibling directory under the same root. Source identity covers the working project and required configuration without source copies.
-- Each command starts a fresh CLI process. Compare parsed JSON values, exit status, stderr, and resulting stored data.
-- The generated verifier supplies project-local cleanup and retention commands under the [lifecycle contract](../project-contract.md#evidence-and-retention). Its result record identifies retained evidence, its owner and retirement event.
+  ```sh
+  export RUN_ROOT="$(python3 -c 'import tempfile; print(tempfile.mkdtemp())')"
+  export NOTES_VERIFY_DATA="$RUN_ROOT/data"
+  mkdir "$NOTES_VERIFY_DATA" "$RUN_ROOT/evidence"
+  ```
 
-## Features and coverage
+- If your tool starts a new shell for each command, write the full paths in place of `$RUN_ROOT` and `$NOTES_VERIFY_DATA`.
 
-| Feature | Known entry points | Recipes and gaps |
-| --- | --- | --- |
-| [Create a note](create-note.md) | `add`; `import-json` | Recipes below cover single-note creation, readback, and blank-title rejection. Batch import has no recipe in this excerpt. No run results are supplied; all behavior remains unverified. |
+- Each command starts a fresh CLI process. Compare parsed JSON, exit status, stderr and the stored file.
 
-This excerpt covers one feature. Listing, publishing, and other discovered outcomes need their own entries in a complete project map. Task results identify the feature and entry point without requiring a permanent index edit; a passing `add` check cannot establish batch import.
+## Features
+
+| Feature | Entry points | Covered | Gaps |
+| --- | --- | --- | --- |
+| [Create a note](create-note.md) | `add`, `import-json` | `create-single`, `create-persist`, `create-reject-blank` | `create-batch` (`import-json`) has no recipe. |

@@ -1,49 +1,55 @@
 ---
 name: bootstrap-verification
-description: Establish project verification through discovery, a feature map, and a proved local procedure. Use when onboarding the toolbox to a project or when the affected behavior has no usable verification path.
+description: Give a project its own verification, with discovery, a feature map and a proved local procedure.
 disable-model-invocation: true
 ---
 
 # Bootstrap verification
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md), the [approved-principle index](../principles/INDEX.md) and [the project contract](references/project-contract.md), unless already in context.
 
-Leave the project with a procedure another agent can run, evidence of which paths work, and explicit coverage gaps. Adopt existing verification facilities before creating new ones. Installing instructions alone does not establish readiness.
+You give a project its own way to check its behaviour: a verifier skill (in the host's project skill folder, `.agents/skills/verify-<project>/` by default, unless it already has one), a feature map, proof that each procedure the verifier calls usable runs, an entry in the project's instruction file that points to it, and a list of gaps.
 
-## Discover before choosing the method
+You're done when another agent, in a fresh session without this toolbox, can find the verifier from the project's instruction file and follow it for the agreed scope, readiness is reported per surface, and every path or lifecycle case it doesn't cover is listed as a gap.
 
-Identify the target project, existing instructions, intended setup scope, and available environment. Reuse the settled brief. State consequential assumptions; investigate observable unknowns. Ask one focused question only for a material preference or constraint that cannot reasonably be assumed, then wait.
+## Rules that always apply
 
-Start with a bounded survey across documentation, executable entry points, tests, configuration, and automation. Reconcile these sources: documentation can omit working paths, and tests can preserve incorrect behavior. Identify:
+- **Run every procedure you call usable.** Launch it, confirm you're on the right build and that it's ready, drive one real path and inspect what it changed; if a result surprises you, recheck the instance and reset first. "The command looks right", "CI runs it" or "the tests pass" isn't proof the procedure works.
+- **Claim only what you've observed.** If the app can't run yet, map its behaviour as planned and say so. If only a first slice runs, prove that slice. Never write commands you haven't run, coverage you haven't observed, or a setup that "should work".
+- **The verifier stands alone.** It must work in a fresh session without this conversation or this toolbox: real project paths, no links into this library, no step that needs a toolbox skill, even if the next agent will have one. Prove it by running the project's own commands directly.
 
-- Actors, user outcomes, alternate entry points, and background or integration paths.
-- State ownership, persistence, dependencies, and access boundaries that affect those outcomes.
-- Existing launch commands, driving tools, fixtures, assertions, and CI checks.
-- Existing glossary and ADR locations, their relevant terms and decisions, and the authority behind intended outcomes. Link applicable records from feature expectations; setup alone does not require creating new records.
-- What was inspected, conflicting evidence, inaccessible areas, and areas not inspected.
+## Discover
 
-Use [how](../how/SKILL.md) to trace relevant paths, [why](../why/SKILL.md) when a historical constraint affects the procedure, and [probe](../probe/SKILL.md) for a consequential observable unknown. Follow critical and task-relevant paths deeply; record why that scope was selected. Do not treat a sample as an exhaustive inventory.
+Identify the target project, its existing instructions and the setup scope. Survey the docs, executable entry points, tests, configuration and automation, then go deep on the paths in scope. Check docs and tests against each other; either can be wrong. Find:
 
-Separate intended behavior and its authority from current observations. When they disagree, retain both and identify the unresolved contract or defect. A proposed requirement remains proposed until grounded in the user's request or another authoritative contract.
+- actors, user outcomes, alternate entry points, and background or integration paths
+- state ownership, persistence, dependencies and access boundaries that affect those outcomes
+- existing launch commands, driving tools, fixtures, assertions and CI checks
+- glossary and ADR locations, and the authority behind each intended outcome
 
-## Adopt or build the project procedure
+Trace paths with [How](../how/SKILL.md). If a historical constraint affects the procedure, use [Why](../why/SKILL.md). If an observable unknown could change the procedure, use [Probe](../probe/SKILL.md).
 
-Read [the project contract](references/project-contract.md) before writing outputs. Extend a suitable existing verifier in its established location; inspect its executable commands and output locations before adopting its pattern. Otherwise use the host's project skill convention; `.agents/skills/verify-<project>/` is the default. Keep commands and recipes project-owned. The generated skill must work without this conversation or the portable toolbox installed.
+Keep intended behaviour and its authority apart from what you observe. If they disagree, record both as an open contract question or a defect; report a defect to its owner and keep the expected result.
 
-For a new map, create `features/README.md` inside the project verifier and one file per identified user-facing feature. Read [the feature-map example](references/feature-map-example/README.md) for the index and recipe shape; the project contract defines their contents. Preserve an established equivalent map instead of creating a second one. Link the map from the generated verifier and write detailed recipes for the selected scope, recording the remaining gaps. Reuse existing tests and tools by reference; add helpers only where they provide a missing repeatable operation or check. Keep reusable source findings with the procedure and temporary tracing with task evidence.
+Done when every in-scope outcome has an entry point, an authority or a characterization label, and an existing check or a gap.
 
-Establish build identity, readiness, isolated data, observation and cleanup before driving the app. Apply the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention) to the executable harness and generated instructions. Repair incompatible adopted tooling within scope; updating prose alone is not migration. Follow project permissions and environment limits. Record unrelated product defects; unavailable access leaves the affected procedure partial or blocked.
+## Adopt or build the procedure
 
-Prefer the existing checkout or a reusable task worktree. Add execution copies only for a demonstrated check requirement, with complete inputs, known storage cost and owned cleanup. Prove direct project invocation without depending on the plugin.
+- If the project already has a suitable verifier, extend it where it lives, after checking its commands and output locations work.
+- If the project has a feature map or an equivalent, extend it. Otherwise write one as [the project contract](references/project-contract.md#discovery-and-feature-map) and [the feature-map example](references/feature-map-example/README.md) describe. Write detailed recipes for the agreed scope only.
+- Reuse existing tests and tools by reference. Add a helper only for a repeatable operation or check that's missing.
+- Before driving the app, set up build identity, readiness, isolated data, observation and cleanup, and follow the contract's [evidence lifecycle](references/project-contract.md#evidence-and-retention).
+- If adopted tooling doesn't fit the contract, repair it within scope. Change the tooling itself, not just the text that describes it.
+- If access is unavailable, mark the affected procedure partial or blocked.
 
-For a greenfield project, map proposed behavior as planned. Prove the first runnable slice when it exists; do not invent commands, observed coverage, or a successful setup for an app that cannot yet run.
+## Prove it
 
-## Prove and connect
+For each distinct setup-and-teardown implementation, exercise success, failure, graceful cancellation and keeping evidence for review. Check that repeated runs clean up.
 
-Run every procedure advertised as usable: launch, confirm identity, drive a selected real path and inspect effects. Exercise shared lifecycle handling once per distinct implementation, covering success, failure, graceful cancellation and pending-review retention proportionally to the owned resources. Inspect actual outputs and repeated-run disposal; confirm required evidence survives teardown. Recheck health/reset after surprising results. State unexercised lifecycle cases as gaps.
+Report readiness and behaviour results as the contract's [Readiness](references/project-contract.md#readiness) section describes.
 
-Record the sampled feature and entry point for a shared procedure. Unexercised features stay unverified. A procedure can be usable while exposing a product failure; distinguish verifier readiness from behavior passing. Report readiness per surface, together with checks performed, failures, and remaining prerequisites. Stop widening the run when the agreed scope is established and the gaps are recorded.
+## Connect and return
 
-Connect ordinary project work using [the project instruction guidance](references/project-instructions.md). Reuse existing routing or add a narrow entry in the project's established instruction file; preserve other instructions. Point to the actual local verifier and feature map. Suitable executable checks may use existing CI conventions when that integration is in scope; prose routing alone is not mechanical enforcement.
+Connect the verifier to ordinary project work as [project instructions](references/project-instructions.md) describes.
 
-Return links to the discovery/map, local verifier, demonstrated readiness, and remaining gaps to the calling owner. Architect incorporates them into its design package; an pilot playbook uses them for its reproduction, baseline, or acceptance checks. A setup run exposing a product defect supplies evidence to that owner and does not silently redefine the expected result. Use [maintain-verification](../maintain-verification/SKILL.md) for subsequent drift; no recurring schedule is implied.
+Return links to the map, the verifier, the readiness results and the gaps to the caller, and name [Maintain Verification](../maintain-verification/SKILL.md) for later drift.

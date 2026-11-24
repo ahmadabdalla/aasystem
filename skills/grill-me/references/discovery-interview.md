@@ -1,36 +1,28 @@
 # Discovery interviews
 
-Follow Grill-me's baseline and the [execution contract](../../pilot/references/execution.md). Reuse the caller's scope, starting knowledge, selected records and checkpoint. Inspect available facts before asking; reopen settled answers only when new evidence changes them.
+1. **Read first.** Never ask what the caller's brief or the project's records already say.
+2. **Ask about real work.** Ask about one concrete, recent example: who did what, with which tools, and who got it next. Include work done by hand or outside the product. Don't offer designs or solutions until the work is clear.
+3. **One question at a time.** Ask one question and end your turn. Let the answer pick the next question, not a fixed list.
+4. **Record.** If you may write, record each answer and who gave it before the next question. Keep the participant's words apart from your reading of them. If an answer changes, keep the old one and say what replaced it. If the work is read-only, return the notes.
+5. **Hand back.** Return the evidence, candidate journeys and open questions. Leave journey maps and requirements to [Product discovery](../../product/references/discovery.md).
 
-Start from concrete activities, examples and handoffs, including work done manually or outside the product. Explore relevant work before offering architectural choices or a recommended solution. Recommendations are appropriate once enough context exists to resolve a real choice.
+## Record
 
-Ask one focused question, then stop and wait for the answer before further investigation or action. Let the answer guide the next consequential gap rather than following a fixed questionnaire.
-
-When persistence is authorized, record each answer and attribution before asking the next question. Preserve participant meaning, separating answers from assistant interpretations, proposals and observations. Preserve revised answers and explain what they supersede instead of silently replacing their rationale. A read-only interview returns proposed notes; separate transcript retention follows the execution contract.
-
-Return evidence, candidate journeys and open choices to the caller. For Product assignments, [Product discovery](../../product/references/discovery.md) owns synthesis and requirements. A standalone interview ends with its result; the interviewer does not become a separate requirements owner.
-
-## Adaptable record
-
-Use the project's authorized location and format. This shape illustrates useful contents, not mandatory headings or a fixed path:
+Use the project's location and format if it has one. Otherwise:
 
 ```markdown
 # <Discovery area>
-Scope and status:
-Participant/source and date:
-Starting knowledge and links:
+Scope, participant and date:
 
-## <Question/date>
-Question:
-Participant answer and concrete example:
-Rationale or constraint:
-Assistant interpretation/proposal, if any:
-Open questions and affected candidate journeys:
+## <Question>
+Answer and example, in the participant's words:
+Reason or constraint:
+My reading, if any:
+Open questions:
 
 ## Outcome
-Confirmed statements, proposals and unresolved matters:
-Links to owning product/journey/decision/requirement records:
-Next step:
+Confirmed, proposed and open:
+Links to product, journey and decision records:
 ```
 
-Unanswered fields stay pending. Founder interviews establish attributed intent rather than participant usability. Link the owning product records for synthesis instead of duplicating their contract here.
+Mark unanswered fields as pending. A founder interview records what the founder intends, not how users behave.

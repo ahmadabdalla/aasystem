@@ -1,65 +1,39 @@
 ---
 name: reflect
-description: Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.
+description: Review a session with three independent reviewers and turn the lessons the user approves into skill edits, principles or backlog items. Use when the user says reflect.
 disable-model-invocation: true
 ---
 
 # Reflect
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract's baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Mine the current conversation for durable learnings, then route them into skill edits.
+Find lessons in this session that will still hold next month, and turn the ones the user approves into edits. If the session was trivial, say so and stop.
 
-## When to invoke
+## 1. Find the transcript
 
-Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
+Use this session's transcript file if the host exposes it, and check it's this session. Never read another project's or session's. If you can't find it, write a digest instead: what was asked, what went wrong, what the user corrected, and what the digest leaves out.
 
-## Process
+## 2. Run three reviewers
 
-### 1. Locate the active transcript
+Start three reviewers in parallel, each in a fresh context. Send each the `<reviewer-prompt>` from [reviewer.md](references/reviewer.md), with `<TRANSCRIPT>` replaced by the path or digest and `<LENS>` by one lens block: judgment, tooling or divergent. If your host has no subagent tool, say the review can't be done independently, and stop.
 
-The parent finds its own transcript before fanning out. Use the active session's transcript location when the host exposes it; verify it matches the current conversation. Do not search unrelated workspaces or private sessions. If no path resolves, write a tight digest of the session and pass that instead, identifying its limits.
+## 3. Synthesize
 
-### 2. Spawn three reviewers in parallel
+Start a fourth agent with [synthesizer.md](references/synthesizer.md), filling in the transcript and all three reviewers' full output.
 
-Spawn three independent review subagents with the host's available delegation tools. Use configured model assignments when available, otherwise inherit the parent model and disclose the lack of model diversity. Reviewers need access to context lookups referenced in the transcript, but must not modify files or external records. If capacity limits parallel execution, run the remaining reviewers as slots become available. If delegation is unavailable, report that this review cannot be completed independently.
+## 4. Ask the user
 
-| Lens | Prompt template |
-|---|---|
-| Judgment | [references/judgment-reviewer.md](references/judgment-reviewer.md) |
-| Tooling | [references/tooling-reviewer.md](references/tooling-reviewer.md) |
-| Divergent | [references/divergent-reviewer.md](references/divergent-reviewer.md) |
+Show the lists as the synthesizer returned them. **Apply only the rows the user approves.** Saying "reflect" isn't approval.
 
-Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in their response body.
+## 5. Apply
 
-### 3. Synthesize
+Make each approved row with the [authoring playbook](../pilot/playbooks/authoring-a-skill.md). For a principle, follow [principle authoring](references/principle-authoring.md). File each approved Backlog row in the project's tracker.
 
-Spawn a separate synthesizer with access to the same scoped evidence and context lookups. Use [references/synthesizer.md](references/synthesizer.md) verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+## 6. Report
 
-### 4. Structural enforcement check
+No preamble:
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. Skill prose is for things mechanisms cannot enforce.
-
-### 5. Apply
-
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Do not auto-apply based on a request to reflect. Prior explicit approval of the concrete edits remains valid.
-
-File Backlog items to the team's configured devex or backlog tracker within the authorized scope. If no tracker is configured or filing is outside that scope, return the items as unfiled; do not silently drop them. Only the Accepted list waits for edit approval.
-
-For each approved Accepted item, follow the Routing field exactly:
-
-- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): use the available skill-authoring capability and the [authoring playbook](../pilot/playbooks/authoring-a-skill.md) for its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): use the skill-authoring capability to tune and test the description.
-- `new skill via create-skill: <kebab-name>`: use the skill-authoring capability. Do not invent the shape ad hoc. For an approved personal principle, also follow the existing [principle-authoring convention](references/principle-authoring.md).
-
-If the environment ships a SKILL.md validator, run it on every touched skill before declaring done. Skip this step if it does not.
-
-### 6. Summarize for the user
-
-Short list, no preamble:
-
-- Edits applied: `<skill path>`. What changed, one line each.
-- New skills created: `<skill path>`. One line each (rare).
-- Backlog filed to the devex tracker: `<issue title>` (`<tags>`), or unfiled with the reason. One line each.
-- Dropped: one line per rejected finding + reason from the synthesizer.
+- Edited: `<path>`: what changed, one line each.
+- Created: `<path>`: one line each.
+- Backlog: `<issue link>`, or "not filed: <reason>".

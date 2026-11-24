@@ -1,35 +1,27 @@
 ---
 name: show-me-your-work
-description: Keep and audit an evidence-linked decision log for substantial, multi-phase, or unattended work. Use when someone will review the reasoning and outcomes later; omit routine action-by-action narration.
+description: Keep a decision log with evidence links and get it audited before delivery. Use when someone will review the reasoning later, such as on long, staged or unattended work.
 disable-model-invocation: true
 ---
 
 # Show me your work
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Keep one canonical append-only decision log. Existing decision records, design packages, and proof artifacts retain their detail; this log points to them.
+1. **Pick one log.** If the task already keeps an audit log, use it. Otherwise use a `decisions.tsv` in the task's working folder, and commit it only if the delivery needs the trail. Only you write to it; workers send you their evidence.
+2. **Inherit with a `start` row.** A new chat or a new owner is a new run. Before you add to a log that has rows, read its tail and append a `start` row naming this run and the time range you inherit. Never claim earlier rows as your own. If you rely on one, check it again and log what you saw. If it was wrong, say so in your reply.
+3. **Log turns, not steps.** If two rows say the same thing, you're logging steps. Add a row as soon as you pick between options, you rule a guess in or out (say why), the plan changes, a check passes or fails, or you're blocked.
 
-## Record decisions
+   ```sh
+   python3 scripts/log.py /absolute/task/decisions.tsv phase "Decision" "Why" "Evidence" "Result"
+   ```
 
-Use a task-owned local `decisions.tsv` or another established audit location. Keep it uncommitted unless the task's delivery needs the trail. The columns are `ts`, `phase`, `decision`, `why`, `evidence`, and `result`. Evidence contains resolvable pointers, and results distinguish observation from inference or unfinished work.
+   Resolve `scripts/log.py` relative to this skill.
+   - Evidence is a repo path, an existing commit or a command someone else can rerun. Not /tmp, not agent IDs.
+   - Result says what you saw. Write `inferred` for what you didn't see and `open` for what's unfinished.
+   - Never write secrets.
+4. **Fix by adding.** If a row is wrong, append a row that names the wrong row's timestamp, what's true and why. Leave the original. If a row holds a secret, replace only the secret with `<REDACTED>` without typing it out, even in a command, append a row saying so, and tell the user to rotate it.
+5. **Audit before delivery.** Check the rows against the transcript, git history and the real files. Every pointer should open, every result should match, and every pivot or revert should have a row. Read only this task's records. If you have no transcript, audit the artifacts and say so.
+6. **Get an independent review.** Have an agent that didn't do the work, preferably another model family, check the log and run evidence for unsupported claims, skipped checks, risky choices and gaps, each pointing at a row or file. Check each finding yourself. If you can't start one, or it's the same model, say so.
 
-Append a row with the bundled helper, requiring Python 3:
-
-```sh
-python3 scripts/log.py /absolute/task/decisions.tsv phase "Decision" "Reason" "Evidence path" "Observed result"
-```
-
-Resolve `scripts/log.py` relative to this skill. The helper creates the header, timestamps in UTC, and keeps cells on one line. One owner writes the log; workers return evidence to that owner. It does not verify that an evidence pointer proves a claim.
-
-Record choices, accepted or refuted hypotheses, changed plans, completed verification gates, and blockers as they happen. Skip routine tool actions. Correct a wrong entry by adding a superseding row with its reason; preserve the original. The log must not contain secrets.
-
-A new chat or replacement owner starts a new run. Before appending to an existing log, read its tail and add a `start` row identifying this run and the earlier time range it inherits. If another run appended since your last contribution, add a new `start` row before resuming. Use `start` only for run ownership, and never claim earlier observations as your own.
-
-## Audit before delivery
-
-Compare this run's rows with its accessible transcript or execution record and the actual artifacts. Check evidence pointers, outcomes, missing pivots, and superseded claims. Read only the authorized task's records. If no transcript is available, audit artifacts and disclose that limit. A helper's successful append proves formatting, not truthful logging.
-
-Use an independent reviewer, preferably a different available model family, to inspect the log and permitted run evidence for unsupported claims, skipped verification, risky choices, and omissions. Self-review does not replace independence; disclose unavailable review or model diversity. The reviewer returns findings with row or artifact pointers, and the lead checks them.
-
-Return the log path and an attention summary naming the reviewer setup, consequential findings, and evidence limits. An empty findings list is valid only for the scope actually reviewed.
+In under 200 words, reply with the absolute log path, the reviewer and its model family, findings riskiest first, and what the audit couldn't see. If the review found nothing, say what it covered.

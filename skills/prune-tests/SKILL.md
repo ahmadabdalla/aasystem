@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Prune tests
 
-Before starting, read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the contract's baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
 Prune within the caller's scope or the supplied path; with neither, ask for the scope before editing. [Verification clarity](../maintainability/references/local-code.md) defines a needed test. This skill owns the decision for each test, the edits and the proof.
 
@@ -30,7 +30,7 @@ Keep an absence test a current contract requires, such as a removed endpoint ret
 
 ## Return
 
-Return deletions, rewrites and kept exceptions with reasons, the before and after runs, the regression checks and their limits, and any production code removed. The caller owns independent verification and delivery; when invoked directly, obtain it under [independent implementation verification](../pilot/references/execution.md#independent-implementation-verification).
+Return deletions, rewrites and kept exceptions with reasons, the before and after runs, the regression checks and their limits, and any production code removed. The caller owns independent verification and delivery; when invoked directly, obtain it under [independent implementation verification](../pilot/references/verification-contract.md#independent-implementation-verification).
 
 ## Example
 

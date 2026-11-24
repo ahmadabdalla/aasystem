@@ -1,67 +1,37 @@
 # Harness adapter boundary
 
-The [continuity procedure](../references/task-continuity.md) owns portable task
-policy. Adapters translate host protocols; they add no coordinator or delivery policy.
+Adapters translate a host's protocol. The [continuity procedure](../references/task-continuity.md) owns task policy; an adapter adds no coordinator or delivery rules.
 
 ## Folder contract
 
-Use `assets/<harness>/` for each delivered integration's setup, supported versions
-and surfaces, configuration, protocol translation and resources. The current
-[Codex folder](codex/README.md) holds its guide; the executable remains at
-[`scripts/orchestration.py`](../scripts/orchestration.py) for command compatibility.
+Put each delivered integration in `assets/<harness>/`: setup, supported versions and surfaces, configuration and protocol translation. The [Codex folder](codex/README.md) holds its guide; its helper stays at [`scripts/orchestration.py`](../scripts/orchestration.py) so existing commands keep working.
 
 Each adapter owns:
 
-- Explicit invocation, raw request and correction capture.
-- Session/workspace/parent-worker identity and harness-specific state namespacing.
-- Lifecycle inputs and accessible recovery/handoff context.
-- Host outputs for completion, truthful pause, bounded continuation and visible failure.
-- Reviewable configuration, installation, trust and availability; no self-activation.
+- Explicit invocation and capturing the raw request and corrections.
+- Session, workspace and parent-worker identity, and namespacing its own state.
+- Lifecycle inputs and the context needed for recovery and handoff.
+- What the host shows for completion, a truthful pause, a bounded retry and a failure.
+- Reviewable configuration, installation and trust. An adapter never activates itself.
 
-Share persistence, revision, evidence and completion invariants through the
-smallest extraction a verified second integration needs. Keep host invocation
-syntax out of shared record-validity rules and link portable instructions.
-
-This folder contract supplies no dynamic loader or stable shared runtime API.
-The current helper combines state/check logic and Codex protocol handling;
-separating them requires implementation and proof with the second integration.
-Adding a folder must not register or trust hooks automatically.
+If a second verified integration needs the same persistence, revision, evidence or completion rules, extract only what both need. Keep host invocation syntax out of shared rules. There is no shared runtime API yet: `orchestration.py` mixes state checks and Codex protocol. Split them only alongside a verified second integration. Adding a folder must not register or trust hooks.
 
 ## Consumer data lifecycle
 
-Inventory adapter state, output and plugin-directed agent files/context separately
-from caller-owned proof and native host transcripts/caches. Reuse existing task
-records; avoid per-event logs, revision archives and duplicate evidence. Follow
-the [evidence lifecycle](../../bootstrap-verification/references/project-contract.md#evidence-and-retention)
-for review retention and retirement.
+Document adapter state and plugin-directed agent files separately from the caller's proof and the host's own transcripts and caches. Reuse existing task records instead of adding event logs, revision archives or copied evidence. Follow the [evidence lifecycle](../../bootstrap-verification/references/project-contract.md#evidence-and-retention) for review retention.
 
-Acceptance must measure repeated-intent growth, normal/failure teardown and
-interrupted-write recovery. Document retention and manual recovery. Housekeeping
-must preserve active work and pending review; age/prefix sweeps or OS expiry are
-insufficient.
+Before delivery, measure:
 
-The [Codex lifecycle](codex/README.md#storage-and-retention) uses temporary session
-bindings, checked handoff and exact-owned retirement, with next-use recovery.
-It keeps no completed-intent archive. Uncertain ownership/proof preserves named
-state. There is no hard cap, background collector or cleanup while nothing runs;
-active inputs, added host context and review proof still consume space.
+- growth from repeated tasks;
+- teardown after normal ends and failures;
+- recovery from an interrupted write.
+
+Document retention and manual recovery. Cleanup must keep active work and pending review; sweeping by age or prefix, or relying on OS temp expiry, isn't enough. See the [Codex lifecycle](codex/README.md#storage-and-retention).
 
 ## Delivery gate
 
-Deliver and verify an integration in its actual target host before retaining
-adapter code, placeholder folders, manifest registration or support claims.
-Until then, keep it a proposal. Claude Code and GitHub Copilot currently use
-portable instructions without mechanical adapters.
+Deliver an integration only after it works in its real host. Until then, keep it a proposal: no adapter code, placeholder folder, manifest entry or support claim. Claude Code and GitHub Copilot use the portable instructions with no adapter.
 
-Establish the exact host version/surface, capabilities, durable state and runnable
-native checks. Verify actual invocation/corrections, supported recovery/compaction
-and worker handoffs, completion rejection, truthful pauses, bounded retries,
-stale evidence and unavailable state/configuration. Inspect received context and
-visible failures. Missing required native proof blocks delivery; another host or
-generated JSON cannot substitute. Local CLI proof does not establish cloud/IDE support.
+In that host, establish the exact version and surface, then verify invocation and corrections, recovery and compaction, worker handoffs, rejected completion, truthful pauses, bounded retries, stale evidence and unavailable state or configuration. Inspect the context the agent receives and the failures the user sees. If a required native check is missing, don't deliver; another host, generated JSON or a local CLI run can't stand in for it.
 
-Use [independent verification](../references/engineering-verification.md). Report
-tested capabilities and limits; the [Codex guide](codex/README.md#stop-behavior-and-limits)
-also requires host observation. Its presence does not prove every installed
-host's lifecycle behavior. Ordinary invocation remains instruction-driven without
-a verified mechanical integration.
+Use [independent verification](../references/engineering-verification.md) and report what you tested and its limits.

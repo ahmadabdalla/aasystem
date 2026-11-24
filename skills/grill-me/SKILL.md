@@ -4,17 +4,25 @@ description: Work through a plan in question rounds or conduct product discovery
 disable-model-invocation: true
 ---
 
-# Grill me
+# Grill Me
 
-Read the [execution contract's baseline](../pilot/references/execution.md#baseline) and the sections it names for this task, and the [approved-principle index](../principles/INDEX.md), unless already in context. Follow the baseline rules.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Reuse the caller's scope, evidence, settled choices and checkpoint. For one missing detail, ask a focused question.
+If a caller sent you, start from its scope and evidence.
 
-Read the procedure that fits:
+If the interview is about how people do their work today, not about a plan, follow [Discovery interviews](references/discovery-interview.md) instead.
 
-- Product activities and journeys: [Discovery interviews](references/discovery-interview.md).
-- Resolve or stress-test a plan: [Grilling](references/grilling.md).
+1. **Map the design tree.** List the decisions the plan needs. Each answer can open more decisions. Leave out branches outside the scope. Leave out any decision the user, the caller or an accepted record already settled.
+2. **Find the facts yourself.** Read the code, docs, glossary and ADRs before you ask anything. Never ask the user for a fact you can look up. If a lookup is slow, hand it to an explorer under the [delegation rules](../pilot/references/delegation.md). Ask the questions that don't need its answer now. If you can't reach a fact, say so and ask for the least you need.
+3. **Ask the frontier.** The frontier is every open decision whose prerequisites are settled. Ask all of it in one round. If a question depends on another open question, list it under "Waits on Qn" for a later round. Number each question and give your recommended answer.
 
-When terms or consequential decisions emerge, read and apply [domain-modeling](../domain-modeling/SKILL.md). Reuse it once loaded. Record agreed terms and qualifying decisions as they settle; load format references only when needed. "With docs" uses this same path. Write only within authorized scope. For read-only work, return proposed text and destinations. Keep requirements and plans in their owning brief.
+   ```text
+   Q1. Should we <your recommended answer>?
+   Recommendation: <answer>, because <main trade-off>.
+   ```
 
-Return the result, saved record paths or proposed notes to the caller, who owns synthesis and delivery. A standalone interview ends here.
+4. **Stop.** End your turn after the round and wait for the answers.
+5. **Record and recompute.** Record each answer, with its reason, in the task brief. If an answer is unclear, keep the question open. If it contradicts an earlier answer or the evidence, say so in the next round. When a term or a hard-to-reverse decision settles, record it now with [Domain Modeling](../domain-modeling/SKILL.md). If the work is read-only, return the proposed text and its file instead. Then recompute the frontier and ask the next round.
+6. **Finish.** When the frontier is empty, summarise the decisions, reasons, assumptions, what was deferred and how success will be checked. Ask the user to confirm you share the same understanding. Don't act on the plan until they do.
+
+If a caller sent you, return the decisions and the paths of any records you saved.

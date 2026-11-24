@@ -1,75 +1,62 @@
 # Interaction contract
 
-Use these phases for the assigned journey or surface. Reuse sufficient existing records; the contents below are decision aids, not mandatory headings or separate documents.
+Work through these five phases for the assigned journey or surface. Write the results in the project's own format.
 
-## 1. Ground the experience and its authority
+## 1. Ground
 
-Read product intent, scoped requirements and acceptance scenarios, their sources and status, relevant glossary and decisions, existing journeys and screens, project constraints, and the verifier's affected recipes when available. Inventory existing specifications and mocks before proposing replacements. Distinguish current implementation, current accepted design, proposed changes, and historical evidence.
+1. Read the product contract and its scenarios, the glossary, decisions, existing screens and mocks, and the verifier's recipes if there are any.
+2. Label everything you rely on as built, accepted, proposed or history. If you can't find who accepted it, label it proposed, even if it's a polished mock or an agent-written spec marked approved.
+3. If the result can stay conditional on a human choice, record the open choice, what it affects and its owner.
 
-For consequential claims whose provenance is missing, retain that uncertainty instead of treating an agent-authored specification or a polished mock as acceptance. Review material assumptions before depending on them; preserve established artifacts and avoid reopening every incidental detail. Inspect observable facts first. If a material human choice is needed to complete the assigned outcome and cannot reasonably be inferred or resolved within delegated scope, ask one focused question and wait. A proposal or review can instead record an unresolved choice, its affected behavior and next owner when the requested result can remain conditional.
+An agreed requirement doesn't approve every way of showing it. "Keep a history of changes" may be agreed. Showing that history beside the record is a presentation proposal. A new app-wide Activity page is a further scope and navigation choice. Check the authority for each one separately.
 
-Use the existing [decision-record convention](../../domain-modeling/references/adr.md) to preserve authority, scope, sources, rationale, unresolved choices, and evidence limits. Link to the owning record; do not repeat its status in a second registry. An accepted requirement does not authorize every possible presentation of it. Evidence that a prototype works and evidence that a person accepted a decision answer different questions.
+Record authority, sources, rationale and open choices with the [decision-record convention](../../domain-modeling/references/adr.md). Link the record; don't copy its status.
 
-For example, retaining attributable changes can be an agreed requirement. Showing that history beside a record is a presentation proposal. Adding an application-wide Activity destination introduces a further scope and navigation choice. Justify those interpretations separately and check their authority.
+## 2. Model people, journeys and states
 
-## 2. Model people, journeys, and states
+Use the project's terms. If one is unclear, use [Domain Modeling](../../domain-modeling/SKILL.md).
 
-Use the project's vocabulary; clarify consequential ambiguity through [domain-modeling](../../domain-modeling/SKILL.md). Keep these concepts distinguishable without forcing them into the data model:
+One person can hold several roles. A role alone doesn't justify a separate account, app, tab or experience. Keep roles (responsibilities), permissions (allowed actions) and scopes (the data those actions cover) distinct.
 
-- A person is an individual; a persona describes a useful pattern of goals or circumstances.
-- A role describes responsibilities in a context; permissions describe allowed actions, and scopes bound the information or resources those permissions cover.
-- One person may hold several roles. A role distinction alone does not justify separate accounts, applications, tabs, or experiences.
+For each affected journey, list its entry points, prerequisites, actions, state changes, and how it finishes or fails. For each handoff, name who receives it, how they find it, what they can see and what they do next, including work picked up in a later session. Show the empty, unavailable, forbidden, pending and recovery states the product contract defines. If a business rule is missing, return it to Product; never fill it with an unmarked default.
 
-Features, stories, journeys, and requirements are related views of outcomes, not a compulsory hierarchy. A journey may cross several features and requirements; one requirement may constrain many journeys. Reuse the product's map and link relevant views. Keep it distinct from the verifier's operational map of runnable checks.
+## 3. Propose structure
 
-For the affected journeys, identify entry points, prerequisites, actions, state transitions, completion and failure outcomes. Follow handoffs to their recipient, discovery path, information scope, and next action, including interrupted work and later sessions. Represent relevant empty, unavailable, forbidden, recovery, and pending states according to the product contract. Return missing business rules to product rather than filling them with an unmarked default.
+Choose navigation, grouping, prominence and interactions that serve those journeys. Apply the relevant approved principles. Reuse existing components and patterns.
 
-## 3. Propose purposeful structure
+For each consequential surface or group of controls (one that changes navigation, who can see or do something, or a screen's primary action), give its purpose, who can see and act on it, its actions and states including failure, the requirements it serves, why this shape beat the alternatives, the record that decided it (or "open"), and how its outcome can be observed.
 
-Choose navigation, grouping, information prominence, and interactions that support those journeys. Apply relevant approved principles with their scope and exceptions. Use existing components and patterns where they fit; routine styling and established controls retain normal design discretion.
+Routine controls share their parent's entry. A rationale can come from an outcome, usability evidence, a constraint or an established pattern. Never invent a requirement to fill the field.
 
-Explain consequential surfaces and groups of controls in the smallest useful form. For each, make these relationships inspectable:
+If you compare alternatives, keep them on the same behaviour contract unless a semantic difference is stated.
 
-| Content | Decision it supports |
-| --- | --- |
-| Purpose and linked outcome | Why the surface or control group belongs |
-| Actor, role, permissions, and information scope | Who can see or act, and in what context |
-| Actions, states, and failure paths | What happens and how unfinished or failed work is handled |
-| Requirement and scenario references | Which intended behavior it expresses |
-| Presentation rationale and alternatives | Why this navigation, grouping, or prominence is suitable |
-| Owning decision and evidence references | What supports the choice and what remains unsettled |
-| Verification path or gap | How the relevant outcome could be observed |
-
-Related routine controls may share a parent interaction's rationale. Do not invent a product requirement for every control merely to populate a traceability table. A defensible presentation choice can derive from an outcome, usability evidence, a constraint, or an established pattern; make that derivation clear.
-
-When a consequential interaction remains unsettled, compare structurally different alternatives, using the entry skill's Arena route when independent candidates could supply evidence that changes the choice. Keep alternatives within the same behavior contract unless proposed semantic differences are explicit. Use a prototype when rendering or exercising it can answer the assigned interaction or presentation question. Record the selected base, incorporated strengths, tradeoffs, remaining disagreement, and conditions for reconsideration. Independent candidates and reviewer consensus do not confer product-owner acceptance.
-
-Before settling a consequential interaction model, use [10x](../../10x/SKILL.md); carry its findings into the presentation rationale and verification handoff.
+Before settling a consequential model, use [10x](../../10x/SKILL.md) and carry its findings into the rationale and how the outcome is observed.
 
 ### Preserve an inspectable visual reference when needed
 
-For requested UI refinement or explicit presentation constraints, treat the rendered experience as a reviewable design artifact. Carry explicit user instructions alongside behavior requirements; a property does not become discretionary because it is cosmetic. Preserve the affected component, placement relative to its surrounding layout, applicable viewport/state and relevant style tokens or values. Reuse existing component definitions rather than maintaining a second style catalog. Treat established shared tokens and component rules as constraints. Prototype overrides remain local proposals; changes to shared design-system definitions need a caller-assigned owner and review of affected consumers before production adoption.
+Use this when the request is UI refinement or the user gave explicit presentation instructions.
 
-Words such as “blue” or “right corner” may still admit different interpretations. Use existing project conventions or render a labeled proposal that the human can inspect. If an unresolved interpretation prevents the requested outcome, follow the existing focused-question rule. Do not claim an inferred shade, container or dimension was specified or accepted.
+- Treat explicit visual instructions as requirements. Being cosmetic doesn't make them optional.
+- Record the component, its placement in the surrounding layout, the viewport and state, and the tokens or values that apply. Link component definitions; don't keep a second style catalogue.
+- Shared tokens and component rules are constraints. A prototype override is a local proposal. Changing a shared definition needs an owner named by the caller and a check of everything that uses it.
+- If an instruction like "blue" or "top right" is ambiguous, use the project's convention or render a labelled proposal for the human. Never claim an inferred shade or size was specified.
+- Link the prototype revision and rendered views from the design record. Note who accepted what, the fixed constraints, open properties, and which states and viewports were inspected. Uninspected states and viewports aren't accepted. Record exact dimensions only if they were specified, already exist in the project, or were accepted in review.
 
-Link an identifiable prototype revision and useful rendered views to the owning interaction/design record, with relevant component/style sources. Preserve the scope and source of acceptance or delegation, fixed constraints, unresolved properties, responsive behavior and states inspected. Do not infer acceptance of unseen states or viewports. Exact dimensions belong here only when specified, established by the project, or accepted through review; other properties retain the agreed discretion.
+The reviewed artifact is the reference for appearance. The behaviour contract stays the reference for behaviour. Record conflicts with the decision convention. If the work is a review-and-refine cycle, [UI Refinement](../../ui-refinement/SKILL.md) owns it.
 
-The reviewed artifact is the scoped appearance reference, and the behavior contract remains the behavioral authority. Record conflicts and changes through the existing decision convention. For coupled prototype-led review and refinement, [UI Refinement](../../ui-refinement/SKILL.md) owns the bounded cycle and returns the reviewed inputs to its caller.
+## 4. Check coverage both ways
 
-## 4. Check coverage in both directions
+- **Forward:** trace every requirement and scenario, including failures and permission limits, to an interaction. If a requirement is enforced outside the UI, link its technical or verification owner instead of inventing a screen.
+- **Backward:** trace every consequential UI choice to a purpose and an authority. Flag added features, misleading role boundaries, unexplained prominence and navigation that promises more than the contract.
 
-Trace each relevant requirement and acceptance scenario forward to its interaction, including failures and permission boundaries. Identify absent required behavior even if the happy path looks complete. Some requirements are enforced outside the UI; link their technical or verification owner rather than inventing a screen.
-
-Trace consequential UI choices backward to their purpose, requirement or other rationale, and decision authority. Look for added functionality, misleading role boundaries, unexplained prominence, or navigation that claims more scope than the product contract.
-
-State the scope of each sketch or mock and intentional omissions. Distinguish behavior intentionally absent from a particular mock, behavior absent from the proposed product, and implemented behavior that has not been verified. A limited mock cannot silently remove a requirement or prove the full product satisfies it.
+For each sketch or mock, state its scope and what it leaves out. Say which of three each missing behaviour is: left out of this mock, left out of the product, or built but unverified.
 
 ## 5. Record and hand off
 
-Use the caller's designated document or an existing canonical section. Create a project UX document only when its audience and future use warrant one under the shared retention rules. A read-only request returns proposed content. Link canonical requirements and decisions instead of copying their authority into a new system.
+Write into the caller's document or an existing canonical section. Create a new UX doc only if someone will use it later. If there's no document to write into, or the work is read-only, put the model in your reply, never only in a scratch file. Put the design in the document; keep sources, review notes and evidence limits in your reply. If the project uses OpenSpec, follow the [OpenSpec reference](../../pilot/references/openspec.md).
 
-For projects using OpenSpec, follow the [OpenSpec reference](../../pilot/references/openspec.md) for document ownership, proposed/current records, reconciliation, and archive links. Other projects use their existing requirements and documentation conventions. Updating a mock does not accept a proposal or supersede a decision.
+Give the technical owner the model, the visual reference and component sources if there are any, the mock's scope, and open decisions with their owners.
 
-Give the technical owner the interaction model, reviewed visual reference and component/style sources when present, constraints, requirement links, consequential rationale, mock scope, and unresolved decisions. Give the verification owner affected scenarios, concrete user actions and expected observable outcomes, relevant states/scopes, supporting prototype evidence, and gaps. Link the existing verifier rather than starting implementation from a design-only assignment.
+Give the verification owner each affected scenario as user actions and the result they should see, the states and roles to cover, what any prototype actually exercised, and the gaps.
 
-Separate structural review and traceability from human acceptance, observed usability, and runtime correctness. Record what was actually inspected or exercised, its source identity and limits. Deliver unresolved decisions to their owner with the smallest next action needed.
+Don't start implementation from a design-only assignment.

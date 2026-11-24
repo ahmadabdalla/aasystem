@@ -1,27 +1,17 @@
 # Technology direction
 
-Use this review within solution's existing research and comparison. Reuse the product contract, project evidence, and settled decisions. Examine only choices relevant to the assigned scope.
+## Find the gaps that matter
 
-## Find consequential gaps
+Check the brief against these:
 
-Use these prompts to inspect the brief. Ask the user only when a missing preference or constraint could change the recommendation.
+- **Commitments:** existing technologies, team experience, provider accounts, ownership, and technical or contractual controls. Organisation size alone isn't a requirement.
+- **Workload:** where user interactions, server requests, scheduled work and long-running jobs run, and the duration, concurrency, latency and scaling that affect the choice.
+- **Data and access:** persistent records, files, data ownership and access boundaries. Give each workload its own identity, and confirm it's permitted to use each endpoint, not just able to reach it.
+- **Operations:** budget, acceptable downtime and data loss, who owns recovery, deployment and rollback, and how you'd notice the worst silent failure.
+- **Compatibility:** whether the parts fit together, including runtime limits, regions, tiers, identity integration and total recurring cost.
 
-- **Commitments:** Existing technologies, team experience, provider accounts, ownership, and explicit technical or contractual controls. Organization size alone does not establish a requirement.
-- **Workload:** Where user interactions, server requests, scheduled work, and long-running jobs execute. Check duration, concurrency, latency, and scaling needs where they affect the choice.
-- **Data and access:** Persistent records, files, data ownership, and access boundaries. Distinguish endpoint reachability from permission to use it, and human identity from workload identity.
-- **Operations:** Budget, acceptable downtime and data loss, recovery ownership, deployment, and rollback. Identify how the most consequential silent failure would be detected.
-- **Compatibility:** Whether the proposed components fit together. Check relevant runtime limits, regions, tiers, identity integration, and combined recurring cost.
+## Compare the whole approach
 
-## Compare the complete approach
+Check whether one choice changes another's assumptions: hosting can limit background work, identity can limit data access, and recovery needs can change storage and cost.
 
-Feed relevant findings into solution's existing alternatives. Check whether a choice changes the assumptions behind another: hosting can constrain background work; identity can constrain data access; recovery needs can change storage and cost.
-
-Name the required runtime roles, where they run, and their important dependencies. Include components only when the requirements justify them. Research current capabilities and test consequential assumptions through solution's existing evidence process.
-
-## Carry the decision forward
-
-Keep the selected technologies, runtime arrangement, tradeoffs, and evidence limits in the existing solution record.
-
-For each material unresolved choice, name who must resolve it, what must be established, and when it becomes blocking: before selection, implementation, release, or a stated future trigger. Apply Solution's [comparison and commitment review](../SKILL.md#compare-and-challenge) to consequential provider, data-format, and runtime commitments; retain the reversal cost and exit condition in that record. A replacement interface alone does not establish that data, contracts, or operations can migrate. Record a credible fallback when available; otherwise keep the recommendation conditional.
-
-Stop when the technical direction is justified and the remaining uncertainty has a clear next step. Leave routine library and code-shape choices to architect.
+Add the chosen technologies, each runtime role with where it runs and its key dependencies, and the evidence limits to the decision record. For a provider, data-format or runtime commitment, name how data, contracts and operations would move off it. A replacement interface alone isn't an exit.
