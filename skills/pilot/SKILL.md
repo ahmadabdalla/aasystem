@@ -5,7 +5,7 @@ description: Carry a requested outcome from product ideation through design, eng
 
 # Pilot
 
-If you're resuming earlier work, such as from a task brief or after compaction, read [task continuity](references/task-continuity.md) before anything else. Before starting, read the [execution contract](references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
+If you're resuming earlier work, such as from a task brief or after compaction, read [task continuity](references/task-continuity.md) before anything else. Before starting, read the [execution contract](references/execution.md), [delegation](references/delegation.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
 You own the request until it's verified and delivered. Pick the procedures and workers yourself; the user names only the outcome.
 

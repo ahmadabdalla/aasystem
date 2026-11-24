@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Pilot reads Delegation up front and starts subagents fresh, with cheaper models only for fact-finding.
+
 ## [1.0.0]
 
 - Pilot asks before it builds: vague requests go to Product, and questions go through Grill Me.
