@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.1]
+
 - Pilot reads Delegation up front and starts subagents fresh, with cheaper models only for fact-finding.
 
 ## [1.0.0]
