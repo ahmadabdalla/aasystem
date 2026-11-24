@@ -1,37 +1,45 @@
 # Interaction review checks
 
-Review the actual interaction artifact against its product sources, owning decisions, and evidence. Apply checks relevant to the assigned scope; an unchanged routine visual adjustment does not require a full product review.
+Check the actual artifact against its product sources, decisions and evidence. Skip checks outside the assigned scope; a routine visual tweak needs no product review. A change is consequential if it changes navigation, who can see or do something, or a screen's primary action.
 
-## Authority and meaning
+## Authority
 
-- Can a reader locate the source and standing of consequential requirements and presentation decisions? Does delegated authority cover the interpretation and its scope?
-- Have unknown legacy provenance and unresolved defaults remained visible? Has an agent's suggestion, repeated specification, successful prototype, or reviewer agreement been mistaken for human acceptance?
-- Does one person's ability to hold several responsibilities survive the proposed interaction? Are role, permission, information scope, and persona distinctions justified by the domain?
-- Does a proposed interaction change business meaning or add behavior that belongs with product? Is accepted behavior preserved while that choice remains unresolved?
+- Can a reader find the source and standing of each consequential requirement and presentation decision?
+- Is any open default or unknown provenance hidden?
+- Has an agent's suggestion, a repeated spec, a working prototype or reviewer agreement been treated as human acceptance?
+- Can one person still hold several roles?
+- Is every role, permission and scope distinction backed by the domain?
+- Does any interaction change business meaning or add behaviour that belongs to Product?
 
-## Purpose and coverage
+## Coverage
 
-- Can each important journey and requirement reach an appropriate interaction or a named non-UI enforcement path? Are failures, restrictions, interrupted work, and cross-role handoffs covered where relevant?
-- Can consequential destinations, tabs, prominent summaries, and control groups be traced back to a purpose and rationale? For example, does a history requirement actually justify the proposed Activity functionality?
-- Is required behavior missing from the proposed experience, or merely omitted from this mock? Are those different limits explicit?
-- Do navigation and information hierarchy help people choose and complete actions? Retain labels and explanations needed for errors, restrictions, or decisions; avoid compensating for unclear structure with repetitive prose.
+- Does every journey and requirement reach an interaction or a named non-UI owner, including failures, restrictions, unfinished work and handoffs between roles?
+- Does every consequential destination, tab, summary and control group trace to a purpose? For example, does a history requirement justify a new Activity page?
+- Is each missing behaviour marked as left out of this mock, left out of the product, or built but unverified?
+- Does the structure help people choose and finish actions, without repeated prose making up for unclear structure? Keep the labels people need for errors, restrictions and decisions.
 
-## Presentation fidelity, when a reviewed reference exists
+## Fidelity, only if a reviewed visual reference exists
 
-- Is the delivered surface compared with the identifiable reviewed revision using matching viewport, state and representative content?
-- Are explicit and accepted placement, dimensions, component shape, color, spacing and state treatments preserved where they apply? Check actual rendering; CSS values alone do not establish layout fidelity.
-- Are responsive or accessibility adaptations within the established constraints and discretion? Return material conflicts rather than silently dropping an accepted instruction.
-- Are observed differences supported changes, defects to correct, or unverified gaps? Functional success does not establish fidelity, and similar screenshots do not establish behavior.
-
-## Independent rendered UX assessment, when assigned
-
-Use [Independent rendered UX assessment](rendered-ux-assessment.md) to assess the existing rendered experience, with or without an approved visual reference. It owns the two parallel domain assignments and their rubrics. Keep fidelity differences distinct from design concerns about the reference itself; a routine model review does not automatically start this assessment.
+- Is the result compared with the reviewed revision at the same viewport, state and content?
+- Are explicit and accepted placement, size, shape, colour, spacing and state treatments kept? Check the rendering; CSS values alone don't prove layout.
+- Do responsive and accessibility adaptations stay inside the constraints? Return a conflict instead of dropping an instruction.
+- Is each difference a supported change, a defect or unverified? Similar screenshots don't prove behaviour, and working behaviour doesn't prove fidelity.
+- Are fidelity differences kept apart from concerns about the reference itself?
 
 ## Alternatives and handoff
 
-- Did consequential unsettled alternatives receive a fair comparison under shared constraints? Does the synthesis preserve tradeoffs and disagreements rather than count votes? Have required human decisions remained with the human?
-- Can the technical owner retrieve the contract, requirements, decisions, states, and unresolved constraints without interpreting a mock as the complete specification?
-- Can the verifier derive concrete actions and expected observations independently of the implementation? Is prototype evidence being claimed only for what was exercised?
-- Is there one canonical home for each requirement and decision? Can a fresh reader find current records and follow proposed, superseded, and archived references under the project's lifecycle procedure?
+- Did unsettled alternatives get a fair comparison on shared constraints, with tradeoffs and disagreement kept rather than votes counted?
+- Can the technical owner find the contract, requirements, decisions, states and open constraints without reading a mock as the full spec?
+- Can the verifier derive actions and expected results without reading the implementation?
+- Is prototype evidence claimed only for what was exercised?
+- Does each requirement and decision have one home, with proposed, superseded and archived records findable?
 
-Return blocking gaps, consequential risks, and bounded improvements with artifact references. Distinguish an observed defect from a question or unverified concern. After fixes, inspect the revised combined artifact; an earlier candidate's review does not automatically apply to a changed synthesis.
+Return one line per finding:
+
+```
+<blocking | risk | improvement> — <artifact ref> — <issue> — <defect | concern | question>
+```
+
+Blocking must be fixed before handoff. A risk is consequential and its owner decides. An improvement is optional.
+
+After fixes, check the revised combined artifact. A review of an earlier candidate doesn't carry over.

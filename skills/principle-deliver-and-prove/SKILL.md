@@ -1,18 +1,24 @@
 ---
 name: principle-deliver-and-prove
-description: Establish readiness to deliver an implementation and verify its expected behavior before editing. Use when beginning implementation or when new findings change what delivery or proof requires.
+description: Before editing, check you can deliver the change and prove it works. Use when starting implementation, or when a finding changes what delivery or proof needs.
 disable-model-invocation: true
 ---
 
 # Be ready to deliver and prove
 
-At the start of implementation, answer two questions:
+Before you edit, answer two questions:
 
-1. **Do I have everything I need to deliver this?**
-2. **Do I have everything I need to verify what I build and prove it?**
+1. **Can I deliver this?** You need the expected behaviour, the project's conventions, and inputs and dependencies you can actually reach.
+2. **Can I prove it?** You need a check you can run, what it needs to run, and an agreed expected result to compare against.
 
-Ground the answers in the assigned scope, project instructions and observed evidence. Delivery needs clear expected behavior, relevant conventions, accessible inputs and usable dependencies. Proof needs a runnable verification path, its prerequisites and a way to compare observed outcomes with the agreed expectations. Establish that path before depending on it; finding test files alone does not show that it works.
+Establish that the check runs before you depend on it. Test files existing don't show that.
 
-Resolve gaps within authorized scope before the work that depends on them. Use the existing [project verification routes](../pilot/references/execution.md#verification-through-the-project); return material conflicts or unavailable prerequisites to the owner under the [decision authority rules](../pilot/references/execution.md#decision-authority). Revisit the questions when findings change either answer.
+If either answer is no, fix the gap within your assigned scope before the work that depends on it, using the [project's verification routes](../pilot/references/verification-contract.md#verification-through-the-project). If you can't, or the gap is a conflict that changes what you'd build, return it to the owner under [Ask the human](../pilot/references/execution.md#ask-the-human). If a finding changes either answer, answer again.
 
-Prefer discovering delivery and proof gaps early to building on untested assumptions. Match the checks to the change: an exact presentation edit needs its relevant checks, while a behavior change needs evidence from the affected surface. Code checks support only the boundaries they exercise; identify any system validation still needed. A failing baseline can be useful proof of a reported bug. Record material gaps and intended checks in the existing task brief; these questions add no routine approval or separate report. Readiness establishes a way to obtain proof; completion still requires the actual results.
+Match the checks to the change. A presentation-only edit needs presentation checks; a behaviour change needs evidence from the surface it affects. If a check covers only part of the change, name the system check still needed.
+
+Write gaps and planned checks into the existing brief, not a new report or approval step.
+
+Why: finding a delivery or proof gap early beats building on an untested assumption.
+
+Where it stops: being ready to prove isn't proof. Finishing still needs the results.

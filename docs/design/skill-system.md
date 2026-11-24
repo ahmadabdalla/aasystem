@@ -1,84 +1,38 @@
 # Skill system
 
-This file records the library’s structure, ownership, sources, and deliberate adaptations.
+This file records the library's structure, who owns what, where each skill came from, and what we changed on purpose. Maintenance rules live in [`AGENTS.md`](../../AGENTS.md) and Codex settings in [`docs/ops/codex.md`](../ops/codex.md).
 
-It does not define maintenance steps or Codex invocation settings.
-
-- **Maintenance rules:** [`AGENTS.md`](../../AGENTS.md)
-- **Codex settings:** [`docs/ops/codex.md`](../ops/codex.md)
 - **Operating design:** [How Pilot works](verification-contract.md)
 - **Visual map:** [Ahmad Abdalla's Pilot System Graph](../../visualizations/skill-library/index.html)
 
 ## System flow
 
-The default flow is:
-
 `pilot -> playbook -> supporting skills -> project evidence`
 
-1. [`pilot`](../../skills/pilot/SKILL.md) owns coordination and completion
-2. A playbook defines the task sequence
-3. Supporting skills return bounded results to their caller
-4. The caller updates canonical project records
-5. Project verification supplies observed results
+1. [`pilot`](../../skills/pilot/SKILL.md) coordinates the task and decides when it's done.
+2. A playbook sets the sequence.
+3. Supporting skills return bounded results to their caller.
+4. The caller updates the project's records.
+5. Project verification supplies what was observed.
 
-[System in Motion](../../skills/system-in-motion/SKILL.md) is a separate, direct entry point. It owns its source-grounding, presentation, and verification contracts. It follows shared decision authority and uses Grill Me for a requested interview or several interdependent choices about the walkthrough brief.
-
-Pilot and its supporting procedures use:
-
-- The [execution contract](../../skills/pilot/references/execution.md)
-- The [principle index](../../skills/principles/INDEX.md)
-- The current project instructions
-- The current task brief
+Pilot and its supporting skills use the [execution contract](../../skills/pilot/references/execution.md), the [principle index](../../skills/principles/INDEX.md), the project's instructions and the task brief. [System in Motion](../../skills/system-in-motion/SKILL.md) is a separate direct entry point with its own source, presentation and verification contracts.
 
 ## Ownership boundaries
 
-Use these boundaries when skills interact:
+Each skill's role is in the [inventory](#skill-inventory). These parts aren't skills:
 
-- **pilot:** shared understanding, scope and proof assessment, routing, direct or delegated execution, and completion
-- **Task continuity reference:** durable intent, scope-aware increments, recovery and task-wide reconciliation; existing rubric and procedures retain sizing, specialist responsibilities and proof requirements
-- **Optional Codex adapter:** session/cwd-bound local state, hook context restoration and recorded completion checks; it neither chooses the route nor authenticates semantic acceptance
-- **Product:** journeys, behavior, rules, and acceptance scenarios
-- **Grill me:** attributed interview evidence
-- **Interaction design:** navigation, interactions, information hierarchy, and coordination of assigned independent rendered UX assessments
-- **UI refinement:** the bounded human review loop
-- **Design judge:** default visual standards and read-only design-system audits; projects' established tokens take precedence, and remediation goes through Feature
-- **Prototype:** the inspectable throwaway artifact
-- **Solution:** the overall approach
-- **Architect:** implementation shape, boundaries, rationale, and verification planning; design-only
-- **10x:** shared growth assessment; domain callers retain decisions and carry required proof into delivery
-- **Implement:** bounded edits against a supplied design or contract, development checks, and evidence return
-- **Maintainability:** reusable criteria for reader effort, local change cost, and ease of verification; also returns bounded assessments to its caller
-- **Explain visually:** plain-text diagrams matched to the reader's question; Investigation finds missing facts; Investigation and standalone How send diagram requests here
-- **Feature playbook:** authorized production delivery
-- **Project verifier:** the project-owned procedure and reusable checks
-- **Independent verification agent:** a worker separate from every producer of assessed work, using the affected domains' criteria and specialist procedures; production engineering combines Maintainability assessment with project-verifier execution and returns distinct findings and observations
-- **Interrogate:** adversarial review findings and conditional PR merge-risk judgments; review does not replace executable verification
-- **Caller:** phase transitions and canonical record updates
+- **Task continuity reference:** the durable brief, increments, recovery and task-wide reconciliation.
+- **Optional Codex adapter:** local state per session and directory, restored context and recorded completion checks. It doesn't choose the route or judge the result.
+- **Playbooks:** the sequence for each kind of task; Feature owns authorized production delivery.
+- **Project verifier:** the project's own procedure and checks.
+- **Independent verification agent:** a worker separate from everyone who produced the work. It assesses with Maintainability's criteria, runs the project's checks, and returns findings and observations separately.
+- **Caller:** phase changes and updates to project records.
 
-Supporting skills do not gain production scope from an assignment.
-
-Project records remain usable without this library.
-
-Separate reports need a stated retention purpose.
+Supporting skills don't gain production scope from an assignment. Project records must stay usable without this library.
 
 ## Project-owned records
 
-Projects own these durable records:
-
-- Verification procedures
-- Feature maps
-- Glossaries
-- Product decisions
-- Design decisions
-- Software decisions
-
-New feature maps live inside the project verifier.
-
-Use `features/README.md` plus linked feature files.
-
-Preserve an equivalent existing layout.
-
-For OpenSpec projects, use the [integration reference](../../skills/pilot/references/openspec.md).
+Projects own their verification procedures, feature maps, glossaries, and product, design and software decisions. New feature maps live in the project verifier as `features/README.md` plus linked feature files, unless an equivalent layout exists. OpenSpec projects follow the [integration reference](../../skills/pilot/references/openspec.md).
 
 ## Skill inventory
 
@@ -96,17 +50,18 @@ Each row names the skill’s role, source, and local adaptation.
 | [`maintainability`](../../skills/maintainability/SKILL.md) | Assess reader effort, local change, and ease of verification | pstack [`Minimize Reader Load`](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-minimize-reader-load/SKILL.md) and [`Architect red flags`](https://github.com/cursor/plugins/blob/main/pstack/skills/architect/references/design-red-flags.md); Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/main/skills/engineering/codebase-design/SKILL.md) and [`code-review`](https://github.com/mattpocock/skills/blob/main/skills/engineering/code-review/SKILL.md); [selected engineering inputs](#selected-engineering-inputs) | Owns reusable criteria in [`SKILL.md`](../../skills/maintainability/SKILL.md), [`local code`](../../skills/maintainability/references/local-code.md), and [`boundaries`](../../skills/maintainability/references/boundaries.md), consumed directly by design, implementation, and independent verification |
 | [`interaction-design`](../../skills/interaction-design/SKILL.md) | Design consequential interactions | pstack [`Experience First`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-experience-first/SKILL.md), [`Exhaust the Design Space`](https://github.com/cursor/plugins/blob/9f451cf875ad1239912762f67741e8e5ba6ac0f1/pstack/skills/principle-exhaust-the-design-space/SKILL.md), Matt Pocock [`wayfinder`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/wayfinder/SKILL.md) | Keeps product meaning and implementation architecture with their owners |
 | [`ui-refinement`](../../skills/ui-refinement/SKILL.md) | Refine a rendered experience | First-party founder requirement | Returns a reviewed reference; the caller retains delivery |
-| [`design-judge`](../../skills/design-judge/SKILL.md) | Audit visual consistency and own default visual standards | First-party; user-stated corner-radius audit and UI/UX standards; alignment method adapted from the [`gridlines`](https://github.com/pritamux/gridlines) skill | Owns the default [visual standards](../../skills/design-judge/references/visual-standards.md) and a report-only [design-system audit](../../skills/design-judge/references/design-system-audit.md); project tokens take precedence |
+| [`design-judge`](../../skills/design-judge/SKILL.md) | Audit visual consistency and own default visual standards | First-party; user-stated corner-radius audit and UI/UX standards; alignment method adapted from the [`gridlines`](https://github.com/pritamux/gridlines) skill | Owns the default [visual standards](../../skills/design-judge/references/visual-standards.md) and a report-only audit; project tokens take precedence |
 | [`prototype`](../../skills/prototype/SKILL.md) | Build an inspectable experiment | Matt Pocock [`prototype`](https://github.com/mattpocock/skills/blob/6fd947921b935b7e1e69293a200400f0fdd5c15f/skills/engineering/prototype/SKILL.md) | Uses isolated artifacts; excludes automatic production promotion |
-| [`how`](../../skills/how/SKILL.md) | Trace current behavior | pstack [`how`](https://github.com/cursor/plugins/blob/main/pstack/skills/how/SKILL.md) | Reports unavailable exploration paths |
+| [`how`](../../skills/how/SKILL.md) | Trace current behavior | pstack [`how`](https://github.com/cursor/plugins/blob/main/pstack/skills/how/SKILL.md) | Names each untraced step as a gap |
 | [`why`](../../skills/why/SKILL.md) | Reconstruct prior rationale | pstack [`why`](https://github.com/cursor/plugins/blob/main/pstack/skills/why/SKILL.md) | Checks several evidence sources and reports access gaps |
 | [`explain-visually`](../../skills/explain-visually/SKILL.md) | Explain flows, responsibilities, and changes with plain-text diagrams | First-party; [issue 62](https://github.com/ahmadabdalla/aasystem/issues/62) and agreed user scope | Matches layout to the question, writes plainly, and keeps sources and limits; Investigation finds missing facts |
 | [`probe`](../../skills/probe/SKILL.md) | Test an important assumption | pstack [`prototype`](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/prototype.md) | Separates empirical questions from artifact prototyping |
 | [`arena`](../../skills/arena/SKILL.md) | Compare competing options | pstack [`arena`](https://github.com/cursor/plugins/blob/main/pstack/skills/arena/SKILL.md) | Uses an independent judge when available |
 | [`interrogate`](../../skills/interrogate/SKILL.md) | Find consequential weaknesses and assess PR merge risk | pstack [`interrogate`](https://github.com/cursor/plugins/blob/main/pstack/skills/interrogate/SKILL.md); Warp [`merge-risk`](https://github.com/warpdotdev/common-skills/blob/8792394ff1b655e0af451b8fabb68ef0cfcbd208/.agents/skills/merge-risk/SKILL.md) | Challenges framing, selects review inputs through the shared context rule, and owns the conditional [merge-risk criteria](../../skills/interrogate/references/merge-risk.md) |
-| [`grill-me`](../../skills/grill-me/SKILL.md) | Interview in decision rounds or conduct product discovery | Matt Pocock [`grilling`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling/SKILL.md) and [`grill-with-docs`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs/SKILL.md) | Loads one interview reference; reuses Domain Modeling for scoped inline capture; Product retains discovery synthesis |
+| [`grill-me`](../../skills/grill-me/SKILL.md) | Interview in decision rounds or conduct product discovery | Matt Pocock [`grilling`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/productivity/grilling/SKILL.md) and [`grill-with-docs`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/grill-with-docs/SKILL.md) | Keeps question rounds in its entry and discovery in one reference; reuses Domain Modeling for scoped inline capture; Product retains discovery synthesis |
 | [`domain-modeling`](../../skills/domain-modeling/SKILL.md) | Define terms and record decisions | Matt Pocock [`domain-modeling`](https://github.com/mattpocock/skills/blob/b0618bc436ad893b3c5e84e55fba86586d34a404/skills/engineering/domain-modeling/SKILL.md) | Adds ownership, evidence, layout, and supersession rules |
 | [`tdd`](../../skills/tdd/SKILL.md) | Prove a regression before a fix | pstack [`tdd`](https://github.com/cursor/plugins/blob/main/pstack/skills/tdd/SKILL.md) | Adds practical test limits and repeats the original check |
+| [`prune-tests`](../../skills/prune-tests/SKILL.md) | Remove tests that guard no behavior | User-supplied standalone skill; source to be confirmed | Keeps contract-required absences and tests at different entry points, prunes only passing tests, and proves coverage for each deletion |
 | [`swarm`](../../skills/swarm/SKILL.md) | Coordinate parallel work | pstack [`swarm`](https://github.com/cursor/plugins/blob/main/pstack/skills/swarm/SKILL.md) | Uses available models; missing results remain unfinished |
 | [`figure-it-out`](../../skills/figure-it-out/SKILL.md) | Create a task-specific workflow | pstack [`figure-it-out`](https://github.com/cursor/plugins/blob/main/pstack/skills/figure-it-out/SKILL.md) | Preserves plan-only requests and adds explicit checks |
 | [`show-me-your-work`](../../skills/show-me-your-work/SKILL.md) | Keep a decision log | pstack [`show-me-your-work`](https://github.com/cursor/plugins/blob/main/pstack/skills/show-me-your-work/SKILL.md) | Saves locally and reports missing review material |
@@ -136,229 +91,90 @@ The playbooks follow [pstack’s playbook set](https://github.com/cursor/plugins
 
 ## Deliberate system adaptations
 
+Each section records a decision and its source. The linked file owns the rule.
+
 ### Entry-point rename
 
-The entry skill is now `pilot`, moved with its playbooks, shared contracts,
-scripts and optional adapter into `skills/pilot/`. Supporting callers, invocation
-examples, package requirements and graph source links use that tree. This is a
-name/path change: routing, ownership, proof requirements, explicit invocation
-policies and the `aasystem` plugin identity are preserved. No `aapilot` alias is
-exported. The Codex adapter activates `$aasystem:pilot` and `$pilot`; its version-2
-state format is unchanged and retains original request text. The
-[upgrade procedure](../ops/releasing.md#upgrade-from-aapilot-to-pilot) owns consumer
-migration, including separately configured hooks and external references.
+The entry skill is `pilot`, in `skills/pilot/` with its playbooks, contracts, scripts and optional adapter. Only the name and path changed: routes, ownership, proof, invocation policies and the `aasystem` plugin identity are the same. There's no `aapilot` alias. The Codex adapter answers to `$aasystem:pilot` and `$pilot`, and its version 2 state format is unchanged. The [upgrade procedure](../ops/releasing.md#upgrade-from-aapilot-to-pilot) owns migration.
 
 ### Coordination
 
-The first-party, user-requested [effort rubric](../../skills/pilot/references/effort.md) owns S/M/L profiles and consequence-driven scrutiny. The [execution contract](../../skills/pilot/references/execution.md#scope-and-proof) owns application by task owners and standalone specialists, with [inheritance and reassessment](../../skills/pilot/references/execution.md#ownership-and-handoffs) across assignments.
+The first-party [effort rubric](../../skills/pilot/references/effort.md) owns S, M and L sizing. The [execution contract](../../skills/pilot/references/execution.md) is short because every skill reads it. Rules only some tasks need live in files it links: [Delegation](../../skills/pilot/references/delegation.md) for handoffs, invocation restrictions and review context; the [verification contract](../../skills/pilot/references/verification-contract.md) for behaviour changes, with [local execution](../../skills/pilot/references/local-execution.md) for worktrees, copies, cleanup and input fingerprints; and [task continuity](../../skills/pilot/references/task-continuity.md#bounded-autonomy) for unattended work. Agents read whole files, so a separate file, not a section pointer, keeps those rules out of tasks that don't need them.
 
-The [execution contract](../../skills/pilot/references/execution.md) adds:
-
-- Caller-owned phase transitions
-- Sourced requirements, delegated implementation proposals and actual human agreement under [decision authority](../../skills/pilot/references/execution.md#decision-authority), which owns the inspectable human checkpoint handoff and stop/wait rule
-- Non-overlapping canonical writes
-- Freshness checks after supporting work returns
-- No implied scheduler, runtime lock, or automatic approval
-- Fresh workers for independent tasks
-- Independent candidates and judges
-- Review inputs distinguishing independent discovery from confirmation/evidence audits, including exposure through initial returned findings and preserved initial reports
-- Adversarial review where the playbook requires it
-
-Local styling cannot silently change a shared design system.
-
-Shared rules stay in the execution contract. Its [delegation procedure](../../skills/pilot/references/execution.md#delegation) owns capability checks, direct or delegated execution and result acceptance; its [completion rules](../../skills/pilot/references/execution.md#completion) own planned closing assignments and final reconciliation.
-
-Specialists keep only actionable scope reminders.
-
-The [skill authoring playbook](../../skills/pilot/playbooks/authoring-a-skill.md) owns instruction specificity, deduplication, and criteria for splitting skills or using references.
-
-Worker selection follows a concrete parallelism, capability or context need. Comparison uses independent candidates when they can change an unresolved material choice; selected Arena comparisons retain isolation and separate judging. Bounded implementer continuity does not relax fresh independent verification.
-
-The [Architect design trigger](../../skills/architect/SKILL.md#design-trigger) owns the boundary criterion linked by Bug Fix and Refactoring. [Swarm](../../skills/swarm/SKILL.md) declares comparison criteria before ranked races. [Domain Modeling](../../skills/domain-modeling/SKILL.md) distinguishes established glossary meanings from decision-record standing and authority.
+The [skill authoring playbook](../../skills/pilot/playbooks/authoring-a-skill.md) owns how specific an instruction must be, deduplication, and when to split a skill or add a reference. Specialists keep only scope reminders they act on.
 
 ### Grilling and documentation
 
-Pilot and direct requests use the same [Grill Me entry](../../skills/grill-me/SKILL.md). The [grilling reference](../../skills/grill-me/references/grilling.md) owns the decision tree, question rounds, fact finding, recommendations and final confirmation. The execution contract supplies scope and authority. Pending facts block only dependent questions; each round waits for the user's answers.
+Pilot and direct requests use the same [Grill Me entry](../../skills/grill-me/SKILL.md), which owns the question rounds. [Product-discovery interviews](../../skills/grill-me/references/discovery-interview.md) load their own reference and return attributed evidence to Product. Grill Me records settled terms and decisions through Domain Modeling; "with docs" uses the same path.
 
-Load Domain Modeling when terms or consequential decisions emerge. Record them as they settle, following its glossary and ADR formats, recording thresholds and edit scope. "With docs" uses this same path. Requirements stay in their brief; read-only work returns proposed text. [Product-discovery interviews](../../skills/grill-me/references/discovery-interview.md) keep their one-question procedure and return attributed evidence to Product for synthesis.
+### Design, implementation and verification
 
-Load the selected interview reference and reuse shared instructions already in context. New contexts read the baseline. Skill count and invocation policies stay unchanged. Package checks alone do not establish host discovery or composition.
+- [Architect](../../skills/architect/SKILL.md) designs only. A design-and-build request needs a playbook to own the build.
+- [Implement](../../skills/implement/SKILL.md) is shared by Feature, Bug Fix, Refactoring and Figure It Out. The caller supplies the design, file ownership and checks.
+- The [verification contract](../../skills/pilot/references/verification-contract.md) owns when a separate verifier runs and the narrow [owner-presentation exception](../../skills/pilot/references/verification-contract.md#owner-presentation-eligibility). [Engineering Verification](../../skills/pilot/references/engineering-verification.md) is that verifier's brief. The verifier is an agent role, not another skill or review pool.
+- The optional [input_identity.py](../../skills/pilot/scripts/input_identity.py) fingerprints and compares inputs read-only (Python 3.10+ and Git) when the project has nothing suitable. It creates no copies.
+- Architect's [seed scenario reference](../../skills/architect/references/seed-scenarios.md) is conditional, read by Feature when proof depends on state, so seed data needs no separate skill.
 
-### Standard verification contract
-
-The [verification contract](../../skills/pilot/references/verification-contract.md) connects agreed expectations to the tested artifact, independent observations, findings and delivery. Reuse project records. Research and design retain scoped sources and rationale.
-
-The [execution contract](../../skills/pilot/references/execution.md#owner-presentation-eligibility) owns the narrow owner-presentation exception. Feature and direct Implement expose it without extra coordinator or worker; it cannot waive independent review required by the user or project. Other retained implementation requires separate verification and applicable human checkpoints.
-
-Local implementation and verification reuse the checkout or one task worktree. The optional [input_identity.py](../../skills/pilot/scripts/input_identity.py) provides a Python 3.10+/Git read-only fingerprint and comparison when project facilities are insufficient. It streams selected inputs and creates no source copies. Project checks supply behavioural observations; owner/verifier judgment supplies semantic scope and acceptance. None of these mechanisms authenticates actors or controls all host tools.
-
-### Design, implementation, and independent verification
-
-[`architect`](../../skills/architect/SKILL.md) owns design only: caller usage, interfaces, data shapes, ownership, rationale, and proof planning. A direct design-and-build request needs a coordinating playbook to retain implementation and completion scope. Implementation evidence that contradicts the design returns through the caller for design revision.
-
-[`implement`](../../skills/implement/SKILL.md) is shared bounded execution support for Feature, Bug Fix, Refactoring, and Figure It Out. Each caller supplies its settled design or contract, file ownership, constraints, and assigned checks; Implement returns edits and development evidence into that caller’s run. A direct eligible owner-presentation request can stay with Implement through acceptance.
-
-The [execution contract](../../skills/pilot/references/execution.md#independent-implementation-verification) owns dispatch of a separate verification worker and [owner-presentation eligibility](../../skills/pilot/references/execution.md#owner-presentation-eligibility). The first-party [engineering-verification reference](../../skills/pilot/references/engineering-verification.md) defines that worker's combined assignment: bounded scope and structure assessment using Maintainability criteria, plus affected project-verifier checks. Its result distinguishes qualitative findings from executable observations. The verifier is an existing agent role, not another portable skill or review pool. The caller retains integration, material-finding dispositions, current proof, and explicit semantic acceptance. Interrogate supplies adversarial review when warranted; its findings do not establish runtime behavior.
-
-[Feature](../../skills/pilot/playbooks/feature.md) orders retained implementation around unresolved integration assumptions, recording the first slice's expected and observed results before dependent expansion. Final independent verification remains required.
-
-Architect's first-party [seed scenario reference](../../skills/architect/references/seed-scenarios.md) owns data purpose, minimal context, lifecycle and source/build/release/invocation decisions. Feature reads it when proof depends on state. The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#scenario-coverage) owns completion and automation criteria through existing Bootstrap/Maintain routes. Decisions and proof stay in current assignments and project records. A conditional reference avoids a separate skill and repeated lifecycle guidance.
+None of these mechanisms authenticates who acted or controls every host tool.
 
 ### Signal effects
 
-The [execution contract](../../skills/pilot/references/execution.md#signal-effects) owns the change-scoped signal account across delivery and direct skill use. Architect plans relevant checks, Implement reconciles the diff, and Engineering Verification checks affected expectations. Bootstrap and Maintain consume the [project contract](../../skills/bootstrap-verification/references/project-contract.md), linking project-owned detection guidance rather than copying it.
-
-Interrogate's [signal assessment](../../skills/interrogate/references/signal-assessment.md) traces detection for an existing system, proposed design, or change. How traces current signal paths. These direct entrances add no portable skill or Pilot route; existing review-context, proof and authority rules still apply. This is first-party guidance for [issue 66](https://github.com/ahmadabdalla/aasystem/issues/66), following the user's preference for concise instructions with explicit evidence limits.
+The [execution contract](../../skills/pilot/references/execution.md#signal-effects) owns the signal account for a change. Interrogate's [signal assessment](../../skills/interrogate/references/signal-assessment.md) traces detection, and How traces current signal paths. Neither adds a skill. Source: [issue 66](https://github.com/ahmadabdalla/aasystem/issues/66).
 
 ### Merge-risk review
 
-Interrogate's [Merge risk](../../skills/interrogate/references/merge-risk.md) reference preserves the instructional body of Warp's [`merge-risk`](https://github.com/warpdotdev/common-skills/blob/8792394ff1b655e0af451b8fabb68ef0cfcbd208/.agents/skills/merge-risk/SKILL.md) verbatim at commit `8792394ff1b655e0af451b8fabb68ef0cfcbd208`. Only standalone-skill frontmatter is omitted and a reference heading is added. Upstream credits Matt Pocock's PR skill; the existing Matt Pocock notice and [Warp MIT notice](../../WARP_LICENSE.txt), copyright Denver Technologies, Inc., travel with the export.
+Interrogate's [Merge risk](../../skills/interrogate/references/merge-risk.md) reference keeps the instructional body of Warp's [`merge-risk`](https://github.com/warpdotdev/common-skills/blob/8792394ff1b655e0af451b8fabb68ef0cfcbd208/.agents/skills/merge-risk/SKILL.md) verbatim at commit `8792394ff1b655e0af451b8fabb68ef0cfcbd208`, with only the frontmatter removed and a heading added. Upstream credits Matt Pocock's PR skill. The Matt Pocock notice and the [Warp MIT notice](../../WARP_LICENSE.txt), copyright Denver Technologies, Inc., travel with the export. The earlier local rewrite and its scoring definitions are gone.
 
-The reference retains the five categories, per-category verdicts and emojis, output format, examples, UX screenshot/recording and performance-profiling requirements, before-and-after preference, and hidden weighted score with its original thresholds. Interrogate's wrapper owns integration with project review formats and shared verification/authority rules. A calculated low or medium rating does not close missing required checks or authorize merging; findings and proof gaps remain visible separately. The former local rewrite and qualitative scoring definitions are not retained.
-
-Direct Interrogate requests and its existing callers reach the reference for PR/diff merge-readiness assessments or when recovery or failure detection can change a change-review verdict. [Opening a PR](../../skills/pilot/playbooks/opening-a-pr.md) requests Interrogate for those consequential cases and carries its result into the project's reviewer brief. General design reviews retain their existing procedure. Pilot gains no merge-risk route, and no new portable skill, reviewer pool, executable-proof owner, or merge authority is introduced. Engineering Verification retains affected executable checks; the caller retains corrections and delivery. This follows the preserve-decision-context principle by carrying the proof limits and recovery constraints into the acceptance decision.
-
-Package validation establishes links, metadata and adapters. Behavioral evaluations and their limits belong in the change's evidence; neither this structure nor a risk verdict proves host discovery, production readiness, or comparative improvement.
+Interrogate reads it for PR merge-readiness, or when recovery or failure detection could change a review verdict. [Opening a PR](../../skills/pilot/playbooks/opening-a-pr.md) carries the result into the reviewer brief. A low or medium rating doesn't close missing checks or authorize a merge.
 
 ### Growth assessment
 
-[`10x`](../../skills/10x/SKILL.md) owns one reusable assessment method. Solution, Architect and Interaction Design apply it before settling consequential designs, reusing current findings and extending only newly exposed constraints. Pilot also routes standalone growth-assessment requests to it. Direct application and bounded independent assignments use the same contract; invocation creates no new coordinator or mandatory worker.
-
-The assessment states a baseline and growth scenario, first constraint, present/deferred tradeoff, proof need and reconsideration trigger. Assumptions, proposed targets and observed capacity remain distinct. Existing design handoffs carry required checks to [engineering verification](../../skills/pilot/references/engineering-verification.md); deferred targets do not become release requirements. ADR formatting remains owned by [Domain Modeling](../../skills/domain-modeling/references/adr.md).
+[10x](../../skills/10x/SKILL.md) is one reusable assessment. Solution, Architect and Interaction Design apply it before settling a consequential design, and Pilot routes standalone requests to it. Deferred targets don't become release requirements.
 
 ### Maintainability
 
-[`maintainability`](../../skills/maintainability/SKILL.md) is a conditional supporting assessment for Architect, Refactoring, and Interrogate when its findings can change a design, structural improvement, or review verdict.
+[Maintainability](../../skills/maintainability/SKILL.md) owns the criteria that used to live in Architect: its `SKILL.md`, [local code](../../skills/maintainability/references/local-code.md) and [boundaries](../../skills/maintainability/references/boundaries.md). Architect, Implement and the verifier read them directly, without invoking Maintainability. A full assessment runs only when its findings could change a design, refactoring or review verdict, or when Pilot routes an explicit request. The [module design review](../../skills/maintainability/references/module-design-review.md) adapts the user's proposal.
 
-Pilot also routes explicit module-design and existing-code maintainability assessments to Maintainability. Its [module design review](../../skills/maintainability/references/module-design-review.md), adapted from the user's supplied proposal, owns bounded sampling, a concrete behavior trace, a hypothetical change trace, and a report organized by depth, interface, locality, leverage, and seams. It applies the existing criteria rather than introducing another skill or design owner. Scores are optional scoped judgments when requested; test inspection and execution remain distinct evidence. Supporting design/diff assessments and routine criterion use retain their existing path. Comparative behavioral improvement and cross-host composition are not established by this integration.
+Two conditional references follow the same pattern: Implement reads [Refactoring moves](../../skills/implement/references/refactoring-moves.md) for structural edits, and Architect reads [Business state](../../skills/architect/references/business-state.md) when identity, state ownership, invariants or cross-context coordination change. Each of the three references stays under 80 lines. The [design package](../../skills/architect/references/design-package.md) carries guarantees and required cases to the verifier, so one verifier covers these concerns.
 
-The reusable assessment criteria formerly held by Architect now live with Maintainability in its [`SKILL.md`](../../skills/maintainability/SKILL.md), [local-code reference](../../skills/maintainability/references/local-code.md), and [boundaries reference](../../skills/maintainability/references/boundaries.md). Architect, Implement, and the independent verifier consume the relevant criteria directly; reading them does not require a separate Maintainability invocation. The conditional deeper assessment remains available when its findings could change a decision. Architect retains implementation design and Refactoring retains equivalence proof.
+### Test pruning
 
-The boundaries reference also supplies dependency-design questions: caller obligations, knowledge ownership, dependency direction, justified adapters, and preserved failure meaning. Architect applies these during comparison; Implement and the verifier use the same criteria against the actual artifact.
-
-Implement conditionally reads [Refactoring moves](../../skills/implement/references/refactoring-moves.md) for assigned structural improvements. Architect conditionally reads [Business state and consistency](../../skills/architect/references/business-state.md) when identity, state ownership, invariants, or cross-context coordination change. Both return into existing design, implementation, and verification handoffs; Domain Modeling retains terminology and records. No new skill, verifier, or external installation is introduced. This PoC keeps each of these three references at no more than 80 physical lines, including headings and blanks.
-
-The [design package](../../skills/architect/references/design-package.md) carries applicable guarantees and required cases into implementation and independent verification. [Engineering Verification](../../skills/pilot/references/engineering-verification.md) applies local-code criteria to production edits and boundary criteria when relevant, derives checks from the authorised contract and actual artifact as well as that handoff, and keeps qualitative findings separate from executable proof. It reads the business-state procedure only when interpreting or checking coverage requires it. Recipe gaps return through [Maintain Verification](../../skills/maintain-verification/SKILL.md) within the existing scope; unchanged recipes need no edit. One verifier can cover these concerns without another review pool or blanket source reading.
+[Prune Tests](../../skills/prune-tests/SKILL.md) owns test cleanup. Maintainability's [verification clarity](../../skills/maintainability/references/local-code.md) defines a needed test. Pilot routes "which tests are useless?" to Maintainability and "prune them" to Refactoring. Implement, Maintain Verification and the verifier never prune tests nobody asked to prune.
 
 ### Selected engineering inputs
 
-The user supplied local Clean Code and Pragmatic Programmer references as conceptual inputs. The local Clean Code skill's metadata identifies author `wondelai`, version `1.4.0`, and license `MIT`. The supplied Pragmatic Programmer file has no license declaration; no additional provenance or license is asserted here. These local inputs are not export dependencies.
+The user supplied local Clean Code and Pragmatic Programmer references as conceptual inputs. The Clean Code skill's metadata names author `wondelai`, version `1.4.0` and license `MIT`. The Pragmatic Programmer file declares no license, and none is asserted here. Neither is an export dependency.
 
-The library authors its own bounded adaptations rather than copying those manuals: names and flow that expose intent, meaningful failure contracts, preserved rationale, duplication judged as shared knowledge, explicit invariants, test independence, generated-source ownership, and evidence about coupling and reversal cost. Solution owns approach and commitment comparisons. Maintainability owns the criteria consumed by Architect for design, Implement for assigned edits, and the existing verifier for independent assessment. The [engineering-verification reference](../../skills/pilot/references/engineering-verification.md) is a first-party procedure for that gate. Fixed cleanliness scores, size quotas, blanket extraction or error-handling policies, speculative abstractions, and unrelated cleanup are not adopted.
+These pinned sources informed bounded first-party references, not copied text:
 
-The compact-reference PoC uses these additional conceptual inputs, pinned for review:
+- Wondel.ai [`refactoring-patterns`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/refactoring-patterns/SKILL.md): Implement's refactoring moves.
+- Wondel.ai [`clean-architecture`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/clean-architecture/SKILL.md), [`software-design-philosophy`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/software-design-philosophy/SKILL.md) and Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/codebase-design/SKILL.md): Maintainability's boundary criteria.
+- Wondel.ai [`domain-driven-design`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/domain-driven-design/SKILL.md): Architect's business-state reference.
+- Wondel.ai [`pragmatic-programmer`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/pragmatic-programmer/SKILL.md): an identified upstream for the craftsmanship concepts, separate from the local file.
 
-- Wondel.ai [`refactoring-patterns`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/refactoring-patterns/SKILL.md): transformation choices and compatibility hazards inform Implement's first-party refactoring reference.
-- Wondel.ai [`clean-architecture`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/clean-architecture/SKILL.md), [`software-design-philosophy`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/software-design-philosophy/SKILL.md), and Matt Pocock [`codebase-design`](https://github.com/mattpocock/skills/blob/5beb35b040e3de97e54fa9e386d7e42d15c295c2/skills/engineering/codebase-design/SKILL.md): dependency ownership, caller burden, and useful abstraction inform the existing boundary criteria.
-- Wondel.ai [`domain-driven-design`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/domain-driven-design/SKILL.md): identity, business contexts, and invariant ownership inform Architect's first-party business-state reference. Events, consistency mechanisms, and deployment splits remain decisions derived from the project's accepted rules.
-- Wondel.ai [`pragmatic-programmer`](https://github.com/wondelai/skills/blob/c172996495bed0fcd26896a9416b2093fd7073f0/pragmatic-programmer/SKILL.md) provides an identified upstream counterpart for the selected craftsmanship concepts. This is separate from the locally supplied file of undeclared provenance; neither is a runtime dependency.
-
-Selected behavior remains owned and verifiable through the following existing paths. This is a maintainer coverage map, not an additional runtime checklist or a claim to reproduce the full upstream manuals.
-
-| Engineering input | Behavior retained and owning instructions | Verification connection |
-| --- | --- | --- |
-| Clean Code | [Local-code criteria](../../skills/maintainability/references/local-code.md): intent, focused responsibilities, visible effects, meaningful failures, rationale, and independent test expectations. [Refactoring moves](../../skills/implement/references/refactoring-moves.md): preserve ordering, compatibility, and effects during structural edits. | The same independent verifier assesses relevant changed code; [Refactoring](../../skills/pilot/playbooks/refactoring.md) retains baseline/equivalence proof. |
-| Pragmatic Programmer | Local-code criteria distinguish shared knowledge from coincidental similarity; [boundary criteria](../../skills/maintainability/references/boundaries.md) retain change locality, generated-source ownership, invariants, and concrete reversal cost. [Solution](../../skills/solution/SKILL.md) owns commitments and exit conditions; [Feature](../../skills/pilot/playbooks/feature.md) owns the first retained integration slice, while [Prototype](../../skills/pilot/playbooks/prototype.md) owns throwaway experiments. | Check contract-derived outcomes and real integration at the affected surface; accepted rationale and a substitute's pass do not prove production behavior. |
-| DDD | [Business-state design](../../skills/architect/references/business-state.md) covers identity/value meaning, context translations, invariant ownership, consistency, competing writers, and recovery. [Domain Modeling](../../skills/domain-modeling/SKILL.md) owns terminology and justified records. | Applicable guarantees and cases travel in the design package; the verifier checks the actual enforcement and affected outcomes, and Maintain Verification reconciles recipe drift. |
-
-These are selected conceptual inputs, not vendored upstream skill bodies or runtime dependencies. Upstream scores, fixed architecture shapes, adapter-count thresholds, and unconditional test deletion are not adopted. The PoC establishes inspectable content and caller wiring; comparative behavioral improvement and cross-host composition require separate evaluation.
+Not adopted: fixed scores, size quotas, blanket extraction or error-handling policies, fixed architecture shapes and adapter-count thresholds. Test deletion comes only through Prune Tests.
 
 ### UI review
 
-[Independent rendered UX assessment](../../skills/interaction-design/references/rendered-ux-assessment.md) is a first-party reference under Interaction Design, added for [issue 33](https://github.com/ahmadabdalla/aasystem/issues/33) using the user-agreed two-domain model. It adds no portable skill. Pilot routes the assessment to Interaction Design; UI Refinement can use it within an assigned refinement slice. Routine design and model reviews retain their existing flow.
-
-The reference owns setup and reconciliation for exactly two fresh nonproducer assessors working in parallel. [Visual composition](../../skills/interaction-design/references/visual-assessment.md) owns the static composition rubric; [Interaction and continuity](../../skills/interaction-design/references/interaction-assessment.md) owns the exercised interaction rubric. Each receives its own instructions, common grounded constraints and explicit domain boundaries, with separate sessions and isolated mutable fixtures. Initial reports remain separate until returned. The caller retains delivery, material decisions and existing human/production-verification gates. Missing required independence or access leaves the affected assessment incomplete.
-
-This shape keeps the rubric with the existing design owner while making assessment separately reachable. It follows the preserve-decision-context principle by carrying accepted constraints and evidence limits into each domain assignment rather than inheriting producer discussion. Explicit routes and domain references are authored behavior; comparative improvement, participant usability and cross-host execution require observed evidence and are not established by this structure alone.
-
-The [UI refinement loop](../../skills/ui-refinement/references/refinement-loop.md) adds:
-
-- Conditional grounding through How and Why
-- Product ownership of business meaning
-- Interaction Design ownership of visual-reference content
-- Prototype ownership of the rendered candidate
-- Bounded composition under the loop's [rendering assignment rules](../../skills/ui-refinement/references/refinement-loop.md#rendering-assignments), preserving role ownership and required independence
-- Feature ownership of delivery and final comparison
-- Existing records for the review checkpoint and evidence
-
-This is not a visual-parity claim.
-
-It is not required for every UI edit.
+[Independent rendered UX assessment](../../skills/interaction-design/references/rendered-ux-assessment.md) sits under Interaction Design, for [issue 33](https://github.com/ahmadabdalla/aasystem/issues/33), using the two-domain model the user agreed. Two fresh assessors who didn't build the interface work in parallel: one on [visual composition](../../skills/interaction-design/references/visual-assessment.md), one on [interaction and continuity](../../skills/interaction-design/references/interaction-assessment.md). Keeping the rubric with Interaction Design avoids another skill. [UI Refinement](../../skills/ui-refinement/SKILL.md) can use it within a slice. It isn't a visual-parity claim or required for every UI edit.
 
 ### Design standards
 
-[Design Judge](../../skills/design-judge/SKILL.md) is a first-party skill built from user-stated corner-radius audit requirements and UI/UX standards. Pilot routes design-system audits to it, and rendered task friction to Interaction Design's independent assessment. The audit inventories tokens and components by reach, calculates nested radii, and returns a concise report with located findings, recommended values and token proposals. An application-wide audit of a runnable app also merges Interaction Design's independent rendered assessment, rather than repeating its procedure. It stops before editing; authorized remediation follows the Feature playbook.
+[Design Judge](../../skills/design-judge/SKILL.md) is first-party, built from the user's corner-radius audit requirements and UI/UX standards. Its [visual standards](../../skills/design-judge/references/visual-standards.md) are defaults; a project's tokens and decisions take [precedence](../../skills/design-judge/references/visual-standards.md#precedence). The audit reports and stops; fixes go through Feature.
 
-The [visual standards](../../skills/design-judge/references/visual-standards.md) own the default values: the nested-radius formula, the 4px/8px spacing scale, distancing, alignment, typography and iconography, restrained colour, consistent dimensions and about 300ms eased transitions. They are defaults, not a mandated design system: explicit instructions, accepted decisions and a project's established tokens and palette take [precedence](../../skills/design-judge/references/visual-standards.md#precedence). The visual and interaction assessors, Implement and UI Refinement read the relevant sections as criteria without starting an audit. Interaction Design keeps its rubric and assessment ownership.
+The alignment rules and measurement approach adapt the MIT-licensed [`gridlines`](https://github.com/pritamux/gridlines) skill without copying its code or text; it draws on Karri Saarinen's Linear sidebar redraw and Apple's HIG. The [measurement scripts](../../skills/design-judge/scripts/capture.mjs) are a separate implementation; one vote per table or list, card and list-row edges, single ownership of nested items and right-to-left mirroring are local extensions, not from gridlines. They need Playwright and Chromium, which the library doesn't bundle. [`tests/test_design_judge_capture.py`](../../tests/test_design_judge_capture.py) checks the [fixtures](../../tests/fixtures/design-judge/) at 1440px and 390px when Playwright resolves; CI skips it.
 
-The alignment rules and the measurement approach (lines derived from rendered ink, drawn on captures, misses reported in pixels) adapt the MIT-licensed [`gridlines`](https://github.com/pritamux/gridlines) skill, without copying its code or text; it draws on Karri Saarinen's Linear sidebar redraw and Apple's HIG layout guidance. Design Judge's [measurement scripts](../../skills/design-judge/scripts/capture.mjs) are a separate implementation of that approach, extended with one vote per table or list, card and list-row edges, single ownership of nested items and right-to-left mirroring. They need Playwright and Chromium, which the library does not bundle. Fixtures in [`tests/fixtures/design-judge/`](../../tests/fixtures/design-judge/) declare each container's expected findings; [`tests/test_design_judge_capture.py`](../../tests/test_design_judge_capture.py) checks them at 1440px and 390px when Playwright resolves (from `PLAYWRIGHT_DIR` or the repository), and CI skips it.
-
-An ad-hoc explicit-use evaluation, a corner-radius audit of an uncommitted synthetic token-and-component fixture, found every planted nested-radius, theme and decision conflict without editing files. Independent reviewers then probed the scripts with 54 adversarial containers and a local build of a real application (four screens and three overlays, 1440px and 390px). Their false positives and misses were fixed and pinned in the fixtures. Remaining limits: middle columns, stacked bottom tab bars and single-row bars get no edge check, two rows that disagree with no majority derive no line unless one sits on the container's padding edge, overlay scroll arrows can set an arguable trailing line, and table text inset from its heading is reported by design. The application sets its theme in-app, so its dark theme was not rendered. Discovery, Pilot route selection for ambiguous requests, consumer uptake, an agent-run rendered audit and shadow DOM or iframes remain unevaluated.
+Evaluation: a corner-radius audit of a synthetic fixture found every planted conflict without editing files. Reviewers then probed the scripts with 54 adversarial containers and a local build of a real application at both widths; the misses and false positives they found are fixed and pinned in the fixtures. Known limits: middle columns, stacked bottom tab bars and single-row bars get no edge check; two disagreeing rows derive no line unless one sits on the padding edge; overlay scroll arrows can set an arguable trailing line; table text inset from its heading is reported by design; the app's dark theme wasn't rendered. Discovery, consumer uptake, routing of ambiguous requests, an agent-run rendered audit, and shadow DOM or iframes are unevaluated.
 
 ### Decision records
 
-The [ADR convention](../../skills/domain-modeling/references/adr.md) preserves Matt Pocock’s rules:
-
-- Require reversal cost, surprising rationale, and a real tradeoff
-- Keep the core rationale short, using one to three sentences where sufficient
-- Lazy creation and sequential numbering
-- System-wide and established-context scope
-
-The local system adds:
-
-- Product, design, and software ownership
-- Project-defined directory layouts
-- One decision per record
-- Cross-links between related decisions
-- Separate authority and implementation evidence
-- Explicit update, split, and supersession handling
-- Project rules before existing scoped conventions (including older formats), then a framework default
-- Required default content and review failures tied to the selected rules
-- A final `At 10x scale` section in the framework default, with equivalent content placed within established project formats
-
-Poteto supplies workflow ideas, not the ADR taxonomy.
-
-The default content and shared author/reviewer contract adapt pstack's [architecture rationale template](https://github.com/cursor/plugins/blob/1dcc2bacde73ddd284803b7af28164d0436198fc/pstack/skills/architect/references/rationale-template.md). ADR convention selection is a local addition; the default requires decision meaning and the compact scale section above.
-
-Accepted decisions constrain work but do not prove the result.
-
-Runtime guidance excludes evaluation-only examples.
+The [ADR convention](../../skills/domain-modeling/references/adr.md) keeps Matt Pocock's rules: a record needs reversal cost, surprising rationale and a real tradeoff; rationale stays short; records are created lazily and numbered in sequence. Local additions: project layouts, one decision per record, cross-links, explicit supersession, project rules before a framework default, and a closing `At 10x scale` section. Poteto supplies workflow ideas, not the ADR taxonomy. The default content adapts pstack's [rationale template](https://github.com/cursor/plugins/blob/1dcc2bacde73ddd284803b7af28164d0436198fc/pstack/skills/architect/references/rationale-template.md). Accepted decisions constrain work but don't prove the result.
 
 ### Verification evidence
 
-The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#evidence-and-retention) owns evidence lifetime.
-
-It separates:
-
-- Durable verification recipes
-- Temporary review evidence
-- Deliberately retained proof
-
-Local additions include:
-
-- Suitable project facilities with explicit ownership and lifecycle
-- Native OS temporary allocation and one owned output root per invocation
-- Retention through review or investigation
-- Explicit disposal and migration rules
-- Source identity for the exercised artifact
-- A Git guard for temporary verification output
-- Durable proof only for a named future reader
-
-The [Git guard](../../skills/bootstrap-verification/assets/check-verification-output.sh) rejects indexed disposable output when runs live inside a checkout. Bootstrap checks adopted executable harnesses; Maintain reconciles drift. The project contract owns evidence retention and retirement.
-
-Unrelated workspace inventory is outside evidence identity.
-
-Upstream sources are:
-
-- pstack [`create-verification-skill`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/create-verification-skill/SKILL.md)
-- pstack [`maintain-verification-skill`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/maintain-verification-skill/SKILL.md)
-- pstack [`Prove It Works`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/principle-prove-it-works/SKILL.md)
-- pstack [`Show Me Your Work`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/show-me-your-work/SKILL.md)
-- pstack [`Encode Lessons in Structure`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/principle-encode-lessons-in-structure/SKILL.md)
+The [project verification contract](../../skills/bootstrap-verification/references/project-contract.md#evidence-and-retention) owns evidence lifetime: durable recipes, temporary review evidence and proof kept for a named reader. The [Git guard](../../skills/bootstrap-verification/assets/check-verification-output.sh) rejects disposable output staged inside a checkout. Sources: pstack [`create-verification-skill`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/create-verification-skill/SKILL.md), [`maintain-verification-skill`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/maintain-verification-skill/SKILL.md), [`Prove It Works`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/principle-prove-it-works/SKILL.md), [`Show Me Your Work`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/show-me-your-work/SKILL.md) and [`Encode Lessons in Structure`](https://github.com/cursor/plugins/blob/df581122cde17e6e27686b5a448bde23e4ad4318/pstack/skills/principle-encode-lessons-in-structure/SKILL.md).
 
 ## Supporting sources
-
-Other sources inform bounded parts of the system:
 
 - **Technology discovery:** [`tech-interviewer`](https://github.com/ahmadabdalla/tech-interviewer)
 - **Context control:** pstack [`Guard the Context Window`](https://github.com/cursor/plugins/blob/main/pstack/skills/principle-guard-the-context-window/SKILL.md)
@@ -371,21 +187,17 @@ Other sources inform bounded parts of the system:
 
 ### Durable orchestration
 
-Delivery-judgment refinements in the [execution contract](../../skills/pilot/references/execution.md) and [engineering verification](../../skills/pilot/references/engineering-verification.md) address [issue 51](https://github.com/ahmadabdalla/aasystem/issues/51).
+- Delivery-judgment rules in the execution contract and Engineering Verification address [issue 51](https://github.com/ahmadabdalla/aasystem/issues/51).
+- The [verification working loop](../../skills/pilot/references/verification-contract.md#working-loop) sets acceptance scope, correction classes and when to stop churning, informed by [UpNow issue 16](https://github.com/ahmadabdalla/UpNow/issues/16). These are instructions, not host-enforced budgets or measured speedups.
+- [Task continuity](../../skills/pilot/references/task-continuity.md) addresses [issue 49](https://github.com/ahmadabdalla/aasystem/issues/49), extended by the user's agreed requirements for context recovery, scope-aware specialist work and optional local Codex enforcement. It adds no skill. Following [Preserve decision context](../../skills/principle-preserve-decision-context/SKILL.md), a shorter handoff must still carry what the next owner needs.
 
-The [verification working loop](../../skills/pilot/references/verification-contract.md#working-loop) owns acceptance scope, cumulative limits, correction classification, evidence reuse and churn stopping rules, informed by [UpNow issue 16](https://github.com/ahmadabdalla/UpNow/issues/16). Engineering Verification consumes that loop and bounds discoverability and coverage assessment to the assigned change. These are instruction-level controls, not host-enforced budgets or measured delivery-speed improvements.
+The optional [Codex adapter](../../skills/pilot/assets/codex/README.md) uses the official [hooks protocol](https://learn.chatgpt.com/docs/hooks): hooks restore a coordinator-owned record and check its obligations at stop, while the coordinator still picks procedures and judges results. It adds no SDK controller, manifest hook registration, tool interception or managed runtime. The [harness adapter boundary](../../skills/pilot/assets/README.md) owns the rules for adding integrations and their [data lifecycle](../../skills/pilot/assets/README.md#consumer-data-lifecycle). Those rules came from a consumer audit of version 1, which kept every prompt and session indefinitely and left stale locks; version 2 binds sessions only until a checked handoff to an existing task file.
 
-[Task continuity](../../skills/pilot/references/task-continuity.md) is first-party guidance for [issue 49](https://github.com/ahmadabdalla/aasystem/issues/49), extended by the user's agreed requirements for context recovery, scope-aware specialist work and optional local Codex enforcement. It keeps `pilot` as the entry point, reuses the effort rubric and playbooks, and adds no portable skill. [Preserve decision context](../../skills/principle-preserve-decision-context/SKILL.md) informs the retrievable brief and bounded assignments: a shorter handoff must retain the information the next owner needs.
+Separating state by session and directory lets independent tasks run at once; revision checks stop stale coordinator writes. Several writers, distributed execution and authenticated approval are out of scope. Evidence hashes catch changed files; source-artifact identity stays with the verification contract. Tests and evaluations cover only what they exercised.
 
-The optional [Codex adapter](../../skills/pilot/assets/codex/README.md) is an explicit host integration using the official [hooks protocol](https://learn.chatgpt.com/docs/hooks). It adds no SDK controller, shared plugin-manifest hook registration, tool interception or managed execution runtime. One coordinator owns the compact session-bound state; hooks restore context and check recorded obligations at attempted completion. The coordinator still selects the appropriate procedures, calls stage checks and judges the results. Installing portable skills alone does not enable hook enforcement.
+Across this file: package validation checks links, metadata and adapters only. None of these structures, and no risk verdict, proves host discovery, cross-host composition, production readiness, participant usability or a comparative improvement; those need observed evaluation.
 
-The [harness adapter boundary](../../skills/pilot/assets/README.md) reserves one folder per delivered integration, keeping host invocation, lifecycle, context, completion and configuration translation outside the portable procedure. Future integrations must be deliverable and verifiable in their actual target host before implementation; there are no Claude or Copilot adapter stubs or registrations. A second verified integration should share the existing state/check invariants through the smallest necessary extraction, rather than duplicate orchestration policy. The current Codex helper is not yet a dynamic adapter loader or a stable shared runtime API.
-
-The same boundary owns [consumer data lifecycle checks](../../skills/pilot/assets/README.md#consumer-data-lifecycle): avoid redundant logs and archives, measure repeated-intent growth and verify teardown and interrupted-write recovery. The consumer audit exposed indefinite version 1 prompt/session retention and stale locks. Version 2 keeps independent intent identity with temporary session bindings, a checked handoff to an existing local task record, and exact-owned retirement. A small index retains only active ownership and interrupted handoff receipts, rather than completed intent history. Kernel locking and next-use recovery address interrupted writes; the coordinator remains responsible for stopped scratch users, canonical meaning and invoking handoff. There is no daemon, hard storage cap or native session-close cleanup claim. Plugin-directed proof/output and native transcripts retain their explicitly separate lifetimes.
-
-Session/working-directory separation addresses independent concurrent tasks; optimistic state updates address stale coordinator writes. Multiwriter coordination, distributed execution and authenticated approvals are outside scope. Evidence hashes protect referenced files from undetected endpoint changes, while source-artifact identity remains under the verification contract. Runtime checks and behavioral evaluations establish only the exercised coverage; they do not establish uniform behavior across hosts or eliminate model judgment.
-
-The [evaluation playbook](../../skills/pilot/playbooks/eval.md) adapts [pstack’s Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript inspection, and lead reconciliation. Local adaptations use the shared host and invocation rules and project evidence conventions; the playbook owns temporary experiments and the criterion for retaining reusable regression cases. The library does not ship an evaluation runner or a standing fixture collection.
+The [evaluation playbook](../../skills/pilot/playbooks/eval.md) adapts [pstack's Eval](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/playbooks/eval.md): realistic tasks, blinded candidates and judging, transcript reading and lead reconciliation. The library ships no evaluation runner or standing fixtures.
 
 ## Export boundary
 
@@ -402,10 +214,6 @@ Export these files together:
 - [`README.md`](../../README.md)
 - [`docs/ops/codex.md`](../ops/codex.md)
 
-The portable root manifest and Claude compatibility manifest package the same skill tree as `aasystem`. The root manifest owns the portable identity, version and OpenAI presentation metadata. The [release validator](../../scripts/validate-release.py) checks the compatibility identity and version mechanically. Packaging preserves the library's invocation policies and specialist boundaries.
+Both manifests package the same skill tree as `aasystem`. The root manifest owns the identity, version and OpenAI presentation metadata; the [release validator](../../scripts/validate-release.py) checks the Claude manifest matches. The Codex hook helper and guide travel inside `skills/pilot/`, and neither manifest registers them: opting in is separate from installing.
 
-The optional Codex hook helper and setup guide travel inside the exported `skills/pilot/` tree. Neither shared manifest auto-registers them; opting into the host-specific configuration is separate from installing the portable library.
-
-The [release process](../ops/releasing.md) adapts Azure Cost Calculator's tag/release and changelog helpers. Merging a reviewed, manually versioned release PR into `main` triggers validation and publication of its exact merged commit, with safe retries. Successful publication prepares a separate reviewed marketplace adoption PR. Release automation does not change skill routes or handoffs.
-
-See [`docs/ops/codex.md`](../ops/codex.md) for Codex adapters and invocation limits.
+The [release process](../ops/releasing.md) adapts Azure Cost Calculator's tag, release and changelog helpers. Merging a reviewed, manually versioned release PR into `main` validates and publishes that exact commit, with safe retries, then opens a separate marketplace adoption PR.

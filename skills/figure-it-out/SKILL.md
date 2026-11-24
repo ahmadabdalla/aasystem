@@ -6,28 +6,19 @@ disable-model-invocation: true
 
 # Figure it out
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Produce the workflow before executing it. Scale rigor through concrete checks and artifacts, then retain the evidence for the owner's final judgment.
+1. **Write "done when".** One line you can check on the real result, such as "every caller reads the new format and the suite passes". For a research or value question, done is a sourced answer with open claims named; don't invent a test for a judgement. If you can't write one you could prove within the request, stop and say what's missing.
+2. **Split the job into phases.** For each phase, write its input, its output, the check that proves it and what it waits on. Put the baseline first: build any missing checks and record the current behaviour they'll compare against. Put the riskiest unknown next. Name anything this environment lacks, such as a credential or an outside service. Build and test everything you can without it; stop only at the step that needs it.
+   - If an experiment can answer an unknown, use [Probe](../probe/SKILL.md).
+   - If the shape is unsettled and costly to get wrong, use [Architect](../architect/SKILL.md).
+   - If phases are independent and ready, use [Swarm](../swarm/SKILL.md).
+   - If approaches compete and nothing has settled the choice, use [Arena](../arena/SKILL.md).
+3. **Show the plan.** If the user asked for a plan only, return it and stop, with no edits. If they named another checkpoint, stop there. If a phase needs a decision only the user can make, ask before that phase. Otherwise carry on.
+4. **Run each phase.** Keep a decision log with [Show Me Your Work](../show-me-your-work/SKILL.md). Make production edits with [Implement](../implement/SKILL.md). Run the phase's check and read the result yourself, not a report about it. Mark it verified, failed or inconclusive; inconclusive isn't a pass. Start a phase only after the phases it waits on are verified.
+   - If an experiment fails, revert your own edits and log why the plan changed.
+   - If a check passes too easily, say what it actually observes and why that can't fail. If the check is wrong, fix it as its own change; never weaken the requirement to make it pass.
+   - If you can't meet a gate, stop the phases that depend on it and keep what's proven. Say what's needed to continue and who can provide it.
+5. **Check the whole.** Run the "done when" check on the integrated result. Get [independent verification](../pilot/references/verification-contract.md#independent-implementation-verification) for production code you keep.
 
-## Frame
-
-Reuse the current brief, discovery, and [principle index](../principles/INDEX.md). Establish the intended outcome, scope, constraints, actual capabilities, and a checkable completion predicate. For research, the predicate can be a supported answer with unresolved claims identified; do not invent an implementation test for a value judgment.
-
-Name any missing specialized procedure or external prerequisite. A custom workflow must explain its credible proof path and limits. Present the proposed phases and tradeoffs before substantial execution. A plan-only request ends with the plan; honor requested checkpoints and ask one question and wait if a material choice cannot reasonably be assumed.
-
-## Design the phases
-
-Divide the task into independently checkable units with explicit inputs, owners, artifacts, evidence gates, and dependencies. Put the riskiest unknowns and necessary baseline or harness work first. Use [probe](../probe/SKILL.md) for empirical uncertainty and [architect](../architect/SKILL.md) for an unresolved consequential shape; this workflow retains implementation.
-
-Use [swarm](../swarm/SKILL.md) only for independent ready slices and [arena](../arena/SKILL.md) for unresolved alternatives selected under the shared comparison rule. Reuse settled designs. Establish a stopping or reconsideration condition for repeated failed hypotheses and a practical bound for expensive experiments. New information can change the plan; record why.
-
-## Execute and record
-
-When execution is authorized, follow the phase list and use [show-me-your-work](../show-me-your-work/SKILL.md) from the first consequential decision. For each unit, state the expected effect, execute or assign production edits and development checks using [Implement](../implement/SKILL.md), and inspect the artifact before retaining or revising it. Non-production units follow their assigned procedure. Verify each unit before dependent work starts. Revert only owned experimental changes whose hypothesis failed.
-
-Use [independent verification](../pilot/references/execution.md#independent-implementation-verification) for production implementation and separate adversarial review when the proof path rests on an unproven assumption. If a check passes suspiciously easily, inspect its observation method. Fix a defective check as a separately explained change; never lower the product contract to make the result pass. Record verified, failed, and inconclusive results distinctly. If a required gate cannot be met, stop dependent work and return the established evidence and precise gap.
-
-## Finish
-
-Check the integrated result against the original completion predicate and the requested delivery boundary. Account for every phase, evidence gate, and deferred item. Report the workflow followed, significant changes of direction, decision-log path, proven outcomes, and remaining limitations. A completed checklist without artifact evidence does not establish completion.
+Reply with each phase's verdict and evidence, where the plan changed and why, the decision-log path and what's still open.

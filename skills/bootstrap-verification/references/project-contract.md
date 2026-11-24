@@ -1,30 +1,28 @@
 # Project verification contract
 
-Use this when adopting or generating a project verifier. New feature maps use the layout below. Preserve an established equivalent layout and avoid parallel sources of truth; it must still carry the required meaning. These are artifact instructions, not mandatory reply headings.
+What a project verifier, its feature map and its evidence must contain. If the project already has an equivalent layout, keep it and make it carry the same meaning.
 
 ## Operating procedure
 
-The project skill needs a discriminating name and description in YAML frontmatter and concrete instructions for:
+The verifier is a project skill whose name and description set it apart from the project's other skills. It says:
 
-- **Scope and launch:** Supported surfaces, prerequisites, exact commands, fixture setup, and the signal that each instance is ready. Use a fresh invocation for short-lived commands; keep server lifecycle explicit.
-- **Health and identity:** Confirm the intended instance, current build or source revision, owned port/data location, and required access. Without a Git revision, record a reproducible fingerprint of relevant source and checks. Stop or reset when identity cannot be established.
-- **Drive and observe:** Operate the public surface through existing tools or documented helpers. Record actions and resulting state, including persistence or other consequential effects. A simulated dependency only supports a claim about that simulation.
-- **Reset and cleanup:** Restore a known fixture state and release owned resources, including after failure. State where evidence survives. Do not stop unrelated processes or remove unrelated data.
-- **Completion:** Select recipes by affected behavior, entry points, and dependencies; derive expected results from the contract and apply [scenario coverage](#scenario-coverage) to stateful or multi-step behavior. Report pass, fail, and unverified outcomes separately. Include an explicit mismatch when checks ran against a different artifact.
+- **Launch:** surfaces, prerequisites, exact commands, fixtures and the signal that each instance is ready.
+- **Identity:** how to confirm the right instance and build. Fingerprint every input the run uses, including uncommitted files and config; a commit alone isn't enough. If identity can't be established, reset and check again, then stop.
+- **Drive and observe:** operate the public surface and record each action and the state it left. A simulated dependency proves only the simulation. If "nothing was written" is the claim, observe the writes.
+- **Cleanup:** restore the fixture state, release what the run owns, and say where evidence survives.
+- **Completion:** choose recipes by what changed, take expected results from the contract, and report pass, fail and unverified separately.
 
-Generated instructions use real project paths and commands, with no unfinished placeholders or references to the author's machine. Existing external tooling prerequisites are named and checked. New helper invocations are documented and actually executed.
-
-Link project-owned detection guidance and affected checks under the [shared signal-effects rule](../../pilot/references/execution.md#signal-effects); preserve a single source of truth.
+Everything you generate must work without this toolbox: real project paths and commands, no placeholders, no links back here. Run every helper you add.
 
 ## Scenario coverage
 
-For scenario-dependent work, map changed semantics and fields, including optional ones, to starting context, real feature actions, contract-derived expectations and relevant persistence, constraint and isolation observations in affected recipes. Seed checks and old test passes cannot replace missing feature proof. Keep scenario references, evidence and gaps in existing project records. Read [Seed scenarios](../../architect/references/seed-scenarios.md) when setup or lifecycle needs design; skip seeding where inapplicable.
+If a change adds fields or states, each affected recipe starts from a state that uses them, drives the real feature, and checks what was stored. A seed check or an old passing test isn't feature proof. If setup needs design, read [Seed scenarios](../../architect/references/seed-scenarios.md).
 
-Inspect suite selectors, skip conditions and actual local/CI commands. Distinguish a usable procedure, an observed local pass, configured automation and an enforced merge check; prose alone supplies no enforcement.
+Keep apart a usable procedure, an observed local pass, configured CI and an enforced merge check. Text in a file enforces nothing.
 
 ## Discovery and feature map
 
-Start with a broad survey, then deepen selected paths. Record inspection boundaries and reasons for prioritization; do not label the map exhaustive without evidence. For a new map, use:
+Record what you inspected. Don't call the map exhaustive without evidence. A new map uses:
 
 ```text
 verify-<project>/
@@ -34,50 +32,28 @@ verify-<project>/
     └── <feature>.md
 ```
 
-`features/README.md` is the single index. Link each feature file and summarize its entry points, recipe coverage, and gaps. Include shared preconditions and driving conventions, or link to their owner in the local verifier. Link durable source references; keep ordinary dated results with the task's review evidence, not in a permanent run history. A documented recipe is not proof of a current pass. The verifier links back to this index and directs readers to the relevant feature files.
+`features/README.md` is the only index: one line per feature with its entry points, coverage and gaps. Each feature file opens with the actor, the intended outcome and its authority. If an expectation comes only from observed behaviour, label it characterization. Then four sections, in order:
 
-Each feature file starts with an H1 and a short description of the actor, intended outcome, and authority for that expectation. Include scheduled or external callers where relevant. Link the requirement, published contract, or recorded user decision; label observed behavior without an independent authority as characterization.
-
-Use agreed project vocabulary and link relevant current ADRs as decision authority. Keep proposed choices conditional and implementation evidence separate from decision acceptance.
-
-For UI scope, link the relevant project interaction model and its requirement coverage. Keep the product's feature/story/journey map with its product owner; this operational feature map describes how to reach and exercise behavior. A deliberate omission from a mock is not removal from the product contract: retain its later proof path or explicit coverage gap. Use the interaction review to question unsupported UI scope; observing a working control does not authorize its existence.
-
-Then use these four H2 sections in order:
-
-| Section | What it must establish |
+| Section | Contents |
 | --- | --- |
-| `Sub-features` | Short stable IDs for observable behaviors, including consequential failure, retry, access, concurrency, or recovery cases. |
-| `How to get to it (user POV)` | Every known UI path, command, route, export, or trigger, including alternate entry points. |
-| `Driving it with <harness>` | Replace the harness name with the actual tool. Start with `Preconditions:` covering data, access, services, versions, and isolation. Pair each action in the selected scope with exact commands or interactions, independent expected results, and relevant persisted or external effects. Identify any entry points or sub-features without recipes. |
-| `Gotchas` | Traps that can invalidate a run, unmet prerequisites, unresolved expectations, and remaining coverage gaps. Refer to shared reset and cleanup instructions where needed. |
+| `Sub-features` | Stable IDs for observable behaviours, including failure and recovery cases that matter. |
+| `How to get to it (user POV)` | Every UI path, command, route or trigger. |
+| `Driving it with <harness>` | `Preconditions:`, then each action with its exact command and an expected result from the contract, not the code. List entry points with no recipe. |
+| `Gotchas` | Traps that can invalidate a run, and unresolved expectations. |
 
-See [the authoring example](feature-map-example/README.md) for this shape. Populate generated maps with the project's real contracts and commands; the example is not an application or an additional runtime dependency. All generated links must resolve within the project or its actual dependencies, without the portable toolbox.
-
-Discovery findings identify concrete source locations, dependencies, existing checks, contradictions, and areas left uninspected. Keep reusable findings with the procedure or its existing sources, temporary tracing with task evidence, and feature recipes focused on user-observable behavior. Reconcile new, changed, or removed feature files and entry points with the index as work proceeds. An unchanged ordinary run requires no map edit. A check through one entry point does not prove the others.
+[The authoring example](feature-map-example/README.md) shows this shape. Keep dated results out of the map; a run that changes nothing needs no map edit.
 
 ## Evidence and retention
 
-Keep maintained instructions, recipes and helpers separate from run output. Prefer a unique OS temporary directory allocated through the runtime's native API, without hard-coded machine paths. One invocation owns the run root and passes it to child checks; keep isolated fixtures and evidence in separate subdirectories. Reuse established project facilities when their ownership and lifecycle satisfy this contract. Name necessary exceptions, such as tool-managed caches or external databases; do not relocate or clean shared resources merely to fit this layout. Reject existing output paths or allocate new ones.
-
-Use the existing checkout or task worktree under the [local execution contract](../../pilot/references/verification-contract.md#local-execution). Fingerprint complete required inputs, including dirty/new source, checks and ignored configuration; a commit alone is insufficient. Share identity for common inputs without omitting fixture-specific inputs. Do not archive source by default. Extra execution copies need a concrete check requirement, selected inputs, expected storage and owned disposal. Neither copies nor worktrees are security sandboxes. Generated commands work without the plugin.
-
-Reuse harness output instead of duplicating reports. Record the feature/entry point, action, expected result and authority, observation, environment, tested identity and rerun procedure in the existing result owner. Capture only evidence needed for the claim or investigation; avoid whole-workspace inventory and secret contents. Publish/commit proof only for an identified future reader within authority. Durable conclusions must remain understandable without temporary files.
-
-Release owned processes and disposable fixtures on success, failure and graceful cancellation. A pass does not end pending review: retain necessary evidence through review, or investigation/explicit handoff for unresolved failures. Preserve baseline failures and pending changes. Name retained resources, their owner, reason and retirement event in the existing task/review record. Move only necessary proof to an authorized review, CI or project evidence destination when it must survive temporary storage. OS housekeeping is a fallback, not guaranteed cleanup or retention. Abrupt interruption may prevent teardown; report incomplete checks and assess leftovers before reuse or retirement.
-
-Before completion and before retiring referenced output, inspect the maintained instructions, recipes and result records affected by the run. Durable conclusions must remain usable after temporary output disappears. Retain necessary original evidence in the project's authorized durable location and update its references, or record its unavailability and limit the claim. Use existing link checks or searches for known output paths to support this review; distinguish actual dependencies from illustrative examples. Record the inspected scope and unresolved dependencies in the existing result record. Add automation when an observed failure warrants it, scoped to the project's actual output formats.
-
-After retention obligations end, retire only resources whose exact ownership, boundary and lack of active writers are established. Never sweep by prefix or age, follow deletion outside the owned boundary, or remove credentials, shared caches, retained databases or ambiguous resources. Preserve unresolved required evidence; report uncertain ownership instead of claiming cleanup. Inspect owners and inbound links before migrating tracked runs; preserve proof, repair references and review removal. This contract authorizes no bulk deletion.
-
-For temporary output inside a Git checkout, ignore its location and provide a check rejecting indexed files beneath it, including files tracked before the ignore rule. Reuse an equivalent project check; otherwise copy [the Git guard](../assets/check-verification-output.sh), configure its repository-relative path and execute it. Use an equivalent project runtime if POSIX shell is unavailable. Report offending paths without automatic deletion/untracking; integrate existing checks only within scope.
-
-Match observations to the strength of the claim. Byte-preservation checks compare raw bytes or their hashes and file existence; decoded text can normalize line endings, and parsed values establish only semantic equality. Equal final content alone does not prove that no write occurred. If absence of writes is the contract, observe the relevant write effects as well.
+- Each run owns one unique OS temp directory, allocated through the runtime, with fixtures and evidence in subdirectories. Never write into an output path that already exists.
+- Record each check's feature, action, expected result and authority, observation, tested identity and rerun command in the harness output.
+- Release owned processes and fixtures on success, failure and cancellation. Keep evidence until review ends; OS temp cleanup isn't teardown. Before you finish, move any evidence a review or record needs to the project's evidence location.
+- Delete only what the run owns. Never sweep by prefix or age, stop unrelated processes, or remove anything ambiguous; report what you left.
+- If output must sit inside a Git checkout, ignore it and add a check that rejects tracked files there. Reuse the project's check, or copy [the Git guard](../assets/check-verification-output.sh). Report offending paths; don't delete them.
 
 ## Readiness
 
-Report both dimensions:
+Report two things:
 
-- **Procedure readiness per surface:** usable for named checks; partial with exact gaps; or blocked with a missing prerequisite. Name the sampled path when several features share a procedure.
-- **Behavior results:** pass, fail, or unverified for the exercised scope. Planned features and unexercised paths cannot inherit a pass.
-
-A successful sample establishes that procedure's usability. It does not establish other features, alternate paths, integrations, operating conditions, or product-wide quality. A failing behavior can be valid evidence from a working verifier.
+- **Procedure readiness, per surface:** usable, partial with the exact gaps, or blocked by a named prerequisite.
+- **Behaviour results:** pass, fail or unverified for what you ran. Anything you didn't run can't inherit a pass. A failing result can be valid evidence from a working verifier.

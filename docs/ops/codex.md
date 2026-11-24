@@ -12,7 +12,7 @@ Upgrading from `aapilot` requires new commands and helper paths; follow the
 [rename migration](releasing.md#upgrade-from-aapilot-to-pilot), including existing
 hook configuration and state handling.
 
-Pilot may work directly or delegate through actual host tools. Required independent implementation verification still needs a fresh noneditor, except for the [narrow presentation exception](../../skills/pilot/references/execution.md#owner-presentation-eligibility). Missing tool/access prerequisites remain explicit gaps.
+Pilot may work directly or delegate through actual host tools. Required independent implementation verification still needs a fresh noneditor, except for the [narrow presentation exception](../../skills/pilot/references/verification-contract.md#owner-presentation-eligibility). Missing tool/access prerequisites remain explicit gaps.
 
 ## Local work and verification
 
@@ -24,23 +24,17 @@ Ordinary invocation does not provide tool interception, a process sandbox, host-
 
 ## Durable orchestration hooks
 
-The optional [local Codex adapter](../../skills/pilot/assets/codex/README.md) adds
-context restoration and recorded completion checks to `$aasystem:pilot <outcome>`.
-It requires separate configuration and trust; installing skills does not activate it.
+The optional [local Codex adapter](../../skills/pilot/assets/codex/README.md) keeps a
+`$aasystem:pilot` task's record across sessions and blocks a stop until its checks pass.
+Installing the skills doesn't enable it. Follow its
+[setup](../../skills/pilot/assets/codex/README.md#one-time-setup),
+[coordinator protocol](../../skills/pilot/assets/codex/README.md#coordinator-protocol),
+[handoff and resume](../../skills/pilot/assets/codex/README.md#handoff-and-resume) and
+[limits](../../skills/pilot/assets/codex/README.md#stop-behavior-and-limits).
 
-Start with the guide's [setup](../../skills/pilot/assets/codex/README.md#one-time-setup),
-then follow its [coordinator protocol](../../skills/pilot/assets/codex/README.md#coordinator-protocol)
-and [handoff/resume steps](../../skills/pilot/assets/codex/README.md#handoff-and-resume).
-Checked handoff preserves intent/proof in an existing task file before retiring
-owned scratch. Active state and pending review proof remain until safe retirement;
-there is no background or session-close collector.
-
-Hooks check recorded obligations, not semantic fulfillment, reviewer independence
-or authenticated approval. Verify actual callbacks in your host and read the
-[failure limits](../../skills/pilot/assets/codex/README.md#stop-behavior-and-limits).
-Hosted orchestration and other harnesses may lack these callbacks; use the
+If your host doesn't deliver these hooks, use the
 [portable continuity procedure](../../skills/pilot/references/task-continuity.md)
-and disclose instruction-driven operation there.
+and say the task runs on instructions alone.
 
 ## Invocation policy
 

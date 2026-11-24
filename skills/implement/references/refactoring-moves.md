@@ -1,43 +1,23 @@
 # Refactoring moves
 
-Use for an agreed structural improvement within Implement's assigned scope.
-Reuse the caller's baseline, compatibility requirements, and affected checks.
-A move across responsibility or state owners needs Architect's settled target.
+Each move below can change behaviour without failing a type check. Keep what it lists the same.
 
-## Select the move
+## Per move
 
-Name the reader or change burden the move removes; retaining the code is valid.
-Use Maintainability's [local-code](../../maintainability/references/local-code.md)
-and [boundary criteria](../../maintainability/references/boundaries.md).
+- **Rename:** Before renaming, search for every way the name is reached besides a direct reference: string lookups, reflection, persisted or serialised names (columns, JSON keys, cache keys, event names), config, generated inputs (edit the maintained source, not the output) and public exports. If any match, report the rename as a compatibility change.
+- **Extract or inline:** Keep the order expressions run in, which side effects happen and how long objects and resources live. If an argument was evaluated lazily or only on one branch, keep it that way.
+- **Move code:** If the brief gives no settled target owner, ask before moving. Migrate every caller. If you leave a forwarder, name the consumer that needs it.
+- **Introduce a value:** Keep units, equality, validation and the serialised form the same at every existing edge.
+- **Simplify a conditional:** Keep condition order, short-circuiting, defaults and which failure each input raises.
 
-- **Rename:** inspect callers, string lookup, persisted names, generated inputs,
-  and public contracts before treating a domain-name correction as internal.
-- **Extract or inline:** extract a meaningful operation that reduces mental work;
-  inline a hop that adds none. Preserve evaluation order, effects, and lifetime.
-- **Move responsibility:** migrate behavior and callers to the settled knowledge
-  owner; retain forwarding only for a real policy or compatibility obligation.
-- **Introduce a value:** group values sharing a rule or lifecycle. Preserve units,
-  equality, validation, serialization, and compatibility at existing edges.
-- **Simplify a branch:** preserve condition order, short-circuiting, defaults,
-  and failures. Choose guards, a table, or polymorphism from actual variation.
-- **Share or separate:** trace which rule must change together; weigh the coupling
-  introduced by sharing against the synchronization burden it removes.
+## If a check changes
 
-## Apply and check
+If a baseline check gives a different result after a move, stop editing. Work out whether the move changed behaviour or the check was already unstable, save the check's output as evidence, and report it before the next move.
 
-Identify the smallest move and the observable behavior it could disturb.
-Check indirect consumers and maintained source before editing generated output.
-Apply the move, migrate affected callers, and remove only owned obsolete paths.
-Run the caller's affected baseline checks and inspect the diff for contract drift.
-Classify a changed result before further edits; preserve failures and others' work.
-Return scope or design contradictions to the caller rather than changing expectations.
+## Staged migrations
 
-For a staged public migration, name who still needs the old path, how callers move,
-and the removal condition. A compatibility layer needs an actual consumer.
-Use the same expectation for old and new paths where equivalence is intended.
+If old and new paths must coexist, report who still calls the old path, how they will move and when it can be deleted. Run the same check against both paths.
 
-Example: extracting eligibility calculation must preserve when inventory is read
-and whether an external reservation occurs; equal return values alone are insufficient.
+## Example
 
-Return the move, resulting improvement, compatibility impact, and development evidence
-in the caller's record. The playbook owns final equivalence and acceptance.
+When you extract an eligibility calculation, keep when inventory is read and whether an external reservation is made. Matching return values don't prove the refactor is safe.

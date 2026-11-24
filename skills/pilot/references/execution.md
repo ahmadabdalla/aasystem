@@ -1,89 +1,55 @@
 # Execution contract
 
-**Baseline.** Read this contract, the [principle index](../../principles/INDEX.md), relevant principle leaves and project instructions. Reuse settled context. These rules guide agents; they do not grant tool permissions or provide a sandbox.
+Read the [principle index](../../principles/INDEX.md) and the project's instructions.
 
-## Ownership and handoffs
+Read more before you start:
 
-One owner carries the request through the agreed delivery boundary. Keep the outcome, constraints, agreed decisions, open questions, expected results and evidence in the existing task brief; conversation can suffice. Specialists contribute to that task rather than starting another coordinator.
+- If you'll change the product, even one word of copy, read [verification-contract.md](verification-contract.md) before editing.
+- If you'll hand work to another agent or set up a review, read [delegation.md](delegation.md).
+- If the work is long or has stages, goes to other agents or runs unattended, read [task-continuity.md](task-continuity.md). If you're resuming earlier work, read it first.
 
-For substantial, multi-stage or delegated work, use the [task continuity procedure](task-continuity.md) to persist intent, select bounded increments, reconcile results and recover after context resets. Assigned workers consume the same task's relevant record and return evidence to its owner.
+A link in a skill's step is part of that step: read it.
 
-Each assignment needs accessible inputs, a bounded deliverable, write ownership, relevant constraints and checks, and what to return. Workers preserve others' edits and project formats, and return out-of-scope findings to the owner. Keep decision context retrievable under the [handoff principle](../../principle-preserve-decision-context/SKILL.md).
+## One owner
 
-Assignments inherit relevant effort conditions, consequence-driven checks and resource limits; smaller local scope cannot weaken them. The owner reassesses effort and updates affected assignments when evidence changes scope, coupling, consequence or proof needs.
+One agent owns the request until it's delivered. Keep the goal, constraints, decisions and their reasons, open questions, expected results and evidence in the task brief; for small work in one context, the conversation is enough until a handoff or reset. Specialists add to that brief. They never start their own coordinator.
+
+When you hand off, say what to read, what to deliver, which files the worker may touch, what to check and what to send back. Workers keep others' edits and the project's formats, and send anything out of scope back to the owner.
+
+Workers inherit the task's effort level, checks and limits; a smaller piece doesn't lower them. If new evidence changes the scope, coupling, risk or proof needed, reassess the effort and update the assignments.
 
 ## Scope and proof
 
-Replay a new or materially changed request: what to achieve, what must remain true, uncertainties and next action. A clear authorised request proceeds; replay is not an approval ceremony. Respect research-only, design-only and other explicit stopping points.
+Restate a new or changed request in a line: the goal, what must stay true, and what's unclear. Then go without waiting for a reply. If the user set a stopping point, such as "research only" or "design only", stop there.
 
-Define the smallest sufficient outcome and explicit exclusions. Before adding architecture, tooling or process, explain its contribution to that outcome; omit speculative additions. For substantial work, outline stages, ownership, verification targets and the authorised stopping point together.
+Build the smallest thing that works, with no architecture, tooling or process the goal doesn't need. Size the work with the [effort rubric](effort.md) unless the caller already did. At each phase boundary, say what's ready, what's missing and what's next, then carry on. If someone will review the reasoning later, keep the log with [Show Me Your Work](../../show-me-your-work/SKILL.md) from the start.
 
-An owning invocation, including a standalone specialist, applies the [effort rubric](effort.md) to its requested deliverable when no current assessment covers it. Assigned work consumes the caller's assessment rather than restarting overall sizing or coordination.
+Look up any fact you can check yourself instead of assuming it or asking the user. Reuse the project's requirements, accepted decisions and verification steps. In the brief and the report, label each claim as a fact, a proposal or a decision. A model agreeing isn't proof.
 
-Inspect observable unknowns before depending on them. Reuse project requirements, accepted decisions and verification procedures. Distinguish sourced facts, proposals, human agreements and observations. A design proposal is not permission to build; model agreement is not evidence of correctness.
+Proof matches the work: research cites sources, design shows its reasoning, and code shows observed behaviour. If you couldn't check something, say it's unverified.
 
-Match proof to the task. Research needs sources and limits; design needs rationale and an inspectable proposal; implementation needs observed behaviour. An unavailable prerequisite leaves the affected result unverified. Use the [verification contract](verification-contract.md) for retained implementation.
+## Signal effects
 
-### Signal effects
+For every change, note what it does to operational and security signals: what logging, monitoring or alerting it adds, what it removes, and what failure or misuse still goes unnoticed. "No change" is fine if you looked.
 
-For each proposed or implemented change, record its effect on operational and security signals: visibility added, visibility lost, and consequential failure or misuse still undetected. Keep the account scoped to affected behaviour and dependencies. "No change to signals" is sufficient when supported by inspection.
+Record them once in the task record, carry them into verification, and check them against the final result. If a current requirement needs detection, deferring it leaves the work incomplete. Link any other deferred detection work to its owner. If the change touches authentication, permissions, money or personal data, use Interrogate's [signal assessment](../../interrogate/references/signal-assessment.md).
 
-Record it once in the existing task record. Carry relevant expectations into verification and reconcile the final result. Link deferred detection to its owning work; deferral does not satisfy a current requirement. Use Interrogate's [signal assessment](../../interrogate/references/signal-assessment.md) for a focused examination of detection gaps.
+## Ask the human
 
-## Decision authority
+Decide routine details yourself. Before anything that changes product meaning, architecture, trust boundaries, permissions or external effects, or that needs a visual review, stop and ask. Don't re-ask for permission you already have.
 
-Routine details within settled scope proceed. An unresolved choice changing product meaning, architecture, trust boundaries, permissions, external effects or required visual review returns to the human before dependent work. Check existing authority first; do not repeatedly ask for settled permission.
+When you ask, show the proposal, what you checked, what's uncertain and what you'll do next. Give a preview for visual decisions. Ask one question, then wait. Record the human's answer with the decision. No agent's recommendation or check is the human's approval.
 
-At a checkpoint, show the concrete proposal or result, what was checked and remains uncertain, the decision needed and the next action after it. Provide a usable visual preview when the decision is visual. Ask a focused question, then stop the whole process and wait. Record the actual answer with the decision; neither an agent's recommendation nor its inspection supplies human approval.
+## Finish
 
-## Delegation
+Before delivering, check the final result against current evidence, resolve open findings, clean up what you started and update affected project records. Report:
 
-The owner may do the work or delegate for useful expertise, independent ready work or context separation. A skill is a procedure, not a requirement to launch another agent. Check actual tools, permissions and capacity; use configured models without inventing diversity.
+- what changed
+- the checks you ran, and what they showed
+- what's unverified
+- where the evidence is
+- anything you left in place on purpose (worktrees, artifacts, temporary code) and why
 
-For parallel work, give workers separate write ownership and identify shared resources. Use [Swarm](../../swarm/SKILL.md) for partitioned coverage and [Arena](../../arena/SKILL.md) for competing approaches when their evidence can change an unresolved choice. Preserve required independent candidates, judging and verification. Keep coupled work with one owner.
+Stop once the agreed outcome is verified. Keep bulky artifacts only for a named need, under the [evidence lifetime](../../bootstrap-verification/references/project-contract.md#evidence-and-retention). Keep one log, and point to evidence instead of copying it.
 
-Inspect returned artifacts and observations against the assignment before relying on them. Resolve contradictions, stale inputs and material findings. A worker's return is not automatic acceptance. Unavailable required delegation must be disclosed; owner checks cannot be relabelled independent.
-
-## Review context
-
-Initial implementation verification defaults to independent discovery; correction rechecks may use confirmation audits.
-
-Start required independent reviewers separately from every producer, without inherited discussion when the host permits. Give requirements, accepted constraints, original artifacts, source identity, relevant criteria and runnable procedures. For independent discovery, withhold prior conclusions until initial findings return. A confirmation audit may receive claims and sources; label it accordingly.
-
-Preserve original findings before editing summaries or sharing other assessments. Disclose inherited context, exposure to earlier conclusions and other isolation limits. A different agent or model alone does not establish independent discovery.
-
-## Verification through the project
-
-Find the project verifier and affected feature recipes before changing behaviour. Use [Bootstrap Verification](../../bootstrap-verification/SKILL.md) for a missing usable path and [Maintain Verification](../../maintain-verification/SKILL.md) for recipe drift, within the authorised setup scope.
-
-Derive expected results from the request or contract. Exercise the relevant UI, API, CLI or library entry point and inspect its effects on stored state, external calls and output. Check instance identity, readiness and fixture reset before interpreting surprising results. Builds, mocks and worker summaries prove only the boundaries they exercise. Never change an expectation merely to hide a failure.
-
-Use the [local execution and evidence rules](verification-contract.md#local-execution) for working directories, tested identity and cleanup. Preserve failing-before evidence for bug fixes and baseline observations for refactoring. Update affected recipes; an unchanged run needs no permanent map edit.
-
-## Owner-presentation eligibility
-
-An exact prescribed, low-impact presentation edit may be made and checked by the owner when meaning, behaviour, data, contracts, permissions, dependencies and deployment remain unchanged and decisions are settled. This cannot waive independent review required by the user or project. A billing or consent wording change does not qualify merely because it is short.
-
-State the eligibility basis, inspect the final diff and available preview, and report this as owner-checked. If broader effects appear, obtain the required independent verification or report the gap. No separate coordinator or full feature checklist is needed.
-
-## Independent implementation verification
-
-Other retained implementation requires a fresh verifier separate from every editor to assess the combined diff and execute affected checks. Before briefing the verifier, read [Engineering Verification](engineering-verification.md) for the assignment and correction loop. Development checks do not replace this assessment. [Interrogate](../../interrogate/SKILL.md) supplies adversarial review, not executable proof.
-
-## Completion
-
-Before delivery, reconcile material findings and decisions, check the final artifact against current evidence, update affected project records and resolve owned resources. Report what changed, actual checks and outcomes, unverified scope, evidence location and anything deliberately retained. Follow the [evidence lifetime](../../bootstrap-verification/references/project-contract.md#evidence-and-retention); retain bulky artifacts only for an identified need.
-
-Check that the result meets the sufficient outcome without unnecessary additions. At meaningful phase boundaries, state readiness, remaining gaps and the recommended next action; continue within existing authority. Stop expanding once the agreed outcome is verified.
-
-For substantial or unattended work, keep consequential decisions and their evidence with the existing task record; use [Show Me Your Work](../../show-me-your-work/SKILL.md) when a later reader needs that trail. Do not create parallel logs or routine action transcripts.
-
-## Bounded autonomy
-
-Before unattended work, establish scope, permitted effects, required evidence, practical work/time limits and stopping conditions. Honour actual user and host limits across retries; do not restart a task to evade them. A duration such as overnight grants no extra authority or session-survival capability.
-
-Stop for required human decisions, exhausted limits, unavailable mandatory proof or uncertain external effects. After interruption, inspect actual owned work before retrying; cancelling an agent does not prove its processes stopped. Resolve uncertainty before overlapping work or claiming completion. Report completed work and the precise remaining prerequisite.
-
-## Delivery
-
-Respect the requested boundary. Local edits, commits, PRs, merging and release are separate actions. Leave uncommitted work available when human review is requested. Use [Opening a PR](../playbooks/opening-a-pr.md) when authorised. Read-only work ends with its answer.
+Edits, commits, PRs, merges and releases are separate steps, so only do the ones you were asked for. Use [Opening a PR](../playbooks/opening-a-pr.md) when asked for one. For read-only work, the answer is the report: skip "what changed".

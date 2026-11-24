@@ -1,25 +1,37 @@
 # Seed scenarios
 
-Use for seed/fixture design or representative state in a proof plan.
+## Reuse first
 
-## Choose the minimum context
+Use the existing loaders, factories and fixtures. Add a scenario only when none gives the state the proof needs.
 
-Reuse project loaders, factories and fixtures; add or extend a scenario only for a missing need. Keep focused failure cases in tests, and skip seeding for inapplicable work.
+Keep three kinds of data apart:
 
-Distinguish required production reference/bootstrap data, optional contributor/demo data and focused test fixtures. Identify purpose, authors/consumers and invocation; shared facilities need not share lifecycle policies.
+- **Reference data** production needs to run. Follow the project's rules.
+- **Demo data** contributors load to try the app.
+- **Test fixtures** for one test.
 
-## Define the scenario and proof
+Keep edge and failure cases in test fixtures, not demo data.
 
-Describe needed actors, permissions, relationships and lifecycle states, with stable logical references for callers. Keep authored meaning deterministic. Use synthetic contributor/demo/test identities; production reference data follows the project's contract. Omit secrets and fabricated audit history.
+## Describe the scenario
 
-Use framework facilities respecting current domain rules for ordinary valid scenarios; derive values through their owning records or operations. Historical, migration or intentionally invalid fixtures may use controlled construction; explain and scope the exception.
+Name the actors, permissions, relationships and states the proof needs. Give each record a stable name the recipe can use, like `draft-order`, not a generated ID.
 
-Connect context to actions under the [project completion rule](../../bootstrap-verification/references/project-contract.md#scenario-coverage). An existing draft order can support an optional delivery note: enter it through the changed UI/API, save and read back, without a permanent demo edit. Exercise changed relationships through creation/readback and relevant parent/tenant rejection. Scenarios need not mirror every field or test case.
+Create valid records through the app's own operations, so they obey domain rules. If a fixture must be invalid or historical, build it directly and note why.
 
-## Decide lifecycle and delivery boundaries
+Use made-up identities. Never seed secrets or fake audit history.
 
-For the target and data owner, decide first load, repeat, refresh/reset, edit preservation, schema compatibility and partial-failure recovery as needed. Disposable fixtures may reset and recreate; retained edits need an explicit repeat/rebuild policy. Add coordination or persistent loader state only for a demonstrated risk.
+## Tie it to the proof
 
-Treat source placement, compilation, release/deployed contents and runtime invocation as separate decisions with explicit deferrals. Compilation settles neither release inclusion nor invocation; apply the project's production requirements.
+The seed sets the starting state; the recipe drives the feature. See [scenario coverage](../../bootstrap-verification/references/project-contract.md#scenario-coverage).
 
-Return decisions, minimum scenario changes and proof plan in the existing design package or feature recipe. Preserve project formats without imposing a registry, schema or folder layout.
+Example: to prove an optional delivery note, seed one draft order. The recipe adds the note through the changed UI or API, saves, and reads it back, without permanently editing demo data.
+
+If a relationship changes, create and read back a linked record, and check that one from the wrong parent or tenant is rejected.
+
+## Repeat runs
+
+Say what a second load does, including after a schema change or a half-finished run. If fixtures are disposable, reset and recreate them. If people may edit seeded data, say whether a reload keeps or overwrites their edits. Add locking or loader state only for a shown risk.
+
+Where the seed file lives doesn't decide whether it ships or when it runs. Decide both, or say they're deferred.
+
+Put the scenario changes and proof plan in the existing design package or feature recipe, in the project's format.

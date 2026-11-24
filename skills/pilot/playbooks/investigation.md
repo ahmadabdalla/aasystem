@@ -1,8 +1,8 @@
 # Investigation
 
-Own a cited explanation or recommendation. Preserve the requested read-only boundary.
+Answer the question with checked citations. **Don't change the product** unless the user also asked for the change.
 
-1. Ground the question with [how](../../how/SKILL.md). Use [why](../../why/SKILL.md) for rationale and regression history. Pass existing evidence instead of restarting completed investigation.
-2. For an open solution decision, use [solution](../../solution/SKILL.md). Distinguish facts, historical intent, assumptions, and preferences. Use [probe](../../probe/SKILL.md) for a consequential observable unknown within the permitted scope; research can be sufficient for an advisory answer.
-3. Reconcile contradictions and check citations against the actual artifacts. Report what was inspected, what was exercised, and what remains unknown. A request for an explanation does not authorize a product change.
-4. Deliver the explanation or recommendation, alternatives when relevant, and evidence limits. When the user asks to see it visually or as a diagram, present it with [Explain Visually](../../explain-visually/SKILL.md). If implementation is also authorized, hand the settled result to the appropriate change playbook. Otherwise end here.
+1. **Trace it.** Use [How](../../how/SKILL.md) for how it works and [Why](../../why/SKILL.md) for why it's that way or when it changed.
+2. **Settle what reading can't.** If the question is which approach to take, use [Solution](../../solution/SKILL.md). If a runtime fact would change the answer, run a [Probe](../../probe/SKILL.md) without touching the product.
+3. **Check it.** Open every file and commit you cite and check it says what you claim. If sources disagree, say which wins and why. If you can't tell, report both.
+4. **Answer.** Give the answer, alternatives if any, what you read, what you ran and what's still unknown. If the user wants it visual, use [Explain Visually](../../explain-visually/SKILL.md). If the change was also asked for, hand the answer to the matching change playbook. Otherwise stop.

@@ -1,26 +1,42 @@
-# Codify personal judgment
+# Capture a principle
 
-Use this when reflection finds a transferable preference between viable choices, or the user asks to capture or revise one. First check whether an existing procedure, principle, or project mechanism already owns the decision.
+A principle is the user's preference between options that both work. Use this when reflection finds one, or the user asks to capture or change one. If a skill, an existing principle or a project check already owns the decision, change that instead.
 
-## Establish what is authorized
+## 1. Check it's the user's judgment
 
-- **Stated judgment:** a clearly expressed general preference can be captured within its stated scope when the request authorizes it. Recurrence is not required. Keep unknown rationale unknown; review any expanded scope or inferred rationale before adopting it.
-- **Inferred judgment:** choices across distinct situations can support a candidate. Inspect contrary choices and constraints that might explain the pattern. Confirm the proposed interpretation with the user before activation unless they have already approved it. Silence, agent repetition, and synthetic tests do not establish endorsement.
+- **Stated:** the user said it as a general preference. Capture it at the scope they gave; once is enough. If they gave no reason, leave the reason blank. If you widen the scope or add a reason, ask first.
+- **Inferred:** you saw the user choose the same way in different situations. Look for times they chose otherwise, and for constraints that explain the pattern. **Ask the user to confirm your reading before you write the principle.** Silence, the agent repeating the choice, or a passing test is not a yes.
 
-Use a current working record or `reviews/<date>/judgment/` for the source statement or scoped transcript pointer, the decision and tradeoff, your interpretation, scope, counterexample, observed outcome or its absence, proposed change, and adoption status. Record enough evidence to review the interpretation without copying unrelated conversation. Candidate records are evidence, not operating instructions.
+## 2. Record the evidence
 
-## Write and connect the principle
+Write a record in the task record or `reviews/<date>/judgment/<name>.md`:
 
-Follow the environment's skill-authoring instructions when available. Store an approved leaf at `principle-<name>/SKILL.md` beside the workflow skills. Give it a discriminating description, a decision preference, rationale, and limits. Include an example only where it clarifies the choice. Keep source history and evaluation reports in the review record. Use `disable-model-invocation: true` for the leaf and, when this toolbox carries Codex adapters, add `agents/openai.yaml` with `policy.allow_implicit_invocation: false`. The index owns deliberate selection of relevant principles.
+- the user's words, or a pointer into the transcript
+- the choice and its trade-off
+- your interpretation and its scope
+- a counterexample
+- the outcome, or "not seen yet"
+- the proposed change, and its status: candidate or approved
 
-Update the [approved-principle index](../../principles/INDEX.md) with its situation trigger, relevant workflow, and relative leaf link in the same change. The index routes to the leaf; it should not restate its instructions. pilot, solution, architect, and figure-it-out consume the index. Check the affected path when another workflow also needs deliberate activation.
+Quote only what the principle needs, not the rest of the conversation. The record is evidence, not instructions.
 
-A principle can guide the choice of a project mechanism while that mechanism enforces a concrete property. Keep those responsibilities distinct. Avoid a new principle that merely repeats an existing procedure.
+## 3. Write the principle
 
-## Check meaning and use
+Create `principle-<name>/SKILL.md` beside the other skills, following the [authoring playbook](../../pilot/playbooks/authoring-a-skill.md). Write a description that says when it applies, then the preference, why, and where it stops. Add an example only if it makes the choice clearer.
 
-The user's statement or confirmation establishes fidelity to their judgment. Test activation separately with an ordinary matching request, a meaningful exception, and any affected handoff into a fresh context. Include a different domain when claiming transfer. Compare against the previous workflow where useful. Examine the actual choice and its rationale; mentioning a principle does not demonstrate application.
+In the same change, add a row to the [principle index](../../principles/INDEX.md): the situation, the workflow, and a link to the leaf. Don't copy the principle's text into the index.
 
-Validate skill structure and links. Software produced under a principle still needs project verification. A successful replay neither proves that the principle is universally useful nor supplies missing user endorsement.
+## 4. Test it
 
-On later feedback or contrary outcomes, propose a scoped revision, merge, or retirement. Update the index and affected references together, preserving the reason in the review record. A project-specific exception need not change the portable preference. Apply changes within existing authorization; if confirmation is needed, ask one question and wait.
+Run it against:
+
+- an ordinary request it should apply to
+- an exception it shouldn't apply to
+- a handoff into a fresh agent, if one is affected
+- a different domain, if you claim it transfers
+
+Check the choice the agent made and its reason. An agent naming the principle doesn't show it applied it.
+
+## Revising
+
+If later feedback or an outcome contradicts it, propose a narrower scope, a merge or retirement. Record why. A project-specific exception doesn't change the portable preference.

@@ -1,27 +1,19 @@
 ---
 name: arena
-description: Produce and compare competing designs or artifacts, select a base, integrate compatible strengths, and check the result. Use when an early approach could lock in a consequential wrong shape.
+description: Have separate agents attempt the same design or artifact, judge them, and combine the best into one checked result. Use when an early wrong shape would be costly to undo.
 disable-model-invocation: true
 ---
 
 # Arena
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Frame the task, generate competing candidates, compare them, choose a base, integrate compatible strengths, and verify the result.
+1. **Write one brief.** Include the question, the evidence and its limits, the required behaviour and the output format. If a workflow called you, use its brief and format. If a gap would make candidates answer different questions, settle it first.
+2. **Set the criteria.** Before any candidate starts, write three to six criteria that would tell the options apart, such as "who owns retry state". Give them to the judge, not the candidates.
+3. **Run the candidates.** Start at least two separate agents. Each gets the same brief, the raw files and its own output location. None sees another's work or the answer you'd pick. Each returns its artifact, why it chose that shape and what it rejected. If you can't start separate agents, write the alternatives yourself in turn and say they're one agent's work, not independent.
+4. **Check the field.** If two design candidates share the same boundary, owner, data shape and interaction model, count them as one. If all candidates share a premise the evidence doesn't force, run one without it. If fewer than two distinct candidates finish, say there was no real comparison. Add a candidate only if it would offer a different shape.
+5. **Judge.** Once every candidate has finished, give a separate judge, from another model family if you have one, the criteria and the candidates labelled A, B, C. Meanwhile, score every artifact yourself against the criteria. Where your scores and the judge's differ, settle it from the artifacts or with a [probe](../probe/SKILL.md), not a vote. If you can't start a judge, label the pick lead-only.
+6. **Combine.** Pick one candidate as the base. Add the parts of others that fit it, noting where each came from, and say why you rejected the rest. If candidates solved different problems, fix the brief and rerun.
+7. **Check the result.** The combined result is new, so no candidate's passing check carries over. For code, run the project's verification. For a recommendation, back each claim. For a design, check that usage, shape, constraints and verification plan agree.
 
-## Frame and generate
-
-Use the calling workflow's brief, grounding artifacts, and output contract when supplied; otherwise establish them. State only new consequential gaps or assumptions to the user when the brief is already settled. Resolve a gap that would make the candidates answer different questions. Set three to six discriminating criteria before seeing candidates. Candidates receive the same brief, evidence with its limits, and output contract; reserve the evaluative rubric for comparison rather than coaching them toward the preferred answer. Required behavior and acceptance criteria remain part of the shared task.
-
-Use at least two isolated candidate contexts when delegation is available and permitted. Give each its own output location and access to the same raw artifacts; withhold other candidates and the parent's preferred answer until generation ends. Use actual available models; model diversity is useful, not a fabricated capability. Each candidate supplies an artifact, rationale, and alternatives rejected.
-
-If isolated contexts are unavailable, generate sequential alternatives and disclose that they are one agent's comparison, not independent corroboration. Record dropouts. If fewer than two candidates complete, do not present a competitive selection as established. Architecture candidates must differ in a consequential boundary, ownership, data shape, or interaction model. Inspect whether convergence reflects shared constraints or an unexplored premise.
-
-## Judge, synthesize, check
-
-After candidates finish, use a separate judge context with the rubric and neutrally labeled candidates whenever delegation is supported and permitted. Prefer an available model family different from the lead's. The judge can run while the lead independently reads every artifact and compares each criterion against evidence; do not start it while candidates are still writing. Record both verdicts and reconcile their differences through artifacts or [probe](../probe/SKILL.md), not a vote count. If independent judging is unavailable, label the selection as lead-only and retain that limit in the returned artifact.
-
-Choose one coherent base. Adapt compatible strengths from others; record the source of each addition and why other ideas were rejected. If candidates solved different problems, repair the brief before combining them.
-
-Check the synthesized result again. Code needs the project's behavioral verification; a recommendation needs supported claims and a defensible decision under the criteria. A design sketch needs consistency between usage, shape, constraints, and its verification plan; implementation behavior remains unverified until exercised. Do not transfer a candidate's passing result to a changed synthesis. Return one synthesized artifact and a short record of selection, additions, rejections, independence limits, and evidence. Populate the calling workflow's selection record directly when one is supplied. The caller incorporates this result; a direct invocation presents it to the user. Stop expanding the field when more attempts no longer offer a different plausible shape.
+Return one result in the caller's format, with a short record: the base, what you added and from where, what you rejected, both verdicts, any dropouts or limit on independence, and the evidence.

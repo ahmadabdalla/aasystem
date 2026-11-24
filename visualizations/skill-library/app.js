@@ -388,6 +388,17 @@ const nodes = [
     y: 855,
   },
   {
+    id: "prune-tests",
+    title: "Prune Tests",
+    type: "skill",
+    subtitle: "Tests that guard behavior",
+    purpose: "Removes or rewrites tests that guard no intended behavior and proves each deletion lost no needed coverage.",
+    owns: "Each test's decision, the pruning edits and the coverage proof; Maintainability defines a needed test.",
+    source: "../../skills/prune-tests/SKILL.md",
+    x: 2224,
+    y: 855,
+  },
+  {
     id: "independent-verification",
     title: "Independent verification",
     type: "role",
@@ -448,7 +459,7 @@ const nodes = [
     title: "Execution contract",
     type: "foundation",
     subtitle: "Applies to all procedures",
-    purpose: "Defines ownership, decision authority and human checkpoints, delegation, review context, verification and delivery; keeps handoffs and current verification evidence proportional to the task, with a narrow presentation exception.",
+    purpose: "Core rules every skill reads: ownership, scope and proof, decision authority, completion and delivery. Linked references, read when the task needs them, hold delegation and review context, behaviour-change verification with its narrow presentation exception, and bounded autonomy.",
     owns: "The shared operating rules, including effort-condition inheritance, reassessment and change-scoped signal effects, read by every procedural skill and worker.",
     source: "../../skills/pilot/references/execution.md",
     x: 2224,
@@ -518,7 +529,9 @@ function connect(from, to, type, label) {
   ["investigation", "explain or research"],
   ["maintainability", "assess module design / maintainability"],
   ["solution", "choose direction"],
+  ["architect", "design implementation"],
   ["10x", "assess plausible growth"],
+  ["interrogate", "challenge adversarially"],
   ["bug-fix", "correct a defect"],
   ["feature", "change behavior"],
   ["refactoring", "change structure"],
@@ -536,7 +549,6 @@ function connect(from, to, type, label) {
 
 // Product, solution, and interaction ownership.
 connect("product", "how", "support", "grounds existing behavior");
-connect("product", "why", "support", "checks consequential rationale");
 connect("product", "domain-modeling", "support", "clarifies ambiguous terms");
 connect("product", "probe", "support", "settles testable assumptions");
 connect("product", "interrogate", "support", "challenges the contract");
@@ -618,18 +630,16 @@ connect("feature", "how", "support", "grounds existing system");
 connect("feature", "solution", "support", "settles overall approach");
 connect("feature", "ui-refinement", "support", "runs reviewed UI loop");
 connect("feature", "interaction-design", "support", "designs changed interactions");
-connect("feature", "architect", "support", "design-only package");
+connect("feature", "architect", "support", "designs when trigger applies");
 connect("feature", "swarm", "support", "partitions independent slices");
 connect("feature", "arena", "support", "compares live alternatives");
-connect("feature", "interrogate", "support", "reviews contested result");
-connect("feature", "opening-pr", "handoff", "delivers when authorized");
+connect("feature", "interrogate", "support", "challenges contested design");
 
 connect("bug-fix", "how", "support", "traces failure path");
 connect("bug-fix", "why", "support", "checks regression history");
 connect("bug-fix", "probe", "support", "separates causal hypotheses");
 connect("bug-fix", "architect", "support", "designs when trigger applies");
 connect("bug-fix", "tdd", "support", "pins cheap regression path");
-connect("bug-fix", "opening-pr", "handoff", "delivers when authorized");
 
 connect("refactoring", "how", "support", "captures behavior baseline");
 connect("refactoring", "figure-it-out", "support", "handles coupled migration");
@@ -637,7 +647,9 @@ connect("refactoring", "architect", "support", "designs when trigger applies");
 connect("refactoring", "maintainability", "support", "assesses structural improvement");
 connect("refactoring", "feature", "handoff", "separates behavior changes");
 connect("refactoring", "bug-fix", "handoff", "separates discovered defects");
-connect("refactoring", "opening-pr", "handoff", "delivers when authorized");
+connect("refactoring", "prune-tests", "support", "assigns test pruning");
+connect("prune-tests", "maintainability", "support", "applies needed-test criteria");
+connect("prune-tests", "implement", "support", "makes pruning edits");
 
 connect("figure-it-out", "probe", "support", "reduces empirical uncertainty");
 connect("figure-it-out", "architect", "support", "settles consequential shape");
@@ -667,7 +679,7 @@ connect("independent-verification", "project-records", "support", "uses project 
 connect("independent-verification", "bootstrap-verification", "handoff", "returns missing proof path via caller");
 connect("independent-verification", "maintain-verification", "handoff", "returns recipe drift via caller");
 connect("independent-verification", "implement", "handoff", "returns correction need via caller");
-connect("execution-contract", "independent-verification", "governance", "owns independent dispatch and exceptions");
+connect("execution-contract", "independent-verification", "governance", "verification contract owns dispatch and exceptions");
 
 // Visual standards are read as criteria; reading them does not start an audit.
 connect("visual-assessor", "design-judge", "support", "applies composition standards");

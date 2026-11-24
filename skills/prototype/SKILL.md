@@ -1,32 +1,42 @@
 ---
 name: prototype
-description: Build and exercise an inspectable throwaway artifact to explore business state, refine specified presentation, or compare UI interactions. Use for concrete logic walkthroughs and contextual UI alternatives; use probe for research and other empirical unknowns.
+description: Build and exercise a throwaway prototype that answers one question, either a state model a domain expert can click through, or UI rendered inside the real app. Use probe for research and other experiments.
 disable-model-invocation: true
 ---
 
 # Prototype
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Own the inspectable artifact and its observations. The caller coordinates the larger task; the [prototype playbook](../pilot/playbooks/prototype.md) owns standalone experiments, and [probe](../probe/SKILL.md) owns the empirical method. Reuse the caller's question, decision criteria and grounding rather than reopening settled choices.
+A prototype is **throwaway code that answers a question**. Your caller owns the decision. If a human invoked you directly, follow the [Prototype playbook](../pilot/playbooks/prototype.md) as your caller. You build the artifact, exercise it and return what you saw. If the question isn't about business state or UI, use [Probe](../probe/SKILL.md) instead.
 
-## Frame and build
+## Pick a branch
 
-Carry the source question, affected decision, authorized scope, requirements and their status, relevant domain terms, representative scenarios, and expected observations into the experiment. Distinguish a model's observable behavior from a preference requiring human judgment. When an unknown materially changes the experiment and cannot be inferred, ask one focused question and wait; otherwise state the assumption and proceed.
+- **"Does this logic or state model feel right?"** Follow [logic-prototype.md](references/logic-prototype.md): one HTML file a domain expert can click through.
+- **"What should this look like?"** Follow [ui-prototype.md](references/ui-prototype.md): one candidate or several variants, rendered inside the real app.
 
-Read the reference matching the uncertainty:
+If the brief doesn't say which, pick one and state why at the top of the prototype. If an unknown would change what you build and you can't infer it, ask one question and wait. If you can't reach the human, return the question to your caller.
 
-- [Logic prototype](references/logic-prototype.md): let a domain expert drive actions and inspect business states, including awkward and forbidden transitions.
-- [UI prototype](references/ui-prototype.md): render a specified candidate or compare consequential interaction structures in representative application context.
+## Rules for both
 
-Use both only when they answer distinct necessary questions. Use [interaction-design](../interaction-design/SKILL.md) for the interaction model and its rationale; a prototype supplies evidence to that owner.
-
-Build in an isolated scratch location or checkout, identified as a prototype, with a simple launch instruction. Keep mutations in memory or explicit stubs; persistence experiments use owned scratch storage. Preserve the context needed for a credible observation without silently enabling live side effects. Add only the scaffolding and checks needed to trust the answer.
+1. **Isolate it.** If it mounts in the app, build it in a separate worktree. Otherwise, build it in a scratch directory outside the repository. Name it so a reader can see it's a prototype.
+2. **Make it trivial to run.** One command or file launches it, and one action resets it.
+3. **No live side effects.** Keep state in memory and stub every mutation. If persistence is the question, create a new scratch store named as a prototype, and let reset wipe only that.
+4. **Skip the polish.** No test suite, and no error handling beyond what keeps it runnable.
+5. **Keep to the brief.** If the prototype needs a business rule, scope or interaction choice the brief doesn't give, show it as a labelled proposal and return it.
 
 ## Observe and return
 
-Exercise the actual artifact on its intended surface, including reset and the scenarios that discriminate the choices. Record expected and observed results, inputs, environment, revision or source identity, and evidence paths under the execution contract. Distinguish a broken demo from evidence against the proposed model. A screenshot can show layout; it cannot prove an unexercised interaction.
+Exercise it yourself before handing it over: launch it the way the recipient will and run each scenario from reset. If the demo can't express the rule, fix the demo before you judge the idea. A screenshot shows layout; it doesn't prove an interaction you didn't drive.
 
-Return the question, alternatives, artifact path and launch/reset instructions, observations, human feedback with its source when available, decision or unresolved choice, and evidence limits. Agent reviews are assessments, not human acceptance. Return changed business semantics, interaction choices and technical feasibility findings through the caller, identifying [Product](../product/SKILL.md), the interaction owner or a design-only [Architect](../architect/SKILL.md) assignment as appropriate.
+Return:
 
-Keep the production boundary explicit: prototype behavior does not prove production reliability, authorization enforcement, persistence or integration. Hand selected findings to the current owner; production implementation needs its authorized workflow and verification. Retain evidence under the shared contract; do not automatically promote code, publish, commit, update external trackers, or discard artifacts.
+- the question and the alternatives
+- the artifact path, its revision if it's in a worktree, and launch and reset steps
+- what you did, expected and saw, with evidence paths
+- human feedback, with who gave it, or "no human feedback yet". An agent's review, yours included, is an assessment, not acceptance
+- the decision, or the open choice and who decides it
+- what the prototype can't show: production reliability, permission enforcement, persistence and integration
+- through the caller: business-meaning changes for [Product](../product/SKILL.md), interaction choices for the interaction owner, feasibility questions for [Architect](../architect/SKILL.md)
+
+Leave the artifact where it is. Copy it into production, commit, publish, update a tracker or delete it only when the caller asks.

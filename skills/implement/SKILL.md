@@ -1,35 +1,35 @@
 ---
 name: implement
-description: Make bounded production edits and run development checks against a supplied contract or settled design. Use for assigned implementation, corrections, and mechanical refactoring; return artifact and evidence to the caller. Architect owns design; the caller owns acceptance.
+description: Make bounded production edits and run development checks against a supplied contract or settled design.
 disable-model-invocation: true
 ---
 
 # Implement
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Own assigned edits and development evidence; the caller owns integration, acceptance, and [independent verification](../pilot/references/execution.md#independent-implementation-verification). Return into the caller’s task without starting another coordinator.
+The caller owns the design, acceptance and [independent verification](../pilot/references/verification-contract.md#independent-implementation-verification).
 
-## Establish the assignment
+No brief? Make wording or styling changes yourself under [owner-presentation eligibility](../pilot/references/verification-contract.md#owner-presentation-eligibility). Send anything else through [Pilot](../pilot/SKILL.md) before editing.
 
-Before editing, apply [Be ready to deliver and prove](../principle-deliver-and-prove/SKILL.md) to the assigned implementation. Use its two questions to establish delivery and verification readiness within the existing task brief.
+1. Read the brief and everything it links, and apply [Be ready to deliver and prove](../principle-deliver-and-prove/SKILL.md) to it. The brief should give:
+   - the behaviour to build, the settled design with its named data structures, and any reviewed visual reference
+   - which files you own
+   - invariants, failure behaviour, compatibility and allowed effects
+   - the checks to run and where evidence goes
 
-Use the assigned brief and retrieve its linked inputs before editing: behavior contract, settled design when the brief links one, source identity, file ownership, invariants, compatibility, permitted effects, checks, and evidence destination. Return material conflicts or missing prerequisites to the owner; a routine local correction needs no architecture package.
+   If the design or file ownership is missing or contradictory, ask the owner before editing.
+2. Write code to Maintainability's [local-code criteria](../maintainability/references/local-code.md).
+   - When you touch callers, shared code or invariants, also read its [boundary criteria](../maintainability/references/boundaries.md).
+   - For UI, read Design Judge's [visual standards](../design-judge/references/visual-standards.md).
+   - For refactors, read [Refactoring moves](references/refactoring-moves.md).
+3. Edit in small units. After each unit, run the assigned checks: the failing reproduction for a fix, the baseline for a refactor. Never change an expected result to make a check pass.
+4. Stay in scope. Report bugs and design problems you find to the owner, and send back changes to shared design tokens or files you don't own; don't make them yourself. Before returning, remove anything speculative, unrelated or left over from investigating.
+5. Return:
+   - the diff, and the commit or files it applies to
+   - why you made each change, including tradeoffs you weighed
+   - the checks you ran, their results and where the evidence is
+   - anything unverified
+   - for a refactor, any compatibility impact
+   - what logging or monitoring the change adds or loses ([signal effects](../pilot/references/execution.md#signal-effects))
 
-Before choosing local structure, read Maintainability's [local-code criteria](../maintainability/references/local-code.md); read its [boundary criteria](../maintainability/references/boundaries.md) when the assignment touches callers, owned knowledge, or invariant enforcement. Use the relevant criteria in the edits and return material tradeoffs with the rationale. This consumes shared criteria within Implement's scope; it does not start another assessment workflow or reopen settled design.
-
-When the assignment changes UI presentation, read the relevant sections of Design Judge's [visual standards](../design-judge/references/visual-standards.md). Apply them to the presentation the assignment changes, under their [precedence rule](../design-judge/references/visual-standards.md#precedence). Return a needed shared token change to the owner.
-
-For an assigned structural improvement, read [Refactoring moves](references/refactoring-moves.md) and use the relevant move within the settled target. Return its compatibility impact and development evidence to the caller.
-
-For a direct invocation meeting [owner-presentation eligibility](../pilot/references/execution.md#owner-presentation-eligibility), own the request, execute it directly and return the actual diff/preview checks and limitations under the [verification contract](../pilot/references/verification-contract.md); no coordinator wrapper or worker is required. For other direct invocations without an execution assignment, the invoking lead remains the sole coordinator: select the change playbook through [pilot](../pilot/SKILL.md), execute or assign Implement under the shared delegation rule, then arrange verification and acceptance. An assigned worker executes and returns to its owner; it starts neither another workflow nor another Implement wrapper. Follow the contract’s [delegation and invocation rules](../pilot/references/execution.md#delegation).
-
-## Execute and return
-
-Apply the caller’s decomposition: [swarm](../swarm/SKILL.md) for independent slices, [arena](../arena/SKILL.md) for unsettled alternatives selected under the shared comparison rule. Preserve other contributors’ work and project formats. Return material design contradictions to the owner for [architect](../architect/SKILL.md) revision; report discovered defects separately instead of changing scope or behavior. Before returning, inspect the actual diff against the assignment and remove owned speculative abstractions, unrelated cleanup, and investigation-only changes; return any needed scope expansion to the owner before making it.
-
-Run assigned checks after meaningful units, including the refactoring baseline or failing reproduction for corrections. Follow [project verification and evidence rules](../pilot/references/execution.md#verification-through-the-project) for observations, source identity, failure classification, and unchanged expectations.
-
-Reconcile [signal effects](../pilot/references/execution.md#signal-effects) against the actual diff; return changed expectations or detection gaps to the owner.
-
-Return the changed artifact and final source identity, change rationale, executed checks and evidence paths, failures, unverified boundaries, and design concerns. Development passes do not satisfy a required independent gate.

@@ -1,222 +1,127 @@
 # Optional local Codex checkpoints
 
-This adapter restores task context and checks recorded completion requirements.
-The [continuity procedure](../../references/task-continuity.md) owns sizing,
-routing, human decisions and proof; the [adapter boundary](../README.md) owns
-future integrations.
-
-Requires Python 3.10+, a local POSIX filesystem supporting `flock`, and local
-Codex command hooks for `SessionStart`, `UserPromptSubmit`, `SubagentStart` and
-`Stop`. Commands use POSIX shell quoting. Run only one helper version per state
-root; stop older writers before upgrading. Windows, network filesystems,
-cross-machine coordination and automatic hosted ChatGPT/Work integration are
-unsupported. See the [Codex hook reference](https://learn.chatgpt.com/docs/hooks).
+This adapter keeps a Pilot task's record across Codex sessions and blocks a stop until the record's completion checks pass. The [continuity procedure](../../references/task-continuity.md) owns the brief and recovery. Pilot and its execution contract own routing, human decisions and proof.
 
 ## One-time setup
 
-Choose absolute paths: a stable library installation and an exclusively owned,
-persistent state directory outside maintained source. Permit coordinator writes
-and session reads there. Generate configuration:
+Requires Python 3.10+, a local POSIX filesystem with `flock`, and Codex command hooks for `SessionStart`, `UserPromptSubmit`, `SubagentStart` and `Stop` ([hook reference](https://learn.chatgpt.com/docs/hooks)). Windows, network filesystems, several machines and hosted ChatGPT are unsupported.
 
-```sh
-python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
-  --state-dir /local/pilot-state config > /local/pilot-hooks.json
-```
+1. Pick absolute paths: a stable library install, and a state directory you own outside any source tree. If Codex runs sandboxed, let it write to the state directory.
+2. Generate the hooks. This prints JSON and changes nothing:
 
-This prints JSON without installing hooks or creating task state. Review and
-merge its `hooks` entries into your existing `~/.codex/hooks.json` or trusted
-project's `.codex/hooks.json`. Review/trust the exact definitions through `/hooks`;
-regenerate and review after path or definition changes. Shared plugin manifests
-do not register this adapter; portable skill installation does not activate it.
+   ```sh
+   python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+     --state-dir /local/pilot-state config > /local/pilot-hooks.json
+   ```
 
-For an existing installation, follow the
-[Pilot migration steps](../../../../docs/ops/releasing.md#upgrade-from-aapilot-to-pilot):
-regenerate with the new helper path and retain the existing state directory.
-
-Start with `$aasystem:pilot <outcome>` or `$pilot <outcome>` for direct installs.
-Activation requires either spelling at the raw prompt's start after optional
-whitespace. Quoted examples and other invocation forms use portable instructions
-unless the host supplies that explicit prompt. Verify actual event delivery.
-
-## Captured request and ownership
-
-`UserPromptSubmit` creates an `intent_id` and immutable `original_request`, bound
-temporarily to the root session and working directory. Later inputs append
-verbatim and clear completion, requiring owner reconciliation. Identical
-turn-ID/text replays are idempotent. No reliable sender marker distinguishes Stop
-continuations, so prompt text never filters possible corrections.
-
-Another explicit invocation remains input to the current intent. Hand off before
-switching to independent work; the next invocation can then create a new intent.
-The coordinator alone updates state; workers return results. `SubagentStart`
-restores the parent record when supplied its documented parent session ID and
-same working directory. Workers in another worktree need an explicit accessible
-record path; the adapter does not search other workspaces.
-
-`SessionStart` supplies startup/resume/post-compaction context. Hooks return the
-record path, CLI prefix and a bounded summary: read the full record before
-dependent work. Captured prompts, filenames and evidence are never executed.
-
-### Storage and retention
-
-```text
-state root/
-  bindings.json                 active ownership / interrupted handoff receipts
-  <sha256(cwd, session)>/
-    task.json                   current intent and reconciled brief
-    work/                       optional registered disposable output
-
-checked handoff -> existing task file + necessary proof outside state root
-                -> remove owned task/work folder and binding
-all intents retired -> bindings.json only (empty: 3 bytes)
-```
-
-There are no per-event logs, revision archives or retired-intent history.
-Active inputs and review proof can grow; there is no hard cap. Use `workdir` for
-disposable updates/intermediates, including plugin-directed agent files. Stop or
-reconcile scratch users before retirement. Retain necessary proof outside the
-entire state root under the [evidence lifecycle](../../../bootstrap-verification/references/project-contract.md#evidence-and-retention).
-
-The coordinator invokes handoff. Kernel directory locking releases on process
-exit; fixed pending replacements and ownership receipts support next-use recovery
-of committed initial writes or verified interrupted retirement. Uncertain
-ownership, canonical proof or filesystem safety preserves state and reports a
-gap to the affected task. Recovery failures in other tasks do not block the
-current hook or CLI command; safe leftovers still recover on next use. A malformed
-shared ownership index remains a root-wide failure. There is no age/prefix
-sweep, daemon, `SessionEnd` handler or cleanup while
-nothing runs. Task records, retained proof, generated configuration and native
-host transcripts/caches remain with their owners; added host context still counts
-toward the plugin's footprint.
+3. Merge its `hooks` entries into `~/.codex/hooks.json` or a trusted project's `.codex/hooks.json`, then review and trust them in `/hooks`. If a path or definition changes, regenerate and review again. Installing the skills doesn't enable the hooks.
+4. Run one helper version per state directory. Stop older writers before upgrading. If you're upgrading from aapilot, follow the [migration steps](../../../../docs/ops/releasing.md#upgrade-from-aapilot-to-pilot) and keep the existing state directory.
+5. Start a task with `$aasystem:pilot <outcome>`, or `$pilot <outcome>` for a direct install, at the very start of the prompt. Any other form gets the portable instructions only. Check that the events actually arrive.
 
 ## Coordinator protocol
 
-Use the hook-provided session, working directory and CLI prefix. `show` returns
-`version`, `intent_id`, `original_request`, session binding, `cwd`, `revision`,
-verbatim `inputs` (`text`, `turn_id`) and the agent-owned body:
+What the hooks do:
 
-```sh
-python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
-  --state-dir /local/pilot-state --session SESSION --cwd /project show
-```
+- `UserPromptSubmit` creates the record: an `intent_id` and the exact `original_request`, bound to the session and working directory. Every later root prompt, including another `$pilot`, is appended to `inputs`, bumps the revision, sets status to `active` and clears `reconciliation`. To start independent work, hand off first.
+- `SessionStart` (startup, resume, after compaction) and `SubagentStart` return the record path, the CLI prefix and a summary. The host may cut the summary short, so read the full record with `show` before dependent work. A subagent gets the record only if the event carries the parent's session ID and the same working directory. A worker in another worktree needs the record path passed to it.
+- Only the coordinator updates the record. Workers return results to it.
 
-Prepare an update with the latest `expected_revision` and full body. This research
-example selects its own route and obligations:
+Each increment:
 
-```json
-{
-  "expected_revision": 1,
-  "body": {
-    "acknowledged_inputs": 1,
-    "outcome": "Explain the importer using observed sources and limits",
-    "constraints": ["Do not edit product files"],
-    "decisions": ["User requested findings only"],
-    "effort": {"size": "S", "reason": "One bounded, understood investigation"},
-    "route": ["investigation"],
-    "boundary": "Supported findings; no implementation",
-    "current_increment": "research",
-    "next_action": "Trace the import entry point",
-    "obligations": [
-      {
-        "id": "import-findings",
-        "description": "Explain actual import behavior with sources and limits",
-        "stage": "research",
-        "status": "pending",
-        "evidence": []
-      }
-    ],
-    "findings": [],
-    "status": "active",
-    "reason": "",
-    "reconciliation": ""
-  }
-}
-```
+1. Read the record. `show` returns `version`, `intent_id`, `original_request`, the binding, `revision`, `inputs` (`text`, `turn_id`) and the body:
 
-| Field | Required meaning/check |
-| --- | --- |
-| `acknowledged_inputs` | Count of **all** current inputs reconciled by the owner; an assertion, not authenticated understanding. |
-| `effort`, `route` | Existing S/M/L assessment and task-selected procedures. |
-| `obligations` | Unique `id`, expected `description`, increment `stage`, `status` (`pending`/`passed`) and `evidence`. Retain required obligations through final reconciliation. |
-| `findings` | `description`, boolean `material`/`resolved`, string `return_checkpoint`. Unresolved material findings block successful checks; deferred minor findings need a return checkpoint. |
-| `status` | `active`, `waiting`, `blocked`, `complete` or `cancelled`. Pauses/cancellation require `reason` and retain `next_action`. |
-| `reconciliation` | For completion: compare with the original request, acknowledge all inputs, pass all obligations with matching proof and resolve material findings. Research/design need their own proof, not implementation. |
+   ```sh
+   python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+     --state-dir /local/pilot-state --session SESSION --cwd /project show
+   ```
 
-Send the JSON on stdin with the same prefix:
+2. Write the full body with the latest revision, on stdin (`update --file -`). For `--file PATH`, put the file in the directory `workdir` returns. Example for a research task:
 
-```sh
-python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
-  --state-dir /local/pilot-state --session SESSION --cwd /project \
-  update --file -
-```
+   ```json
+   {
+     "expected_revision": 1,
+     "body": {
+       "acknowledged_inputs": 1,
+       "outcome": "Explain the importer using observed sources and limits",
+       "constraints": ["Do not edit product files"],
+       "decisions": ["User requested findings only"],
+       "effort": {"size": "S", "reason": "One bounded, understood investigation"},
+       "route": ["investigation"],
+       "boundary": "Supported findings; no implementation",
+       "current_increment": "research",
+       "next_action": "Trace the import entry point",
+       "obligations": [
+         {
+           "id": "import-findings",
+           "description": "Explain actual import behavior with sources and limits",
+           "stage": "research",
+           "status": "pending",
+           "evidence": []
+         }
+       ],
+       "findings": [],
+       "status": "active",
+       "reason": "",
+       "reconciliation": ""
+     }
+   }
+   ```
 
-For `update --file PATH`, obtain the directory with `workdir` and reuse one file.
-Failed updates leave prior state intact;
-malformed events are rejected before writing. Reread after revision conflicts.
+   | Field | Rule |
+   | --- | --- |
+   | `acknowledged_inputs` | Must equal the number of `inputs`. It says you reconciled them all. |
+   | `effort`, `route` | Size S, M or L with a reason; `route` lists at least one procedure. |
+   | `obligations` | At least one. Each has a unique `id`, `description`, `stage`, `status` (`pending` or `passed`) and `evidence`. A passed one needs evidence. Keep every obligation until the end. |
+   | `findings` | `description`, `material`, `resolved` (booleans) and `return_checkpoint`. An unresolved material finding blocks every check. A deferred minor one needs a `return_checkpoint`. |
+   | `status` | `active`, `waiting`, `blocked`, `complete` or `cancelled`. A pause or cancellation needs a `reason`. |
+   | `reconciliation` | Needed for `complete`: how the result meets the original request. Research and design need their own proof, not an implementation. |
 
-Generate references for nonempty regular nonsymlink evidence files:
+   ```sh
+   python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+     --state-dir /local/pilot-state --session SESSION --cwd /project \
+     update --file -
+   ```
 
-```sh
-python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
-  --state-dir /local/pilot-state evidence /local/proof/findings.md
-```
+   A failed update leaves the record unchanged. If the revision is stale, read again. Setting `complete` runs the final check at once.
 
-References use `{"path": "/absolute/file", "sha256": "64 lowercase hex digits"}`.
-Updates, checkpoints and completion recheck passed evidence, including during
-pauses. If stale/missing, retain the obligation, reset it to `pending`, record the
-blocker and reverify before passing it again. Historical pending references may
-remain. File hashes cannot prove source/runtime freshness, sufficient obligations,
-independent review or semantic correctness; use the [tested identity procedure](../../references/verification-contract.md#tested-identity).
+3. Reference evidence. This prints `{"path", "sha256"}` for each nonempty regular file (not a symlink):
 
-Before advancing an increment, reread and check the current revision:
+   ```sh
+   python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+     --state-dir /local/pilot-state evidence /local/proof/findings.md
+   ```
 
-```sh
-python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
-  --state-dir /local/pilot-state --session SESSION --cwd /project \
-  checkpoint --expected-revision 2
-```
+   Every update, checkpoint and handoff rehashes passed evidence. If a file changed, set the obligation back to `pending`, record the blocker and verify again. A matching hash says the file is unchanged, not that the work is right; use the [tested identity procedure](../../references/verification-contract.md#tested-identity).
 
-This checks obligations matching `current_increment`, returns the revision and
-changes no state. Future stages may remain pending. Update to select the next
-increment while retaining earlier obligations; completion checks them all.
-The coordinator must call checkpoints; hooks do not intercept internal planning
-or edits. A populated record or nonempty evidence file alone does not prove work.
+4. Before moving to the next increment, check the current one:
+
+   ```sh
+   python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+     --state-dir /local/pilot-state --session SESSION --cwd /project \
+     checkpoint --expected-revision 2
+   ```
+
+   It passes when every input is acknowledged, no material finding is open, and at least one obligation has `stage` equal to `current_increment` and all of those have passed. It changes nothing. Then update `current_increment`; completion checks every obligation. Hooks don't see planning or edits, so you must call checkpoints yourself.
 
 ## Handoff and resume
 
-Use an existing authorized, stable local UTF-8 task file in its project format.
-It must be nonempty, owned by the current user, regular/nonsymlink, have one hard
-link and sit outside the state root. The helper reads it without writing another
-archive or accepting remote PR URLs. If unavailable, retain recoverable state and
-disclose the missing mechanical handoff capability.
+Hand off once status is `complete`, `waiting`, `blocked` or `cancelled`; an active task can't hand off. A paused or cancelled task can stop without a handoff, but its state stays until you hand it off.
 
-For a completed or truthfully paused intent:
+1. Pick an existing local UTF-8 task file in the project's format: nonempty, a regular file you own with one hard link, outside the state directory. If there is none you may write to, keep the state and say mechanical handoff is unavailable.
+2. Write these strings into it unchanged: `intent_id`, `original_request`, every string in the body (list items included), each obligation's `id`, `description`, `stage`, `status` and evidence `path` and `sha256`, and each finding's `description` and `return_checkpoint`. `handoff` checks each appears verbatim, so don't wrap or reformat them.
+3. Move evidence outside the state directory and refresh its references. Evidence inside the state directory blocks handoff, and so does any other file in the task folder besides `task.json` and `work/`.
+4. Stop or reconcile anything using `workdir`. Read the task file back, hash it with `evidence`, and don't touch it again before:
 
-1. Reconcile inputs and update the body. Persist intent ID, exact original request,
-   outcome, constraints, decisions/corrections, sizing/route, boundary, increment,
-   status, next action, obligations, findings and necessary evidence references in
-   the task file. Exact retained strings are checked; owner/verifier judge meaning.
-   A full transcript is unnecessary.
-2. Retain proof outside the state root and refresh references/hashes. Any reference
-   inside disposable state blocks handoff; passed evidence must still match.
-3. Stop/reconcile scratch users, read the task file back, get its hash with
-   `evidence`, then run:
+   ```sh
+   python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
+     --state-dir /local/pilot-state --session SESSION --cwd /project \
+     handoff --record /project/existing-task.md --expected-revision N \
+     --expected-record-sha256 HASH --workers-stopped
+   ```
 
-```sh
-python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
-  --state-dir /local/pilot-state --session SESSION --cwd /project \
-  handoff --record /project/existing-task.md --expected-revision N \
-  --expected-record-sha256 HASH --workers-stopped
-```
+   `--workers-stopped` is required if a work directory exists. It is your word that its users stopped; the helper can't check. Success removes only this task's state. The task file and evidence stay.
 
-`--workers-stopped` is required if a work area exists. It is the coordinator's
-assertion that scratch users have stopped or been reconciled; the helper does
-not discover detached processes. Locking serializes helper operations only.
-Unknown files, symlinks, foreign ownership, stale revisions or changed required
-text/proof block retirement. Success removes only registered disposable scope;
-the task file and proof remain unchanged.
-
-In the receiving session, resume with the record's ID and exact original request:
+To resume in a new session, the intent must be handed off first:
 
 ```sh
 python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
@@ -225,34 +130,37 @@ python3 /installed/aasystem/skills/pilot/scripts/orchestration.py \
   --original-request 'The exact original request'
 ```
 
-Resume preserves identity in a new binding but leaves the body unset. Read the
-entire record and reconstruct decisions, obligations and next action before
-dependent work. It does not parse project prose; the captured canonical hash is
-selected-version metadata, not continuing semantic proof. Reconcile source changes.
-
-Only the current version 2 format is supported. Older development records are
-rejected and preserved; no compatibility reader or automatic migration is shipped.
+Resume keeps the intent ID with an empty body. Read the whole task file and rebuild the body before dependent work; reconcile any source changes. Only version 2 records work; older ones are refused and left in place.
 
 ## Stop behavior and limits
 
-Version 2 completion requires checked handoff before closing. Missing body/sizing,
-corrupt state, unreconciled inputs, pending obligations, missing reconciliation or
-stale evidence requests one corrective continuation. If `stop_hook_active` is
-already true and the gap remains, Stop ends with an explicit incomplete warning.
-Waiting/blocked/cancelled states may stop truthfully with a “not complete” warning.
-No endless retries or conversion of gaps into passes.
+- Stop asks for one more turn if the body is missing, inputs are unreconciled, the task is still `active`, or it is `complete` but fails the final check or hasn't been handed off. If the gap remains on the next stop, Stop ends with an incomplete warning.
+- A waiting, blocked or cancelled task stops with a "not complete" message.
+- Sessions without a task are ignored. If a task folder has a missing or corrupt record, it's reported incomplete, not recreated.
+- Malformed events, missing Python or state, untrusted hooks, host errors and timeouts can stop enforcement. Hooks don't sandbox anything or prove approval, review or that the work is right.
 
-Inactive sessions are no-ops. A missing/corrupt record in an existing task folder
-is incomplete, not recreated over lost intent. Malformed events, unavailable
-Python/state, untrusted/disabled hooks, host errors/timeouts and unsupported events
-can prevent enforcement. Hooks neither sandbox processes nor authenticate approval,
-reviewers or semantic fulfillment.
-
-Run CLI/event regression checks from the library root:
+To run the helper's tests from the library root:
 
 ```sh
 python3 -m unittest discover -s tests -p test_orchestration.py
 ```
 
-These prove their exercised subprocess/state boundary. Actual host callbacks,
-skill discovery and specialist composition require separate native observation.
+They cover the CLI and state handling only. Real host callbacks need checking in Codex.
+
+## Storage and retention
+
+```text
+state root/
+  bindings.json                 active ownership; initial records and handoff receipts until they finish
+  <sha256(cwd, session)>/
+    task.json                   current intent and body
+    work/                       optional disposable output
+
+handoff -> task file and evidence outside the state root
+        -> removes this task's folder and binding
+nothing active -> bindings.json only (empty: 3 bytes)
+```
+
+There are no event logs, revision archives or history of finished tasks, and no size cap. Inputs and evidence grow while a task is active. Put disposable files, including plugin-directed agent files, in `workdir`. Keep evidence a review needs outside the state root under the [evidence lifecycle](../../../bootstrap-verification/references/project-contract.md#evidence-and-retention).
+
+Interrupted writes and handoffs are recovered on the next helper run. If ownership or evidence is unclear, the helper keeps the state and reports the gap to that task. A failure in another task doesn't block this one, but a corrupt `bindings.json` blocks every task. Nothing cleans up while no helper runs: there's no sweep, daemon or `SessionEnd` handler. Task files, evidence, generated config and Codex transcripts stay with their owners.

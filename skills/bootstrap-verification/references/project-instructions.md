@@ -1,15 +1,20 @@
 # Connect verification to normal project work
 
-Read existing project instructions and reuse their routing where it already works. Add the smallest scoped entry needed in the established instruction file. Follow directory-specific ownership in larger repositories. Do not replace unrelated instructions or copy portable reasoning skills into the project.
+Reuse the project's existing instruction routing where it works. Otherwise add the smallest entry that does the job to the established instruction file, following directory ownership in larger repositories. Keep toolbox skills out of the project.
 
-Adapt the following text with actual relative paths before installing it. These placeholders are authoring inputs; none may remain in the generated project instructions.
+Replace `VERIFIER_PATH` and `MAP_PATH` with real relative paths before installing.
 
-> For changes affecting product behavior, read [the project verifier](VERIFIER_PATH) and its [feature map](MAP_PATH). Select checks for the changed behavior, alternate entry points, and affected dependencies. Add missing task-specific criteria from the request or contract before implementation. Run the applicable checks on the final artifact, follow the verifier's evidence retention procedure, and report pass, fail, and unverified scope separately. Update affected recipes when intended behavior or the procedure changes; ordinary runs need no permanent map edit. If the procedure cannot run, report the missing prerequisite and preserve the verification gap; a passing unrelated check does not close it.
+> For changes affecting product behaviour, read [the project verifier](VERIFIER_PATH) and its [feature map](MAP_PATH). Before implementing, pick checks for the changed behaviour, its other entry points and affected dependencies, taking expected results from the request or contract, not the code. Run them on the final change and report pass, fail and unverified separately. If intended behaviour or the procedure changes, update the affected recipes. If a check can't run, report what's missing; an unrelated pass doesn't close the gap.
 
-Generated instructions must remain usable when the portable toolbox is absent. They may explain how to repair the local procedure without requiring a portable skill by name. Link actual existing tests and scripts when they enforce the contract. Make no claim that written instructions guarantee execution.
+Link the real tests and scripts that enforce the contract.
 
-When project glossary or ADR records exist, preserve or add a short instruction to read relevant records before changing the affected area. Link their actual locations, carrying decision status and evidence limits into expected outcomes. Reuse an existing pointer; create no empty records as part of setup.
+If the project has a glossary or ADRs, keep or add a short pointer to read the relevant ones before changing that area. Don't create empty records.
 
-For user-facing work, likewise point to the canonical product purpose, journey map and interaction records that exist. Say when each is needed: outcomes and authority before changing behavior; interaction decisions before changing navigation, workflow or visibility; verifier recipes before claiming implementation results. Project-level skills follow these project-relative pointers and link requirements instead of copying business rules into their instructions. Preserve proposed and superseded status when resolving a reference.
+For user-facing work, also point to the product purpose, journey map and interaction records that exist, and say when each is needed:
 
-Verify integration by reading the final instruction entry and following its links from the target project. For a substantive setup, a fresh-context change request can test whether the entry is discovered without an explicit reminder to verify.
+- outcomes and their authority, before changing behaviour
+- interaction decisions, before changing navigation, workflow or what users can see
+
+In the verifier, link requirements; don't copy business rules.
+
+Finally, read the installed entry and follow its links from the project. Then test it: give a fresh-context agent a change request that doesn't mention verification, and check that it finds and follows the verifier.

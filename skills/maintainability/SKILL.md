@@ -1,36 +1,35 @@
 ---
 name: maintainability
-description: Assess the effort needed to understand, change, and verify supplied code or an implementation design. Use for module design reviews, bounded structural assessments, refactoring targets, and code review; the caller retains design choices and implementation.
+description: Assess how hard supplied code or a design is to understand, change and verify. Use for module design reviews, structural assessments of a design or diff, and finding tests that guard no behaviour.
 disable-model-invocation: true
 ---
 
 # Maintainability
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract's baseline requirements, delegation procedure, and review-context rule.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Assess the supplied artifact against the intended change and project constraints. Return findings to the current owner; this assignment does not select a workflow, choose the design, or authorize edits.
+Find what makes the work hard to understand, change and verify. Return findings to whoever asked. Don't choose the design or edit code.
 
 ## Select the assessment
 
-For an explicit module design review or a standalone maintainability assessment of existing code, read [Module design review](references/module-design-review.md) in full. It owns scope selection, behavior and hypothetical-change traces, and the assessment report; numerical scores are optional when requested.
+- If asked for a module design review, or how maintainable existing code is, follow [Module design review](references/module-design-review.md).
+- If asked which tests guard no behaviour, check each test in scope against the needed-test rule in [Local code](references/local-code.md)'s **Verification clarity**. List each test that fails it, with the clause it fails, one line each.
+- Otherwise (a design, a diff or a narrow question), follow the steps below.
 
-For a supplied design, diff, or targeted supporting question, use the bounded assessment below. Reading shared criteria during design, implementation, or verification does not require the module review procedure.
+## Assess
 
-## Establish and inspect
-
-Use the caller's artifact path and revision, assignment phase, intended behavior, accepted constraints, relevant callers, and evidence limits. Preserve existing compatibility requirements and known defects. Identify missing evidence that could change the assessment; do not treat an inaccessible caller as absent. Reuse a settled assessment for unchanged scope and evidence.
-
-Read only the criteria relevant to the assignment:
-
-- [Local code](references/local-code.md) for names, function responsibilities, control flow, effects, duplication, and test clarity.
-- [Boundaries](references/boundaries.md) for caller burden, knowledge and state ownership, invariants, abstraction, change locality, and verification through interfaces.
-
-Trace material concerns through concrete usage or a likely change. Compare the current or proposed structure with a plausible simpler alternative, including the cost of that alternative. Assess consequences rather than accumulating smells; a wrapper, long function, shared writer, or repeated expression can be justified by the actual contract. A design assessment identifies expected consequences; observed implementation behavior needs separate proof.
+1. **Gather.** Get the artifact and its revision, the intended change, the constraints and the callers. If something missing could change a finding, say so. A caller you can't read still exists.
+2. **Read the criteria.** [Local code](references/local-code.md) and [Boundaries](references/boundaries.md). For a design with no code yet, Boundaries alone.
+3. **Trace.** Follow each concern through a real use or a likely change.
 
 ## Return a bounded assessment
 
-For each material finding, return **location → causal reader or change burden → recommendation → tradeoff → verification needed**, with supporting evidence and its limits. Distinguish a demonstrated issue, an unresolved risk, and a preference. An empty assessment is valid; name the inspected scope, criteria, and limits rather than asserting absolute cleanliness.
+One entry per finding that could change the caller's design, verdict or plan:
 
-When supplying criteria or findings to the common [independent implementation verification](../pilot/references/execution.md#independent-implementation-verification) gate, preserve its distinction between qualitative assessment and executable proof. A separate Maintainability invocation is unnecessary when that verifier can apply the relevant criteria itself.
+```text
+<location> [demonstrated | risk | preference]: <what it costs a reader or a change> → <fix>. Tradeoff: <cost of the fix>. Evidence: <what you traced or ran>. Verify: <check that would settle it>.
+```
 
-Return in the caller's working record or conversation; follow the execution contract's retention rules rather than creating a report by default. The caller decides which findings change its design, review verdict, or implementation plan and owns final verification.
+**demonstrated:** you traced it in this code or saw it in a run. **risk:** plausible, not shown. **preference:** a style choice.
+
+No findings is a valid result. Say what you inspected and what you didn't.

@@ -1,47 +1,30 @@
 # Business state and consistency
 
-Use when a design changes business identity, state ownership, invariant enforcement,
-or coordination between meanings that differ across established contexts.
-Reuse agreed product rules, glossary terms, and current decisions.
-
 ## Name the model
 
-Describe one concrete operation and the facts that make its result valid.
-Distinguish stable identity from a value whose meaning comes from its contents.
-Define equality, units, transitions, and lifecycle only where they matter.
-A database row, class, business context, and deployment unit need not coincide.
+Pick one concrete operation, such as "reserve the last seat". Write down the facts that must hold for its result to be valid.
 
-When the same term has different meanings, name each context and its translation.
-Use [Domain Modeling](../../domain-modeling/SKILL.md) for unsettled meanings and
-justified records; Product retains authority over business rules.
-Folders and service boundaries alone do not establish business contexts.
+Say whether two things are equal by id or by contents. Add units, transitions and lifecycle only where this operation depends on them.
+
+A table, class, context and service needn't line up. Folders don't prove a context.
+
+If two contexts use one term differently, name both meanings and the translation between them. If a meaning is unsettled, use [Domain Modeling](../../domain-modeling/SKILL.md). If a business rule is unsettled, return it to your caller.
 
 ## Place the invariant
 
-1. State the rule and identify every writer, including jobs, imports, and retries.
-2. Choose the authoritative state owner and the operation that enforces the rule.
-3. Identify which reads and writes must succeed together under the accepted contract.
-4. Choose transaction, locking, constraint, version, or other enforcement from that need.
-5. Explain concurrent attempts, stale reads, duplicate requests, and partial failure.
-6. Across owners, name the accepted consistency guarantee and recovery mechanism.
-   Events or eventual consistency are choices; they do not follow from object identity.
+1. Write the rule. List every writer, including jobs, imports and retries.
+2. Pick the module or service that owns the state, and the operation in it that enforces the rule.
+3. List the reads and writes that must succeed together.
+4. Pick the mechanism that makes them succeed together, such as a transaction, lock, unique constraint or version check.
+5. Say what happens on concurrent attempts, stale reads, duplicate requests and partial failure.
+6. If the rule spans owners, name the agreed consistency guarantee and how a failed step recovers. Events are a choice, not a default. If nobody has agreed one, return it to your caller.
 
-Use a consistency boundary where it makes the rule enforceable.
-Keep independently changing state separate when the contract permits it.
-A factory, repository, event, or rich object needs a concrete role in this operation.
-Simple records and functions remain viable implementations.
+Keep state that changes independently apart, unless the rule needs it together. Add a factory, repository, event or rich object only if this operation needs one. Plain records and functions are fine.
 
 ## Carry the proof
 
-Map the rule to observable success, rejection, conflict, and recovery scenarios.
-Include competing writes or replay when those could violate the rule.
-Name effects that persist after failure and who can observe or repair them.
-Carry the cases into the existing verification plan and implementation brief.
+For each rule, write the success, rejection, conflict and recovery cases. If competing writes or replays could break the rule, add them. Name any effect that survives a failure, and who sees or repairs it.
 
-Example: reserving the final item needs a defined outcome for concurrent requests.
-A method named "reserve" is insufficient; identify the atomic check/write or other
-mechanism. If payment is separate, preserve the agreed pending and recovery states
-rather than silently promising one transaction or accepting overselling.
+Put the owner, translations and consistency guarantee in the design package's shape, and these cases in its verification plan.
 
-Return ownership, consistency, translations, and proof needs in the existing
-[design package](design-package.md), reusing project record formats.
+Example: two requests reserve the last item at once. Say which wins and what the other gets. A method named `reserve` doesn't answer this; name the atomic check-and-write. If payment is a separate step, keep the agreed pending and recovery states. Don't promise one transaction across both steps, and don't allow overselling.

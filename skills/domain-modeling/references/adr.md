@@ -1,71 +1,61 @@
-# Project decision records
+# Decision records (ADRs)
 
-Before writing or reviewing an ADR, choose its rules in this order: documented project rules for the record's scope, the convention used by existing ADRs in that scope, then the framework default below. This includes older formats the project still uses. Use an external template only if the project explicitly adopted it. If the sources conflict and specify no precedence, identify the conflict and leave conformance undecided.
+## Which rules apply
 
-## Decide whether to record
+Follow the project's written ADR rules. If it has none, follow the format its existing ADRs use. Otherwise use the default below. If two sources conflict and nothing says which wins, say so. Review an ADR against the same rules it was written to.
 
-Create an ADR only when all three apply:
+## When to write one
 
-- Changing the choice later has meaningful cost.
-- A future reader would need context to understand it.
-- Genuine alternatives involved a consequential tradeoff.
+Write an ADR only when all three are true:
 
-Otherwise keep the choice in its task or design record, unless an ADR is explicitly requested. Reuse an existing decision rather than create another account of it.
+1. **Hard to reverse:** changing your mind later costs something real.
+2. **Surprising without context:** a future reader would wonder why.
+3. **A real trade-off:** there were genuine alternatives and you picked one for a reason.
 
-## Choose owner and scope
+Otherwise keep the choice in the task or design record, unless the user asks for an ADR.
 
-Ownership follows the decisive tradeoff:
+## Where it goes
 
-- **Product:** outcomes, business rules and operating commitments.
-- **Design:** interaction, navigation and information presentation.
-- **Software:** implementation structure and technical boundaries.
+Use the project's locations, numbering and index. Otherwise put system-wide choices in `docs/adr/` and choices inside one context in `<context>/docs/adr/`, named `NNNN-short-title.md` with the next unused number. Create the directory when the first ADR needs it, and link the new ADR from the project's index or instructions.
 
-Scope is independent: system-wide or contained within an established business context. A technology name does not determine ownership; a feature or dimension does not establish a context.
+One decision per ADR. Before writing, read related ADRs. If yours contradicts one, supersede it. Link related ADRs to each other.
 
-Keep one decision per ADR, including choices spanning dimensions; several consequences do not make several decisions. Cross-link related records. Read relevant decisions across dimensions and scopes, and resolve conflicts at the owning scope before adopting a contradictory choice.
+## What every ADR says
 
-## Follow project placement
+Whatever the format, the record says:
 
-Use the project's locations, numbering and discovery pointers. Otherwise store decisions at the narrowest scope containing their consequences:
+- the problem or constraint
+- the decision and why
+- at least one alternative you rejected, and why
+- the costs and limits
+- what happens at 10x: run [10x](../../10x/SKILL.md) when you create an ADR or change its choice, and say what you accommodate now, what you defer and what would make you reconsider. If growth changes nothing, say why in one line.
 
-- `docs/adr/` for system-wide choices and agreements between contexts.
-- `<context>/docs/adr/` for context-local choices.
+If the project's format has no slot for one of these, put it in the closest section, such as consequences or fallout. Never drop it, and don't add headings the format lacks. Keep each point to a sentence or two.
 
-Create directories lazily, when a qualifying record is needed. Default to `NNNN-short-title.md`, using the next unused number in the chosen directory. The location need not encode dimension; state owner and scope briefly when useful. Link the record from the project's existing index or instructions.
+## Default format
 
-## Maintain one decision
+```md
+# {Short title of the decision}
 
-Before writing, reread the relevant records and classify the change using the rules below. Before delivery, check the diff against that classification.
+{The problem. What we decided and why. The alternative we rejected and why. The costs.}
 
-- **Update:** correct, clarify or add evidence for the same decision without changing its choice.
-- **Separate:** an independent choice meeting the ADR threshold gets its own linked record; other choices stay in their task or design record.
-- **Supersede:** explain the changed evidence or constraint for a materially different accepted choice, then create a successor linked both ways. Preserve the old rationale and mark the old record superseded only when the replacement is accepted.
+Standing: {user-confirmed | delegated | proposed | unresolved | superseded by ADR-NNNN}, {source}
 
-When splitting an overloaded ADR, preserve each decision's sources, standing, rationale and historical links. Extraction alone does not supersede an accepted choice.
+## At 10x scale
 
-## Write a small record
+{What grows, what we accommodate now and defer, and what would make us reconsider.}
+```
 
-The framework default requires a title and prose stating:
+## Standing
 
-- The problem or constraint.
-- The decision and intended result.
-- Why the decision was chosen.
-- At least one alternative considered and why it was rejected.
-- Expected effects, including costs and limitations.
+Say who settled the choice, in the project's format. **User-confirmed** or **delegated** (by a project record that grants authority) means accepted; link the source. Otherwise it's **proposed**, or **unresolved** if you can't tell. Don't guess.
 
-State standing and authority using the rules below. Aim for 1–3 sentences; use more to cover the required information. Simple ASCII flows and headings beyond the scale section below are optional.
+A draft, a generated document or working code doesn't make a choice accepted, and acceptance doesn't prove the code does it.
 
-When creating an ADR or changing its choice, use [10x](../../10x/SKILL.md), reusing a current assessment. Under the framework default, end the record with `## At 10x scale`: briefly state the growth scenario, consequences or constraints of this choice, what is accommodated or deferred, and the condition for reconsideration. Link the assessment or verification plan for detail. If growth does not affect the choice, state why. Under selected project rules or an existing format, put this content in the equivalent section without imposing a new heading. Evidence-only updates need no fresh assessment.
+## Changing an ADR
 
-Authors and reviewers use the same selected rules. For each failure, cite the rule and identify the missing information or format error. Require specific headings only when the selected rules require them. Link sources and substantial evidence; keep requirements, implementation steps and detailed verification scenarios in their owning documents.
+- **Same choice, better wording or evidence:** update it in place.
+- **A different choice:** write a new ADR that says what changed and links both ways. Keep the old one and its rationale, and mark it superseded once the new one is accepted.
+- **A new, separate choice:** give it its own ADR if it meets the threshold.
 
-Make standing and authority clear using the project's format:
-
-- **User-confirmed:** the user's recorded decision covers this choice; link its source.
-- **Explicitly delegated:** a source grants decision authority within stated boundaries.
-- **Proposed:** a choice awaiting the necessary decision.
-- **Unresolved:** no settled choice or sufficient authority is known; missing provenance stays unknown.
-
-An authoritative project record can supply the basis without inventing user confirmation. Authority is separate from evidence: a proposal, generated document or working implementation does not establish acceptance; acceptance does not prove implementation. Acceptance of one choice does not authorize additional scope or presentation. Preserve these distinctions in consequential task/design choices below the ADR threshold too, without creating another approval register or requiring approval for routine choices already within scope.
-
-Return affected constraints and observable expectations to the caller. Link verification evidence when useful; an implementation failure does not authorize rewriting the intended contract.
+If the code doesn't match an ADR, report it. Don't rewrite the ADR to match the code.

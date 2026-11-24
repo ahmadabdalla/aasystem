@@ -1,20 +1,16 @@
 # Signal assessment
 
-Identify consequential failures or misuse within the assigned scope.
+List how the work in scope could fail or be misused, and check whether anyone would notice. For an existing system, trace the detection it has. For a design, assess what it proposes. For a change, compare before and after.
 
-For an existing system, trace current detection. For a design, assess proposed detection. For a change, compare detection before and after.
+Fill in one block per scenario:
 
-For each scenario, establish:
+```text
+Scenario: <trigger> → <consequence>
+Signal: <what is emitted> → <where it lands>
+Consumer: <who or what acts on it, or none>
+Evidence: <observed | traced | documented | inferred | unverified>, under <conditions tested>
+Gap: <what still goes unnoticed>
+Fix: <smallest change or check>
+```
 
-- Trigger and consequence.
-- Signal produced and where it lands.
-- Expected consumer, if any.
-- Evidence and remaining detection gap.
-
-A rejected action, recorded event, and notification are separate claims. When a signal changes, trace affected consumers.
-
-Use project-owned guidance and checks. Label claims as observed, traced, documented, inferred, or unverified. State the tested conditions for observations.
-
-Return material findings, evidence limits, and the smallest corrective action or check. Link deferred work. An empty assessment is valid; state the inspected scope.
-
-Follow shared [review-context rules](../../pilot/references/execution.md#review-context). Keep results in the existing record.
+Blocking an action, recording it and notifying someone are three separate claims; check each. If a signal changes, trace everything that consumes it. Say what you inspected.

@@ -1,31 +1,28 @@
 ---
 name: interaction-design
-description: Design navigation, interactions and information hierarchy, or coordinate an independent rendered UX assessment. Product owns business behavior and architect owns implementation design.
+description: Design navigation, interactions and what people see, or run an independent rendered UX assessment. Use when a user-facing change alters how people find, see or act on behaviour.
 disable-model-invocation: true
 ---
 
 # Interaction design
 
-Before starting, read the [shared execution contract](../pilot/references/execution.md) in full and the [approved-principle index](../principles/INDEX.md). Follow the contract’s baseline requirements.
+Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-Own the interaction model for the assigned scope. The caller assigns this responsibility and integrates the result; a standalone request ends with the requested design or review. Product owns intended behavior and business meaning, while architect owns technical implementation design. This skill proposes how people encounter and act on that behavior.
+You decide how people find, see and act on agreed behaviour. Product owns what the behaviour is. Architect owns how it's built. If the request is standalone, stop at the design or the review.
+
+**A change is consequential if it changes navigation, who can see or do something, or a screen's primary action.** If the change is routine styling or uses established controls, skip the model and the independent review.
 
 ## Select the assignment
 
-For an independent assessment of an existing rendered interface, follow [Independent rendered UX assessment](references/rendered-ux-assessment.md). It requires two parallel nonproducer assessors with separate domain instructions and rubrics. Return their reconciled findings and evidence; use the design phases below only when the assignment also includes a new or revised interaction model.
+- If the task is to assess an interface that already renders, follow [rendered-ux-assessment.md](references/rendered-ux-assessment.md). If the task also asks for a new or revised model, do the steps below afterwards.
+- Otherwise, follow the steps below.
 
-For interaction design or model review, follow Ground and design, then Review and return below.
+## Steps
 
-## Ground and design
+1. **Design.** Follow the [interaction contract](references/interaction-contract.md).
+2. **Compare.** If a consequential choice is unsettled, compare at least two structurally different options. If independent candidates could change the choice, use [Arena](../arena/SKILL.md) and put the interaction contract in its brief. If rendering or clicking through would answer the question, use [Prototype](../prototype/SKILL.md).
+3. **Refine.** If a human needs to review and refine a rendered UI, return to the caller for a [UI Refinement](../ui-refinement/SKILL.md) assignment. If your caller is UI Refinement, return your model to it instead.
+4. **Route out.** Send changes to business meaning or scope to [Product](../product/SKILL.md), and feasibility questions to [Architect](../architect/SKILL.md), both through the caller. Use [Solution](../solution/SKILL.md) only if the overall direction is wrong.
+5. **Review.** Check your work with [review-checks.md](references/review-checks.md). If the change is consequential, start one fresh reviewer with that file, the model and its sources. Only if your host has no subagent tool, review it yourself and say it wasn't independent. Check each finding against the artifacts, fold in the supported ones and recheck.
 
-Read the [interaction contract](references/interaction-contract.md) and follow its phases. Reuse the caller's settled brief, canonical product contract, terminology, decisions, existing experience, and evidence. Scale the deliverable to the decision: a section in an existing document can suffice. Routine presentation changes do not need a complete interaction model or a new approval gate.
-
-Compare consequential unsettled interaction alternatives; use [arena](../arena/SKILL.md) when independent candidates could supply evidence that changes the choice under the shared delegation rule. Supply the same grounded brief and interaction contract to candidates; preserve its independent comparison and synthesis requirements. Use [prototype](../prototype/SKILL.md) when an inspectable business-state walkthrough, specified presentation or contextual UI comparison can answer the assigned question. For a coupled human review/refinement cycle, return to the caller for a bounded [UI Refinement](../ui-refinement/SKILL.md) assignment. If that caller already owns the refinement cycle, return the model and findings to it without starting another cycle. A sketch is sufficient when it answers the question. These helpers return to this assignment; they do not authorize implementation or establish human acceptance.
-
-Return proposed changes to business meaning, behavior, or scope to [product](../product/SKILL.md) through the caller. Return technical feasibility questions through the caller for a bounded [Architect](../architect/SKILL.md) design/feasibility assignment. Preserve unresolved constraints through both handoffs. Use [solution](../solution/SKILL.md) only when the overall direction needs reconsideration.
-
-## Review and return
-
-Read [review checks](references/review-checks.md) before handing off. Obtain an independent review for a new interaction model, or a revision that changes navigation, roles or a primary action, when delegation is available and permitted; disclose a lead-only review otherwise. Inspect findings against the artifacts and requirements, integrate supported changes, and recheck the result. Agent agreement cannot replace a required human decision.
-
-Return the interaction model or review findings, canonical decision references, covered and omitted behavior, unresolved choices, evidence and its limits, and the next responsible owner. Follow the contract's recording and verification handoff; do not create a parallel requirement or decision registry.
+Return the model or findings, what you left out, each open choice with its owner, and who acts next.

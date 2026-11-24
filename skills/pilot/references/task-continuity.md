@@ -1,88 +1,40 @@
-# Task continuity and incremental orchestration
+# Task continuity
 
-Preserve intent through delivery and recovery. Use the [effort rubric](effort.md)
-for sizing, the [entry skill](../SKILL.md#select-the-path) for routing, and the
-[execution contract](execution.md) for authority, handoffs, proof and stopping
-conditions. No fixed specialist chain or extra approval step is required.
+After compaction, a handoff or an interruption, the next agent knows only what's written down, so it can drop a user's decision, redo settled work or call the task done after its last increment.
 
-## Preserve the task
+## Keep a brief
 
-Before substantial, multi-stage or delegated work, keep one durable brief in the
-project's existing task record. Link authoritative inputs instead of copying
-them or keeping an action log. Conversation can suffice for a short S task in one
-context; persist it before a handoff or reset makes that inadequate. Preserve
-project formats and read-only scope; use an owned external location when needed.
+Keep one brief per request in the project's existing task record. If the task is read-only, keep it somewhere you own outside the project. Keep scratch output in one temporary area you own.
 
-Keep these inputs retrievable:
+Besides what the [execution contract](execution.md#one-owner) puts in it, the brief holds:
 
-- Original request, outcome, constraints and stopping boundary.
-- User decisions and corrections, their sources and standing; separate proposals
-  from agreements.
-- S/M/L rationale, consequence-driven checks, principles and exceptions.
-- Selected procedures, dependencies, current increment and expected results.
-- Task-wide requirements, evidence/gaps, material findings and deferred findings
-  with reasons and return checkpoints.
-- Status, next action, artifact identity and owned resources.
+- the original request and where to stop
+- each user correction, and whether it still stands
+- the procedure you're following, the current increment and the next action
+- deferred findings, and when you'll come back to them
+- the resources you own
 
-Update this record as steering or evidence changes. Preserve original intent and
-decision history; summaries and worker returns cannot override user constraints.
-Recover inaccessible inputs or expose the affected gap before dependent work.
+A summary or a worker's return never overrides what the user said. A new request never replaces unfinished work: checkpoint the current one first.
 
-Give each intent its own identity and stopping boundary. A session can hold
-several intents; an intent can resume elsewhere. Reconcile corrections with the
-current intent. Before switching to independent work, checkpoint or hand off the
-previous intent; another invocation must not replace unfinished work. Clarify
-scope ambiguity when it changes that choice.
+## Each increment
 
-## Choose and execute the next increment
+1. Reload the brief and any input that changed.
+2. If you own the task, pick each increment's procedure from [Pilot](../SKILL.md#procedures). A worker tells its owner when the evidence changes the task.
+3. If it changes code you keep, get [independent verification](verification-contract.md#independent-implementation-verification) before the next increment.
+4. Fix material findings before building on them, and update the brief.
 
-1. **Reload and size.** Use the current brief and applicable rules; reload missing
-   or changed inputs. Reconcile new findings. Reassess size when uncertainty,
-   coupling, consequence or proof needs change; otherwise inherit it.
-2. **Select needed work.** Reuse capabilities and settled inputs. Missing product
-   meaning or acceptance scenarios calls for Product; unsettled interactions for
-   Interaction Design or UI Refinement; changed implementation boundaries for
-   Architect. Investigations, experiments and skill work retain their procedures.
-   Keep S work brief; sequence L work into verifiable increments.
-3. **Bound assignments.** Follow [handoff requirements](execution.md#ownership-and-handoffs).
-   Specialists join this task and return to its owner; they do not restart global
-   coordination or edit shared coordination state. Delegate only when useful or
-   required and supported by the host.
-4. **Inspect and prove.** Compare artifacts and observations with the original
-   requirements and current increment. Apply the selected procedure's proof,
-   including real journeys/persisted effects and independent verification where
-   required. A worker's completion message, populated record or build is insufficient.
-5. **Resolve and continue.** Correct material findings and recheck affected proof
-   before dependent expansion. Update coverage, evidence identity, deferred
-   checkpoints and next action. Continue authorized work without repeated role
-   assignments; pause for unresolved human decisions under the execution contract.
+## Recover
 
-Honor research-only and design-only boundaries. Blocked prerequisites and human
-decisions permit truthful pauses, not completion claims.
+After compaction, an interruption or a change of owner, reread the brief and any steering newer than it. Check the actual files and the processes you own; cancelling a worker doesn't prove its processes stopped.
 
-## Recover and finish
+## Finish
 
-After compaction, interruption or owner handoff, reread the brief, original
-request, latest steering and relevant procedure. Inspect actual artifacts and
-owned processes; cancelled workers may leave processes running. Reconcile stale
-proof and unsettled inputs before resuming. Workers reload their bounded assignment.
+When the last increment is done, match every original requirement and every later correction to a result, evidence or a stated gap, then run the [finish check](execution.md#finish).
 
-At the requested boundary, reconcile **every original requirement and subsequent
-correction** with the result, evidence or explicit gap. Check identity, findings,
-authority and affected documentation under the [completion rules](execution.md#completion).
-Finishing the last increment alone does not finish the task.
+Before deleting your scratch area, move the proof you need into the task record. Delete only what you know is disposable.
 
-Use one owned temporary area for disposable coordination and verification output,
-including plugin-directed agent files. Before retirement, stop/reconcile workers,
-retain intent and necessary proof in the authorized record, and verify both are
-readable without scratch. Delete only known disposable contents. Failed handoffs
-preserve recoverable state and an explicit gap. Pending review evidence and native
-harness transcripts retain their existing owners and lifetimes.
+## Bounded autonomy
 
-## Optional mechanical support
+Before leaving work to run unattended, agree the scope, what it may change or send, the evidence it needs, its work and time limits, and when to stop. Never restart a task to get round a limit. "Overnight" grants no extra authority and won't keep the session alive.
 
-The [local Codex adapter](../assets/codex/README.md) adds context restoration and
-recorded completion checks after separate setup and trust. Unavailable or
-untrusted hooks leave orchestration instruction-driven; retain the portable brief
-and disclose the limit. Checks do not choose obligations, authenticate approvals
-or reviewers, prove semantic correctness, or intercept every stage transition.
+Stop when you need a human decision, hit a limit, can't get required proof, or aren't sure what an external effect will do.
