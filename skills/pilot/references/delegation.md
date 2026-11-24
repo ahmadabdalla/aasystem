@@ -4,7 +4,7 @@
 
 Follow a skill yourself. Hand off only for expertise, parallel work or a clean context.
 
-Give each parallel worker its own files, and name what they share, such as a database or a port. Invoke the [`swarm`](../../swarm/SKILL.md) skill to split coverage. Invoke the [`arena`](../../arena/SKILL.md) skill to compare approaches when the result could change an open choice. When you split work, never give an independent candidate's, judge's or verifier's job to another worker. Coupled work stays with one owner.
+Give each parallel worker its own files, and name what they share, such as a database or a port. Call the Skill tool with "swarm" ([swarm](../../swarm/SKILL.md)) to split coverage. Call the Skill tool with "arena" ([arena](../../arena/SKILL.md)) to compare approaches when the result could change an open choice. When you split work, never give an independent candidate's, judge's or verifier's job to another worker. Coupled work stays with one owner.
 
 Check a worker's claims against its files and check output, and resolve contradictions and stale inputs. A worker saying "done" isn't acceptance.
 

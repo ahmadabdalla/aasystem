@@ -8,7 +8,7 @@ user-invocable: false
 
 Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-1. **Pick the mode.** In a **partition**, each slice covers a different part of the work. In a **race**, several workers attempt the same goal. If candidates need judging and combining, invoke the [`arena`](../arena/SKILL.md) skill instead. For a race, write the rule before any worker starts: first verified pass, rank all, or pick the best. If you rank or pick, write the criteria with the rule.
+1. **Pick the mode.** In a **partition**, each slice covers a different part of the work. In a **race**, several workers attempt the same goal. If candidates need judging and combining, call the Skill tool with "arena" ([arena](../arena/SKILL.md)) instead. For a race, write the rule before any worker starts: first verified pass, rank all, or pick the best. If you rank or pick, write the criteria with the rule.
 2. **Draw the coverage table.** Give each slice a row: owner, inputs, files it may write, expected result and how you'll check it. Done when every part of the request has a row. If two slices write the same file or state, run them in order. If a slice needs something that doesn't exist yet, build it before you start any worker.
 3. **Brief each worker.** Brief each under the [delegation rule](../pilot/references/delegation.md) and name the exact version to work from. For a measurement, also give the method, units, conditions and comparison order. Each result is **pass**, **issues** or **blocked**, with its evidence.
 4. **Start the ready slices at once.** If you can't start separate agents, run the slices yourself in turn and say the results weren't independent.

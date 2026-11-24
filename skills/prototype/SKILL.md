@@ -8,7 +8,7 @@ user-invocable: false
 
 Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-A prototype is **throwaway code that answers a question**. Your caller owns the decision. If a human invoked you directly, follow the [Prototype playbook](../pilot/playbooks/prototype.md) as your caller. You build the artifact, exercise it and return what you saw. If the question isn't about business state or UI, invoke the [`probe`](../probe/SKILL.md) skill instead.
+A prototype is **throwaway code that answers a question**. Your caller owns the decision. If a human invoked you directly, follow the [Prototype playbook](../pilot/playbooks/prototype.md) as your caller. You build the artifact, exercise it and return what you saw. If the question isn't about business state or UI, call the Skill tool with "probe" ([probe](../probe/SKILL.md)) instead.
 
 ## Pick a branch
 

@@ -28,7 +28,7 @@ Whatever the format, the record says:
 - the decision and why
 - at least one alternative you rejected, and why
 - the costs and limits
-- what happens at 10x: invoke the [`10x`](../../10x/SKILL.md) skill when you create an ADR or change its choice, and say what you accommodate now, what you defer and what would make you reconsider. If growth changes nothing, say why in one line.
+- what happens at 10x: call the Skill tool with "10x" ([10x](../../10x/SKILL.md)) when you create an ADR or change its choice, and say what you accommodate now, what you defer and what would make you reconsider. If growth changes nothing, say why in one line.
 
 If the project's format has no slot for one of these, put it in the closest section, such as consequences or fallout. Never drop it, and don't add headings the format lacks. Keep each point to a sentence or two.
 

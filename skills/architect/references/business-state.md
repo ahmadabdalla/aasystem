@@ -8,7 +8,7 @@ Say whether two things are equal by id or by contents. Add units, transitions an
 
 A table, class, context and service needn't line up. Folders don't prove a context.
 
-If two contexts use one term differently, name both meanings and the translation between them. If a meaning is unsettled, invoke the [`domain-modeling`](../../domain-modeling/SKILL.md) skill. If a business rule is unsettled, return it to your caller.
+If two contexts use one term differently, name both meanings and the translation between them. If a meaning is unsettled, call the Skill tool with "domain-modeling" ([domain-modeling](../../domain-modeling/SKILL.md)). If a business rule is unsettled, return it to your caller.
 
 ## Place the invariant
 

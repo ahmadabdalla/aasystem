@@ -27,7 +27,7 @@ Identify the target project, its existing instructions and the setup scope. Surv
 - existing launch commands, driving tools, fixtures, assertions and CI checks
 - glossary and ADR locations, and the authority behind each intended outcome
 
-Invoke the [`how`](../how/SKILL.md) skill to trace paths. If a historical constraint affects the procedure, invoke the [`why`](../why/SKILL.md) skill. If an observable unknown could change the procedure, invoke the [`probe`](../probe/SKILL.md) skill.
+Call the Skill tool with "how" ([how](../how/SKILL.md)) to trace paths. If a historical constraint affects the procedure, call the Skill tool with "why" ([why](../why/SKILL.md)). If an observable unknown could change the procedure, call the Skill tool with "probe" ([probe](../probe/SKILL.md)).
 
 Keep intended behaviour and its authority apart from what you observe. If they disagree, record both as an open contract question or a defect; report a defect to its owner and keep the expected result.
 

@@ -8,7 +8,7 @@ user-invocable: false
 
 Before starting, read the [execution contract](../pilot/references/execution.md), the [approved-principle index](../principles/INDEX.md) and [the project contract](../bootstrap-verification/references/project-contract.md), unless already in context.
 
-You bring a project's verifier and feature map back in line with the project. If there's no verifier, invoke the [`bootstrap-verification`](../bootstrap-verification/SKILL.md) skill instead.
+You bring a project's verifier and feature map back in line with the project. If there's no verifier, call the Skill tool with "bootstrap-verification" ([bootstrap-verification](../bootstrap-verification/SKILL.md)) instead.
 
 ## Rules
 
@@ -19,7 +19,7 @@ You bring a project's verifier and feature map back in line with the project. If
 ## Steps
 
 1. **Scope.** Say whether this is task-scoped (the change and what depends on it) or a full audit (every mapped feature, plus a search for unmapped entry points).
-2. **Compare.** Check the map's entry points against the code, docs, tests and recent changes. Invoke the [`how`](../how/SKILL.md) skill to trace unclear flows.
+2. **Compare.** Check the map's entry points against the code, docs, tests and recent changes. Call the Skill tool with "how" ([how](../how/SKILL.md)) to trace unclear flows.
 3. **Run** every in-scope feature through the verifier. If the harness crashes, fix the crash first so every check reports.
 4. **Classify** each finding:
    - Authorised change: update the expectation, cite the authority, rerun.

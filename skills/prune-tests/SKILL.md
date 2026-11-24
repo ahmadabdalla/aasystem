@@ -24,7 +24,7 @@ Keep an absence test a current contract requires, such as a removed endpoint ret
 ## Prune and prove
 
 1. Run the scoped tests and record the result with each test's guarded behavior.
-2. Invoke the [`implement`](../implement/SKILL.md) skill to make the edits, or make them within the assigned scope. Remove production code used only by deleted tests.
+2. Call the Skill tool with "implement" ([implement](../implement/SKILL.md)) to make the edits, or make them within the assigned scope. Remove production code used only by deleted tests.
 3. Rerun the remaining tests. For each deletion, name the test that still guards its behavior, or why that behavior is not intended. Where cheap, introduce the regression the deleted test claimed to catch, confirm a remaining test fails, then revert it.
 4. Record [signal effects](../pilot/references/execution.md#signal-effects): the coverage removed and any regression no longer detected.
 

@@ -22,7 +22,7 @@ Start by reading the project instructions, then the glossary and ADRs for the ar
 
 **Check the code.** If the code contradicts what the user says, show the contradiction and ask which is right. Record the agreed meaning and report the code as a mismatch. Don't redefine the term to match the code.
 
-If a meaning that matters stays unclear, ask one question and wait. If no user is present to answer, return the question with your recommended answer, and don't record the term as agreed. If several dependent choices are open, invoke the [`grill-me`](../grill-me/SKILL.md) skill.
+If a meaning that matters stays unclear, ask one question and wait. If no user is present to answer, return the question with your recommended answer, and don't record the term as agreed. If several dependent choices are open, call the Skill tool with "grill-me" ([grill-me](../grill-me/SKILL.md)).
 
 ## Glossary
 
