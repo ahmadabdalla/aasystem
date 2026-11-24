@@ -2,7 +2,11 @@
 
 ## Do it or hand it off
 
-Follow a skill yourself. Hand off only for expertise, parallel work or a clean context.
+**Do the work yourself, unless a subagent has to.** A subagent has to when a skill or playbook asks for a separate agent: verifier, reviewer, judge, candidate. No exceptions. Otherwise, hand off only when it clearly helps, such as independent pieces that are each big.
+
+**Start every subagent fresh.** No conversation history: put what it needs in the brief. If it only gathers facts, use a cheaper model. Judging, reviewing and verifying stay on your model.
+
+**If you did a large read yourself, say so.** Name it in your report, and say why.
 
 Give each parallel worker its own files, and name what they share, such as a database or a port. Call the Skill tool with "swarm" ([swarm](../../swarm/SKILL.md)) to split coverage. Call the Skill tool with "arena" ([arena](../../arena/SKILL.md)) to compare approaches when the result could change an open choice. When you split work, never give an independent candidate's, judge's or verifier's job to another worker. Coupled work stays with one owner.
 
