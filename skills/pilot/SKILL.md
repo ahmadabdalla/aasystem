@@ -15,14 +15,14 @@ If the work is long or has stages, or goes to other agents, read [task continuit
 
 1. Reuse the existing brief and sizing if they still fit; otherwise restate the scope.
 2. If you can't say who it's for, what they'll be able to do and what done looks like, call the Skill tool with "product" ([product](../product/SKILL.md)) first. Don't design or edit until the user answers.
-3. If you need to ask the user anything before you start, call the Skill tool with "grill-me" ([grill-me](../grill-me/SKILL.md)) to ask it. Don't ask inline.
+3. Ask the user questions through Grill Me: call the Skill tool with "grill-me" ([grill-me](../grill-me/SKILL.md)).
 4. If a rule comes from a borrowed workflow, don't treat it as the user's preference.
 5. Pick the [procedures](#procedures) that fit, read each in full and use the steps that apply. If another owner handed you this work, keep their scope; you're not the coordinator.
 6. For an OpenSpec project, follow the [OpenSpec reference](references/openspec.md).
 7. Keep one task list for substantial work. Reuse the existing list and brief, and link playbooks rather than copying them in.
 8. Size specialist work and proof to the assessed effort, and reuse settled Product, interaction and architecture inputs, including from specialists the user ran directly. A prescribed presentation edit that [qualifies](references/verification-contract.md#owner-presentation-eligibility) needs only its relevant checks.
 
-Before your first edit, post the brief: scope, size, and each procedure with the skill it calls. Open each skill before you name it. Name any step you skip and say why.
+Before your first edit, post the brief: scope, size, and each procedure with the skill it calls. Name any step you skip and say why.
 
 ## Procedures
 

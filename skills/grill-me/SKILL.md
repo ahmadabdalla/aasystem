@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description: Work through a plan in question rounds or conduct product discovery. Record agreed terms and decisions when authorized.
+description: Grill the user on a plan, decision or idea in question rounds until you share an understanding. Use when they want their thinking tested, or say grill.
 ---
 
 # Grill Me
@@ -9,7 +9,7 @@ Before starting, read the [execution contract](../pilot/references/execution.md)
 
 If a caller sent you, start from its scope and evidence.
 
-If the interview is about how people do their work today, not about a plan, follow [Discovery interviews](references/discovery-interview.md) instead.
+Grill the user on any plan, decision or idea. Only follow [Discovery interviews](references/discovery-interview.md) when you're asking someone how they work today and they aren't the one deciding.
 
 1. **Map the design tree.** List the decisions the plan needs. Each answer can open more decisions. Leave out branches outside the scope. Leave out any decision the user, the caller or an accepted record already settled.
 2. **Find the facts yourself.** Read the code, docs, glossary and ADRs before you ask anything. Never ask the user for a fact you can look up. If a lookup is slow, hand it to an explorer under the [delegation rules](../pilot/references/delegation.md). Ask the questions that don't need its answer now. If you can't reach a fact, say so and ask for the least you need.

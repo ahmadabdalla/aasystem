@@ -106,7 +106,7 @@ Marketplace installs use published releases. If you already added the marketplac
 | Audit a design system for consistent corners, spacing, alignment, colour and motion | [Design Judge](skills/design-judge/SKILL.md) |
 | Decide how code, interfaces, and data should fit together | [Architect](skills/architect/SKILL.md) |
 | Choose the overall approach while the direction is still open | [Solution](skills/solution/SKILL.md) |
-| Work through a plan in question rounds | [Grill Me](skills/grill-me/SKILL.md) |
+| Grill a plan, decision or idea in question rounds | [Grill Me](skills/grill-me/SKILL.md) |
 | Challenge a proposal, design or PR before it ships | [Interrogate](skills/interrogate/SKILL.md) |
 | Turn a session's lessons into skill edits | [Reflect](skills/reflect/SKILL.md) |
 
