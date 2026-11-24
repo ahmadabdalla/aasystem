@@ -4,7 +4,7 @@ See the [README](../../README.md#install-the-plugin) for installation.
 
 ## Invoke a skill
 
-Start with `$aasystem:pilot`, or select a focused skill such as `$aasystem:product` or `$aasystem:how`. Direct skill installations omit the plugin prefix. Keep the complete [export tree](../design/skill-system.md#export-boundary), including references, adapters and license notices.
+Start with `$aasystem:pilot`, or select a flagship skill such as `$aasystem:product` or `$aasystem:grill-me`. Direct skill installations omit the plugin prefix. Keep the complete [export tree](../design/skill-system.md#export-boundary), including references, adapters and license notices.
 
 Start [System in Motion](../../skills/system-in-motion/SKILL.md) with the direct invocation `$aasystem:system-in-motion`.
 
@@ -38,11 +38,9 @@ and say the task runs on instructions alone.
 
 ## Invocation policy
 
-Every portable skill includes `agents/openai.yaml` with:
+Each portable skill ships `agents/openai.yaml` with a policy that matches its [tier](../design/skill-system.md#skill-inventory):
 
-```yaml
-policy:
-  allow_implicit_invocation: false
-```
+- **Flagship and Agent skills** set `allow_implicit_invocation: true`, so Codex can run them when another skill calls them.
+- **User and Reference skills** set `allow_implicit_invocation: false`, so Codex runs them only when you name them.
 
-Select skills explicitly. Preserve each adapter's policy and dependency settings with its frontmatter; generated project verifiers retain their own invocation policy. See the [official invocation policy](https://learn.chatgpt.com/docs/build-skills#optional-metadata) and [system map](../design/skill-system.md).
+Codex has no setting that hides a skill from users, so you can still name an Agent skill with `$aasystem:<skill>`. Preserve each adapter's policy and dependency settings with its frontmatter; generated project verifiers retain their own invocation policy. See the [official invocation policy](https://learn.chatgpt.com/docs/build-skills#optional-metadata) and the [authoring playbook](../../skills/pilot/playbooks/authoring-a-skill.md).

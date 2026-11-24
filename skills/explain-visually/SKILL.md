@@ -1,7 +1,7 @@
 ---
 name: explain-visually
 description: Explain how something works, who owns what, or what changed with a plain-text diagram. Match the layout to the question and write plainly.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Explain Visually

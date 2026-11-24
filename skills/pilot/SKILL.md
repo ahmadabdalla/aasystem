@@ -1,7 +1,6 @@
 ---
 name: pilot
 description: Carry a requested outcome from product ideation through design, engineering delivery, and verification using the relevant procedures.
-disable-model-invocation: true
 ---
 
 # Pilot
@@ -15,34 +14,36 @@ If the work is long or has stages, or goes to other agents, read [task continuit
 ## Start
 
 1. Reuse the existing brief and sizing if they still fit; otherwise restate the scope.
-2. If a rule comes from a borrowed workflow, don't treat it as the user's preference.
-3. Pick the [procedures](#procedures) that fit, read each in full and use the steps that apply. If another owner handed you this work, keep their scope; you're not the coordinator.
-4. For an OpenSpec project, follow the [OpenSpec reference](references/openspec.md).
-5. Keep one task list for substantial work. Reuse the existing list and brief, and link playbooks rather than copying them in.
-6. Size specialist work and proof to the assessed effort, and reuse settled Product, interaction and architecture inputs, including from specialists the user ran directly. A prescribed presentation edit that [qualifies](references/verification-contract.md#owner-presentation-eligibility) needs only its relevant checks.
+2. If you can't say who it's for, what they'll be able to do and what done looks like, call the Skill tool with "product" ([product](../product/SKILL.md)) first. Don't design or edit until the user answers.
+3. Ask the user questions through Grill Me: call the Skill tool with "grill-me" ([grill-me](../grill-me/SKILL.md)).
+4. If a rule comes from a borrowed workflow, don't treat it as the user's preference.
+5. Pick the [procedures](#procedures) that fit, read each in full and use the steps that apply. If another owner handed you this work, keep their scope; you're not the coordinator.
+6. For an OpenSpec project, follow the [OpenSpec reference](references/openspec.md).
+7. Keep one task list for substantial work. Reuse the existing list and brief, and link playbooks rather than copying them in.
+8. Size specialist work and proof to the assessed effort, and reuse settled Product, interaction and architecture inputs, including from specialists the user ran directly. A prescribed presentation edit that [qualifies](references/verification-contract.md#owner-presentation-eligibility) needs only its relevant checks.
 
-Start is done when the brief states the scope, size and the procedures you'll run.
+Before your first edit, post the brief: scope, size, and each procedure with the skill it calls. Name any step you skip and say why.
 
 ## Procedures
 
 Product and design:
 
-- Discover product structure, people and journeys, or define behaviour, business rules and acceptance scenarios: [Product](../product/SKILL.md)
-- Turn product outcomes into navigation, interactions, what's visible and justified UI choices: [Interaction Design](../interaction-design/SKILL.md)
-- Independently assess a rendered interface for visual and interaction friction: Interaction Design's [rendered UX assessment](../interaction-design/SKILL.md#select-the-assignment)
-- Audit design tokens, components or UI code for visual consistency (radii, spacing, alignment, type, colour, motion): [Design Judge](../design-judge/SKILL.md)
-- Refine an inspectable UI or UX with human feedback and keep a reviewed visual reference: [UI Refinement](../ui-refinement/SKILL.md). For production delivery, pick Feature and use UI Refinement within it. To settle a decision with a throwaway prototype, use Prototype instead.
+- Discover product structure, people and journeys, or define behaviour, business rules and acceptance scenarios: call the Skill tool with "product" ([product](../product/SKILL.md))
+- Turn product outcomes into navigation, interactions, what's visible and justified UI choices: call the Skill tool with "interaction-design" ([interaction-design](../interaction-design/SKILL.md))
+- Independently assess a rendered interface for visual and interaction friction: invoke the [`interaction-design`](../interaction-design/SKILL.md#select-the-assignment) skill for its rendered UX assessment
+- Audit design tokens, components or UI code for visual consistency (radii, spacing, alignment, type, colour, motion): call the Skill tool with "design-judge" ([design-judge](../design-judge/SKILL.md))
+- Refine an inspectable UI or UX with human feedback and keep a reviewed visual reference: call the Skill tool with "ui-refinement" ([ui-refinement](../ui-refinement/SKILL.md)). For production delivery, pick Feature and use UI Refinement within it. To settle a decision with a throwaway prototype, use Prototype instead.
 
 Understand and decide:
 
-- Work through a plan with the user: [Grill Me](../grill-me/SKILL.md)
-- Clarify project terms, or record a product, design or software decision that matters: [Domain Modeling](../domain-modeling/SKILL.md)
+- Work through a plan with the user: call the Skill tool with "grill-me" ([grill-me](../grill-me/SKILL.md))
+- Clarify project terms, or record a product, design or software decision that matters: call the Skill tool with "domain-modeling" ([domain-modeling](../domain-modeling/SKILL.md))
 - Explain a behaviour, change or finding, or investigate a question, without changing the product, in prose or a diagram: [Investigation](playbooks/investigation.md)
-- Assess module design or code maintainability, including tests that guard no behaviour: [Maintainability](../maintainability/SKILL.md#select-the-assessment)
-- Decide what solution should exist while direction, ownership or constraints are open: [Solution](../solution/SKILL.md)
-- Design implementation boundaries, interfaces and state ownership without building: [Architect](../architect/SKILL.md)
-- Test how a decision or design holds up under plausible growth: [10x](../10x/SKILL.md)
-- Challenge a proposal, design or change adversarially, including PR merge risk and detection gaps: [Interrogate](../interrogate/SKILL.md)
+- Assess module design or code maintainability, including tests that guard no behaviour: invoke the [`maintainability`](../maintainability/SKILL.md#select-the-assessment) skill
+- Decide what solution should exist while direction, ownership or constraints are open: call the Skill tool with "solution" ([solution](../solution/SKILL.md))
+- Design implementation boundaries, interfaces and state ownership without building: call the Skill tool with "architect" ([architect](../architect/SKILL.md))
+- Test how a decision or design holds up under plausible growth: call the Skill tool with "10x" ([10x](../10x/SKILL.md))
+- Challenge a proposal, design or change adversarially, including PR merge risk and detection gaps: call the Skill tool with "interrogate" ([interrogate](../interrogate/SKILL.md))
 - Settle a decision with a throwaway experiment: [Prototype](playbooks/prototype.md)
 
 Change code:
@@ -56,18 +57,18 @@ Skills, verification and delivery:
 - Create or change a skill: [Skill authoring](playbooks/authoring-a-skill.md)
 - Test whether an instruction or skill change improves behaviour: [Evaluation](playbooks/eval.md)
 - Open a pull request when asked: [Opening a PR](playbooks/opening-a-pr.md)
-- Set up verification for a project that has none: [Bootstrap Verification](../bootstrap-verification/SKILL.md)
-- Audit project verification, including recipes that no longer work: [Maintain Verification](../maintain-verification/SKILL.md)
-- Capture a lesson or a stated judgment: [Reflect](../reflect/SKILL.md)
-- Change several coupled phases at once: [Figure It Out](../figure-it-out/SKILL.md)
+- Set up verification for a project that has none: call the Skill tool with "bootstrap-verification" ([bootstrap-verification](../bootstrap-verification/SKILL.md))
+- Audit project verification, including recipes that no longer work: call the Skill tool with "maintain-verification" ([maintain-verification](../maintain-verification/SKILL.md))
+- Capture a lesson or a stated judgment: call the Skill tool with "reflect" ([reflect](../reflect/SKILL.md))
+- Change several coupled phases at once: call the Skill tool with "figure-it-out" ([figure-it-out](../figure-it-out/SKILL.md))
 
-If no procedure fits, tell the user there's no dedicated procedure for it. If you can build a bounded procedure you can prove within the request, use [Figure It Out](../figure-it-out/SKILL.md). If you can't, stop and say what's missing.
+If no procedure fits, tell the user there's no dedicated procedure for it. If you can build a bounded procedure you can prove within the request, call the Skill tool with "figure-it-out" ([figure-it-out](../figure-it-out/SKILL.md)). If you can't, stop and say what's missing.
 
 ## Coordinate
 
 Code you keep follows the [verification contract](references/verification-contract.md). If the change doesn't [qualify](references/verification-contract.md#owner-presentation-eligibility) as owner-presentation, an agent that edited none of it must verify it, however small; your own checks don't count. If that check didn't run, the work is incomplete: say so in your report, and why.
 
-Hand off as [Delegation](references/delegation.md) describes. The `disable-model-invocation` flag is never a reason to skip a handoff, except for skills reserved for the user, which you offer instead of running. If you can't start a required worker, say so. The playbook decides who does what: Architect gives the design, [Implement](../implement/SKILL.md) gives the edits and development checks, and when required, a separate worker briefed with [Engineering Verification](references/engineering-verification.md) gives the [acceptance proof](references/verification-contract.md#independent-implementation-verification).
+Hand off as [Delegation](references/delegation.md) describes. If you can't start a required worker, say so. The playbook decides who does what: Architect gives the design, [Implement](../implement/SKILL.md) gives the edits and development checks, and when required, a separate worker briefed with [Engineering Verification](references/engineering-verification.md) gives the [acceptance proof](references/verification-contract.md#independent-implementation-verification).
 
 When the evidence changes the task, change the route.
 

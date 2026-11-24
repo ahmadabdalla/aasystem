@@ -14,7 +14,7 @@ Record authority, sources, rationale and open choices with the [decision-record 
 
 ## 2. Model people, journeys and states
 
-Use the project's terms. If one is unclear, use [Domain Modeling](../../domain-modeling/SKILL.md).
+Use the project's terms. If one is unclear, call the Skill tool with "domain-modeling" ([domain-modeling](../../domain-modeling/SKILL.md)).
 
 One person can hold several roles. A role alone doesn't justify a separate account, app, tab or experience. Keep roles (responsibilities), permissions (allowed actions) and scopes (the data those actions cover) distinct.
 
@@ -30,7 +30,7 @@ Routine controls share their parent's entry. A rationale can come from an outcom
 
 If you compare alternatives, keep them on the same behaviour contract unless a semantic difference is stated.
 
-Before settling a consequential model, use [10x](../../10x/SKILL.md) and carry its findings into the rationale and how the outcome is observed.
+Before settling a consequential model, call the Skill tool with "10x" ([10x](../../10x/SKILL.md)) and carry its findings into the rationale and how the outcome is observed.
 
 ### Preserve an inspectable visual reference when needed
 

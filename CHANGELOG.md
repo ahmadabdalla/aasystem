@@ -2,9 +2,11 @@
 
 ## [Unreleased]
 
+- Pilot asks before it builds: vague requests go to Product, and questions go through Grill Me.
+- Skills can now call each other. Supporting skills such as How, Why and TDD are agent-only and hidden from Claude Code's `/` menu. Start a new session after upgrading.
 - Reviewed and updated the skills documentation. Simplified wording and performed verification testing to measure improvements.
 - Add Prune Tests, routed through Refactoring, to remove or rewrite tests that guard no behavior, with exceptions for contract-required absences and proof that each deletion lost no needed coverage.
-- Fix delegation and verification gaps: skills marked as not auto-invoked can still be handed to a worker; any edit after verification needs a fresh check; stale recipes are updated before the final check; TDD edits product code only when assigned the fix; Pilot routes to Architect and Interrogate.
+- Fix delegation and verification gaps: any edit after verification needs a fresh check; stale recipes are updated before the final check; TDD edits product code only when assigned the fix; Pilot routes to Architect and Interrogate.
 - Add Design Judge, routed from Pilot, to audit corner radii, spacing, alignment, typography, colour, dimensions and motion into report-only corrections and token proposals, with alignment measured on captures; its default visual standards yield to project tokens.
 
 ## [0.11.0]

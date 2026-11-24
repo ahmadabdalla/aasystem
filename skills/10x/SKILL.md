@@ -1,7 +1,7 @@
 ---
 name: 10x
 description: Assess a decision or design under plausible growth, exposing its first constraints, tradeoffs, verification needs, and reconsideration triggers. Use within domain design or as a bounded independent challenge.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # 10x

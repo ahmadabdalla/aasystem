@@ -1,7 +1,7 @@
 ---
 name: bootstrap-verification
 description: Give a project its own verification, with discovery, a feature map and a proved local procedure.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Bootstrap verification
@@ -27,7 +27,7 @@ Identify the target project, its existing instructions and the setup scope. Surv
 - existing launch commands, driving tools, fixtures, assertions and CI checks
 - glossary and ADR locations, and the authority behind each intended outcome
 
-Trace paths with [How](../how/SKILL.md). If a historical constraint affects the procedure, use [Why](../why/SKILL.md). If an observable unknown could change the procedure, use [Probe](../probe/SKILL.md).
+Call the Skill tool with "how" ([how](../how/SKILL.md)) to trace paths. If a historical constraint affects the procedure, call the Skill tool with "why" ([why](../why/SKILL.md)). If an observable unknown could change the procedure, call the Skill tool with "probe" ([probe](../probe/SKILL.md)).
 
 Keep intended behaviour and its authority apart from what you observe. If they disagree, record both as an open contract question or a defect; report a defect to its owner and keep the expected result.
 

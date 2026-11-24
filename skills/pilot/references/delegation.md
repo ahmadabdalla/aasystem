@@ -4,13 +4,11 @@
 
 Follow a skill yourself. Hand off only for expertise, parallel work or a clean context.
 
-Give each parallel worker its own files, and name what they share, such as a database or a port. Use [Swarm](../../swarm/SKILL.md) to split coverage. Use [Arena](../../arena/SKILL.md) to compare approaches when the result could change an open choice. When you split work, never give an independent candidate's, judge's or verifier's job to another worker. Coupled work stays with one owner.
+Give each parallel worker its own files, and name what they share, such as a database or a port. Call the Skill tool with "swarm" ([swarm](../../swarm/SKILL.md)) to split coverage. Call the Skill tool with "arena" ([arena](../../arena/SKILL.md)) to compare approaches when the result could change an open choice. When you split work, never give an independent candidate's, judge's or verifier's job to another worker. Coupled work stays with one owner.
 
 Check a worker's claims against its files and check output, and resolve contradictions and stale inputs. A worker saying "done" isn't acceptance.
 
 If your host can't start a required separate agent, say so before you plan around it. Never call your own check independent.
-
-Skills marked `disable-model-invocation: true` aren't picked automatically, but you can still follow one your procedure links to, or brief a worker to. The flag is never a reason to skip a handoff; only a host that can't reach the skill file or start the worker blocks one. Skills reserved for the user, like System in Motion, are offered to them, not run.
 
 ## Reviews
 

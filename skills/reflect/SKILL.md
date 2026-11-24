@@ -1,7 +1,6 @@
 ---
 name: reflect
 description: Review a session with three independent reviewers and turn the lessons the user approves into skill edits, principles or backlog items. Use when the user says reflect.
-disable-model-invocation: true
 ---
 
 # Reflect

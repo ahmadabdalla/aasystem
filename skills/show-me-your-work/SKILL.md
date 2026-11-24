@@ -1,7 +1,7 @@
 ---
 name: show-me-your-work
 description: Keep a decision log with evidence links and get it audited before delivery. Use when someone will review the reasoning later, such as on long, staged or unattended work.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Show me your work

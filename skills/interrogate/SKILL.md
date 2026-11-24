@@ -1,7 +1,6 @@
 ---
 name: interrogate
 description: Challenge a proposal, design, change or recommendation. Use to find weak assumptions, failure modes and framing errors, to assess a PR's merge risk, or to find operational and security detection gaps.
-disable-model-invocation: true
 ---
 
 # Interrogate
@@ -18,7 +17,7 @@ Find what's wrong with the work, and with the question it answers.
    - **the frame:** a premise every option shares that nobody tested, a missing alternative, a means mistaken for the user's goal, a constraint that conflicts with the goal
    - if the question is detection gaps, each scenario in [Signal assessment](references/signal-assessment.md)
    - if reader burden or change cost could change the verdict, the [Maintainability](../maintainability/SKILL.md) criteria
-3. **Check.** Merge duplicates. Keep disagreements and findings only one reviewer raised. Check each finding that could change the verdict in the code or source, or with [Probe](../probe/SKILL.md).
+3. **Check.** Merge duplicates. Keep disagreements and findings only one reviewer raised. Check each finding that could change the verdict in the code or source, or by calling the Skill tool with "probe" ([probe](../probe/SKILL.md)).
 4. **Report.** Lead with the verdict, then one line on whether the review was independent and what the reviewers were given. Mark each finding **act on**, **consider**, **noted** or **dismissed**:
 
    ```text

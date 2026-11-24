@@ -19,7 +19,7 @@ Follow the brief's visual instructions and the components it names. Render the s
 
 Build as many as the question needs; two can be enough. Variants differ in structure: grouping, placement, primary action, navigation or disclosure. If they differ only in colour or copy, they don't answer the question. Keep the project's components and constraints.
 
-If independent candidates could change the choice, use [Arena](../../arena/SKILL.md) to generate and combine them, with the same question and fixtures. Give each worker its own variant files, and keep the shared wiring with one owner.
+If independent candidates could change the choice, call the Skill tool with "arena" ([arena](../../arena/SKILL.md)) to generate and combine them, with the same question and fixtures. Give each worker its own variant files, and keep the shared wiring with one owner.
 
 Switch variants with a stable `?variant=` key, or the framework's equivalent, so each one has a reloadable address. Label each by its structure, for example `B (sidebar nav)`. Keep the switcher visibly separate from the design, and don't let it cover what's being compared. If arrow keys switch variants, don't intercept them while an input has focus. Switching restores the same fixture state, so no variant looks more complete than another.
 

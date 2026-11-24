@@ -1,7 +1,7 @@
 ---
 name: domain-modeling
 description: "Pin down what project terms mean and record the decisions that matter, in a glossary and ADRs. Use when a term or relationship is ambiguous, or when recording, changing or reviewing a project decision."
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Domain Modeling
@@ -22,7 +22,7 @@ Start by reading the project instructions, then the glossary and ADRs for the ar
 
 **Check the code.** If the code contradicts what the user says, show the contradiction and ask which is right. Record the agreed meaning and report the code as a mismatch. Don't redefine the term to match the code.
 
-If a meaning that matters stays unclear, ask one question and wait. If no user is present to answer, return the question with your recommended answer, and don't record the term as agreed. If several dependent choices are open, use [grill-me](../grill-me/SKILL.md).
+If a meaning that matters stays unclear, ask one question and wait. If no user is present to answer, return the question with your recommended answer, and don't record the term as agreed. If several dependent choices are open, call the Skill tool with "grill-me" ([grill-me](../grill-me/SKILL.md)).
 
 ## Glossary
 

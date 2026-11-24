@@ -1,18 +1,18 @@
 ---
 name: tdd
 description: Prove a bug with a test that fails before the fix and passes after. Use when the user asks for a test-first fix, or when Pilot's Bug fix playbook finds a cheap local test.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # TDD
 
 Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-If a Bug fix run called you, use its cause and don't diagnose again; it says whether you also fix. If the user asked only for a check, stop at the check. Otherwise make the fix through [Pilot](../pilot/SKILL.md)'s [Bug fix](../pilot/playbooks/bug-fix.md) playbook.
+If a Bug fix run called you, use its cause and don't diagnose again; it says whether you also fix. If the user asked only for a check, stop at the check. Otherwise call the Skill tool with "pilot" ([pilot](../pilot/SKILL.md)) and make the fix through its [Bug fix](../pilot/playbooks/bug-fix.md) playbook.
 
 1. **Pick the check.** Test the path the bug takes, through a public interface.
 2. **Watch it fail.** Write the expected value as a literal from the bug report or spec, never computed the way the code does. Run the test before the fix. It must fail on that assertion, showing the reported wrong result. If it passes, it misses the bug: go back to step 1.
-3. **Fix, or stop.** If you don't make the fix, don't edit product code. If you do, make the smallest fix with [Implement](../implement/SKILL.md), then rerun the test and the nearby tests. Never weaken an existing assertion to make them pass.
+3. **Fix, or stop.** If you don't make the fix, don't edit product code. If you do, call the Skill tool with "implement" ([implement](../implement/SKILL.md)) to make the smallest fix, then rerun the test and the nearby tests. Never weaken an existing assertion to make them pass.
 
 If the bug depends on time or randomness, pin the clock or seed in a new test. Leave the existing flaky test as it is. One green rerun proves nothing.
 

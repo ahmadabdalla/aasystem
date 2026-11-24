@@ -12,6 +12,10 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = "skills/product/SKILL.md"
 ADAPTER = "skills/product/agents/openai.yaml"
+AGENT_SKILL = "skills/how/SKILL.md"
+USER_SKILL = "skills/system-in-motion/SKILL.md"
+USER_ADAPTER = "skills/system-in-motion/agents/openai.yaml"
+SYSTEM_MAP = "docs/design/skill-system.md"
 
 
 class ReleaseValidatorTests(unittest.TestCase):
@@ -127,28 +131,57 @@ class ReleaseValidatorTests(unittest.TestCase):
                 self.reject_edit(path, contents, f"Invalid YAML in {path}:")
 
     def test_invalid_tagged_scalars_include_filename(self):
-        for path, policy, value in ((SKILL, "disable-model-invocation", "true"),
-                                    (ADAPTER, "allow_implicit_invocation", "false")):
+        for path, policy, value in ((AGENT_SKILL, "user-invocable", "false"),
+                                    (ADAPTER, "allow_implicit_invocation", "true")):
             original = (self.repo / path).read_text()
             for scalar in ("!!bool invalid", "!!int invalid", "!!float invalid"):
                 with self.subTest(path=path, scalar=scalar):
                     contents = original.replace(f"{policy}: {value}", f"{policy}: {scalar}")
                     self.reject_edit(path, contents, f"Invalid YAML in {path}:")
 
-    def test_skill_invocation_policy_requires_boolean_true(self):
+    def test_flagship_skill_sets_no_invocation_flag(self):
         original = (self.repo / SKILL).read_text()
+        for flag in ("disable-model-invocation: true", "disable-model-invocation: false",
+                     "user-invocable: false", "user-invocable: true"):
+            with self.subTest(flag=flag):
+                self.reject_edit(SKILL, original.replace("\n---\n", f"\n{flag}\n---\n", 1),
+                                 f"Invocation policy differs from Flagship tier: {SKILL}")
+
+    def test_agent_skill_requires_boolean_user_invocable_false(self):
+        original = (self.repo / AGENT_SKILL).read_text()
+        for value in ("true", "'false'", "0", "null"):
+            with self.subTest(value=value):
+                self.reject_edit(AGENT_SKILL, original.replace("user-invocable: false", f"user-invocable: {value}"),
+                                 f"Invocation policy differs from Agent tier: {AGENT_SKILL}")
+        self.reject_edit(AGENT_SKILL, original.replace("user-invocable: false\n", ""),
+                         f"Invocation policy differs from Agent tier: {AGENT_SKILL}")
+        self.reject_edit(AGENT_SKILL, original.replace("user-invocable: false", "user-invocable: false\ndisable-model-invocation: true"),
+                         f"Invocation policy differs from Agent tier: {AGENT_SKILL}")
+
+    def test_user_skill_requires_boolean_disable_model_invocation_true(self):
+        original = (self.repo / USER_SKILL).read_text()
         for value in ("false", "'true'", "1", "null"):
             with self.subTest(value=value):
-                self.reject_edit(SKILL, original.replace("disable-model-invocation: true", f"disable-model-invocation: {value}"),
-                                 "Explicit invocation policy missing:")
+                self.reject_edit(USER_SKILL, original.replace("disable-model-invocation: true", f"disable-model-invocation: {value}"),
+                                 f"Invocation policy differs from User tier: {USER_SKILL}")
 
-    def test_adapter_invocation_policy_requires_boolean_false(self):
-        for value in ("true", "'false'", "0", "null"):
+    def test_adapter_policy_matches_tier(self):
+        for value in ("false", "'true'", "1", "null"):
             with self.subTest(value=value):
                 self.reject_edit(ADAPTER, f"policy:\n  allow_implicit_invocation: {value}\n", "Adapter invocation policy differs:")
         for contents in ("- list\n", "policy: false\n", "policy: {}\n", "{}\n"):
             with self.subTest(contents=contents):
                 self.reject_edit(ADAPTER, contents, "Adapter invocation policy differs:")
+        original = (self.repo / USER_ADAPTER).read_text()
+        self.reject_edit(USER_ADAPTER, original.replace("allow_implicit_invocation: false", "allow_implicit_invocation: true"),
+                         "Adapter invocation policy differs:")
+
+    def test_unknown_inventory_tier_is_rejected(self):
+        original = (self.repo / SYSTEM_MAP).read_text()
+        row = "| [`product`](../../skills/product/SKILL.md) | Flagship |"
+        self.assertIn(row, original)
+        self.reject_edit(SYSTEM_MAP, original.replace(row, "| [`product`](../../skills/product/SKILL.md) | Hidden |"),
+                         f"Unknown tier 'Hidden' for {SKILL}")
 
     def test_missing_adapter_is_rejected(self):
         (self.repo / ADAPTER).unlink()
