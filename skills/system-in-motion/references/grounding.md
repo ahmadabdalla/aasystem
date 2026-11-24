@@ -33,7 +33,7 @@ Keep decisions in the existing brief and leave unsupported system facts unknown.
 Apply the shared [decision authority](../../pilot/references/execution.md#ask-the-human)
 when a choice materially changes the explanation and needs the user's judgment.
 
-For a requested interview, use [Grill Me](../../grill-me/SKILL.md) and follow
+For a requested interview, invoke the [`grill-me`](../../grill-me/SKILL.md) skill and follow
 the procedure that fits its purpose. When settling the walkthrough brief, use
 Grill Me's question rounds if one answer determines what to ask next. Reuse the existing brief,
 answers and confirmation. For one gap outside an interview, ask one focused

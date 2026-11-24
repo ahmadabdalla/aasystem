@@ -1,7 +1,6 @@
 ---
 name: pilot
 description: Carry a requested outcome from product ideation through design, engineering delivery, and verification using the relevant procedures.
-disable-model-invocation: true
 ---
 
 # Pilot
@@ -27,22 +26,22 @@ Start is done when the brief states the scope, size and the procedures you'll ru
 
 Product and design:
 
-- Discover product structure, people and journeys, or define behaviour, business rules and acceptance scenarios: [Product](../product/SKILL.md)
-- Turn product outcomes into navigation, interactions, what's visible and justified UI choices: [Interaction Design](../interaction-design/SKILL.md)
-- Independently assess a rendered interface for visual and interaction friction: Interaction Design's [rendered UX assessment](../interaction-design/SKILL.md#select-the-assignment)
-- Audit design tokens, components or UI code for visual consistency (radii, spacing, alignment, type, colour, motion): [Design Judge](../design-judge/SKILL.md)
-- Refine an inspectable UI or UX with human feedback and keep a reviewed visual reference: [UI Refinement](../ui-refinement/SKILL.md). For production delivery, pick Feature and use UI Refinement within it. To settle a decision with a throwaway prototype, use Prototype instead.
+- Discover product structure, people and journeys, or define behaviour, business rules and acceptance scenarios: invoke the [`product`](../product/SKILL.md) skill
+- Turn product outcomes into navigation, interactions, what's visible and justified UI choices: invoke the [`interaction-design`](../interaction-design/SKILL.md) skill
+- Independently assess a rendered interface for visual and interaction friction: invoke the [`interaction-design`](../interaction-design/SKILL.md#select-the-assignment) skill for its rendered UX assessment
+- Audit design tokens, components or UI code for visual consistency (radii, spacing, alignment, type, colour, motion): invoke the [`design-judge`](../design-judge/SKILL.md) skill
+- Refine an inspectable UI or UX with human feedback and keep a reviewed visual reference: invoke the [`ui-refinement`](../ui-refinement/SKILL.md) skill. For production delivery, pick Feature and use UI Refinement within it. To settle a decision with a throwaway prototype, use Prototype instead.
 
 Understand and decide:
 
-- Work through a plan with the user: [Grill Me](../grill-me/SKILL.md)
-- Clarify project terms, or record a product, design or software decision that matters: [Domain Modeling](../domain-modeling/SKILL.md)
+- Work through a plan with the user: invoke the [`grill-me`](../grill-me/SKILL.md) skill
+- Clarify project terms, or record a product, design or software decision that matters: invoke the [`domain-modeling`](../domain-modeling/SKILL.md) skill
 - Explain a behaviour, change or finding, or investigate a question, without changing the product, in prose or a diagram: [Investigation](playbooks/investigation.md)
-- Assess module design or code maintainability, including tests that guard no behaviour: [Maintainability](../maintainability/SKILL.md#select-the-assessment)
-- Decide what solution should exist while direction, ownership or constraints are open: [Solution](../solution/SKILL.md)
-- Design implementation boundaries, interfaces and state ownership without building: [Architect](../architect/SKILL.md)
-- Test how a decision or design holds up under plausible growth: [10x](../10x/SKILL.md)
-- Challenge a proposal, design or change adversarially, including PR merge risk and detection gaps: [Interrogate](../interrogate/SKILL.md)
+- Assess module design or code maintainability, including tests that guard no behaviour: invoke the [`maintainability`](../maintainability/SKILL.md#select-the-assessment) skill
+- Decide what solution should exist while direction, ownership or constraints are open: invoke the [`solution`](../solution/SKILL.md) skill
+- Design implementation boundaries, interfaces and state ownership without building: invoke the [`architect`](../architect/SKILL.md) skill
+- Test how a decision or design holds up under plausible growth: invoke the [`10x`](../10x/SKILL.md) skill
+- Challenge a proposal, design or change adversarially, including PR merge risk and detection gaps: invoke the [`interrogate`](../interrogate/SKILL.md) skill
 - Settle a decision with a throwaway experiment: [Prototype](playbooks/prototype.md)
 
 Change code:
@@ -56,18 +55,18 @@ Skills, verification and delivery:
 - Create or change a skill: [Skill authoring](playbooks/authoring-a-skill.md)
 - Test whether an instruction or skill change improves behaviour: [Evaluation](playbooks/eval.md)
 - Open a pull request when asked: [Opening a PR](playbooks/opening-a-pr.md)
-- Set up verification for a project that has none: [Bootstrap Verification](../bootstrap-verification/SKILL.md)
-- Audit project verification, including recipes that no longer work: [Maintain Verification](../maintain-verification/SKILL.md)
-- Capture a lesson or a stated judgment: [Reflect](../reflect/SKILL.md)
-- Change several coupled phases at once: [Figure It Out](../figure-it-out/SKILL.md)
+- Set up verification for a project that has none: invoke the [`bootstrap-verification`](../bootstrap-verification/SKILL.md) skill
+- Audit project verification, including recipes that no longer work: invoke the [`maintain-verification`](../maintain-verification/SKILL.md) skill
+- Capture a lesson or a stated judgment: invoke the [`reflect`](../reflect/SKILL.md) skill
+- Change several coupled phases at once: invoke the [`figure-it-out`](../figure-it-out/SKILL.md) skill
 
-If no procedure fits, tell the user there's no dedicated procedure for it. If you can build a bounded procedure you can prove within the request, use [Figure It Out](../figure-it-out/SKILL.md). If you can't, stop and say what's missing.
+If no procedure fits, tell the user there's no dedicated procedure for it. If you can build a bounded procedure you can prove within the request, invoke the [`figure-it-out`](../figure-it-out/SKILL.md) skill. If you can't, stop and say what's missing.
 
 ## Coordinate
 
 Code you keep follows the [verification contract](references/verification-contract.md). If the change doesn't [qualify](references/verification-contract.md#owner-presentation-eligibility) as owner-presentation, an agent that edited none of it must verify it, however small; your own checks don't count. If that check didn't run, the work is incomplete: say so in your report, and why.
 
-Hand off as [Delegation](references/delegation.md) describes. The `disable-model-invocation` flag is never a reason to skip a handoff, except for skills reserved for the user, which you offer instead of running. If you can't start a required worker, say so. The playbook decides who does what: Architect gives the design, [Implement](../implement/SKILL.md) gives the edits and development checks, and when required, a separate worker briefed with [Engineering Verification](references/engineering-verification.md) gives the [acceptance proof](references/verification-contract.md#independent-implementation-verification).
+Hand off as [Delegation](references/delegation.md) describes. If you can't start a required worker, say so. The playbook decides who does what: Architect gives the design, [Implement](../implement/SKILL.md) gives the edits and development checks, and when required, a separate worker briefed with [Engineering Verification](references/engineering-verification.md) gives the [acceptance proof](references/verification-contract.md#independent-implementation-verification).
 
 When the evidence changes the task, change the route.
 

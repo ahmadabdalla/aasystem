@@ -1,7 +1,6 @@
 ---
 name: design-judge
 description: Audit a design system or UI code for visual consistency (corner radii, spacing, alignment, typography, colour, component dimensions and motion) and report located corrections and token improvements without editing. Owns the default visual standards.
-disable-model-invocation: true
 ---
 
 # Design Judge

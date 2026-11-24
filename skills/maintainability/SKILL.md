@@ -1,7 +1,7 @@
 ---
 name: maintainability
 description: Assess how hard supplied code or a design is to understand, change and verify. Use for module design reviews, structural assessments of a design or diff, and finding tests that guard no behaviour.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Maintainability

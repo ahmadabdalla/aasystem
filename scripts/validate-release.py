@@ -14,6 +14,14 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEM_MAP = Path("docs/design/skill-system.md")
 VERSION = r"(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
+# Each inventory tier maps to its Claude Code frontmatter flags and Codex implicit-invocation policy.
+TIERS = {
+    "Flagship": ({}, True),
+    "Agent": ({"user-invocable": False}, True),
+    "User": ({"disable-model-invocation": True}, False),
+    "Reference": ({"disable-model-invocation": True}, False),
+}
+INVOCATION_FLAGS = ("disable-model-invocation", "user-invocable")
 
 
 def check(condition, message):
@@ -42,7 +50,7 @@ def parse_yaml(source, path):
         raise ValueError(f"Invalid YAML in {path}: {error}") from error
 
 
-def validate_skill(path):
+def validate_skill(path, tier):
     frontmatter = re.match(r"\A---\s*\n(.*?)\n---\s*\n", read(path), re.DOTALL)
     check(frontmatter, f"Missing metadata: {path}")
     metadata = parse_yaml(frontmatter[1], path)
@@ -50,11 +58,15 @@ def validate_skill(path):
     check(metadata.get("name") == Path(path).parent.name, f"Skill name differs from directory: {path}")
     description = metadata.get("description")
     check(isinstance(description, str) and description.strip(), f"Missing description: {path}")
-    check(metadata.get("disable-model-invocation") is True, f"Explicit invocation policy missing: {path}")
+    check(tier in TIERS, f"Unknown tier {tier!r} for {path}")
+    flags, implicit = TIERS[tier]
+    actual = {key: metadata[key] for key in INVOCATION_FLAGS if key in metadata}
+    check(actual == flags and all(type(value) is bool for value in actual.values()),
+          f"Invocation policy differs from {tier} tier: {path}")
     adapter_path = Path(path).parent / "agents/openai.yaml"
     adapter = parse_yaml(read(adapter_path), adapter_path)
     policy = adapter.get("policy") if isinstance(adapter, dict) else None
-    check(isinstance(policy, dict) and policy.get("allow_implicit_invocation") is False,
+    check(isinstance(policy, dict) and policy.get("allow_implicit_invocation") is implicit,
           f"Adapter invocation policy differs: {path}")
 
 
@@ -100,15 +112,16 @@ def validate():
 
     skills = sorted(path.as_posix() for path in Path("skills").glob("*/SKILL.md"))
     check(skills, "Skill tree is empty")
-    for path in skills:
-        validate_skill(path)
 
-    # The system inventory links every portable skill, catching incomplete exports.
+    # The system inventory links every portable skill and names its tier, catching incomplete exports.
     inventory = {
-        (SYSTEM_MAP.parent / target).resolve().relative_to(ROOT).as_posix()
-        for target in re.findall(r"\]\(((?:\.\./)*skills/[^)]+/SKILL\.md)\)", read(SYSTEM_MAP))
+        (SYSTEM_MAP.parent / target).resolve().relative_to(ROOT).as_posix(): tier
+        for target, tier in re.findall(r"^\| \[`[^`]+`\]\(((?:\.\./)*skills/[^)]+/SKILL\.md)\) \| ([^|]*?) \|",
+                                       read(SYSTEM_MAP), flags=re.MULTILINE)
     }
     check(sorted(inventory) == skills, "System inventory and portable skill tree differ")
+    for path in skills:
+        validate_skill(path, inventory[path])
 
     documents = (
         sorted(Path("skills").glob("**/*.md"))

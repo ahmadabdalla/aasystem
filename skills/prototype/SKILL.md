@@ -1,14 +1,14 @@
 ---
 name: prototype
 description: Build and exercise a throwaway prototype that answers one question, either a state model a domain expert can click through, or UI rendered inside the real app. Use probe for research and other experiments.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Prototype
 
 Before starting, read the [execution contract](../pilot/references/execution.md) and the [approved-principle index](../principles/INDEX.md), unless already in context.
 
-A prototype is **throwaway code that answers a question**. Your caller owns the decision. If a human invoked you directly, follow the [Prototype playbook](../pilot/playbooks/prototype.md) as your caller. You build the artifact, exercise it and return what you saw. If the question isn't about business state or UI, use [Probe](../probe/SKILL.md) instead.
+A prototype is **throwaway code that answers a question**. Your caller owns the decision. If a human invoked you directly, follow the [Prototype playbook](../pilot/playbooks/prototype.md) as your caller. You build the artifact, exercise it and return what you saw. If the question isn't about business state or UI, invoke the [`probe`](../probe/SKILL.md) skill instead.
 
 ## Pick a branch
 

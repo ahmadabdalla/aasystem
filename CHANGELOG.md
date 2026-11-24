@@ -2,9 +2,10 @@
 
 ## [Unreleased]
 
+- Sort skills into tiers so skills that call each other actually load. Flagships can be started by you or by another skill: Pilot, Product, Architect, Interaction Design, UI Refinement, Design Judge, and now Solution, Grill Me, Interrogate and Reflect. Supporting skills such as How, Why, Probe and TDD are agent-only: other skills invoke them by name, and Claude Code hides them from the `/` menu (Codex still lists them). After upgrading, start a new session. Manual installs must recopy every skill, including `agents/openai.yaml`. If you also have a skill with the same name, such as your own `tdd` or `grill-me`, the agent may load that one instead.
 - Reviewed and updated the skills documentation. Simplified wording and performed verification testing to measure improvements.
 - Add Prune Tests, routed through Refactoring, to remove or rewrite tests that guard no behavior, with exceptions for contract-required absences and proof that each deletion lost no needed coverage.
-- Fix delegation and verification gaps: skills marked as not auto-invoked can still be handed to a worker; any edit after verification needs a fresh check; stale recipes are updated before the final check; TDD edits product code only when assigned the fix; Pilot routes to Architect and Interrogate.
+- Fix delegation and verification gaps: any edit after verification needs a fresh check; stale recipes are updated before the final check; TDD edits product code only when assigned the fix; Pilot routes to Architect and Interrogate.
 - Add Design Judge, routed from Pilot, to audit corner radii, spacing, alignment, typography, colour, dimensions and motion into report-only corrections and token proposals, with alignment measured on captures; its default visual standards yield to project tokens.
 
 ## [0.11.0]

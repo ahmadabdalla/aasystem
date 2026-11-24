@@ -22,7 +22,7 @@ Workers inherit the task's effort level, checks and limits; a smaller piece does
 
 Restate a new or changed request in a line: the goal, what must stay true, and what's unclear. Then go without waiting for a reply. If the user set a stopping point, such as "research only" or "design only", stop there.
 
-Build the smallest thing that works, with no architecture, tooling or process the goal doesn't need. Size the work with the [effort rubric](effort.md) unless the caller already did. At each phase boundary, say what's ready, what's missing and what's next, then carry on. If someone will review the reasoning later, keep the log with [Show Me Your Work](../../show-me-your-work/SKILL.md) from the start.
+Build the smallest thing that works, with no architecture, tooling or process the goal doesn't need. Size the work with the [effort rubric](effort.md) unless the caller already did. At each phase boundary, say what's ready, what's missing and what's next, then carry on. If someone will review the reasoning later, invoke the [`show-me-your-work`](../../show-me-your-work/SKILL.md) skill from the start to keep the log.
 
 Look up any fact you can check yourself instead of assuming it or asking the user. Reuse the project's requirements, accepted decisions and verification steps. In the brief and the report, label each claim as a fact, a proposal or a decision. A model agreeing isn't proof.
 

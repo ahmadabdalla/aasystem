@@ -1,7 +1,7 @@
 ---
 name: probe
 description: Resolve a consequential assumption with research, observation, or a small experiment before making a decision. Use when reality can answer an unknown; use project verification to check a finished implementation.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Probe

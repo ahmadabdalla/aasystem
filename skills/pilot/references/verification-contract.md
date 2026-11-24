@@ -4,7 +4,7 @@ How to prove code you keep.
 
 ## Verification through the project
 
-Before changing behaviour, find how the project verifies it: its verifier and the recipes for the feature you're touching. No usable way to verify? Use [Bootstrap Verification](../../bootstrap-verification/SKILL.md). Recipes out of date, or a verifier reports them missing or stale? Fix them with [Maintain Verification](../../maintain-verification/SKILL.md), then rerun the affected check.
+Before changing behaviour, find how the project verifies it: its verifier and the recipes for the feature you're touching. No usable way to verify? Invoke the [`bootstrap-verification`](../../bootstrap-verification/SKILL.md) skill. Recipes out of date, or a verifier reports them missing or stale? Invoke the [`maintain-verification`](../../maintain-verification/SKILL.md) skill to fix them, then rerun the affected check.
 
 Take expected results from the request or contract, not from the code. Test through the real entry point (UI, API, CLI or library call) and check what it actually did: stored data, outgoing calls and output. If a result surprises you, first check you're testing the right instance, that it's ready and that fixtures were reset. Never change an expected result to make a check pass.
 

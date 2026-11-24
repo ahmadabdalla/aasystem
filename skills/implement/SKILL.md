@@ -1,7 +1,7 @@
 ---
 name: implement
 description: Make bounded production edits and run development checks against a supplied contract or settled design.
-disable-model-invocation: true
+user-invocable: false
 ---
 
 # Implement
@@ -10,7 +10,7 @@ Before starting, read the [execution contract](../pilot/references/execution.md)
 
 The caller owns the design, acceptance and [independent verification](../pilot/references/verification-contract.md#independent-implementation-verification).
 
-No brief? Make wording or styling changes yourself under [owner-presentation eligibility](../pilot/references/verification-contract.md#owner-presentation-eligibility). Send anything else through [Pilot](../pilot/SKILL.md) before editing.
+No brief? Make wording or styling changes yourself under [owner-presentation eligibility](../pilot/references/verification-contract.md#owner-presentation-eligibility). For anything else, invoke the [`pilot`](../pilot/SKILL.md) skill before editing.
 
 1. Read the brief and everything it links, and apply [Be ready to deliver and prove](../principle-deliver-and-prove/SKILL.md) to it. The brief should give:
    - the behaviour to build, the settled design with its named data structures, and any reviewed visual reference

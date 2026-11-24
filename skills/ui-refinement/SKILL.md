@@ -1,7 +1,6 @@
 ---
 name: ui-refinement
 description: Render a user-facing flow, refine it with human feedback, and keep the reviewed version as its visual reference. Use when the user wants to see the UI before it's built, or how it looks is still open.
-disable-model-invocation: true
 ---
 
 # UI Refinement
@@ -11,9 +10,9 @@ Before starting, read the [execution contract](../pilot/references/execution.md)
 You produce a reviewed visual reference. Your caller keeps the task and builds the product, so don't edit production code.
 
 1. **Reuse what's reviewed.** If a reference names the human who reviewed it, its revision and its screenshots, and it covers the request, return it and stop.
-2. **Frame the slice.** List the screens and states the human needs to see. If the mechanics are unclear, use [How](../how/SKILL.md). If a past choice matters and no record explains it, use [Why](../why/SKILL.md). If a business rule is missing or the request changes one, return it to [Product](../product/SKILL.md) through the caller and render only what's settled.
-3. **Design it.** Use [Interaction Design](../interaction-design/SKILL.md) for the interactions that change.
-4. **Render it.** Use [Prototype](../prototype/SKILL.md). Put the path to Design Judge's [visual standards](../design-judge/references/visual-standards.md) in the brief. Do steps 3 and 4 yourself unless the [delegation rule](../pilot/references/delegation.md) says to split them.
+2. **Frame the slice.** List the screens and states the human needs to see. If the mechanics are unclear, invoke the [`how`](../how/SKILL.md) skill. If a past choice matters and no record explains it, invoke the [`why`](../why/SKILL.md) skill. If a business rule is missing or the request changes one, return it to [Product](../product/SKILL.md) through the caller and render only what's settled.
+3. **Design it.** Invoke the [`interaction-design`](../interaction-design/SKILL.md) skill for the interactions that change.
+4. **Render it.** Invoke the [`prototype`](../prototype/SKILL.md) skill. Put the path to Design Judge's [visual standards](../design-judge/references/visual-standards.md) in the brief. Do steps 3 and 4 yourself unless the [delegation rule](../pilot/references/delegation.md) says to split them.
 5. **Look at it.** Open the candidate with realistic content (a long title, an empty list, a full list) at the viewports the project supports, and save screenshots. Reading the markup isn't looking. If you can't render, say so and stop.
 6. **Assess it, if asked.** If the brief asks for an independent assessment, run the [rendered UX assessment](../interaction-design/references/rendered-ux-assessment.md) before the human sees it.
 7. **Ask the human.** Show the screenshots and ask one question, as [Ask the human](../pilot/references/execution.md#ask-the-human) says. If no human is reachable, end your reply with that question.
