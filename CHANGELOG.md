@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.0]
+
 - Pilot asks before it builds: vague requests go to Product, and questions go through Grill Me.
 - Skills can now call each other. Supporting skills such as How, Why and TDD are agent-only and hidden from Claude Code's `/` menu. Start a new session after upgrading.
 - Reviewed and updated the skills documentation. Simplified wording and performed verification testing to measure improvements.
